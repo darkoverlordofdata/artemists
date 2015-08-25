@@ -3,9 +3,11 @@ module artemis {
 
 		function decode(key) {
 			switch(typeof key) {
-				case 'string': return key;
-				case 'function': return 'name';
-				default: return 'uuid';
+				case 'boolean': 	return ''+key;
+				case 'number': 		return ''+key;
+				case 'string': 		return key;
+				case 'function': 	return key.className | key.name;
+				default: 					return key.uuid;
 			}
 		}
 		export class HashMap<K,V> implements Map<K,V> {
