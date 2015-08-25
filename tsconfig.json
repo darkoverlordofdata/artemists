@@ -1,0 +1,44 @@
+{
+    "compilerOptions": {
+        "target": "ES5",
+        "module": "commonjs",
+        "noImplicitAny": false,
+        "removeComments": false,
+        "preserveConstEnums": false,
+        "sourceMap": true,
+        "outDir": "web/src/artemis"
+    },
+
+    "files": [
+      "lib/prolog.ts",
+      "lib/utils/Bag.ts",
+      "lib/utils/BitSet.ts",
+      "lib/utils/Class.ts",
+      "lib/utils/Map.ts",
+      "lib/utils/HashMap.ts",
+      "lib/utils/ImmutableBag.ts",
+      "lib/utils/UUID.ts",
+      "lib/Aspect.ts",
+      "lib/Component.ts",
+      "lib/ComponentManager.ts",
+      "lib/ComponentMapper.ts",
+      "lib/ComponentType.ts",
+      "lib/Entity.ts",
+      "lib/EntityManager.ts",
+      "lib/EntityObserver.ts",
+      "lib/EntitySystem.ts",
+      "lib/Manager.ts",
+      "lib/World.ts",
+      "lib/annotations/Mapper.ts",
+      "lib/managers/GroupManager.ts",
+      "lib/managers/PlayerManager.ts",
+      "lib/managers/TagManager.ts",
+      "lib/managers/TeamManager.ts",
+      "lib/systems/DelayedEntityProcessingSystem.ts",
+      "lib/systems/EntityProcessingSystem.ts",
+      "lib/systems/IntervalEntityProcessingSystem.ts",
+      "lib/systems/IntervalEntitySystem.ts",
+      "lib/systems/VoidEntitySystem.ts"
+   ]
+	
+}

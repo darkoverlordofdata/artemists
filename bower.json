@@ -1,0 +1,37 @@
+{
+  "name": "artemists",
+  "version": "0.0.1",
+  "authors": [
+    "darkoverlordofdata@gmail.com"
+  ],
+  "description": "Artemis TS",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "tmp",
+    "build",
+    "node_modules",
+    "packages",
+    "src",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "closure-compiler": "~0.2.7",
+    "google-closure-library": "*"
+  },
+  "dependencies": {
+    "bitset.js": "~3.0.0"
+  },
+  "install": {
+    "ignore": [
+      "closure-compiler",
+      "google-closure-library"
+    ],
+    "path": "web/src",
+    "sources": {
+      "bitset.js": "packages/bitset.js/bitset.js"
+    }
+  }
+}
