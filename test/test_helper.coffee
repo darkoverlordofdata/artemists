@@ -5,7 +5,7 @@
 #
 #
 
-do () ->
+do (artemis = require('../build/artemis.js')) ->
 
 
 
@@ -13,4 +13,6 @@ do () ->
 
     # Use chai 'should' semantics
     should: value: require('chai').should()
+    
+    artemis: value: artemis
 

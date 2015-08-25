@@ -22,11 +22,11 @@ BabelScript     = 4   # es6
 ClosureCompiler = 8   # plovr
 
 # paths:
-LIB_NAME        = "ash"
+LIB_NAME        = "artemis"
 PLOVR           = "tools/plovr.jar"
 COMPILER_JAR    = "packages/closure-compiler/lib/vendor/compiler.jar"
-LIB_ASH         = "packages/ash.coffee/goog/lib"
-LIB_ASTEROIDS   = "goog/asteroids"
+LIB_ARTEMIS     = "packages/artemis/goog/lib"
+LIB_WARRIOR     = "goog/warrior"
 CLOSURE_HOME    = "packages/google-closure-library"
 CLOSURE_BIN     = "#{CLOSURE_HOME}/closure/bin/build"
 GOOG_BASE       = "../../../.."
@@ -51,7 +51,7 @@ module.exports = (project, options = {}) ->
   ### VS Code ctrl-shift-b ###
   _vscode_build: do ->
     switch projectType
-      when TypeScript then "tsc --watch"
+      when TypeScript then "tsc " #--watch"
       when CoffeeScript then "coffee -o web/src/#{LIB_NAME} -cm lib "
       # when CoffeeScript then "coffee -o web/src/#{LIB_NAME} -wcm lib "
 
@@ -163,8 +163,8 @@ module.exports = (project, options = {}) ->
   ### collect dependencies for closure compiler ###
   depswriter: """
     python #{CLOSURE_BIN}/depswriter.py \
-      --root_with_prefix='#{LIB_ASH} #{GOOG_BASE}/#{LIB_ASH}' \
-      --root_with_prefix='#{LIB_ASTEROIDS} #{GOOG_BASE}/#{LIB_ASTEROIDS}' \
+      --root_with_prefix='#{LIB_ARTEMIS} #{GOOG_BASE}/#{LIB_ARTEMIS}' \
+      --root_with_prefix='#{LIB_WARRIOR} #{GOOG_BASE}/#{LIB_WARRIOR}' \
       --root_with_prefix='web #{GOOG_BASE}/web' \
       > web/#{LIB_NAME}.dep.js
   """

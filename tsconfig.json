@@ -7,7 +7,7 @@
         "preserveConstEnums": false,
         "sourceMap": true,
         "experimentalDecorators": true,
-        "outDir": "web/src/artemis"
+        "outDir": "web/src"
     },
 
     "files": [
@@ -39,7 +39,8 @@
       "lib/systems/EntityProcessingSystem.ts",
       "lib/systems/IntervalEntityProcessingSystem.ts",
       "lib/systems/IntervalEntitySystem.ts",
-      "lib/systems/VoidEntitySystem.ts"
+      "lib/systems/VoidEntitySystem.ts",
+      "example/demo.ts"
    ]
 	
 }
