@@ -1,8 +1,10 @@
 # Artemis
 
+status - just started.
+
 Port of artemis-framework to typescript.
 
-demo using typescript port of https://github.com/Flet/spaceship-warrior-redux
+plan demo using typescript port of https://github.com/Flet/spaceship-warrior-redux
 
 
 # MIT License
