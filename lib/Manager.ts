@@ -9,6 +9,11 @@ module artemis {
 	*/
 	export class Manager implements EntityObserver {
 		protected world_:World;
+		public uuid:string;
+		
+		constructor() {
+			this.uuid = UUID.randomUUID(); 
+		}
 		
 		public initialize() {
 			throw Error('Abstract Method');

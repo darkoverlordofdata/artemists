@@ -10,3 +10,19 @@ import Entity = artemis.Entity;
 import Aspect = artemis.Aspect;
 import EntitySystem = artemis.EntitySystem;
 
+function Id() {
+  return function (target: Object, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) {
+    return descriptor;
+  }
+}
+
+/**
+ * @Mapper artems.component.Position
+ * em:ComponentMapper<Position>;
+ * 
+ */
+function Mapper(component: Function) {
+  return function (target: Object, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) {
+    return descriptor;
+  }
+}

@@ -8,7 +8,7 @@ module artemis {
 	* 
 	*/
 	export class Entity {
-		private uuid_:UUID;
+		public uuid:string;
 	
 		private id_:number;
 		private componentBits_:BitSet;
@@ -63,7 +63,7 @@ module artemis {
 		protected reset() {
 			this.systemBits_.clear();
 			this.componentBits_.clear();
-			this.uuid_ = UUID.randomUUID();
+			this.uuid = UUID.randomUUID();
 		}
 	
 		//@Override
@@ -242,7 +242,7 @@ module artemis {
 		* @return uuid instance for this entity.
 		*/
 		public getUuid():UUID {
-			return this.uuid_;
+			return this.uuid;
 		}
 	
 		/**

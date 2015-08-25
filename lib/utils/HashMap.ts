@@ -1,37 +1,37 @@
 module artemis {
 	export module utils {
 
+		function decode(key) {
+			switch(typeof key) {
+				case 'string': return key;
+				case 'function': return 'name';
+				default: return 'uuid';
+			}
+		}
 		export class HashMap<K,V> implements Map<K,V> {
-			private keys_;
-			private data_;
-			private size_:number;
-			private capacity_:number;
+			private map_;
 			
-			constructor(capacity: number = 64) {
-				this.size_ = 0;
-				this.keys_ = new Array(capacity);
-				this.data_ = new Array(capacity);
-				this.capacity_ = capacity;
+			
+			constructor() {
+				this.clear();
 			}
 			
 			clear() {
-				var size = this.size_;
-				var keys = this.keys_;
-				var data = this.data_;
-				
-				for (var index=0; size>index; index++) {
-					keys[index] = null;
-					data[index] = null;
-				}
-				this.size_ = 0;
+				this.map_ = {};
 			}
 			
+			values() {
+				var data = [];
+				for (var key in this.map_) {
+					data.push(this.map_[key]);
+				}
+				return data;
+			}
+			
+			
 			contains(value):boolean {
-				var size = this.size_;
-				var data = this.data_;
-				
-				for(var index = 0; size > index; index++) {
-					if(value === data[index]) {
+				for (var key in this.map_) {
+					if (value === this.map_[key]) {
 						return true;
 					}
 				}
@@ -39,99 +39,44 @@ module artemis {
 			}
 			
 			containsKey(key):boolean {
-				var size = this.size_;
-				var keys = this.keys_;
-				
-				for(var index = 0; size > index; index++) {
-					if(key === keys[index]) {
-						return true;
-					}
-				}
-				return false;
+				return decode(key) in this.map_;
 			}
 			
 			containsValue(value):boolean {
-				var size = this.size_;
-				var data = this.data_;
-				
-				for(var index = 0; size > index; index++) {
-					if(value === data[index]) {
+				for (var key in this.map_) {
+					if (value === this.map_[key]) {
 						return true;
 					}
 				}
 				return false;
 			}
 			
-			elements() {
-				return this.data_;
-			}
-			
-			values() {
-				return this.data_;
-			}
 			
 			get(key) {
-				var size = this.size_;
-				var keys = this.keys_;
-				var data = this.data_;
-
-				for(var index = 0; size > index; index++) {
-					if(key === keys[index]) {
-						return data[index];
-					}
-				}
-				return null;
+				return this.map_[decode(key)];
 			}
 			
 			isEmpty():boolean {
-				return this.size_ === 0;
+				return Object.keys(this.map_).length === 0;
 			}
 			
 			keys() {
-				return this.keys_;
+				return Object.keys(this.map_);
 			}
 			
+			/**
+			 * if key is a string, use as is, else use key.id_ or key.name
+			 */
 			put(key, value) {
-				var size = this.size_;
-				var keys = this.keys_;
-				var data = this.data_;
-
-				for(var index = 0; size > index; index++) {
-					if(key === keys[index]) {
-						data[index] = value;
-						return;
-					}
-				}
-				if (size >= data.length) {
-					keys.length += this.capacity_;
-					data.length += this.capacity_;
-					this.capacity_ += this.capacity_; 
-				}
-				keys.push(key);
-				data.push(value);
-				this.size_ = data.length;
+				this.map_[decode(key)] = value;
 			}
 			
 			remove(key) {
-				var size = this.size_;
-				var keys = this.keys_;
-				var data = this.data_;
-				var last = size-1;
-
-				for(var index = 0; size > index; index++) {
-					if(key === keys[index]) {
-						data[index] = data[last];
-						keys[index] = keys[last];
-						data[last] = null;
-						keys[last] = null;
-						this.size_ = last;
-						return;
-					}
-				}
+				delete this.map_[decode(key)];
 			}
 
 			size():number {
-				return this.size_;
+				return Object.keys(this.map_).length;
 			}
 			
 		}

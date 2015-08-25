@@ -25,12 +25,14 @@ module artemis {
 			 * Serendipity Theory:
 			 * 
 			 * What we call 'luck', is a contigous stream of randomness.
-			 * The game user has a more realistic 'luck' experience when 
+			 * The player has a more real 'luck' experience when 
 			 * seperate instances of prng's are used per player/agent.
 			 * 
 			 * ex:
 			 * System requirements for a prng source use Math.random().
 			 * Each player owns an instance of a MersenneTwister. 
+			 * 
+			 * - Dark Overlord of Data -
 			 * 
 			 */
 			// static randomUUID():UUID {
