@@ -2,6 +2,7 @@ module artemis {
 	
 	import Bag = artemis.utils.Bag;
 	import BitSet = artemis.utils.BitSet;
+	import Manager = artemis.Manager;
 	
 	export class EntityManager extends Manager {
 		private entities_:Bag<Entity>;

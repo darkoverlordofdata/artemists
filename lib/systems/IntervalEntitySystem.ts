@@ -1,5 +1,9 @@
 module artemis {
 	export module systems {
+		
+		import EntitySystem = artemis.EntitySystem;
+		import Aspect = artemis.Aspect;
+		
 		/**
 		* A system that processes entities at a interval in milliseconds.
 		* A typical usage would be a collision system or physics system.

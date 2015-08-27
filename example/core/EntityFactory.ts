@@ -15,6 +15,11 @@ module brokenspork.core {
 	
 	import Layer = brokenspork.components.Layer;
 	import EFFECT = brokenspork.components.EFFECT;
+	
+	import World = artemis.World;
+	import Entity = artemis.Entity;
+	import GroupManager = artemis.managers.GroupManager;
+	
 
 	export class EntityFactory {
 		

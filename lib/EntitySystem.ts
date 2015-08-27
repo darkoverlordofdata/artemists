@@ -4,6 +4,8 @@ module artemis {
 	import ImmutableBag = artemis.utils.ImmutableBag;
 	import BitSet = artemis.utils.BitSet;
 	import HashMap = artemis.utils.HashMap;
+	import EntityObserver = artemis.EntityObserver;
+	
 	/**
 	* The most raw entity system. It should not typically be used, but you can create your own
 	* entity system handling by extending this. It is recommended that you use the other provided

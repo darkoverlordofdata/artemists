@@ -1,6 +1,11 @@
 module artemis {
 	export module utils {
 
+		/**
+		 * Decode HashMap key
+		 * 
+		 * When the key is an object, we generate a unique uuid and use that as the actual key.
+	 	 */
 		function decode(key) {
 			switch(typeof key) {
 				case 'boolean': 	return ''+key;
@@ -11,9 +16,16 @@ module artemis {
 					return key.uuid = key.uuid ? key.uuid : UUID.randomUUID();
 			}
 		}
+		
+		/**
+		 * HashMap
+		 * 
+		 * Allow object as key. 
+		 */
 		export class HashMap<K,V> implements Map<K,V> {
-			private map_;
 			
+			private map_;
+			private keys_;
 			
 			constructor() {
 				this.clear();
@@ -21,14 +33,15 @@ module artemis {
 			
 			clear() {
 				this.map_ = {};
+				this.keys_ = {};
 			}
 			
 			values() {
-				var data = [];
+				var result = [];
 				for (var key in this.map_) {
-					data.push(this.map_[key]);
+					result.push(this.map_[key]);
 				}
-				return data;
+				return result;
 			}
 			
 			
@@ -64,18 +77,26 @@ module artemis {
 			}
 			
 			keys() {
-				return Object.keys(this.map_);
+				var result = [];
+				for (var key in this.keys_) {
+					result.push(this.keys_[key]);
+				}
+				return result;
 			}
 			
 			/**
 			 * if key is a string, use as is, else use key.id_ or key.name
 			 */
 			put(key, value) {
-				this.map_[decode(key)] = value;
+				var k = decode(key);
+				this.map_[k] = value;
+				this.keys_[k] = key;
 			}
 			
 			remove(key) {
-				delete this.map_[decode(key)];
+				var k = decode(key);
+				delete this.map_[k];
+				delete this.keys_[k];
 			}
 
 			size():number {

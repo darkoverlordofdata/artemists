@@ -1,5 +1,7 @@
 module brokenspork.components {
 	
+	import Component = artemis.Component;
+
 	export class ScaleAnimation extends Component {
   	public static className = 'ScaleAnimation';
 		

@@ -2,7 +2,11 @@ module artemis {
 	
 	import Bag = artemis.utils.Bag;
 	import BitSet = artemis.utils.BitSet;
-		
+	import Manager = artemis.Manager;
+	import Component = artemis.Component;
+	import ComponentType = artemis.ComponentType;
+	import Entity = artemis.Entity;
+	
 	export class ComponentManager extends Manager {
 		private componentsByType_: Bag<Bag<Component>>;
 		private deleted_: Bag<Entity>;

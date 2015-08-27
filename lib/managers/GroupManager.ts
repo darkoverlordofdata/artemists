@@ -4,6 +4,7 @@ module artemis {
 	import ImmutableBag = artemis.utils.ImmutableBag;
 	import HashMap = artemis.utils.HashMap;
 	import Map = artemis.utils.Map;
+	import Manager = artemis.Manager;
 	
 	export module managers {
 		/**

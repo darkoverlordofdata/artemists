@@ -2,6 +2,8 @@ module artemis {
 	export module systems {
 		
 		import ImmutableBag = artemis.utils.ImmutableBag;
+		import EntitySystem = artemis.EntitySystem;
+		
 		/**
 		* The purpose of this class is to allow systems to execute at varying intervals.
 		* 

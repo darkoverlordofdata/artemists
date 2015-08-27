@@ -1,5 +1,7 @@
 module brokenspork.components {
 	
+	import Component = artemis.Component;
+
 	export class Position extends Component {
   	public static className = 'Position';
 		public x:number;

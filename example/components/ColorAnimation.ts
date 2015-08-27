@@ -1,5 +1,7 @@
 module brokenspork.components {
 	
+	import Component = artemis.Component;
+
 	export class ColorAnimation extends Component {
 		
     public static className = 'Bounds';

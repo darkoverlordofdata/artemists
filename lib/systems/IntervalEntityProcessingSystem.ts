@@ -2,6 +2,8 @@ module artemis {
 	export module systems {
 		
 		import ImmutableBag = artemis.utils.ImmutableBag;
+		import IntervalEntitySystem = artemis.systems.IntervalEntitySystem;
+		
 		/**
 		* If you need to process entities at a certain interval then use this.
 		* A typical usage would be to regenerate ammo or health at certain intervals, no need

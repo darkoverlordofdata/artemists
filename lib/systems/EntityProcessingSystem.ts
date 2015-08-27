@@ -2,6 +2,7 @@ module artemis {
 	export module systems {
 		
 		import ImmutableBag = artemis.utils.ImmutableBag;
+		import EntitySystem = artemis.EntitySystem;
 		
 		/**
 		* A typical entity system. Use this when you need to process entities possessing the

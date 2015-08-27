@@ -18,6 +18,13 @@ module brokenspork.systems {
 	import EntityFactory = brokenspork.core.EntityFactory;
 	import Mapper = artemis.annotations.Mapper;
 
+	import EntitySystem = artemis.EntitySystem;
+	import ComponentMapper = artemis.ComponentMapper;
+	import Aspect = artemis.Aspect;
+	import Entity = artemis.Entity;
+	import GroupManager = artemis.managers.GroupManager;
+	
+	
 	
 	export class CollisionSystem extends EntitySystem {
 		@Mapper Position

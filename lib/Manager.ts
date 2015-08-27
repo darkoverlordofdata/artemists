@@ -1,6 +1,7 @@
 module artemis {
 	
-	
+	import EntityObserver = artemis.EntityObserver;
+
 	/**
 	* Manager.
 	* 

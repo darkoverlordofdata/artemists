@@ -3,6 +3,11 @@ module brokenspork.systems {
 	import ColorAnimation = brokenspork.components.ColorAnimation;
 	import Sprite = brokenspork.components.Sprite;
 	import Mapper = artemis.annotations.Mapper;
+	
+	import EntityProcessingSystem = artemis.systems.EntityProcessingSystem;
+	import ComponentMapper = artemis.ComponentMapper;
+	import Aspect = artemis.Aspect;
+	import Entity = artemis.Entity;
 
 	export class ColorAnimationSystem extends EntityProcessingSystem {
 		@Mapper ColorAnimation 

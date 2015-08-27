@@ -6,11 +6,9 @@ module brokenspork.systems {
 	import Constants = brokenspork.core.Constants;
 	import EntityFactory = brokenspork.core.EntityFactory;
 	
-	import Timer = artemis.utils.Timer;
+	import VoidEntitySystem = artemis.systems.VoidEntitySystem;
 	
-	// import com.artemis.systems.VoidEntitySystem;
-	// import com.artemis.utils.Timer;
-	// import com.badlogic.gdx.math.MathUtils;
+	import Timer = artemis.utils.Timer;
 	
 	export class EntitySpawningTimerSystem extends VoidEntitySystem {
 	

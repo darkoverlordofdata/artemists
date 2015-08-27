@@ -1,6 +1,10 @@
 module artemis {
 	
 	import Bag = artemis.utils.Bag;
+	import Component = artemis.Component;
+	import ComponentType = artemis.ComponentType;
+	import Entity = artemis.Entity;
+	
 	/**
 	* High performance component retrieval from entities. Use this wherever you
 	* need to retrieve components from entities often and fast.

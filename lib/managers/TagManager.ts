@@ -3,6 +3,7 @@ module artemis {
 		
 		import HashMap = artemis.utils.HashMap;
 		import Map = artemis.utils.Map;
+		import Manager = artemis.Manager;
 		
 		/**
 		* If you need to tag any entity, use this. A typical usage would be to tag

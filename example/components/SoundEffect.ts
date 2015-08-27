@@ -1,5 +1,7 @@
 module brokenspork.components {
 	
+	import Component = artemis.Component;
+
 	export enum EFFECT {
 		PEW, ASPLODE, SMALLASPLODE
 		
