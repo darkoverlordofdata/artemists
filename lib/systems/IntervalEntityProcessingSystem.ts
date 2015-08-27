@@ -1,5 +1,7 @@
 module artemis {
 	export module systems {
+		
+		import ImmutableBag = artemis.utils.ImmutableBag;
 		/**
 		* If you need to process entities at a certain interval then use this.
 		* A typical usage would be to regenerate ammo or health at certain intervals, no need
@@ -22,7 +24,7 @@ module artemis {
 			public process(e:Entity){}
 		
 			
-			//@Override
+			
 			protected processEntities(entities:ImmutableBag<Entity>) {
 				for (var i = 0, s = entities.size(); s > i; i++) {
 					this.process(entities.get(i));

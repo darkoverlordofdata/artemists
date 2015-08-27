@@ -1,4 +1,10 @@
 module artemis {
+	
+	import Bag = artemis.utils.Bag;
+	import ImmutableBag = artemis.utils.ImmutableBag;
+	import HashMap = artemis.utils.HashMap;
+	import Map = artemis.utils.Map;
+	
 	export module managers {
 		/**
 		* If you need to group your entities together, e.g. tanks going into "units" group or explosions into "effects",
@@ -20,7 +26,7 @@ module artemis {
 			}
 			
 		
-			//@Override
+			
 			public initialize() {
 			}
 			
@@ -127,7 +133,7 @@ module artemis {
 				return false;
 			}
 		
-			//@Override
+			
 			public deleted(e:Entity) {
 				this.removeFromAllGroups(e);
 			}

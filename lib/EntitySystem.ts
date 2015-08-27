@@ -1,5 +1,9 @@
 module artemis {
 	
+	import Bag = artemis.utils.Bag;
+	import ImmutableBag = artemis.utils.ImmutableBag;
+	import BitSet = artemis.utils.BitSet;
+	import HashMap = artemis.utils.HashMap;
 	/**
 	* The most raw entity system. It should not typically be used, but you can create your own
 	* entity system handling by extending this. It is recommended that you use the other provided
@@ -11,7 +15,7 @@ module artemis {
 	export class EntitySystem implements EntityObserver {
 		private systemIndex_:number;
 	
-		protected world_:World;
+		public world:World;
 	
 		private actives_:Bag<Entity>;
 	
@@ -152,38 +156,38 @@ module artemis {
 		}
 		
 		
-		//@Override
+		
 		public added(e:Entity) {
 			this.check(e);
 		}
 		
-		//@Override
+		
 		public changed(e:Entity) {
 			this.check(e);
 		}
 		
-		//@Override
+		
 		public deleted(e:Entity) {
 			if(e.getSystemBits().get(this.systemIndex_)) {
 				this.removeFromSystem(e);
 			}
 		}
 		
-		//@Override
+		
 		public disabled(e:Entity) {
 			if(e.getSystemBits().get(this.systemIndex_)) {
 				this.removeFromSystem(e);
 			}
 		}
 		
-		//@Override
+		
 		public enabled(e:Entity) {
 			this.check(e);
 		}
 		
 	
 		public setWorld(world:World) {
-			this.world_ = world;
+			this.world = world;
 		}
 		
 		public isPassive():boolean {

@@ -5,7 +5,7 @@ status - just started.
 Port of artemis-framework to typescript.
 
 plan demo using typescript port of https://github.com/Flet/spaceship-warrior-redux
-
+replacing gdx with cocos2d-js
 
 # MIT License
 

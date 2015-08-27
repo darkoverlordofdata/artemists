@@ -1,5 +1,6 @@
 module artemis {
 	
+	import Bag = artemis.utils.Bag;
 	/**
 	* High performance component retrieval from entities. Use this wherever you
 	* need to retrieve components from entities often and fast.
@@ -8,13 +9,12 @@ module artemis {
 	*
 	* @param <A> the class type of the component
 	*/
-	export class ComponentMapper extends Component {
+	export class ComponentMapper<A extends Component> {
 		private type_: ComponentType;
 		private classType_: Function;
 		private components_: Bag<Component>;
 	
 		constructor(type:Function, world:World) {
-			super()
 			this.type_ = ComponentType.getTypeFor(type);
 			this.components_ = world.getComponentManager().getComponentsByType(this.type_);
 			this.classType_ = type;
@@ -28,8 +28,8 @@ module artemis {
 		* @param e the entity that should possess the component
 		* @return the instance of the component
 		*/
-		public get(e:Entity):Component {
-			return this.components_.get(e.getId());
+		public get(e:Entity):A {
+			return <A>this.components_.get(e.getId());
 		}
 	
 		/**
@@ -39,9 +39,9 @@ module artemis {
 		* @param e the entity that should possess the component
 		* @return the instance of the component
 		*/
-		public getSafe(e:Entity):Component {
+		public getSafe(e:Entity):A {
 			if(this.components_.isIndexWithinBounds(e.getId())) {
-				return this.components_.get(e.getId());
+				return <A>this.components_.get(e.getId());
 			}
 			return null;
 		}
@@ -62,10 +62,12 @@ module artemis {
 		* @param world the world that this component mapper should use.
 		* @return a new mapper.
 		*/
-		// public static getFor(type:Class<T>, World world):<T extends Component> ComponentMapper<T> {
-		public static getFor(type:Function, world:World):ComponentMapper {
-			return new ComponentMapper(type, world);
+		public static getFor<T extends Component>(type:Function, world:World):ComponentMapper<T> {
+			return new ComponentMapper<T>(type, world);
 		}
+		// public static <T extends Component> ComponentMapper<T> getFor(Class<T> type, World world) {
+		// 	return new ComponentMapper<T>(type, world);
+		// }
 	
 	}
 }

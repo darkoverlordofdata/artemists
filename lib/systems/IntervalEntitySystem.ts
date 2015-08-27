@@ -16,9 +16,9 @@ module artemis {
 				this.interval_ = interval;
 			}
 		
-			//@Override
+			
 			protected checkProcessing():boolean {
-				this.acc_ += this.world_.getDelta();
+				this.acc_ += this.world.getDelta();
 				if(this.acc_ >= this.interval_) {
 					this.acc_ -= this.interval_;
 					return true;

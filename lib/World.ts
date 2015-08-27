@@ -1,5 +1,9 @@
 module artemis {
 	
+	import Bag = artemis.utils.Bag;
+	import ImmutableBag = artemis.utils.ImmutableBag;
+	import HashMap = artemis.utils.HashMap;
+	import Map = artemis.utils.Map;
 	
 	/**
 	* The primary instance for the framework. It contains all the managers.
@@ -107,7 +111,7 @@ module artemis {
 		*            class type of the manager
 		* @return the manager
 		*/
-		public getManager(managerType:Function):Manager {
+		public getManager<T extends Manager>(managerType:Function):T {
 			return this.managers_.get(managerType);
 		}
 		
@@ -280,6 +284,10 @@ module artemis {
 		public getSystem(type:Function):EntitySystem {
 			return this.systems_.get(type);
 		}
+		// public getManager<T extends EntitySystem>(type:Function):T {
+		// public <T extends EntitySystem> T getSystem(Class<T> type) {
+		// 	return type.cast(systems.get(type));
+		// }
 	
 		
 		/**
@@ -304,35 +312,35 @@ module artemis {
 		*/
 		public process() {
 			this.check(this.added_, {
-				//@Override
+				
 				perform: function(observer:EntityObserver, e:Entity) {
 					observer.added(e);
 				}
 			});
 			
 			this.check(this.changed_, {
-				//@Override
+				
 				perform: function(observer:EntityObserver, e:Entity) {
 					observer.changed(e);
 				}
 			});
 			
 			this.check(this.disable_, {
-				//@Override
+				
 				perform: function(observer:EntityObserver, e:Entity) {
 					observer.disabled(e);
 				}
 			});
 			
 			this.check(this.enable_, {
-				//@Override
+				
 				perform: function(observer:EntityObserver, e:Entity) {
 					observer.enabled(e);
 				}
 			});
 			
 			this.check(this.deleted_, {
-				//@Override
+				
 				perform: function(observer:EntityObserver, e:Entity) {
 					observer.deleted(e);
 				}
@@ -355,8 +363,8 @@ module artemis {
 		* @param type of component to get mapper for.
 		* @return mapper for specified component type.
 		*/
-		public getMapper(type:Function):ComponentMapper  {
-			return ComponentMapper.getFor(type, this);
+		public getMapper<T extends Component>(type:Function):ComponentMapper<T>  {
+			return ComponentMapper.getFor<T>(type, this);
 		}
 		
 	}

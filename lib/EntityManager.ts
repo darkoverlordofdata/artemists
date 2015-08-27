@@ -1,5 +1,8 @@
 module artemis {
 	
+	import Bag = artemis.utils.Bag;
+	import BitSet = artemis.utils.BitSet;
+	
 	export class EntityManager extends Manager {
 		private entities_:Bag<Entity>;
 		private disabled_:BitSet;
@@ -18,7 +21,7 @@ module artemis {
 			this.identifierPool_ = new IdentifierPool();
 		}
 		
-		//@Override
+		
 		public initialize() {
 		}
 	
@@ -28,24 +31,24 @@ module artemis {
 			return e;
 		}
 		
-		//@Override
+		
 		public added(e:Entity) {
 			this.active_++;
 			this.added_++;
 			this.entities_.set(e.getId(), e);
 		}
 		
-		//@Override
+		
 		public enabled(e:Entity) {
 			this.disabled_.clear(e.getId());
 		}
 		
-		//@Override
+		
 		public disabled(e:Entity) {
 			this.disabled_.set(e.getId());
 		}
 		
-		//@Override
+		
 		public deleted(e:Entity) {
 			this.entities_.set(e.getId(), null);
 			

@@ -1,4 +1,10 @@
 module artemis {
+	
+	import Bag = artemis.utils.Bag;
+	import ImmutableBag = artemis.utils.ImmutableBag;
+	import HashMap = artemis.utils.HashMap;
+	import Map = artemis.utils.Map;
+	
 	export module managers {
 		/**
 		* Use this class together with PlayerManager.
@@ -21,7 +27,7 @@ module artemis {
 				this.teamByPlayer_ = new HashMap<String, String>();
 			}
 			
-			//@Override
+			
 			public initialize() {
 			}
 			

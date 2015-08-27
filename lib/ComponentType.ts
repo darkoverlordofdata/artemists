@@ -1,5 +1,7 @@
 module artemis {
 	
+	import HashMap = artemis.utils.HashMap;
+	
 	export class ComponentType {
 		private static INDEX:number = 0;
 	
@@ -15,10 +17,11 @@ module artemis {
 			return this.index_;
 		}
 		
-		//@Override
+		
 		public toString():string {
-			var klass = new Class(ComponentType)
-			return "ComponentType["+klass.getSimpleName()+"] ("+this.index_+")";
+			var klass:any = ComponentType;
+			return "ComponentType["+klass.name+"] ("+this.index_+")";
+			// return "ComponentType["+klass.getSimpleName()+"] ("+this.index_+")";
 		}
 	
 		private static componentTypes:HashMap<Function, ComponentType> = new HashMap<Function, ComponentType>();

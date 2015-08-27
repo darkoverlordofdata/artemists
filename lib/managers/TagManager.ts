@@ -1,5 +1,9 @@
 module artemis {
 	export module managers {
+		
+		import HashMap = artemis.utils.HashMap;
+		import Map = artemis.utils.Map;
+		
 		/**
 		* If you need to tag any entity, use this. A typical usage would be to tag
 		* entities such as "PLAYER", "BOSS" or something that is very unique.
@@ -38,7 +42,7 @@ module artemis {
 				return this.tagsByEntity_.values();
 			}
 			
-			//@Override
+			
 			public deleted(e:Entity) {
 				var removedTag:string = this.tagsByEntity_.remove(e);
 				if(removedTag != null) {
@@ -46,7 +50,7 @@ module artemis {
 				}
 			}
 		
-			//@Override
+			
 			public initialize() {
 			}
 		

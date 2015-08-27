@@ -1,5 +1,7 @@
 module artemis {
 	export module systems {
+		
+		import ImmutableBag = artemis.utils.ImmutableBag;
 		/**
 		* The purpose of this class is to allow systems to execute at varying intervals.
 		* 
@@ -34,7 +36,7 @@ module artemis {
 				super(aspect);
 			}
 		
-			//@Override
+			
 			protected processEntities(entities:ImmutableBag<Entity>) {
 				for (var i = 0, s = entities.size(); s > i; i++) {
 					var entity:Entity = entities.get(i);
@@ -49,7 +51,7 @@ module artemis {
 			this.stop();
 			}
 			
-			//@Override
+			
 			protected inserted(e:Entity) {
 				var delay:number = this.getRemainingDelay(e);
 				if(delay > 0) {
@@ -67,10 +69,10 @@ module artemis {
 				throw Error('Abstract Method');
 			}
 			
-			//@Override
+			
 			protected checkProcessing():boolean {
 				if(this.running_) {
-					this.acc_ += this.world_.getDelta();
+					this.acc_ += this.world.getDelta();
 					
 					if(this.acc_ >= this.delay_) {
 						return true;

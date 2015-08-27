@@ -7,7 +7,8 @@ module artemis {
 				case 'number': 		return ''+key;
 				case 'string': 		return key;
 				case 'function': 	return key.className | key.name;
-				default: 					return key.uuid;
+				default: 					
+					return key.uuid = key.uuid ? key.uuid : UUID.randomUUID();
 			}
 		}
 		export class HashMap<K,V> implements Map<K,V> {

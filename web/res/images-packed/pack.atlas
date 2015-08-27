@@ -1,0 +1,61 @@
+
+pack.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bullet
+  rotate: false
+  xy: 664, 821
+  size: 3, 10
+  orig: 3, 10
+  offset: 0, 0
+  index: -1
+enemy1
+  rotate: false
+  xy: 282, 271
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: -1
+enemy2
+  rotate: false
+  xy: 516, 701
+  size: 146, 130
+  orig: 146, 130
+  offset: 0, 0
+  index: -1
+enemy3
+  rotate: false
+  xy: 2, 95
+  size: 278, 222
+  orig: 278, 222
+  offset: 0, 0
+  index: -1
+explosion
+  rotate: false
+  xy: 2, 319
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+fighter
+  rotate: false
+  xy: 2, 7
+  size: 70, 86
+  orig: 70, 86
+  offset: 0, 0
+  index: -1
+particle
+  rotate: false
+  xy: 2, 2
+  size: 3, 3
+  orig: 3, 3
+  offset: 0, 0
+  index: -1
+star
+  rotate: false
+  xy: 516, 679
+  size: 18, 20
+  orig: 18, 20
+  offset: 0, 0
+  index: -1

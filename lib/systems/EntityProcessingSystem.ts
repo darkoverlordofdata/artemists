@@ -1,6 +1,8 @@
 module artemis {
 	export module systems {
 		
+		import ImmutableBag = artemis.utils.ImmutableBag;
+		
 		/**
 		* A typical entity system. Use this when you need to process entities possessing the
 		* provided component types.
@@ -22,14 +24,14 @@ module artemis {
 				
 			}
 		
-			//@Override
+			
 			protected processEntities(entities:ImmutableBag<Entity>) {
 				for (var i = 0, s = entities.size(); s > i; i++) {
 					this.process(entities.get(i));
 				}
 			}
 			
-			//@Override
+			
 			protected checkProcessing():boolean {
 				return true;
 			}

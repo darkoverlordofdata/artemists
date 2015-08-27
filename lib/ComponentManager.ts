@@ -1,6 +1,8 @@
 module artemis {
 	
-	
+	import Bag = artemis.utils.Bag;
+	import BitSet = artemis.utils.BitSet;
+		
 	export class ComponentManager extends Manager {
 		private componentsByType_: Bag<Bag<Component>>;
 		private deleted_: Bag<Entity>;
@@ -11,7 +13,7 @@ module artemis {
 			this.deleted_ = new Bag<Entity>();
 		}
 		
-		//@Override
+		
 		public initialize() {
 		}
 	
@@ -72,7 +74,7 @@ module artemis {
 		}
 	
 		
-		//@Override
+		
 		public deleted(e:Entity) {
 			this.deleted_.add(e);
 		}

@@ -1,4 +1,10 @@
 module artemis {
+	
+	import Bag = artemis.utils.Bag;
+	import ImmutableBag = artemis.utils.ImmutableBag;
+	import HashMap = artemis.utils.HashMap;
+	import Map = artemis.utils.Map;
+	
 	export module managers {
 		/**
 		* You may sometimes want to specify to which player an entity belongs to.
@@ -50,11 +56,11 @@ module artemis {
 				return this.playerByEntity_.get(e);
 			}
 		
-			//@Override
+			
 			public initialize() {
 			}
 		
-			//@Override
+			
 			public deleted(e:Entity) {
 				this.removeFromPlayer(e);
 			}

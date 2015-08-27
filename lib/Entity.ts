@@ -1,5 +1,9 @@
 module artemis {
 	
+	import Bag = artemis.utils.Bag;
+	import BitSet = artemis.utils.BitSet;
+	import UUID = artemis.utils.UUID;
+	
 	/**
 	* The entity class. Cannot be instantiated outside the framework, you must
 	* create new entities using World.
@@ -66,7 +70,7 @@ module artemis {
 			this.uuid = UUID.randomUUID();
 		}
 	
-		//@Override
+		
 		public toString():string {
 			return "Entity[" + this.id_ + "]";
 		}
@@ -168,6 +172,9 @@ module artemis {
 		public getComponent(type:ComponentType):Component {
 			return this.componentManager_.getComponent(this, type);
 		}
+		// public <T extends Component> T getComponent(Class<T> type) {
+		// 	return type.cast(getComponent(ComponentType.getTypeFor(type)));
+		// }
 	
 		/**
 		* Slower retrieval of components from this entity. Minimize usage of this,
