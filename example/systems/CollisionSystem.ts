@@ -16,6 +16,8 @@ module brokenspork.systems {
 	import Velocity = brokenspork.components.Velocity;
 	import Constants = brokenspork.core.Constants;
 	import EntityFactory = brokenspork.core.EntityFactory;
+	import Mapper = artemis.annotations.Mapper;
+
 	
 	export class CollisionSystem extends EntitySystem {
 		@Mapper Position

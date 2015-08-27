@@ -2,6 +2,7 @@ module brokenspork.systems {
 	
 	import ColorAnimation = brokenspork.components.ColorAnimation;
 	import Sprite = brokenspork.components.Sprite;
+	import Mapper = artemis.annotations.Mapper;
 
 	export class ColorAnimationSystem extends EntityProcessingSystem {
 		@Mapper ColorAnimation 

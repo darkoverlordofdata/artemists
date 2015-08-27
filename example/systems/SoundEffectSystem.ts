@@ -7,6 +7,7 @@ module brokenspork.systems {
 	import ComponentMapper = artemis.ComponentMapper;
 	import Entity = artemis.Entity;
 	import EntityProcessingSystem = artemis.systems.EntityProcessingSystem;
+	import Mapper = artemis.annotations.Mapper;
 	// import  = badlogic.gdx.Gdx;
 	// import  = badlogic.gdx.audio.Sound;
 	

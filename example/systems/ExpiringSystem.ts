@@ -6,6 +6,7 @@ module brokenspork.systems {
 	import ComponentMapper = artemis.ComponentMapper;
 	import Entity = artemis.Entity;
 	import DelayedEntityProcessingSystem = artemis.systems.DelayedEntityProcessingSystem;
+	import Mapper = artemis.annotations.Mapper;
 	
 	export class ExpiringSystem extends DelayedEntityProcessingSystem {
 		@Mapper Expires

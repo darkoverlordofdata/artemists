@@ -9,6 +9,7 @@ module brokenspork.systems {
 	
 	import ComponentMapper = artemis.ComponentMapper;
 	import VoidEntitySystem = artemis.systems.VoidEntitySystem;
+	import Mapper = artemis.annotations.Mapper;
 	// import com.badlogic.gdx.Gdx;
 	// import com.badlogic.gdx.graphics.OrthographicCamera;
 	// import com.badlogic.gdx.graphics.Texture;

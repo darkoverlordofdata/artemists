@@ -8,7 +8,8 @@ module brokenspork.systems {
 	import Entity = artemis.Entity;
 	import EntityProcessingSystem = artemis.systems.EntityProcessingSystem;
 	import MathUtils = artemis.utils.MathUtils;
-	
+	import Mapper = artemis.annotations.Mapper;
+
 	export class HealthRenderSystem extends EntityProcessingSystem {
 		@Mapper Position 
 		pm:ComponentMapper<Position>;

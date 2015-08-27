@@ -11,6 +11,7 @@ module brokenspork.systems {
 	import ComponentMapper = artemis.ComponentMapper;
 	import Entity = artemis.Entity;
 	import IntervalEntityProcessingSystem = artemis.systems.IntervalEntityProcessingSystem;
+	import Mapper = artemis.annotations.Mapper;
 	
 	export class RemoveOffscreenShipsSystem extends IntervalEntityProcessingSystem {
 		@Mapper Position

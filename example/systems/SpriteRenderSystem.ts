@@ -11,6 +11,7 @@ module brokenspork.systems {
 	import EntitySystem = artemis.EntitySystem;
 	import Bag = artemis.utils.Bag;
 	import ImmutableBag = artemis.utils.ImmutableBag;
+	import Mapper = artemis.annotations.Mapper;
 	// import com.badlogic.gdx.Gdx;
 	// import com.badlogic.gdx.graphics.OrthographicCamera;
 	// import com.badlogic.gdx.graphics.Texture;
