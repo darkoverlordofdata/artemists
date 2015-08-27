@@ -20,7 +20,7 @@ module brokenspork.systems {
 		}
 	
 		
-		public process(e:Entity) {
+		public processEach(e:Entity) {
 			var position:Position = this.pm.get(e);
 	
 			if (position.y < -Constants.FRAME_HEIGHT / 2) {

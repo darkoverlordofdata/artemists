@@ -13,6 +13,7 @@
     "jsList" : [
         "src/resource.js",
         "src/app.js",
+        "src/lib/cclib-rt.js",
         "src/lib/utils/Bag.js",
         "src/lib/utils/BitSet.js",
         "src/lib/utils/MathUtils.js",
@@ -43,6 +44,7 @@
         "src/lib/systems/IntervalEntitySystem.js",
         "src/lib/systems/VoidEntitySystem.js",
         "src/lib/systems/IntervalEntityProcessingSystem.js",
+        "src/example/core/Constants.js",
         "src/example/components/ColorAnimation.js",
         "src/example/components/Enemy.js",
         "src/example/components/Expires.js",
@@ -54,8 +56,6 @@
         "src/example/components/SoundEffect.js",
         "src/example/components/Sprite.js",
         "src/example/components/Velocity.js",
-        "src/example/core/Constants.js",
-        "src/example/core/EntityFactory.js",
         "src/example/systems/CollisionSystem.js",
         "src/example/systems/ColorAnimationSystem.js",
         "src/example/systems/EntitySpawningTimerSystem.js",
@@ -67,7 +67,10 @@
         "src/example/systems/RemoveOffscreenShipsSystem.js",
         "src/example/systems/ScaleAnimationSystem.js",
         "src/example/systems/SoundEffectSystem.js",
-        "src/example/systems/SpriteRenderSystem.js"
+        "src/example/systems/SpriteRenderSystem.js",
+        "src/example/core/EntityFactory.js",
+        "src/example/core/GameScreen.js",
+        "src/example/core/SpaceshipWarrior.js"
         
     ]
 }

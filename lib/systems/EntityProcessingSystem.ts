@@ -21,14 +21,14 @@ module artemis {
 			* Process a entity this system is interested in.
 			* @param e the entity to process.
 			*/
-			public process(e:Entity){
+			protected processEach(e:Entity){
 				
 			}
 		
 			
 			protected processEntities(entities:ImmutableBag<Entity>) {
 				for (var i = 0, s = entities.size(); s > i; i++) {
-					this.process(entities.get(i));
+					this.processEach(entities.get(i));
 				}
 			}
 			

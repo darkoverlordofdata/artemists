@@ -31,7 +31,7 @@ module brokenspork.systems {
 		}
 	
 		
-		public process(e:Entity) {
+		public processEach(e:Entity) {
 	
 			var soundEffect:SoundEffect = this.se.get(e);
 			

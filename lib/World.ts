@@ -244,7 +244,9 @@ module artemis {
 		* @param passive wether or not this system will be processed by World.process()
 		* @return the added system.
 		*/
-		public setSystem(system:EntitySystem, passive:boolean=false):EntitySystem {
+		//	public <T extends EntitySystem> T setSystem(T system, boolean passive) {
+
+		public setSystem<T extends EntitySystem>(system:T, passive:boolean=false):T {
 			system.setWorld(this);
 			system.setPassive(passive);
 			
@@ -351,7 +353,7 @@ module artemis {
 			for(var i = 0; this.systemsBag_.size() > i; i++) {
 				var system:EntitySystem = this.systemsBag_.get(i);
 				if(!system.isPassive()) {
-					system.process(null);
+					system.process();
 				}
 			}
 		}

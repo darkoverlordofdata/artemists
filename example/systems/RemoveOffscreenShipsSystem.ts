@@ -25,7 +25,7 @@ module brokenspork.systems {
 		}
 	
 		
-		public process(e:Entity) {
+		public processEach(e:Entity) {
 			var position:Position = this.pm.get(e);
 			var bounds:Bounds = this.bm.get(e);
 			

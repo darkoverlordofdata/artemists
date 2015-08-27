@@ -32,9 +32,12 @@ module artemis {
 
 		export class BitSet {
 			
-			private length_:number;
+			//private length_:number;
 			private words_:number[];
 			
+			constructor() {
+				this.words_ = [0,0,0,0,0,0,0,0,0,0];	
+			}
 			
 			nextSetBit(fromIndex:number) {
 				

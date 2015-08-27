@@ -11,6 +11,8 @@
     },
 
     "files": [
+      "lib/cocos2d-3.1.6x.d.ts",
+      "lib/cclib-dev.ts",
       "lib/utils/Bag.ts",
       "lib/utils/BitSet.ts",
       "lib/utils/MathUtils.ts",
@@ -56,6 +58,8 @@
       "example/components/Velocity.ts",
       "example/core/Constants.ts",
       "example/core/EntityFactory.ts",
+      "example/core/GameScreen.ts",
+      "example/core/SpaceshipWarrior.ts",
       "example/systems/CollisionSystem.ts",
       "example/systems/ColorAnimationSystem.ts",
       "example/systems/EntitySpawningTimerSystem.ts",

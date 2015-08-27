@@ -51,7 +51,7 @@ module artemis {
 		protected begin() {
 		}
 	
-		public process(e:Entity) {
+		public process() {
 			if(this.checkProcessing()) {
 				this.begin();
 				this.processEntities(this.actives_);

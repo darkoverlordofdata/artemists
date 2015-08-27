@@ -21,7 +21,7 @@ module brokenspork.systems {
 		}
 	
 		
-		public process(e:Entity) {
+		protected processEach(e:Entity) {
 			var c:ColorAnimation = this.cam.get(e);
 			var sprite:Sprite = this.sm.get(e);
 			

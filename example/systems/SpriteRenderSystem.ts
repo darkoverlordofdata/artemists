@@ -80,7 +80,7 @@ module brokenspork.systems {
 			// }
 		}
 	
-		public process(e:Entity) {
+		public processEach(e:Entity) {
 			if (this.pm.has(e)) {
 				var position:Position = this.pm.getSafe(e);
 				var sprite:Sprite = this.sm.get(e);
