@@ -48,8 +48,7 @@ module artemis {
 		/**
 		* Called before processing of entities begins. 
 		*/
-		protected begin() {
-		}
+		protected begin() {}
 	
 		public process() {
 			if(this.checkProcessing()) {
@@ -62,8 +61,7 @@ module artemis {
 		/**
 		* Called after the processing of entities ends.
 		*/
-		protected end() {
-		}
+		protected end() {}
 		
 		/**
 		* Any implementing entity system must implement this method and the logic
@@ -71,24 +69,20 @@ module artemis {
 		* 
 		* @param entities the entities this system contains.
 		*/
-		protected processEntities(entities:ImmutableBag<Entity>) {
-			throw Error('Abstract Method');
-		}
+		protected processEntities(entities:ImmutableBag<Entity>) {}
 		
 		/**
 		* 
 		* @return true if the system should be processed, false if not.
 		*/
 		protected checkProcessing():boolean {
-			throw Error('Abstract Method');
+			return true;
 		}
 	
 		/**
 		* Override to implement code that gets executed when systems are initialized.
 		*/
-		public initialize() {
-			throw Error('Abstract Method');
-		}
+		public initialize() {}
 	
 		/**
 		* Called if the system has received a entity it is interested in, e.g. created or a component was added to it.
@@ -100,9 +94,7 @@ module artemis {
 		* Called if a entity was removed from this system, e.g. deleted or had one of it's components removed.
 		* @param e the entity that was removed from this system.
 		*/
-		protected removed(e:Entity) {
-			throw Error('Abstract Method');
-		};
+		protected removed(e:Entity) {};
 	
 		/**
 		* Will check if the entity is of interest to this system.

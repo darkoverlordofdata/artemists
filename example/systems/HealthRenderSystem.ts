@@ -11,10 +11,8 @@ module brokenspork.systems {
 	import Mapper = artemis.annotations.Mapper;
 
 	export class HealthRenderSystem extends EntityProcessingSystem {
-		@Mapper Position 
-		pm:ComponentMapper<Position>;
-		@Mapper Health
-		hm:ComponentMapper<Health>;
+		@Mapper(Position) pm:ComponentMapper<Position>;
+		@Mapper(Health) hm:ComponentMapper<Health>;
 		
 		//private batch:SpriteBatch;
 		// private OrthographicCamera camera;

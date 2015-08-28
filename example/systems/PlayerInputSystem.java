@@ -26,8 +26,8 @@ public class PlayerInputSystem extends EntityProcessingSystem implements InputPr
 	private static final float VerticalMaxSpeed = 200;
 	private static final float FireRate = 0.1f;
 	
-	@Mapper ComponentMapper<Position> pm;
-	@Mapper ComponentMapper<Velocity> vm;
+	@Mapper(ComponentMapper)<Position> pm;
+	@Mapper(ComponentMapper)<Velocity> vm;
 	
 	private boolean up, down, left, right;
 	private boolean shoot;

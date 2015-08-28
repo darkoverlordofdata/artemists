@@ -185,7 +185,7 @@ module artemis {
 			*/
 			add(e:E) {
 				// is size greater than capacity increase capacity
-				if (this.size_ == this.data_.length) {
+				if (this.size_ === this.data_.length) {
 					this.grow();
 				}
 		
@@ -206,12 +206,7 @@ module artemis {
 				this.data_[index] = e;
 			}
 		
-			// grow() {
-			// 	var newCapacity:number = (this.data_.length * 3) / 2 + 1;
-			// 	grow(newCapacity);
-			// }
-			
-			grow(newCapacity:number=(this.data_.length * 3) / 2 + 1) {
+			grow(newCapacity:number=~~((this.data_.length * 3) / 2) + 1) {
 				this.data_.length = newCapacity;
 			}
 			

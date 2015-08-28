@@ -4,6 +4,7 @@ module artemis {
 	import ImmutableBag = artemis.utils.ImmutableBag;
 	import HashMap = artemis.utils.HashMap;
 	import Map = artemis.utils.Map;
+	import Mapper = artemis.annotations.Mapper;
 	
 	/**
 	* The primary instance for the framework. It contains all the managers.
@@ -370,44 +371,35 @@ module artemis {
 		}
 		
 	}
-	class ComponentMapperInitHelper {
-
-		/**
-		 * Replaces:
-		 *	@Mapper ComponentMapper<Position> pm;
-		 *  @Mapper ComponentMapper<Bounds> bm;
-		 * 	@Mapper ComponentMapper<Health> hm;
-		 *	@Mapper ComponentMapper<Expires> ex;
-		 * 
-		 * ex: 
-		 * @Mapper:
-		 * 		pm: game.components.Position
-		 * 		bm: game.components.Bounds
-		 *  	hm: game.components.Health
-		 *  	ex: game.components.Expires
-		 * 
-		 */
-		public static config(target:Object, world:World) {
-			try {
-				var clazz:Function = target.constructor;
-				var Mapper;
-				if (Mapper = clazz['Mapper']) {
-					for (var name in Mapper) {
-						var componentType = Mapper[name]
-						target[name] = world.getMapper(componentType);
-					}
-				}
-			} catch (e) {
-				throw new Error("Error while setting component mappers");
-			}
-		}
-
-	}
+	
 	/*
 	* Only used internally to maintain clean code.
 	*/
 	interface Performer {
 		perform(observer:EntityObserver, e:Entity);
 	}
+
+
+
+	class ComponentMapperInitHelper {
+
+		public static config(target:Object, world:World) {
+			
+			try {
+				
+				var clazz:any = target.constructor;
+				var className = clazz.className || clazz.name;
+				var annotation = Mapper['annotation'][className];
+				
+				for (var field in annotation) {
+					var componentType = annotation[field]
+					target[field] = world.getMapper(componentType);
+				}
+			} catch (e) {
+				throw new Error("Error while setting component mappers");
+			}
+		}
+	}
+	
 }
 

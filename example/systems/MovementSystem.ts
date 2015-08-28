@@ -10,10 +10,8 @@ module brokenspork.systems {
 	import Mapper = artemis.annotations.Mapper;
 	
 	export class MovementSystem extends EntityProcessingSystem {
-		@Mapper Position
-		pm:ComponentMapper<Position>;
-		@Mapper Velocity
-		vm:ComponentMapper<Velocity>;
+		@Mapper(Position) pm:ComponentMapper<Position>;
+		@Mapper(Velocity) vm:ComponentMapper<Velocity>;
 	
 		//@SuppressWarnings("unchecked")
 		constructor() {

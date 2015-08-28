@@ -9,8 +9,7 @@ module brokenspork.systems {
 	import Mapper = artemis.annotations.Mapper;
 	
 	export class ExpiringSystem extends DelayedEntityProcessingSystem {
-		@Mapper Expires
-		em:ComponentMapper<Expires>;
+		@Mapper(Expires) em:ComponentMapper<Expires>;
 	
 		//@SuppressWarnings("unchecked")
 		constructor() {

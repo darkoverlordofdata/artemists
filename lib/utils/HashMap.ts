@@ -13,7 +13,8 @@ module artemis {
 				case 'string': 		return key;
 				case 'function': 	return key.className | key.name;
 				default: 					
-					return key.uuid = key.uuid ? key.uuid : UUID.randomUUID();
+					key.uuid = key.uuid ? key.uuid : UUID.randomUUID();
+					return key.uuid
 			}
 		}
 		
@@ -55,7 +56,6 @@ module artemis {
 			}
 			
 			containsKey(key):boolean {
-				console.log('HashMap::containsKey', key);
 				return decode(key) in this.map_;
 			}
 			
@@ -70,7 +70,6 @@ module artemis {
 			
 			
 			get(key) {
-				console.log('HashMap::get', key);
 				return this.map_[decode(key)];
 			}
 			
@@ -90,14 +89,12 @@ module artemis {
 			 * if key is a string, use as is, else use key.id_ or key.name
 			 */
 			put(key, value) {
-				console.log('HashMap::put', key);
 				var k = decode(key);
 				this.map_[k] = value;
 				this.keys_[k] = key;
 			}
 			
 			remove(key) {
-				console.log('HashMap::remove', key);
 				var k = decode(key);
 				delete this.map_[k];
 				delete this.keys_[k];

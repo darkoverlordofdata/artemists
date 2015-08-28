@@ -21,10 +21,8 @@ module brokenspork.systems {
 	// import com.badlogic.gdx.graphics.g2d.TextureRegion;
 	
 	export class HudRenderSystem extends VoidEntitySystem {
-		@Mapper Position
-		pm:ComponentMapper<Position>;
-		@Mapper Sprite
-		sm:ComponentMapper<Sprite>;
+		@Mapper(Position) pm:ComponentMapper<Position>;
+		@Mapper(Sprite) sm:ComponentMapper<Sprite>;
 	
 		// private HashMap<String, AtlasRegion> regions;
 		// private TextureAtlas textureAtlas;

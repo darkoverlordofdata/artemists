@@ -11,8 +11,7 @@ module brokenspork.systems {
 	import Mapper = artemis.annotations.Mapper;
 	
 	export class ParallaxStarRepeatingSystem extends IntervalEntityProcessingSystem {
-		@Mapper Position
-		pm:ComponentMapper<Position>;
+		@Mapper(Position) pm:ComponentMapper<Position>;
 	
 		//@SuppressWarnings("unchecked")
 		constructor() {

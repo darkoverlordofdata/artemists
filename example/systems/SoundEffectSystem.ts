@@ -13,8 +13,7 @@ module brokenspork.systems {
 	
 	export class SoundEffectSystem extends EntityProcessingSystem {
 	
-		@Mapper SoundEffect
-		se:ComponentMapper<SoundEffect>;
+		@Mapper(SoundEffect) se:ComponentMapper<SoundEffect>;
 	
 		// pew:Sound = Gdx.audio.newSound(Gdx.files.internal("sounds/pew.wav"));
 		// asplode:Sound = Gdx.audio.newSound(Gdx.files.internal("sounds/asplode.wav"));

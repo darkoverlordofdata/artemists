@@ -93,13 +93,15 @@ module.exports = (project, options = {}) ->
       ###
       # Use cocos2d project.json to build the target
       ###
-      files = getCocos2dFiles(true).join(' LF ')
+      #files = getCocos2dFiles(true).join(' LF ')
+      files = getCocos2dFiles(false).join(' LF ')
       if options.compile?
         step.push """
           cat #{files} | java -jar #{COMPILER_JAR} \
             --jscomp_error=checkTypes \
             --warning_level=QUIET \
             --compilation_level #{options.compile} \
+            --formatting PRETTY_PRINT \
             --js_output_file build/web/main.js
         """
       else
@@ -285,8 +287,9 @@ getCocos2dFiles = (standalone=false) ->
   return [] unless fs.existsSync("./web/project.json")
 
   cocos2d = require("./web/project.json")
-
-  root: "./web/#{cocos2d.engineDir}"
+  
+  root = "./web/#{cocos2d.engineDir}"
+  
   if standalone # include the framework
     moduleConfig = require("#{root}/moduleConfig.json")
     files = ["#{root}/#{moduleConfig.bootFile}"]

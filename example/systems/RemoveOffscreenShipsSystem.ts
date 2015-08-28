@@ -14,10 +14,8 @@ module brokenspork.systems {
 	import Mapper = artemis.annotations.Mapper;
 	
 	export class RemoveOffscreenShipsSystem extends IntervalEntityProcessingSystem {
-		@Mapper Position
-		pm:ComponentMapper<Position>;
-		@Mapper Bounds
-		bm:ComponentMapper<Bounds>;
+		@Mapper(Position) pm:ComponentMapper<Position>;
+		@Mapper(Bounds) bm:ComponentMapper<Bounds>;
 	
 		//@SuppressWarnings("unchecked")
 		constructor() {

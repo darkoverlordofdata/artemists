@@ -10,11 +10,8 @@ module brokenspork.systems {
 	import Entity = artemis.Entity;
 
 	export class ColorAnimationSystem extends EntityProcessingSystem {
-		@Mapper ColorAnimation 
-		cam:ComponentMapper<ColorAnimation>;
-
-		@Mapper Sprite 
-		sm:ComponentMapper<Sprite>;
+		@Mapper(ColorAnimation) cam:ComponentMapper<ColorAnimation>;
+		@Mapper(Sprite) sm:ComponentMapper<Sprite>;
 
 		constructor() {
 			super(Aspect.getAspectForAll(ColorAnimation, Sprite));

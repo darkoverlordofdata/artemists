@@ -10,10 +10,8 @@ module brokenspork.systems {
 	import Mapper = artemis.annotations.Mapper;
 	
 	export class ScaleAnimationSystem extends EntityProcessingSystem {
-		@Mapper ScaleAnimation
-		sa:ComponentMapper<ScaleAnimation>;
-		@Mapper Sprite
-		sm:ComponentMapper<Sprite>;
+		@Mapper(ScaleAnimation) sa:ComponentMapper<ScaleAnimation>;
+		@Mapper(Sprite) sm:ComponentMapper<Sprite>;
 	
 		//@SuppressWarnings("unchecked")
 		constructor() {

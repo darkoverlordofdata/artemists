@@ -136,7 +136,7 @@ module artemis {
 	*/
 	class IdentifierPool {
 		private ids_:Bag<number>;
-		private nextAvailableId_:number;
+		private nextAvailableId_:number=0;
 
 		constructor() {
 			this.ids_ = new Bag<number>();

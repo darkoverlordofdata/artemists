@@ -35,8 +35,17 @@ module artemis {
 			//private length_:number;
 			private words_:number[];
 			
-			constructor() {
-				this.words_ = [0,0,0,0,0,0,0,0,0,0];	
+			constructor(nbits:number=0) {
+				if (nbits < 0) {
+					throw RangeError("Negative Array Size: ["+nbits+']')
+				} else if (nbits === 0) {
+					this.words_ = [];
+				} else {
+					var words = this.words_ = new Array(wordIndex(nbits-1)+1);	
+					for (var i=0; i<words.length; i++) {
+						words[i] = 0;
+					}
+				}
 			}
 			
 			nextSetBit(fromIndex:number) {
@@ -109,10 +118,21 @@ module artemis {
 	
 			set(bitIndex:number, value:boolean=true):number {
 				var wordIndex = bitIndex >> ADDRESS_BITS_PER_WORD;
+				var words = this.words_;
+				var wordsInUse = words.length;
+				var wordsRequired = wordIndex+1;
+				
+				if (wordsInUse < wordsRequired) {
+					words.length = Math.max(2 * wordsInUse, wordsRequired);
+					for (var i=wordsInUse; i<words.length; i++) {
+						words[i] = 0;
+					}
+				}
+				
 				if (value) {
-					return this.words_[wordIndex] |= (1 << bitIndex)
+					return words[wordIndex] |= (1 << bitIndex)
 				} else {
-					return this.words_[wordIndex] &= ~(1 << bitIndex);					
+					return words[wordIndex] &= ~(1 << bitIndex);					
 				}
 			}
 	

@@ -27,14 +27,10 @@ module brokenspork.systems {
 	
 	
 	export class CollisionSystem extends EntitySystem {
-		@Mapper Position
-		pm:ComponentMapper<Position>;
-		@Mapper Bounds
-		bm:ComponentMapper<Bounds>;
-		@Mapper Health
-		hm:ComponentMapper<Health>;
-		@Mapper Expires 
-		ex:ComponentMapper<Expires>;
+		@Mapper(Position) pm:ComponentMapper<Position>;
+		@Mapper(Bounds) bm:ComponentMapper<Bounds>;
+		@Mapper(Health) hm:ComponentMapper<Health>;
+		@Mapper(Expires) ex:ComponentMapper<Expires>;
 		
 		private collisionPairs:Bag<CollisionPair>;
 	
