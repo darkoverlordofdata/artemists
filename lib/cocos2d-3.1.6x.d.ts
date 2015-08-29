@@ -628,7 +628,7 @@ declare module cc {
     class SpriteFrameCache{
         static purgeSharedSpriteFrameCache(): SpriteFrameCache;
         addSpriteFrame(frame: SpriteFrame, frameName: string);
-        addSpriteFrames(plist: string, texture:Texture2D);
+        addSpriteFrames(plist: string, texture?:Texture2D);
         addSpriteFramesWithJson(jsonData: Object);
         getSpriteFrame(name: string): SpriteFrame;
         removeSpriteFrameByName(name: string);

@@ -79,48 +79,6 @@ module brokenspork.core {
 		}
 	
 		
-		// public void resize(int width, int height) {
-		// 	// calculate new viewport
-		// 	float aspectRatio = (float) width / (float) height;
-		// 	float scale = 1f;
-		// 	Vector2 crop = new Vector2(0f, 0f);
-	
-		// 	if (aspectRatio > ASPECT_RATIO) {
-		// 		scale = (float) height / (float) Constants.FRAME_HEIGHT;
-		// 		crop.x = (width - Constants.FRAME_WIDTH * scale) / 2f;
-		// 	} else if (aspectRatio < ASPECT_RATIO) {
-		// 		scale = (float) width / (float) Constants.FRAME_WIDTH;
-		// 		crop.y = (height - Constants.FRAME_HEIGHT * scale) / 2f;
-		// 	} else {
-		// 		scale = (float) width / (float) Constants.FRAME_WIDTH;
-		// 	}
-	
-		// 	float w = (float) Constants.FRAME_WIDTH * scale;
-		// 	float h = (float) Constants.FRAME_HEIGHT * scale;
-		// 	viewport = new Rectangle(crop.x, crop.y, w, h);
-		// 	playerInputSystem.setViewport(viewport);
-		// }
-	
-		
-		public show() {
-		}
-	
-		
-		public hide() {
-		}
-	
-		
-		public pause() {
-		}
-	
-		
-		public resume() {
-		}
-	
-		
-		public dispose() {
-		}
-	
 	}
 }
 

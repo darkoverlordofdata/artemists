@@ -5,7 +5,7 @@ module artemis {
 	import HashMap = artemis.utils.HashMap;
 	import Map = artemis.utils.Map;
 	import Mapper = artemis.annotations.Mapper;
-	
+
 	/**
 	* The primary instance for the framework. It contains all the managers.
 	* 
@@ -389,12 +389,16 @@ module artemis {
 				
 				var clazz:any = target.constructor;
 				var className = clazz.className || clazz.name;
-				var annotation = Mapper['annotation'][className];
 				
-				for (var field in annotation) {
-					var componentType = annotation[field]
-					target[field] = world.getMapper(componentType);
+				for (var fieldIndex in clazz.declaredFields) {
+					var field = clazz.declaredFields[fieldIndex];
+					if (!target.hasOwnProperty(field)) {
+						
+						var componentType = clazz.prototype[field]
+						target[field] = world.getMapper(componentType);
+					}
 				}
+				
 			} catch (e) {
 				throw new Error("Error while setting component mappers");
 			}

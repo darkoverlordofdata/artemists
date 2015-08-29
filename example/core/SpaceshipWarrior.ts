@@ -29,8 +29,12 @@ module brokenspork.core {
         this._super();
         this.gameScreen = new GameScreen(this);
         //setScreen(gameScreen);
+        this.scheduleUpdate();
     }
   
+    update(time:number) {
+      this.gameScreen.render(time);
+    }
   }
 }
 

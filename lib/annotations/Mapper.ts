@@ -8,20 +8,14 @@ module artemis.annotations {
   export function Mapper(component: Function) {
     return function (target: Object, propertyKey?: string, descriptor?: TypedPropertyDescriptor<any>) {
       
-      /**
-       * component - reference to component class
-       * target.constructor - class the property is defined on
-       * propertyKey - property name
-       */
        var klass:any = target.constructor;
-       var name:string = klass.className || klass.name;
        
-       var system = Mapper['annotation'][name] = Mapper['annotation'][name] || {};
-       system[propertyKey] = component;
+       klass.declaredFields = klass.declaredFields || [];
+       klass.declaredFields.push(propertyKey);
        
+       klass.prototype[propertyKey] = component;
     }
   }
-  Mapper['annotation'] = {};
 }
 
 

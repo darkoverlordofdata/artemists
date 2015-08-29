@@ -1,7 +1,0 @@
-{
-        minWidth: 1024,
-        minHeight: 1024,
-        filterMin: Linear,
-        filterMag: Linear,
-        flattenPaths: true
-}

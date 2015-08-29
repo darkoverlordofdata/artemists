@@ -26,14 +26,14 @@ module brokenspork.systems {
 		@Mapper(Position) pm:ComponentMapper<Position>;
 		@Mapper(Sprite) sm:ComponentMapper<Sprite>;
 	
-		// private HashMap<String, AtlasRegion> regions;
+		private regions:HashMap<String, cc.SpriteFrame>;
 		// private TextureAtlas textureAtlas;
 		// private SpriteBatch batch;
 		// private OrthographicCamera camera;
-		// private BitmapFont font;
+		private font:cc.LabelBMFont;
 	
-		// private Bag<AtlasRegion> regionsByEntity;
-		//private List<Entity> sortedEntities;
+		private regionsByEntity:Bag<cc.SpriteFrame>;
+		private sortedEntities:Array<Entity>;
 	
 		//@SuppressWarnings("unchecked")
 		constructor() {
@@ -42,22 +42,18 @@ module brokenspork.systems {
 	
 		
 		public initialize() {
-			// regions = new HashMap<String, AtlasRegion>();
-			// textureAtlas = new TextureAtlas(Gdx.files.internal("images-packed/pack.atlas"));
-			// for (AtlasRegion r : textureAtlas.getRegions()) {
-			// 	regions.put(r.name, r);
-			// }
-			// regionsByEntity = new Bag<AtlasRegion>();
+			
+			this.regions = new HashMap<String, cc.SpriteFrame>();
+			cc.spriteFrameCache.addSpriteFrames("res/images/pack.plist");
+			var textureAtlas:any = cc.spriteFrameCache;
+			for (var name in textureAtlas._spriteFrames) {
+				var r = textureAtlas._spriteFrames[name];
+				this.regions.put(name, r);
+			}
+			var regionsByEntity = new Bag<cc.SpriteFrame>();
+			
+			this.sortedEntities = new Array<Entity>();
 	
-			// batch = new SpriteBatch();
-	
-			// sortedEntities = new ArrayList<Entity>();
-	
-			// Texture fontTexture = new Texture(Gdx.files.internal("fonts/normal_0.png"));
-			// fontTexture.setFilter(TextureFilter.Linear, TextureFilter.MipMapLinearLinear);
-			// TextureRegion fontRegion = new TextureRegion(fontTexture);
-			// font = new BitmapFont(Gdx.files.internal("fonts/normal.fnt"), fontRegion, false);
-			// font.setUseIntegerPositions(false);
 		}
 	
 		
@@ -73,9 +69,9 @@ module brokenspork.systems {
 	
 		
 		public processEntities(entities:ImmutableBag<Entity>) {
-			// for (var i = 0; this.sortedEntities.size() > i; i++) {
-			// 	process(this.sortedEntities.get(i));
-			// }
+			for (var i = 0; this.sortedEntities.length > i; i++) {
+				this.processEach(this.sortedEntities[i]);
+			}
 		}
 	
 		public processEach(e:Entity) {
@@ -100,25 +96,27 @@ module brokenspork.systems {
 	
 		
 		protected inserted(e:Entity) {
-			// Sprite sprite = sm.get(e);
-			// regionsByEntity.set(e.getId(), regions.get(sprite.name));
+			var sprite:Sprite = this.sm.get(e);
+			this.regionsByEntity.set(e.getId(), this.regions.get(sprite.name));
 	
 			// sortedEntities.add(e);
-	
-			// Collections.sort(sortedEntities, new Comparator<Entity>() {
-				
-			// 	public int compare(Entity e1, Entity e2) {
-			// 		Sprite s1 = sm.get(e1);
-			// 		Sprite s2 = sm.get(e2);
-			// 		return s1.layer.compareTo(s2.layer);
-			// 	}
-			// });
+			this.sortedEntities.push(e);
+			
+			this.sortedEntities.sort((e1:Entity, e2:Entity) => {
+					var s1:Sprite = this.sm.get(e1);
+					var s2:Sprite = this.sm.get(e2);
+					return s1.layer - s2.layer;
+			});
+			
 		}
 	
 		
 		protected removed(e:Entity) {
-			// this.regionsByEntity.set(e.getId(), null);
-			// this.sortedEntities.remove(e);
+			this.regionsByEntity.set(e.getId(), null);
+			var index = this.sortedEntities.indexOf(e);
+			if (index != -1) {
+				this.sortedEntities.splice(index, 1);
+			}
 		}
 	
 	}

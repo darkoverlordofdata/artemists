@@ -57,6 +57,7 @@
         "src/example/components/SoundEffect.js",
         "src/example/components/Sprite.js",
         "src/example/components/Velocity.js",
+        "src/example/core/EntityFactory.js",
         "src/example/systems/CollisionSystem.js",
         "src/example/systems/ColorAnimationSystem.js",
         "src/example/systems/EntitySpawningTimerSystem.js",
@@ -69,7 +70,6 @@
         "src/example/systems/ScaleAnimationSystem.js",
         "src/example/systems/SoundEffectSystem.js",
         "src/example/systems/SpriteRenderSystem.js",
-        "src/example/core/EntityFactory.js",
         "src/example/core/GameScreen.js",
         "src/example/core/SpaceshipWarrior.js"
         

@@ -10,10 +10,6 @@ module artemis {
 		const BIT_INDEX_MASK = BITS_PER_WORD - 1;
 		const WORD_MASK = 0xffffffff;
 		
-		function wordIndex(bitIndex:number):number {
-			return bitIndex >> ADDRESS_BITS_PER_WORD;
-		}
-		
 		/**
 		 * @see http://stackoverflow.com/questions/6506356/java-implementation-of-long-numberoftrailingzeros
 		 */
@@ -41,7 +37,7 @@ module artemis {
 				} else if (nbits === 0) {
 					this.words_ = [];
 				} else {
-					var words = this.words_ = new Array(wordIndex(nbits-1)+1);	
+					var words = this.words_ = new Array(((nbits-1) >> ADDRESS_BITS_PER_WORD)+1);	
 					for (var i=0; i<words.length; i++) {
 						words[i] = 0;
 					}
@@ -50,7 +46,7 @@ module artemis {
 			
 			nextSetBit(fromIndex:number) {
 				
-				var u = wordIndex(fromIndex)
+				var u = fromIndex >> ADDRESS_BITS_PER_WORD
 				var words = this.words_;
 				var wordsInUse = words.length;
 				
@@ -142,7 +138,7 @@ module artemis {
 					
 			get(bitIndex:number):boolean {
 				
-				var wordIndex = wordIndex(bitIndex);
+				var wordIndex = bitIndex >> ADDRESS_BITS_PER_WORD;
 				var words = this.words_;
 				var wordsInUse = words.length;
 				

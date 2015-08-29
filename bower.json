@@ -22,7 +22,7 @@
     "google-closure-library": "*"
   },
   "dependencies": {
-    "bitset.js": "~3.0.0"
+    "reflect-metadata": "~0.1.0"
   },
   "install": {
     "ignore": [
@@ -31,7 +31,7 @@
     ],
     "path": "web/src",
     "sources": {
-      "bitset.js": "packages/bitset.js/bitset.js"
+      "reflect-metadata": "packages/reflect-metadata/Reflect.js"
     }
   }
 }
