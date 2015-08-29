@@ -34,9 +34,9 @@ module brokenspork.core {
 			
 			var sprite:Sprite = new Sprite();
 			sprite.name = "fighter";
-			sprite.r = 93/255;
-			sprite.g = 255/255;
-			sprite.b = 129/255;
+			sprite.r = 93;
+			sprite.g = 255;
+			sprite.b = 129;
 			sprite.layer = Layer.ACTORS_3;
 			e.addComponent(sprite);
 			
@@ -100,9 +100,9 @@ module brokenspork.core {
 			
 			var sprite:Sprite = new Sprite();
 			sprite.name = name;
-			sprite.r = 255/255;
-			sprite.g = 0/255;
-			sprite.b = 142/255;
+			sprite.r = 255;
+			sprite.g = 0;
+			sprite.b = 142;
 			sprite.layer = layer;
 			e.addComponent(sprite);
 			
@@ -155,10 +155,10 @@ module brokenspork.core {
 			var sprite:Sprite = new Sprite();
 			sprite.name = "explosion";
 			sprite.scaleX = sprite.scaleY = scale;
-			sprite.r = 1;
-			sprite.g = 216/255;
+			sprite.r = 255;
+			sprite.g = 216;
 			sprite.b = 0;
-			sprite.a = 0.5;
+			sprite.a = 128;
 			sprite.layer = Layer.PARTICLES;
 			e.addComponent(sprite);
 			
@@ -220,8 +220,8 @@ module brokenspork.core {
 			var sprite:Sprite = new Sprite();
 			sprite.name = "particle";
 			sprite.scaleX = sprite.scaleY = MathUtils.random(0.5, 1);
-			sprite.r = 1;
-			sprite.g = 216/255;
+			sprite.r = 255;
+			sprite.g = 216;
 			sprite.b = 0;
 			sprite.a = 1;
 			sprite.layer = Layer.PARTICLES;

@@ -4,7 +4,7 @@ module brokenspork.components {
 
 	export class ColorAnimation extends Component {
 		
-    public static className = 'Bounds';
+    public static className = 'ColorAnimation';
 		
 		public redMin:number;
 		public redMax:number;

@@ -16,31 +16,80 @@ module brokenspork.components {
 	};
 	
 	export class Sprite extends Component {
-    public static className = 'Bounds';
-		
-		public name:string;
-		public scaleX:number;
-		public scaleY:number;
-		public rotation:number;
-		public r:number;
-		public g:number;
-		public b:number;
-		public a:number;
+    public static className = 'Sprite';
 		public layer:Layer;
+		
+		public name_:string;
+		public scaleX_:number;
+		public scaleY_:number;
+		public rotation_:number;
+		public r_:number;
+		public g_:number;
+		public b_:number;
+		public a_:number;
+		public sprite_:cc.Sprite;
 		
 			// public int getLayerId() {
 			// 	return ordinal();
 			// }
+			
+		constructor() {
+			super();
+			this.sprite_ = new cc.Sprite();
+		}
+			
+		get name():string {return this.name_;}
+		set name(value:string) {
+			this.name_ = value;
+      this.sprite_.initWithSpriteFrameName(`${value}.png`);
+		}
+		
+		get scaleX():number {return this.sprite_.getScaleX();}
+		set scaleX(value:number) {this.sprite_.setScaleX(value);}
+
+		get scaleY():number {return this.sprite_.getScaleY();}
+		set scaleY(value:number) {this.sprite_.setScaleY(value);}
+		
+		get rotation():number {return this.sprite_.getRotation();}
+		set rotation(value:number) {this.sprite_.setRotation(value);}
+		
+		get r():number {return this.r_;}
+		set r(value:number) {
+			this.r_ = value;
+			this.sprite_.setColor(cc.color(this.r_, this.g_, this.b_));
+		}
+		
+		get g():number {return this.g_;}
+		set g(value:number) {
+			this.g_ = value;
+			this.sprite_.setColor(cc.color(this.r_, this.g_, this.b_));
+		}
+		
+		get b():number {return this.b_;}
+		set b(value:number) {
+			this.b_ = value;
+			this.sprite_.setColor(cc.color(this.r_, this.g_, this.b_));
+		}
+		
+		get a():number {return this.a_;}
+		set a(value:number) {
+			this.a_ = value;
+			this.sprite_.setColor(cc.color(this.r_, this.g_, this.b_, this.a_));
+		}
+		
+		
+		
 	}
 		
-	Sprite.prototype.name = '';
-	Sprite.prototype.scaleX = 1;
-	Sprite.prototype.scaleY = 1;
-	Sprite.prototype.rotation = 0;
-	Sprite.prototype.r = 1;
-	Sprite.prototype.g = 1;
-	Sprite.prototype.b = 1;
-	Sprite.prototype.a = 1;
 	Sprite.prototype.layer = Layer.DEFAULT;
+	Sprite.prototype.name_ = '';
+	Sprite.prototype.scaleX_ = 1;
+	Sprite.prototype.scaleY_ = 1;
+	Sprite.prototype.rotation_ = 0;
+	Sprite.prototype.r_ = 255;
+	Sprite.prototype.g_ = 255;
+	Sprite.prototype.b_ = 255;
+	Sprite.prototype.a_ = 255;
+	Sprite.prototype.sprite_ = null;
 }
 

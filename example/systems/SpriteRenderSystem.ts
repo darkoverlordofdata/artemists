@@ -43,8 +43,11 @@ module brokenspork.systems {
 		
 		public initialize() {
 			
+			console.log('initialize sprites');
 			this.regions = new HashMap<String, cc.SpriteFrame>();
-			cc.spriteFrameCache.addSpriteFrames("res/images/pack.plist");
+			cc.spriteFrameCache.addSpriteFrames("res/images-packed/pack.plist");
+			
+			
 			var textureAtlas:any = cc.spriteFrameCache;
 			for (var name in textureAtlas._spriteFrames) {
 				var r = textureAtlas._spriteFrames[name];

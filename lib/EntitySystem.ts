@@ -101,9 +101,11 @@ module artemis {
 		* @param e entity to check
 		*/
 		protected check(e:Entity) {
+			console.log('check...');
 			if(this.dummy_) {
 				return;
 			}
+			console.log('...');
 			
 			var contains:boolean = e.getSystemBits().get(this.systemIndex_);
 			var interested:boolean = true; // possibly interested, let's try to prove it wrong.
