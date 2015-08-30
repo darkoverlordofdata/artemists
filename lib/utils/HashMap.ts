@@ -11,7 +11,7 @@ module artemis {
 				case 'boolean': 	return ''+key;
 				case 'number': 		return ''+key;
 				case 'string': 		return key;
-				case 'function': 	return key.className | key.name;
+				case 'function': 	return key.className || key.name;
 				default: 					
 					key.uuid = key.uuid ? key.uuid : UUID.randomUUID();
 					return key.uuid

@@ -89,29 +89,30 @@ module.exports = (project, options = {}) ->
     
     step = [].concat(project.config.build)
       
-    if isCocos2d
-      ###
-      # Use cocos2d project.json to build the target
-      ###
-      #files = getCocos2dFiles(true).join(' LF ')
-      files = getCocos2dFiles(false).join(' LF ')
-      if options.compile?
-        step.push """
-          cat #{files} | java -jar #{COMPILER_JAR} \
-            --jscomp_error=checkTypes \
-            --warning_level=QUIET \
-            --compilation_level #{options.compile} \
-            --formatting PRETTY_PRINT \
-            --js_output_file build/web/main.js
-        """
-      else
-        step.push """
-          cp -fr web/src build/web/src
-          mkdir build/web/frameworks
-          cp -fr web/frameworks/cocos2d-html5 build/web/frameworks/cocos2d-html5
-        """
+    # if isCocos2d
+    #   ###
+    #   # Use cocos2d project.json to build the target
+    #   ###
+    #   #files = getCocos2dFiles(true).join(' LF ')
+    #   files = getCocos2dFiles(false).join(' LF ')
+    #   if options.compile?
+    #     step.push """
+    #       cat #{files} | java -jar #{COMPILER_JAR} \
+    #         --jscomp_error=checkTypes \
+    #         --warning_level=QUIET \
+    #         --compilation_level #{options.compile} \
+    #         --formatting PRETTY_PRINT \
+    #         --js_output_file build/web/main.js
+    #     """
+    #   else
+    #     step.push """
+    #       cp -fr web/src build/web/src
+    #       mkdir build/web/frameworks
+    #       cp -fr web/frameworks/cocos2d-html5 build/web/frameworks/cocos2d-html5
+    #     """
     
-    else if projectType is CoffeeScript
+    # else 
+    if projectType is CoffeeScript
       ###
       # Build after recompiling all coffeescript together
       ###

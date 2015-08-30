@@ -12,6 +12,6 @@ module artemis {
 		enabled(e:Entity);
 		
 		disabled(e:Entity);
-	
+		
 	}
 }

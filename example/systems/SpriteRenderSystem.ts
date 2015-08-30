@@ -43,7 +43,6 @@ module brokenspork.systems {
 		
 		public initialize() {
 			
-			console.log('initialize sprites');
 			this.regions = new HashMap<String, cc.SpriteFrame>();
 			cc.spriteFrameCache.addSpriteFrames("res/images-packed/pack.plist");
 			
@@ -53,7 +52,7 @@ module brokenspork.systems {
 				var r = textureAtlas._spriteFrames[name];
 				this.regions.put(name, r);
 			}
-			var regionsByEntity = new Bag<cc.SpriteFrame>();
+			this.regionsByEntity = new Bag<cc.SpriteFrame>();
 			
 			this.sortedEntities = new Array<Entity>();
 	
@@ -98,7 +97,7 @@ module brokenspork.systems {
 		}
 	
 		
-		protected inserted(e:Entity) {
+		public inserted(e:Entity) {
 			var sprite:Sprite = this.sm.get(e);
 			this.regionsByEntity.set(e.getId(), this.regions.get(sprite.name));
 	

@@ -54,7 +54,7 @@ module artemis {
 			}
 			
 			
-			protected inserted(e:Entity) {
+			public inserted(e:Entity) {
 				var delay:number = this.getRemainingDelay(e);
 				if(delay > 0) {
 					this.offerDelay(delay);

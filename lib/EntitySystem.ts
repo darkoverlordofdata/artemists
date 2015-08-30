@@ -88,7 +88,7 @@ module artemis {
 		* Called if the system has received a entity it is interested in, e.g. created or a component was added to it.
 		* @param e the entity that was added to this system.
 		*/
-		protected inserted(e:Entity) {};
+		public inserted(e:Entity) {};
 	
 		/**
 		* Called if a entity was removed from this system, e.g. deleted or had one of it's components removed.
@@ -101,11 +101,9 @@ module artemis {
 		* @param e entity to check
 		*/
 		protected check(e:Entity) {
-			console.log('check...');
 			if(this.dummy_) {
 				return;
 			}
-			console.log('...');
 			
 			var contains:boolean = e.getSystemBits().get(this.systemIndex_);
 			var interested:boolean = true; // possibly interested, let's try to prove it wrong.
@@ -146,6 +144,7 @@ module artemis {
 		}
 	
 		private insertToSystem(e:Entity) {
+			//console.log('EntitySystem::insertToSystem');
 			this.actives_.add(e);
 			e.getSystemBits().set(this.systemIndex_);
 			this.inserted(e);
@@ -211,8 +210,9 @@ module artemis {
 		private static indices:HashMap<Function, number>  = new HashMap<Function, number>();
 		
 		public static getIndexFor(es:Function):number {
+
 			var index:number = SystemIndexManager.indices.get(es);
-			if(index == null) {
+			if(index === undefined) {
 				index = SystemIndexManager.INDEX++;
 				SystemIndexManager.indices.put(es, index);
 			}
