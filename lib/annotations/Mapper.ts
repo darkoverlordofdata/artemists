@@ -1,8 +1,8 @@
 module artemis.annotations {
   
   /**
-  * Mapper artems.component.Position
-  * em:ComponentMapper<artems.component.Position>;
+  * Mapper artemis.component.Position
+  * em:ComponentMapper<artemis.component.Position>;
   * 
   */
   export function Mapper(component: Function) {

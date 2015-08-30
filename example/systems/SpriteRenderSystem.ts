@@ -80,8 +80,7 @@ module brokenspork.systems {
 			if (this.pm.has(e)) {
 				var position:Position = this.pm.getSafe(e);
 				var sprite:Sprite = this.sm.get(e);
-	
-				// AtlasRegion spriteRegion = regionsByEntity.get(e.getId());
+				//var spriteRegion:cc.SpriteFrame = this.regionsByEntity.get(e.getId());
 				// batch.setColor(sprite.r, sprite.g, sprite.b, sprite.a);
 	
 				// float posX = position.x - (spriteRegion.getRegionWidth() / 2 * sprite.scaleX);

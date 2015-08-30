@@ -196,10 +196,6 @@ module artemis {
 		public getActives():ImmutableBag<Entity> {
 			return this.actives_;
 		}
-		
-		
-		
-	
 	}
 	/**
 	* Used to generate a unique bit for each system.

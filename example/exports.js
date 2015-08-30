@@ -3,9 +3,9 @@
         define(factory);
     }
     else if ('object' == typeof exports) {
-        module.exports['artemis'] = factory();
+        module.exports['brokenspork'] = factory();
     }
     else {
-        root['artemis'] = factory();
+        root['brokenspork'] = factory();
     }
-})(this, function () { return artemis; });
+})(this, function () { return brokenspork; });

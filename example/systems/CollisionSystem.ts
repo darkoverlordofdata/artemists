@@ -33,9 +33,11 @@ module brokenspork.systems {
 		@Mapper(Expires) ex:ComponentMapper<Expires>;
 		
 		private collisionPairs:Bag<CollisionPair>;
+		private game:CCLayer;
 	
-		constructor() {
+		constructor(game:CCLayer) {
 			super(Aspect.getAspectForAll(Position, Bounds));
+			this.game = game;
 		}
 	
 		
@@ -49,8 +51,8 @@ module brokenspork.systems {
 				
 				handleCollision: (bullet:Entity, ship:Entity) => {
 					var bp:Position = self.pm.get(bullet);
-					EntityFactory.createSmallExplosion(self.world, bp.x, bp.y).addToWorld();
-					for(var i = 0; 4 > i; i++) EntityFactory.createParticle(self.world, bp.x, bp.y).addToWorld();
+					EntityFactory.createSmallExplosion(self.game, self.world, bp.x, bp.y).addToWorld();
+					for(var i = 0; 4 > i; i++) EntityFactory.createParticle(self.game, self.world, bp.x, bp.y).addToWorld();
 					
 					//TODO: calling bullet.deleteFromWorld() was causing null pointer exceptions in ExpiringSystem and CollisionStstem because it did not exist anymore. 
 					//TODO: This did not happen in vanilla artemis.
@@ -67,7 +69,7 @@ module brokenspork.systems {
 					if(health.health < 0) {
 						health.health = 0;
 						ship.deleteFromWorld();
-						EntityFactory.createBigExplosion(self.world, position.x, position.y).addToWorld();
+						EntityFactory.createBigExplosion(self.game, self.world, position.x, position.y).addToWorld();
 					}
 				}
 			}));

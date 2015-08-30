@@ -56,8 +56,9 @@ module artemis {
 		*/
 		all(type:Function, ...types:Function[]):Aspect {
 			this.allSet_.set(ComponentType.getIndexFor(type));
-			
-			for (var t in types) {
+
+			var t;
+			for (t in types) {
 				this.allSet_.set(ComponentType.getIndexFor(types[t]));
 			}
 	
@@ -74,8 +75,9 @@ module artemis {
 		*/
 		exclude(type:Function, ...types:Function[]):Aspect {
 			this.exclusionSet_.set(ComponentType.getIndexFor(type));
-			
-			for (var t in types) {
+
+      var t;
+			for (t in types) {
 				this.exclusionSet_.set(ComponentType.getIndexFor(types[t]));
 			}
 			return this;

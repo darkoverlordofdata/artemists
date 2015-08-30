@@ -463,7 +463,7 @@ var artemis;
                 case 'boolean': return '' + key;
                 case 'number': return '' + key;
                 case 'string': return key;
-                case 'function': return key.className | key.name;
+                case 'function': return key.className || key.name;
                 default:
                     key.uuid = key.uuid ? key.uuid : utils.UUID.randomUUID();
                     return key.uuid;
@@ -690,8 +690,8 @@ var artemis;
     var annotations;
     (function (annotations) {
         /**
-        * Mapper artems.component.Position
-        * em:ComponentMapper<artems.component.Position>;
+        * Mapper artemis.component.Position
+        * em:ComponentMapper<artemis.component.Position>;
         *
         */
         function Mapper(component) {
@@ -773,7 +773,8 @@ var artemis;
                 types[_i - 1] = arguments[_i];
             }
             this.allSet_.set(artemis.ComponentType.getIndexFor(type));
-            for (var t in types) {
+            var t;
+            for (t in types) {
                 this.allSet_.set(artemis.ComponentType.getIndexFor(types[t]));
             }
             return this;
@@ -792,7 +793,8 @@ var artemis;
                 types[_i - 1] = arguments[_i];
             }
             this.exclusionSet_.set(artemis.ComponentType.getIndexFor(type));
-            for (var t in types) {
+            var t;
+            for (t in types) {
                 this.exclusionSet_.set(artemis.ComponentType.getIndexFor(types[t]));
             }
             return this;
@@ -1847,7 +1849,6 @@ var artemis;
             if (this.dummy_) {
                 return;
             }
-            var unc = this.constructor;
             var contains = e.getSystemBits().get(this.systemIndex_);
             var interested = true; // possibly interested, let's try to prove it wrong.
             var componentBits = e.getComponentBits();
@@ -1929,7 +1930,7 @@ var artemis;
         }
         SystemIndexManager.getIndexFor = function (es) {
             var index = SystemIndexManager.indices.get(es);
-            if (index == null) {
+            if (index === undefined) {
                 index = SystemIndexManager.INDEX++;
                 SystemIndexManager.indices.put(es, index);
             }
@@ -2587,9 +2588,1542 @@ var artemis;
         define(factory);
     }
     else if ('object' == typeof exports) {
-        module.exports = factory();
+        module.exports['artemis'] = factory();
     }
     else {
         root['artemis'] = factory();
     }
 })(this, function () { return artemis; });
+
+var brokenspork;
+(function (brokenspork) {
+    var core;
+    (function (core) {
+        var Constants = (function () {
+            function Constants() {
+            }
+            Constants.FRAME_WIDTH = 1280;
+            Constants.FRAME_HEIGHT = 720;
+            Constants.Groups = {
+                PLAYER_BULLETS: "player bullets",
+                PLAYER_SHIP: "player ship",
+                ENEMY_SHIPS: "enemy ships",
+                ENEMY_BULLETS: "enemy bullets"
+            };
+            return Constants;
+        })();
+        core.Constants = Constants;
+    })(core = brokenspork.core || (brokenspork.core = {}));
+})(brokenspork || (brokenspork = {}));
+//# sourceMappingURL=Constants.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var brokenspork;
+(function (brokenspork) {
+    var components;
+    (function (components) {
+        var Component = artemis.Component;
+        var Bounds = (function (_super) {
+            __extends(Bounds, _super);
+            function Bounds() {
+                _super.apply(this, arguments);
+            }
+            Bounds.className = 'Bounds';
+            return Bounds;
+        })(Component);
+        components.Bounds = Bounds;
+        Bounds.prototype.radius = 0;
+    })(components = brokenspork.components || (brokenspork.components = {}));
+})(brokenspork || (brokenspork = {}));
+//# sourceMappingURL=Bounds.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var brokenspork;
+(function (brokenspork) {
+    var components;
+    (function (components) {
+        var Component = artemis.Component;
+        var ColorAnimation = (function (_super) {
+            __extends(ColorAnimation, _super);
+            function ColorAnimation() {
+                _super.apply(this, arguments);
+            }
+            ColorAnimation.className = 'ColorAnimation';
+            return ColorAnimation;
+        })(Component);
+        components.ColorAnimation = ColorAnimation;
+        ColorAnimation.prototype.redMin = 0;
+        ColorAnimation.prototype.redMax = 0;
+        ColorAnimation.prototype.redSpeed = 0;
+        ColorAnimation.prototype.redAnimate = false;
+        ColorAnimation.prototype.greenMin = 0;
+        ColorAnimation.prototype.greenMax = 0;
+        ColorAnimation.prototype.greenSpeed = 0;
+        ColorAnimation.prototype.greenAnimate = false;
+        ColorAnimation.prototype.blueMin = 0;
+        ColorAnimation.prototype.blueMax = 0;
+        ColorAnimation.prototype.blueSpeed = 0;
+        ColorAnimation.prototype.blueAnimate = false;
+        ColorAnimation.prototype.alphaMin = 0;
+        ColorAnimation.prototype.alphaMax = 0;
+        ColorAnimation.prototype.alphaSpeed = 0;
+        ColorAnimation.prototype.alphaAnimate = false;
+        ColorAnimation.prototype.repeat = false;
+    })(components = brokenspork.components || (brokenspork.components = {}));
+})(brokenspork || (brokenspork = {}));
+//# sourceMappingURL=ColorAnimation.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var brokenspork;
+(function (brokenspork) {
+    var components;
+    (function (components) {
+        var Component = artemis.Component;
+        var Enemy = (function (_super) {
+            __extends(Enemy, _super);
+            function Enemy() {
+                _super.apply(this, arguments);
+            }
+            Enemy.className = 'Enemy';
+            return Enemy;
+        })(Component);
+        components.Enemy = Enemy;
+    })(components = brokenspork.components || (brokenspork.components = {}));
+})(brokenspork || (brokenspork = {}));
+//# sourceMappingURL=Enemy.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var brokenspork;
+(function (brokenspork) {
+    var components;
+    (function (components) {
+        var Component = artemis.Component;
+        var Expires = (function (_super) {
+            __extends(Expires, _super);
+            function Expires() {
+                _super.apply(this, arguments);
+            }
+            Expires.className = 'Expires';
+            return Expires;
+        })(Component);
+        components.Expires = Expires;
+        Expires.prototype.delay = 0;
+    })(components = brokenspork.components || (brokenspork.components = {}));
+})(brokenspork || (brokenspork = {}));
+//# sourceMappingURL=Expires.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var brokenspork;
+(function (brokenspork) {
+    var components;
+    (function (components) {
+        var Component = artemis.Component;
+        var Health = (function (_super) {
+            __extends(Health, _super);
+            function Health() {
+                _super.apply(this, arguments);
+            }
+            Health.className = 'Health';
+            return Health;
+        })(Component);
+        components.Health = Health;
+        Health.prototype.health = 0;
+        Health.prototype.maximumHealth = 0;
+    })(components = brokenspork.components || (brokenspork.components = {}));
+})(brokenspork || (brokenspork = {}));
+//# sourceMappingURL=Health.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var brokenspork;
+(function (brokenspork) {
+    var components;
+    (function (components) {
+        var Component = artemis.Component;
+        var ParallaxStar = (function (_super) {
+            __extends(ParallaxStar, _super);
+            function ParallaxStar() {
+                _super.apply(this, arguments);
+            }
+            ParallaxStar.className = 'ParallaxStar';
+            return ParallaxStar;
+        })(Component);
+        components.ParallaxStar = ParallaxStar;
+    })(components = brokenspork.components || (brokenspork.components = {}));
+})(brokenspork || (brokenspork = {}));
+//# sourceMappingURL=ParallaxStar.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var brokenspork;
+(function (brokenspork) {
+    var components;
+    (function (components) {
+        var Component = artemis.Component;
+        var Player = (function (_super) {
+            __extends(Player, _super);
+            function Player() {
+                _super.apply(this, arguments);
+            }
+            Player.className = 'Player';
+            return Player;
+        })(Component);
+        components.Player = Player;
+    })(components = brokenspork.components || (brokenspork.components = {}));
+})(brokenspork || (brokenspork = {}));
+//# sourceMappingURL=Player.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var brokenspork;
+(function (brokenspork) {
+    var components;
+    (function (components) {
+        var Component = artemis.Component;
+        var Position = (function (_super) {
+            __extends(Position, _super);
+            function Position() {
+                _super.apply(this, arguments);
+            }
+            Position.className = 'Position';
+            return Position;
+        })(Component);
+        components.Position = Position;
+        Position.prototype.x = 0;
+        Position.prototype.y = 0;
+    })(components = brokenspork.components || (brokenspork.components = {}));
+})(brokenspork || (brokenspork = {}));
+//# sourceMappingURL=Position.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var brokenspork;
+(function (brokenspork) {
+    var components;
+    (function (components) {
+        var Component = artemis.Component;
+        var ScaleAnimation = (function (_super) {
+            __extends(ScaleAnimation, _super);
+            function ScaleAnimation() {
+                _super.apply(this, arguments);
+            }
+            ScaleAnimation.className = 'ScaleAnimation';
+            return ScaleAnimation;
+        })(Component);
+        components.ScaleAnimation = ScaleAnimation;
+        ScaleAnimation.prototype.min = 0;
+        ScaleAnimation.prototype.max = 0;
+        ScaleAnimation.prototype.speed = 0;
+        ScaleAnimation.prototype.repeat = false;
+        ScaleAnimation.prototype.active = false;
+    })(components = brokenspork.components || (brokenspork.components = {}));
+})(brokenspork || (brokenspork = {}));
+//# sourceMappingURL=ScaleAnimation.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var brokenspork;
+(function (brokenspork) {
+    var components;
+    (function (components) {
+        var Component = artemis.Component;
+        (function (EFFECT) {
+            EFFECT[EFFECT["PEW"] = 0] = "PEW";
+            EFFECT[EFFECT["ASPLODE"] = 1] = "ASPLODE";
+            EFFECT[EFFECT["SMALLASPLODE"] = 2] = "SMALLASPLODE";
+        })(components.EFFECT || (components.EFFECT = {}));
+        var EFFECT = components.EFFECT;
+        ;
+        var SoundEffect = (function (_super) {
+            __extends(SoundEffect, _super);
+            function SoundEffect() {
+                _super.apply(this, arguments);
+            }
+            SoundEffect.className = 'SoundEffect';
+            return SoundEffect;
+        })(Component);
+        components.SoundEffect = SoundEffect;
+        SoundEffect.prototype.effect = EFFECT.PEW;
+    })(components = brokenspork.components || (brokenspork.components = {}));
+})(brokenspork || (brokenspork = {}));
+//# sourceMappingURL=SoundEffect.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var brokenspork;
+(function (brokenspork) {
+    var components;
+    (function (components) {
+        var Component = artemis.Component;
+        (function (Layer) {
+            Layer[Layer["DEFAULT"] = 0] = "DEFAULT";
+            Layer[Layer["BACKGROUND"] = 1] = "BACKGROUND";
+            Layer[Layer["ACTORS_1"] = 2] = "ACTORS_1";
+            Layer[Layer["ACTORS_2"] = 3] = "ACTORS_2";
+            Layer[Layer["ACTORS_3"] = 4] = "ACTORS_3";
+            Layer[Layer["PARTICLES"] = 5] = "PARTICLES";
+        })(components.Layer || (components.Layer = {}));
+        var Layer = components.Layer;
+        ;
+        var Sprite = (function (_super) {
+            __extends(Sprite, _super);
+            // public int getLayerId() {
+            // 	return ordinal();
+            // }
+            function Sprite() {
+                _super.call(this);
+                this.sprite_ = new cc.Sprite();
+            }
+            Object.defineProperty(Sprite.prototype, "name", {
+                get: function () { return this.name_; },
+                set: function (value) {
+                    this.name_ = value;
+                    this.sprite_.initWithSpriteFrameName(value + ".png");
+                },
+                enumerable: true,
+                configurable: true
+            });
+            Object.defineProperty(Sprite.prototype, "scaleX", {
+                get: function () { return this.sprite_.getScaleX(); },
+                set: function (value) { this.sprite_.setScaleX(value); },
+                enumerable: true,
+                configurable: true
+            });
+            Object.defineProperty(Sprite.prototype, "scaleY", {
+                get: function () { return this.sprite_.getScaleY(); },
+                set: function (value) { this.sprite_.setScaleY(value); },
+                enumerable: true,
+                configurable: true
+            });
+            Object.defineProperty(Sprite.prototype, "rotation", {
+                get: function () { return this.sprite_.getRotation(); },
+                set: function (value) { this.sprite_.setRotation(value); },
+                enumerable: true,
+                configurable: true
+            });
+            Object.defineProperty(Sprite.prototype, "r", {
+                get: function () { return this.r_; },
+                set: function (value) {
+                    this.r_ = value;
+                    this.sprite_.setColor(cc.color(this.r_, this.g_, this.b_));
+                },
+                enumerable: true,
+                configurable: true
+            });
+            Object.defineProperty(Sprite.prototype, "g", {
+                get: function () { return this.g_; },
+                set: function (value) {
+                    this.g_ = value;
+                    this.sprite_.setColor(cc.color(this.r_, this.g_, this.b_));
+                },
+                enumerable: true,
+                configurable: true
+            });
+            Object.defineProperty(Sprite.prototype, "b", {
+                get: function () { return this.b_; },
+                set: function (value) {
+                    this.b_ = value;
+                    this.sprite_.setColor(cc.color(this.r_, this.g_, this.b_));
+                },
+                enumerable: true,
+                configurable: true
+            });
+            Object.defineProperty(Sprite.prototype, "a", {
+                get: function () { return this.a_; },
+                set: function (value) {
+                    this.a_ = value;
+                    this.sprite_.setColor(cc.color(this.r_, this.g_, this.b_, this.a_));
+                },
+                enumerable: true,
+                configurable: true
+            });
+            Sprite.className = 'Sprite';
+            return Sprite;
+        })(Component);
+        components.Sprite = Sprite;
+        Sprite.prototype.layer = Layer.DEFAULT;
+        Sprite.prototype.name_ = '';
+        Sprite.prototype.scaleX_ = 1;
+        Sprite.prototype.scaleY_ = 1;
+        Sprite.prototype.rotation_ = 0;
+        Sprite.prototype.r_ = 255;
+        Sprite.prototype.g_ = 255;
+        Sprite.prototype.b_ = 255;
+        Sprite.prototype.a_ = 255;
+        Sprite.prototype.sprite_ = null;
+    })(components = brokenspork.components || (brokenspork.components = {}));
+})(brokenspork || (brokenspork = {}));
+//# sourceMappingURL=Sprite.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var brokenspork;
+(function (brokenspork) {
+    var components;
+    (function (components) {
+        var Component = artemis.Component;
+        var Velocity = (function (_super) {
+            __extends(Velocity, _super);
+            function Velocity() {
+                _super.apply(this, arguments);
+            }
+            Velocity.className = 'Velocity';
+            return Velocity;
+        })(Component);
+        components.Velocity = Velocity;
+        Velocity.prototype.vectorX = 0;
+        Velocity.prototype.vectorY = 0;
+    })(components = brokenspork.components || (brokenspork.components = {}));
+})(brokenspork || (brokenspork = {}));
+//# sourceMappingURL=Velocity.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
+    switch (arguments.length) {
+        case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
+        case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
+        case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
+    }
+};
+var brokenspork;
+(function (brokenspork) {
+    var systems;
+    (function (systems) {
+        var Bag = artemis.utils.Bag;
+        var Bounds = brokenspork.components.Bounds;
+        var Expires = brokenspork.components.Expires;
+        var Health = brokenspork.components.Health;
+        var Position = brokenspork.components.Position;
+        var Constants = brokenspork.core.Constants;
+        var EntityFactory = brokenspork.core.EntityFactory;
+        var Mapper = artemis.annotations.Mapper;
+        var EntitySystem = artemis.EntitySystem;
+        var Aspect = artemis.Aspect;
+        var GroupManager = artemis.managers.GroupManager;
+        var CollisionSystem = (function (_super) {
+            __extends(CollisionSystem, _super);
+            function CollisionSystem(game) {
+                _super.call(this, Aspect.getAspectForAll(Position, Bounds));
+                this.game = game;
+            }
+            CollisionSystem.prototype.initialize = function () {
+                var self = this;
+                this.collisionPairs = new Bag();
+                this.collisionPairs.add(new CollisionPair(this, Constants.Groups.PLAYER_BULLETS, Constants.Groups.ENEMY_SHIPS, {
+                    handleCollision: function (bullet, ship) {
+                        var bp = self.pm.get(bullet);
+                        EntityFactory.createSmallExplosion(self.game, self.world, bp.x, bp.y).addToWorld();
+                        for (var i = 0; 4 > i; i++)
+                            EntityFactory.createParticle(self.game, self.world, bp.x, bp.y).addToWorld();
+                        //TODO: calling bullet.deleteFromWorld() was causing null pointer exceptions in ExpiringSystem and CollisionStstem because it did not exist anymore. 
+                        //TODO: This did not happen in vanilla artemis.
+                        //TODO: is this a Is this a bug in artemis-odb's DelayedEntityProcessingSystem?
+                        bullet.deleteFromWorld();
+                        //Expires bulletExpires = ex.get(bullet);
+                        //if(bulletExpires != null) {
+                        //    bulletExpires.delay = -1;
+                        //}
+                        var health = self.hm.get(ship);
+                        var position = self.pm.get(ship);
+                        health.health -= 1;
+                        if (health.health < 0) {
+                            health.health = 0;
+                            ship.deleteFromWorld();
+                            EntityFactory.createBigExplosion(self.game, self.world, position.x, position.y).addToWorld();
+                        }
+                    }
+                }));
+            };
+            CollisionSystem.prototype.processEntities = function (entities) {
+                for (var i = 0; this.collisionPairs.size() > i; i++) {
+                    this.collisionPairs.get(i).checkForCollisions();
+                }
+            };
+            CollisionSystem.prototype.checkProcessing = function () {
+                return true;
+            };
+            __decorate([
+                Mapper(Position)
+            ], CollisionSystem.prototype, "pm");
+            __decorate([
+                Mapper(Bounds)
+            ], CollisionSystem.prototype, "bm");
+            __decorate([
+                Mapper(Health)
+            ], CollisionSystem.prototype, "hm");
+            __decorate([
+                Mapper(Expires)
+            ], CollisionSystem.prototype, "ex");
+            return CollisionSystem;
+        })(EntitySystem);
+        systems.CollisionSystem = CollisionSystem;
+        var CollisionPair = (function () {
+            function CollisionPair(cs, group1, group2, handler) {
+                this.groupEntitiesA = cs.world.getManager(GroupManager).getEntities(group1);
+                this.groupEntitiesB = cs.world.getManager(GroupManager).getEntities(group2);
+                this.handler = handler;
+                this.cs = cs;
+            }
+            CollisionPair.prototype.checkForCollisions = function () {
+                for (var a = 0; this.groupEntitiesA.size() > a; a++) {
+                    for (var b = 0; this.groupEntitiesB.size() > b; b++) {
+                        var entityA = this.groupEntitiesA.get(a);
+                        var entityB = this.groupEntitiesB.get(b);
+                        if (this.collisionExists(entityA, entityB)) {
+                            this.handler.handleCollision(entityA, entityB);
+                        }
+                    }
+                }
+            };
+            CollisionPair.prototype.collisionExists = function (e1, e2) {
+                if (e1 == null || e2 == null) {
+                    return false;
+                }
+                //NPE!!!
+                var p1 = this.cs.pm.get(e1);
+                var p2 = this.cs.pm.get(e2);
+                var b1 = this.cs.bm.get(e1);
+                var b2 = this.cs.bm.get(e2);
+                //return Utils.distance(p1.x, p1.y, p2.x, p2.y)-b1.radius < b2.radius;
+                return false;
+            };
+            return CollisionPair;
+        })();
+    })(systems = brokenspork.systems || (brokenspork.systems = {}));
+})(brokenspork || (brokenspork = {}));
+//# sourceMappingURL=CollisionSystem.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
+    switch (arguments.length) {
+        case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
+        case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
+        case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
+    }
+};
+var brokenspork;
+(function (brokenspork) {
+    var systems;
+    (function (systems) {
+        var ColorAnimation = brokenspork.components.ColorAnimation;
+        var Sprite = brokenspork.components.Sprite;
+        var Mapper = artemis.annotations.Mapper;
+        var EntityProcessingSystem = artemis.systems.EntityProcessingSystem;
+        var Aspect = artemis.Aspect;
+        var ColorAnimationSystem = (function (_super) {
+            __extends(ColorAnimationSystem, _super);
+            function ColorAnimationSystem() {
+                _super.call(this, Aspect.getAspectForAll(ColorAnimation, Sprite));
+            }
+            ColorAnimationSystem.prototype.processEach = function (e) {
+                var c = this.cam.get(e);
+                var sprite = this.sm.get(e);
+                if (c.alphaAnimate) {
+                    sprite.a += c.alphaSpeed * this.world.delta;
+                    if (sprite.a > c.alphaMax || sprite.a < c.alphaMin) {
+                        if (c.repeat) {
+                            c.alphaSpeed = -c.alphaSpeed;
+                        }
+                        else {
+                            c.alphaAnimate = false;
+                        }
+                    }
+                }
+            };
+            __decorate([
+                Mapper(ColorAnimation)
+            ], ColorAnimationSystem.prototype, "cam");
+            __decorate([
+                Mapper(Sprite)
+            ], ColorAnimationSystem.prototype, "sm");
+            return ColorAnimationSystem;
+        })(EntityProcessingSystem);
+        systems.ColorAnimationSystem = ColorAnimationSystem;
+    })(systems = brokenspork.systems || (brokenspork.systems = {}));
+})(brokenspork || (brokenspork = {}));
+//# sourceMappingURL=ColorAnimationSystem.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var brokenspork;
+(function (brokenspork) {
+    var systems;
+    (function (systems) {
+        var MathUtils = artemis.utils.MathUtils;
+        var Layer = brokenspork.components.Layer;
+        var Constants = brokenspork.core.Constants;
+        var EntityFactory = brokenspork.core.EntityFactory;
+        var VoidEntitySystem = artemis.systems.VoidEntitySystem;
+        var Timer = artemis.utils.Timer;
+        var EntitySpawningTimerSystem = (function (_super) {
+            __extends(EntitySpawningTimerSystem, _super);
+            function EntitySpawningTimerSystem(game) {
+                var _this = this;
+                _super.call(this);
+                this.timer1 = new Timer(2, true);
+                this.timer1.execute = function () {
+                    EntityFactory.createEnemyShip(_this.game, _this.world, "enemy1", Layer.ACTORS_3, 10, MathUtils.random(-Constants.FRAME_WIDTH / 2, Constants.FRAME_WIDTH / 2), Constants.FRAME_HEIGHT / 2 + 50, 0, -40, 20).addToWorld();
+                };
+                this.timer2 = new Timer(6, true);
+                this.timer2.execute = function () {
+                    EntityFactory.createEnemyShip(_this.game, _this.world, "enemy2", Layer.ACTORS_2, 20, MathUtils.random(-Constants.FRAME_WIDTH / 2, Constants.FRAME_WIDTH / 2), Constants.FRAME_HEIGHT / 2 + 100, 0, -30, 40).addToWorld();
+                };
+                this.timer3 = new Timer(12, true);
+                this.timer3.execute = function () {
+                    EntityFactory.createEnemyShip(_this.game, _this.world, "enemy3", Layer.ACTORS_1, 60, MathUtils.random(-Constants.FRAME_WIDTH / 2, Constants.FRAME_WIDTH / 2), Constants.FRAME_HEIGHT / 2 + 200, 0, -20, 70).addToWorld();
+                };
+            }
+            EntitySpawningTimerSystem.prototype.processSystem = function () {
+                this.timer1.update(this.world.delta);
+                this.timer2.update(this.world.delta);
+                this.timer3.update(this.world.delta);
+            };
+            return EntitySpawningTimerSystem;
+        })(VoidEntitySystem);
+        systems.EntitySpawningTimerSystem = EntitySpawningTimerSystem;
+    })(systems = brokenspork.systems || (brokenspork.systems = {}));
+})(brokenspork || (brokenspork = {}));
+//# sourceMappingURL=EntitySpawningTimerSystem.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
+    switch (arguments.length) {
+        case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
+        case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
+        case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
+    }
+};
+var brokenspork;
+(function (brokenspork) {
+    var systems;
+    (function (systems) {
+        var Expires = brokenspork.components.Expires;
+        var Aspect = artemis.Aspect;
+        var DelayedEntityProcessingSystem = artemis.systems.DelayedEntityProcessingSystem;
+        var Mapper = artemis.annotations.Mapper;
+        var ExpiringSystem = (function (_super) {
+            __extends(ExpiringSystem, _super);
+            //@SuppressWarnings("unchecked")
+            function ExpiringSystem() {
+                _super.call(this, Aspect.getAspectForAll(Expires));
+            }
+            ExpiringSystem.prototype.processDelta = function (e, accumulatedDelta) {
+                var expires = this.em.get(e);
+                expires.delay -= accumulatedDelta;
+            };
+            ExpiringSystem.prototype.processExpired = function (e) {
+                e.deleteFromWorld();
+            };
+            ExpiringSystem.prototype.getRemainingDelay = function (e) {
+                var expires = this.em.get(e);
+                return expires.delay;
+            };
+            __decorate([
+                Mapper(Expires)
+            ], ExpiringSystem.prototype, "em");
+            return ExpiringSystem;
+        })(DelayedEntityProcessingSystem);
+        systems.ExpiringSystem = ExpiringSystem;
+    })(systems = brokenspork.systems || (brokenspork.systems = {}));
+})(brokenspork || (brokenspork = {}));
+//# sourceMappingURL=ExpiringSystem.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
+    switch (arguments.length) {
+        case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
+        case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
+        case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
+    }
+};
+var brokenspork;
+(function (brokenspork) {
+    var systems;
+    (function (systems) {
+        var Health = brokenspork.components.Health;
+        var Position = brokenspork.components.Position;
+        var Aspect = artemis.Aspect;
+        var EntityProcessingSystem = artemis.systems.EntityProcessingSystem;
+        var Mapper = artemis.annotations.Mapper;
+        var HealthRenderSystem = (function (_super) {
+            __extends(HealthRenderSystem, _super);
+            //private batch:SpriteBatch;
+            // private OrthographicCamera camera;
+            // private BitmapFont font;
+            //@SuppressWarnings("unchecked")
+            function HealthRenderSystem() {
+                _super.call(this, Aspect.getAspectForAll(Position, Health));
+            }
+            HealthRenderSystem.prototype.initialize = function () {
+                // batch = new SpriteBatch();
+                // Texture fontTexture = new Texture(Gdx.files.internal("fonts/normal_0.png"));
+                // fontTexture.setFilter(TextureFilter.Linear, TextureFilter.MipMapLinearLinear);
+                // TextureRegion fontRegion = new TextureRegion(fontTexture);
+                // font = new BitmapFont(Gdx.files.internal("fonts/normal.fnt"), fontRegion, false);
+                // font.setUseIntegerPositions(false);
+            };
+            HealthRenderSystem.prototype.begin = function () {
+                // batch.setProjectionMatrix(camera.combined);
+                // batch.begin();
+            };
+            HealthRenderSystem.prototype.processEach = function (e) {
+                var position = this.pm.get(e);
+                var health = this.hm.get(e);
+                var percentage = Math.round(health.health / health.maximumHealth * 100);
+                //font.draw(batch, percentage+"%", position.x, position.y);
+            };
+            HealthRenderSystem.prototype.end = function () {
+                //batch.end();
+            };
+            __decorate([
+                Mapper(Position)
+            ], HealthRenderSystem.prototype, "pm");
+            __decorate([
+                Mapper(Health)
+            ], HealthRenderSystem.prototype, "hm");
+            return HealthRenderSystem;
+        })(EntityProcessingSystem);
+        systems.HealthRenderSystem = HealthRenderSystem;
+    })(systems = brokenspork.systems || (brokenspork.systems = {}));
+})(brokenspork || (brokenspork = {}));
+//# sourceMappingURL=HealthRenderSystem.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
+    switch (arguments.length) {
+        case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
+        case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
+        case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
+    }
+};
+var brokenspork;
+(function (brokenspork) {
+    var systems;
+    (function (systems) {
+        var Position = brokenspork.components.Position;
+        var Sprite = brokenspork.components.Sprite;
+        var VoidEntitySystem = artemis.systems.VoidEntitySystem;
+        var Mapper = artemis.annotations.Mapper;
+        // import com.badlogic.gdx.Gdx;
+        // import com.badlogic.gdx.graphics.OrthographicCamera;
+        // import com.badlogic.gdx.graphics.Texture;
+        // import com.badlogic.gdx.graphics.Texture.TextureFilter;
+        // import com.badlogic.gdx.graphics.g2d.BitmapFont;
+        // import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+        // import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+        // import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+        // import com.badlogic.gdx.graphics.g2d.TextureRegion;
+        var HudRenderSystem = (function (_super) {
+            __extends(HudRenderSystem, _super);
+            // private HashMap<String, AtlasRegion> regions;
+            // private TextureAtlas textureAtlas;
+            // private SpriteBatch batch;
+            // private OrthographicCamera camera;
+            // private BitmapFont font;
+            function HudRenderSystem() {
+                _super.call(this);
+                // this.camera = camera;
+            }
+            HudRenderSystem.prototype.initialize = function () {
+                // regions = new HashMap<String, AtlasRegion>();
+                // textureAtlas = new TextureAtlas("images-packed/pack.atlas");
+                // for (AtlasRegion r : textureAtlas.getRegions()) {
+                // 	regions.put(r.name, r);
+                // }
+                // batch = new SpriteBatch();
+                // Texture fontTexture = new Texture(Gdx.files.internal("fonts/normal_0.png"));
+                // fontTexture.setFilter(TextureFilter.Linear, TextureFilter.MipMapLinearLinear);
+                // TextureRegion fontRegion = new TextureRegion(fontTexture);
+                // font = new BitmapFont(Gdx.files.internal("fonts/normal.fnt"), fontRegion, false);
+                // font.setUseIntegerPositions(false);
+            };
+            HudRenderSystem.prototype.begin = function () {
+                // batch.setProjectionMatrix(camera.combined);
+                // batch.begin();
+            };
+            HudRenderSystem.prototype.processSystem = function () {
+                // batch.setColor(1, 1, 1, 1);
+                // font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), -(Constants.FRAME_WIDTH / 2) + 20, Constants.FRAME_HEIGHT / 2 - 20);
+                // font.draw(batch, "Active entities: " + world.getEntityManager().getActiveEntityCount(), -(Constants.FRAME_WIDTH / 2) + 20, Constants.FRAME_HEIGHT / 2 - 40);
+                // font.draw(batch, "Total created: " + world.getEntityManager().getTotalCreated(), -(Constants.FRAME_WIDTH / 2) + 20, Constants.FRAME_HEIGHT / 2 - 60);
+                // font.draw(batch, "Total deleted: " + world.getEntityManager().getTotalDeleted(), -(Constants.FRAME_WIDTH / 2) + 20, Constants.FRAME_HEIGHT / 2 - 80);
+            };
+            HudRenderSystem.prototype.end = function () {
+                // batch.end();
+            };
+            __decorate([
+                Mapper(Position)
+            ], HudRenderSystem.prototype, "pm");
+            __decorate([
+                Mapper(Sprite)
+            ], HudRenderSystem.prototype, "sm");
+            return HudRenderSystem;
+        })(VoidEntitySystem);
+        systems.HudRenderSystem = HudRenderSystem;
+    })(systems = brokenspork.systems || (brokenspork.systems = {}));
+})(brokenspork || (brokenspork = {}));
+//# sourceMappingURL=HudRenderSystem.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
+    switch (arguments.length) {
+        case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
+        case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
+        case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
+    }
+};
+var brokenspork;
+(function (brokenspork) {
+    var systems;
+    (function (systems) {
+        var Position = brokenspork.components.Position;
+        var Velocity = brokenspork.components.Velocity;
+        var Aspect = artemis.Aspect;
+        var EntityProcessingSystem = artemis.systems.EntityProcessingSystem;
+        var Mapper = artemis.annotations.Mapper;
+        var MovementSystem = (function (_super) {
+            __extends(MovementSystem, _super);
+            //@SuppressWarnings("unchecked")
+            function MovementSystem() {
+                _super.call(this, Aspect.getAspectForAll(Position, Velocity));
+            }
+            MovementSystem.prototype.processEach = function (e) {
+                var position = this.pm.get(e);
+                var velocity = this.vm.get(e);
+                if (velocity == null) {
+                    return;
+                }
+                position.x += velocity.vectorX * this.world.delta;
+                position.y += velocity.vectorY * this.world.delta;
+            };
+            __decorate([
+                Mapper(Position)
+            ], MovementSystem.prototype, "pm");
+            __decorate([
+                Mapper(Velocity)
+            ], MovementSystem.prototype, "vm");
+            return MovementSystem;
+        })(EntityProcessingSystem);
+        systems.MovementSystem = MovementSystem;
+    })(systems = brokenspork.systems || (brokenspork.systems = {}));
+})(brokenspork || (brokenspork = {}));
+//# sourceMappingURL=MovementSystem.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
+    switch (arguments.length) {
+        case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
+        case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
+        case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
+    }
+};
+var brokenspork;
+(function (brokenspork) {
+    var systems;
+    (function (systems) {
+        var ParallaxStar = brokenspork.components.ParallaxStar;
+        var Position = brokenspork.components.Position;
+        var Constants = brokenspork.core.Constants;
+        var Aspect = artemis.Aspect;
+        var IntervalEntityProcessingSystem = artemis.systems.IntervalEntityProcessingSystem;
+        var Mapper = artemis.annotations.Mapper;
+        var ParallaxStarRepeatingSystem = (function (_super) {
+            __extends(ParallaxStarRepeatingSystem, _super);
+            //@SuppressWarnings("unchecked")
+            function ParallaxStarRepeatingSystem() {
+                _super.call(this, Aspect.getAspectForAll(ParallaxStar, Position), 1);
+            }
+            ParallaxStarRepeatingSystem.prototype.processEach = function (e) {
+                var position = this.pm.get(e);
+                if (position.y < -Constants.FRAME_HEIGHT / 2) {
+                    position.y = Constants.FRAME_HEIGHT / 2;
+                }
+            };
+            __decorate([
+                Mapper(Position)
+            ], ParallaxStarRepeatingSystem.prototype, "pm");
+            return ParallaxStarRepeatingSystem;
+        })(IntervalEntityProcessingSystem);
+        systems.ParallaxStarRepeatingSystem = ParallaxStarRepeatingSystem;
+    })(systems = brokenspork.systems || (brokenspork.systems = {}));
+})(brokenspork || (brokenspork = {}));
+//# sourceMappingURL=ParallaxStarRepeatingSystem.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
+    switch (arguments.length) {
+        case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
+        case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
+        case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
+    }
+};
+var brokenspork;
+(function (brokenspork) {
+    var systems;
+    (function (systems) {
+        var Bounds = brokenspork.components.Bounds;
+        var Health = brokenspork.components.Health;
+        var Position = brokenspork.components.Position;
+        var Velocity = brokenspork.components.Velocity;
+        var Constants = brokenspork.core.Constants;
+        var Aspect = artemis.Aspect;
+        var IntervalEntityProcessingSystem = artemis.systems.IntervalEntityProcessingSystem;
+        var Mapper = artemis.annotations.Mapper;
+        var RemoveOffscreenShipsSystem = (function (_super) {
+            __extends(RemoveOffscreenShipsSystem, _super);
+            //@SuppressWarnings("unchecked")
+            function RemoveOffscreenShipsSystem() {
+                _super.call(this, Aspect.getAspectForAll(Velocity, Position, Health, Bounds), 5);
+            }
+            RemoveOffscreenShipsSystem.prototype.processEach = function (e) {
+                var position = this.pm.get(e);
+                var bounds = this.bm.get(e);
+                if (position.y < -Constants.FRAME_HEIGHT / 2 - bounds.radius) {
+                    e.deleteFromWorld();
+                }
+            };
+            __decorate([
+                Mapper(Position)
+            ], RemoveOffscreenShipsSystem.prototype, "pm");
+            __decorate([
+                Mapper(Bounds)
+            ], RemoveOffscreenShipsSystem.prototype, "bm");
+            return RemoveOffscreenShipsSystem;
+        })(IntervalEntityProcessingSystem);
+        systems.RemoveOffscreenShipsSystem = RemoveOffscreenShipsSystem;
+    })(systems = brokenspork.systems || (brokenspork.systems = {}));
+})(brokenspork || (brokenspork = {}));
+//# sourceMappingURL=RemoveOffscreenShipsSystem.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
+    switch (arguments.length) {
+        case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
+        case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
+        case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
+    }
+};
+var brokenspork;
+(function (brokenspork) {
+    var systems;
+    (function (systems) {
+        var ScaleAnimation = brokenspork.components.ScaleAnimation;
+        var Sprite = brokenspork.components.Sprite;
+        var Aspect = artemis.Aspect;
+        var EntityProcessingSystem = artemis.systems.EntityProcessingSystem;
+        var Mapper = artemis.annotations.Mapper;
+        var ScaleAnimationSystem = (function (_super) {
+            __extends(ScaleAnimationSystem, _super);
+            //@SuppressWarnings("unchecked")
+            function ScaleAnimationSystem() {
+                _super.call(this, Aspect.getAspectForAll(ScaleAnimation));
+            }
+            ScaleAnimationSystem.prototype.processEach = function (e) {
+                var scaleAnimation = this.sa.get(e);
+                if (scaleAnimation.active) {
+                    var sprite = this.sm.get(e);
+                    sprite.scaleX += scaleAnimation.speed * this.world.delta;
+                    sprite.scaleY = sprite.scaleX;
+                    if (sprite.scaleX > scaleAnimation.max) {
+                        sprite.scaleX = scaleAnimation.max;
+                        scaleAnimation.active = false;
+                    }
+                    else if (sprite.scaleX < scaleAnimation.min) {
+                        sprite.scaleX = scaleAnimation.min;
+                        scaleAnimation.active = false;
+                    }
+                }
+            };
+            __decorate([
+                Mapper(ScaleAnimation)
+            ], ScaleAnimationSystem.prototype, "sa");
+            __decorate([
+                Mapper(Sprite)
+            ], ScaleAnimationSystem.prototype, "sm");
+            return ScaleAnimationSystem;
+        })(EntityProcessingSystem);
+        systems.ScaleAnimationSystem = ScaleAnimationSystem;
+    })(systems = brokenspork.systems || (brokenspork.systems = {}));
+})(brokenspork || (brokenspork = {}));
+//# sourceMappingURL=ScaleAnimationSystem.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
+    switch (arguments.length) {
+        case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
+        case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
+        case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
+    }
+};
+var brokenspork;
+(function (brokenspork) {
+    var systems;
+    (function (systems) {
+        var SoundEffect = brokenspork.components.SoundEffect;
+        var EFFECT = brokenspork.components.EFFECT;
+        var Aspect = artemis.Aspect;
+        var EntityProcessingSystem = artemis.systems.EntityProcessingSystem;
+        var Mapper = artemis.annotations.Mapper;
+        // import  = badlogic.gdx.Gdx;
+        // import  = badlogic.gdx.audio.Sound;
+        var SoundEffectSystem = (function (_super) {
+            __extends(SoundEffectSystem, _super);
+            //@SuppressWarnings("unchecked")
+            function SoundEffectSystem() {
+                _super.call(this, Aspect.getAspectForAll(SoundEffect));
+            }
+            // pew:Sound = Gdx.audio.newSound(Gdx.files.internal("sounds/pew.wav"));
+            // asplode:Sound = Gdx.audio.newSound(Gdx.files.internal("sounds/asplode.wav"));
+            // smallasplode:Sound = Gdx.audio.newSound(Gdx.files.internal("sounds/smallasplode.wav"));
+            SoundEffectSystem.prototype.initialize = function () {
+            };
+            SoundEffectSystem.prototype.processEach = function (e) {
+                var soundEffect = this.se.get(e);
+                switch (soundEffect.effect) {
+                    case EFFECT.PEW:
+                        //pew.play();
+                        break;
+                    case EFFECT.ASPLODE:
+                        //asplode.play();
+                        break;
+                    case EFFECT.SMALLASPLODE:
+                        //smallasplode.play();
+                        break;
+                    default:
+                        break;
+                }
+                e.removeComponentInstance(soundEffect);
+                e.changedInWorld();
+            };
+            __decorate([
+                Mapper(SoundEffect)
+            ], SoundEffectSystem.prototype, "se");
+            return SoundEffectSystem;
+        })(EntityProcessingSystem);
+        systems.SoundEffectSystem = SoundEffectSystem;
+    })(systems = brokenspork.systems || (brokenspork.systems = {}));
+})(brokenspork || (brokenspork = {}));
+//# sourceMappingURL=SoundEffectSystem.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
+    switch (arguments.length) {
+        case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
+        case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
+        case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
+    }
+};
+var brokenspork;
+(function (brokenspork) {
+    var systems;
+    (function (systems) {
+        var HashMap = artemis.utils.HashMap;
+        var Position = brokenspork.components.Position;
+        var Sprite = brokenspork.components.Sprite;
+        var Aspect = artemis.Aspect;
+        var EntitySystem = artemis.EntitySystem;
+        var Bag = artemis.utils.Bag;
+        var Mapper = artemis.annotations.Mapper;
+        // import com.badlogic.gdx.Gdx;
+        // import com.badlogic.gdx.graphics.OrthographicCamera;
+        // import com.badlogic.gdx.graphics.Texture;
+        // import com.badlogic.gdx.graphics.Texture.TextureFilter;
+        // import com.badlogic.gdx.graphics.g2d.BitmapFont;
+        // import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+        // import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+        // import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+        // import com.badlogic.gdx.graphics.g2d.TextureRegion;
+        var SpriteRenderSystem = (function (_super) {
+            __extends(SpriteRenderSystem, _super);
+            //@SuppressWarnings("unchecked")
+            function SpriteRenderSystem() {
+                _super.call(this, Aspect.getAspectForAll(Position, Sprite));
+            }
+            SpriteRenderSystem.prototype.initialize = function () {
+                this.regions = new HashMap();
+                cc.spriteFrameCache.addSpriteFrames("res/images-packed/pack.plist");
+                var textureAtlas = cc.spriteFrameCache;
+                for (var name in textureAtlas._spriteFrames) {
+                    var r = textureAtlas._spriteFrames[name];
+                    this.regions.put(name, r);
+                }
+                this.regionsByEntity = new Bag();
+                this.sortedEntities = new Array();
+            };
+            SpriteRenderSystem.prototype.begin = function () {
+                // batch.setProjectionMatrix(camera.combined);
+                // batch.begin();
+            };
+            SpriteRenderSystem.prototype.checkProcessing = function () {
+                return true;
+            };
+            SpriteRenderSystem.prototype.processEntities = function (entities) {
+                for (var i = 0; this.sortedEntities.length > i; i++) {
+                    this.processEach(this.sortedEntities[i]);
+                }
+            };
+            SpriteRenderSystem.prototype.processEach = function (e) {
+                if (this.pm.has(e)) {
+                    var position = this.pm.getSafe(e);
+                    var sprite = this.sm.get(e);
+                }
+            };
+            SpriteRenderSystem.prototype.end = function () {
+                //batch.end();
+            };
+            SpriteRenderSystem.prototype.inserted = function (e) {
+                var _this = this;
+                var sprite = this.sm.get(e);
+                this.regionsByEntity.set(e.getId(), this.regions.get(sprite.name));
+                // sortedEntities.add(e);
+                this.sortedEntities.push(e);
+                this.sortedEntities.sort(function (e1, e2) {
+                    var s1 = _this.sm.get(e1);
+                    var s2 = _this.sm.get(e2);
+                    return s1.layer - s2.layer;
+                });
+            };
+            SpriteRenderSystem.prototype.removed = function (e) {
+                this.regionsByEntity.set(e.getId(), null);
+                var index = this.sortedEntities.indexOf(e);
+                if (index != -1) {
+                    this.sortedEntities.splice(index, 1);
+                }
+            };
+            __decorate([
+                Mapper(Position)
+            ], SpriteRenderSystem.prototype, "pm");
+            __decorate([
+                Mapper(Sprite)
+            ], SpriteRenderSystem.prototype, "sm");
+            return SpriteRenderSystem;
+        })(EntitySystem);
+        systems.SpriteRenderSystem = SpriteRenderSystem;
+    })(systems = brokenspork.systems || (brokenspork.systems = {}));
+})(brokenspork || (brokenspork = {}));
+//# sourceMappingURL=SpriteRenderSystem.js.map
+var brokenspork;
+(function (brokenspork) {
+    var core;
+    (function (core) {
+        var MathUtils = artemis.utils.MathUtils;
+        var Bounds = brokenspork.components.Bounds;
+        var ColorAnimation = brokenspork.components.ColorAnimation;
+        var Expires = brokenspork.components.Expires;
+        var Health = brokenspork.components.Health;
+        var ParallaxStar = brokenspork.components.ParallaxStar;
+        var Player = brokenspork.components.Player;
+        var Position = brokenspork.components.Position;
+        var ScaleAnimation = brokenspork.components.ScaleAnimation;
+        var SoundEffect = brokenspork.components.SoundEffect;
+        var Sprite = brokenspork.components.Sprite;
+        var Velocity = brokenspork.components.Velocity;
+        var Layer = brokenspork.components.Layer;
+        var EFFECT = brokenspork.components.EFFECT;
+        var GroupManager = artemis.managers.GroupManager;
+        var EntityFactory = (function () {
+            function EntityFactory() {
+            }
+            EntityFactory.createPlayer = function (game, world, x, y) {
+                var e = world.createEntity();
+                var position = new Position();
+                position.x = x;
+                position.y = y;
+                e.addComponent(position);
+                var sprite = new Sprite();
+                sprite.name = "fighter";
+                sprite.r = 93;
+                sprite.g = 255;
+                sprite.b = 129;
+                sprite.layer = Layer.ACTORS_3;
+                e.addComponent(sprite);
+                game.addChild(sprite.sprite_);
+                var velocity = new Velocity();
+                velocity.vectorX = 0;
+                velocity.vectorY = 0;
+                e.addComponent(velocity);
+                var bounds = new Bounds();
+                bounds.radius = 43;
+                e.addComponent(bounds);
+                e.addComponent(new Player());
+                world.getManager(GroupManager).add(e, core.Constants.Groups.PLAYER_SHIP);
+                return e;
+            };
+            EntityFactory.createPlayerBullet = function (game, world, x, y) {
+                var e = world.createEntity();
+                var position = new Position();
+                position.x = x;
+                position.y = y;
+                e.addComponent(position);
+                var sprite = new Sprite();
+                sprite.name = "bullet";
+                sprite.layer = Layer.PARTICLES;
+                e.addComponent(sprite);
+                var velocity = new Velocity();
+                velocity.vectorY = 800;
+                e.addComponent(velocity);
+                var bounds = new Bounds();
+                bounds.radius = 5;
+                e.addComponent(bounds);
+                var expires = new Expires();
+                expires.delay = 5;
+                e.addComponent(expires);
+                var sf = new SoundEffect();
+                sf.effect = EFFECT.PEW;
+                e.addComponent(sf);
+                world.getManager(GroupManager).add(e, core.Constants.Groups.PLAYER_BULLETS);
+                return e;
+            };
+            EntityFactory.createEnemyShip = function (game, world, name, layer, health, x, y, velocityX, velocityY, boundsRadius) {
+                var e = world.createEntity();
+                var position = new Position();
+                position.x = x;
+                position.y = y;
+                e.addComponent(position);
+                var sprite = new Sprite();
+                sprite.name = name;
+                sprite.r = 255;
+                sprite.g = 0;
+                sprite.b = 142;
+                sprite.layer = layer;
+                e.addComponent(sprite);
+                var velocity = new Velocity();
+                velocity.vectorX = velocityX;
+                velocity.vectorY = velocityY;
+                e.addComponent(velocity);
+                var bounds = new Bounds();
+                bounds.radius = boundsRadius;
+                e.addComponent(bounds);
+                var h = new Health();
+                h.health = h.maximumHealth = health;
+                e.addComponent(h);
+                world.getManager(GroupManager).add(e, core.Constants.Groups.ENEMY_SHIPS);
+                return e;
+            };
+            EntityFactory.createSmallExplosion = function (game, world, x, y) {
+                var e = this.createExplosion(game, world, x, y, 0.1);
+                var sf = new SoundEffect();
+                sf.effect = EFFECT.SMALLASPLODE;
+                e.addComponent(sf);
+                return e;
+            };
+            EntityFactory.createBigExplosion = function (game, world, x, y) {
+                var e = this.createExplosion(game, world, x, y, 0.5);
+                var sf = new SoundEffect();
+                sf.effect = EFFECT.ASPLODE;
+                e.addComponent(sf);
+                return e;
+            };
+            EntityFactory.createExplosion = function (game, world, x, y, scale) {
+                var e = world.createEntity();
+                var position = new Position();
+                position.x = x;
+                position.y = y;
+                e.addComponent(position);
+                var sprite = new Sprite();
+                sprite.name = "explosion";
+                sprite.scaleX = sprite.scaleY = scale;
+                sprite.r = 255;
+                sprite.g = 216;
+                sprite.b = 0;
+                sprite.a = 128;
+                sprite.layer = Layer.PARTICLES;
+                e.addComponent(sprite);
+                var expires = new Expires();
+                expires.delay = 0.5;
+                e.addComponent(expires);
+                var scaleAnimation = new ScaleAnimation();
+                scaleAnimation.active = true;
+                scaleAnimation.max = scale;
+                scaleAnimation.min = scale / 100;
+                scaleAnimation.speed = -3.0;
+                scaleAnimation.repeat = false;
+                e.addComponent(scaleAnimation);
+                return e;
+            };
+            EntityFactory.createStar = function (game, world) {
+                var e = world.createEntity();
+                var position = new Position();
+                position.x = MathUtils.random(-core.Constants.FRAME_WIDTH / 2, core.Constants.FRAME_WIDTH / 2);
+                position.y = MathUtils.random(-core.Constants.FRAME_HEIGHT / 2, core.Constants.FRAME_HEIGHT / 2);
+                e.addComponent(position);
+                var sprite = new Sprite();
+                sprite.name = "particle";
+                sprite.scaleX = sprite.scaleY = MathUtils.random(0.5, 1);
+                sprite.a = MathUtils.random(0.1, 0.5);
+                sprite.layer = Layer.BACKGROUND;
+                e.addComponent(sprite);
+                var velocity = new Velocity();
+                velocity.vectorY = MathUtils.random(-10, -60);
+                e.addComponent(velocity);
+                e.addComponent(new ParallaxStar());
+                var colorAnimation = new ColorAnimation();
+                colorAnimation.alphaAnimate = true;
+                colorAnimation.repeat = true;
+                colorAnimation.alphaSpeed = MathUtils.random(0.2, 0.7);
+                colorAnimation.alphaMin = 0.1;
+                colorAnimation.alphaMax = 0.5;
+                e.addComponent(colorAnimation);
+                return e;
+            };
+            EntityFactory.createParticle = function (game, world, x, y) {
+                var e = world.createEntity();
+                var position = new Position();
+                position.x = x;
+                position.y = y;
+                e.addComponent(position);
+                var sprite = new Sprite();
+                sprite.name = "particle";
+                sprite.scaleX = sprite.scaleY = MathUtils.random(0.5, 1);
+                sprite.r = 255;
+                sprite.g = 216;
+                sprite.b = 0;
+                sprite.a = 1;
+                sprite.layer = Layer.PARTICLES;
+                e.addComponent(sprite);
+                var radians = MathUtils.random(2 * Math.PI);
+                var magnitude = MathUtils.random(400);
+                var velocity = new Velocity();
+                velocity.vectorX = magnitude * Math.cos(radians);
+                velocity.vectorY = magnitude * Math.sin(radians);
+                e.addComponent(velocity);
+                var expires = new Expires();
+                expires.delay = 1;
+                e.addComponent(expires);
+                var colorAnimation = new ColorAnimation();
+                colorAnimation.alphaAnimate = true;
+                colorAnimation.alphaSpeed = -1;
+                colorAnimation.alphaMin = 0;
+                colorAnimation.alphaMax = 1;
+                colorAnimation.repeat = false;
+                e.addComponent(colorAnimation);
+                return e;
+            };
+            return EntityFactory;
+        })();
+        core.EntityFactory = EntityFactory;
+    })(core = brokenspork.core || (brokenspork.core = {}));
+})(brokenspork || (brokenspork = {}));
+//# sourceMappingURL=EntityFactory.js.map
+var brokenspork;
+(function (brokenspork) {
+    var core;
+    (function (core) {
+        var CollisionSystem = brokenspork.systems.CollisionSystem;
+        var ColorAnimationSystem = brokenspork.systems.ColorAnimationSystem;
+        var EntitySpawningTimerSystem = brokenspork.systems.EntitySpawningTimerSystem;
+        var ExpiringSystem = brokenspork.systems.ExpiringSystem;
+        var HealthRenderSystem = brokenspork.systems.HealthRenderSystem;
+        var HudRenderSystem = brokenspork.systems.HudRenderSystem;
+        var MovementSystem = brokenspork.systems.MovementSystem;
+        var ParallaxStarRepeatingSystem = brokenspork.systems.ParallaxStarRepeatingSystem;
+        //import PlayerInputSystem = brokenspork.systems.PlayerInputSystem;
+        var RemoveOffscreenShipsSystem = brokenspork.systems.RemoveOffscreenShipsSystem;
+        var ScaleAnimationSystem = brokenspork.systems.ScaleAnimationSystem;
+        var SoundEffectSystem = brokenspork.systems.SoundEffectSystem;
+        var SpriteRenderSystem = brokenspork.systems.SpriteRenderSystem;
+        var GroupManager = artemis.managers.GroupManager;
+        var GameScreen = (function () {
+            function GameScreen(game) {
+                //this.batch = new SpriteBatch();
+                this.game = game;
+                //this.camera = new OrthographicCamera(Constants.FRAME_WIDTH, Constants.FRAME_HEIGHT);
+                this.world = new artemis.World();
+                this.world.setManager(new GroupManager());
+                this.world.setSystem(new MovementSystem());
+                //this.playerInputSystem = new PlayerInputSystem(game);
+                //this.world.setSystem(playerInputSystem);
+                this.world.setSystem(new SoundEffectSystem());
+                this.world.setSystem(new CollisionSystem(game));
+                this.world.setSystem(new ExpiringSystem());
+                this.world.setSystem(new EntitySpawningTimerSystem(game));
+                this.world.setSystem(new ParallaxStarRepeatingSystem());
+                this.world.setSystem(new ColorAnimationSystem());
+                this.world.setSystem(new ScaleAnimationSystem());
+                this.world.setSystem(new RemoveOffscreenShipsSystem());
+                this.spriteRenderSystem = this.world.setSystem(new SpriteRenderSystem(), true);
+                this.healthRenderSystem = this.world.setSystem(new HealthRenderSystem(), true);
+                this.hudRenderSystem = this.world.setSystem(new HudRenderSystem(), true);
+                this.world.initialize();
+                core.EntityFactory.createPlayer(this.game, this.world, 0, 0).addToWorld();
+                for (var i = 0; 500 > i; i++) {
+                    core.EntityFactory.createStar(this.game, this.world).addToWorld();
+                }
+            }
+            GameScreen.prototype.render = function (delta) {
+                this.world.setDelta(delta);
+                // if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+                // 	for (var i = 0; 10 > i; i++) {
+                // 		this.world.process();
+                // 	}
+                // }
+                this.world.process();
+                this.spriteRenderSystem.process();
+                this.healthRenderSystem.process();
+                this.hudRenderSystem.process();
+            };
+            //private playerInputSystem:PlayerInputSystem;
+            GameScreen.ASPECT_RATIO = core.Constants.FRAME_WIDTH / core.Constants.FRAME_HEIGHT;
+            return GameScreen;
+        })();
+        core.GameScreen = GameScreen;
+    })(core = brokenspork.core || (brokenspork.core = {}));
+})(brokenspork || (brokenspork = {}));
+//# sourceMappingURL=GameScreen.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var brokenspork;
+(function (brokenspork) {
+    var core;
+    (function (core) {
+        var SpaceshipWarrior = (function (_super) {
+            __extends(SpaceshipWarrior, _super);
+            /**
+             *
+             * @constructor
+             * @extends {cc.Layer}
+             * @param {cc.Scene} scene
+             */
+            function SpaceshipWarrior(scene) {
+                _super.call(this);
+                this.scene = scene;
+                return new (cc.Layer.extend(this));
+            }
+            /**
+              * Start the menu
+              * @return {cc.Scene} the menu scene
+              */
+            SpaceshipWarrior.start = function () {
+                var scene = new cc.Scene();
+                scene.addChild(new SpaceshipWarrior(scene));
+                return scene;
+            };
+            SpaceshipWarrior.prototype.ctor = function () {
+                this._super();
+                this.gameScreen = new core.GameScreen(this);
+                //setScreen(gameScreen);
+                this.scheduleUpdate();
+            };
+            SpaceshipWarrior.prototype.update = function (time) {
+                this.gameScreen.render(time);
+            };
+            return SpaceshipWarrior;
+        })(CCLayer);
+        core.SpaceshipWarrior = SpaceshipWarrior;
+    })(core = brokenspork.core || (brokenspork.core = {}));
+})(brokenspork || (brokenspork = {}));
+//# sourceMappingURL=SpaceshipWarrior.js.map
+(function (root, factory) {
+    if ('function' === typeof define && undefined.amd) {
+        define(factory);
+    }
+    else if ('object' == typeof exports) {
+        module.exports['brokenspork'] = factory();
+    }
+    else {
+        root['brokenspork'] = factory();
+    }
+})(this, function () { return brokenspork; });

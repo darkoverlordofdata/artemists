@@ -24,7 +24,7 @@ module brokenspork.core {
 	export class EntityFactory {
 		
 		
-		public static createPlayer(world:World, x:number, y:number):Entity {
+		public static createPlayer(game:CCLayer, world:World, x:number, y:number):Entity {
 			var e:Entity = world.createEntity();
 			
 			var position:Position = new Position();
@@ -39,6 +39,7 @@ module brokenspork.core {
 			sprite.b = 129;
 			sprite.layer = Layer.ACTORS_3;
 			e.addComponent(sprite);
+			game.addChild(sprite.sprite_)
 			
 			var velocity:Velocity = new Velocity();
 			velocity.vectorX = 0;
@@ -56,7 +57,7 @@ module brokenspork.core {
 			return e;
 		}
 		
-		public static createPlayerBullet(world:World, x:number, y:number):Entity {
+		public static createPlayerBullet(game:CCLayer, world:World, x:number, y:number):Entity {
 			var e:Entity = world.createEntity();
 			
 			var position:Position = new Position();
@@ -90,7 +91,7 @@ module brokenspork.core {
 			return e;
 		}
 		
-		public static createEnemyShip(world:World, name:string, layer:Layer, health:number, x:number, y:number, velocityX:number, velocityY:number, boundsRadius:number):Entity {
+		public static createEnemyShip(game:CCLayer, world:World, name:string, layer:Layer, health:number, x:number, y:number, velocityX:number, velocityY:number, boundsRadius:number):Entity {
 			var e:Entity = world.createEntity();
 			
 			var position:Position = new Position();
@@ -124,8 +125,8 @@ module brokenspork.core {
 			return e;
 		}
 		
-		public static createSmallExplosion(world:World, x:number, y:number):Entity {
-			var e:Entity = this.createExplosion(world, x, y, 0.1);
+		public static createSmallExplosion(game:CCLayer, world:World, x:number, y:number):Entity {
+			var e:Entity = this.createExplosion(game, world, x, y, 0.1);
 			
 			var sf:SoundEffect = new SoundEffect();
 			sf.effect = EFFECT.SMALLASPLODE;
@@ -133,8 +134,8 @@ module brokenspork.core {
 			
 			return e;
 		}
-		public static createBigExplosion(world:World, x:number, y:number):Entity {
-			var e:Entity = this.createExplosion(world, x, y, 0.5);
+		public static createBigExplosion(game:CCLayer, world:World, x:number, y:number):Entity {
+			var e:Entity = this.createExplosion(game, world, x, y, 0.5);
 			
 			var sf:SoundEffect = new SoundEffect();
 			sf.effect = EFFECT.ASPLODE;
@@ -144,7 +145,7 @@ module brokenspork.core {
 		}
 		
 		
-		public static createExplosion(world:World, x:number, y:number, scale:number):Entity {
+		public static createExplosion(game:CCLayer, world:World, x:number, y:number, scale:number):Entity {
 			var e:Entity = world.createEntity();
 			
 			var position:Position = new Position();
@@ -177,7 +178,7 @@ module brokenspork.core {
 			return e;
 		}	
 		
-		public static createStar(world:World):Entity {
+		public static createStar(game:CCLayer, world:World):Entity {
 			var e:Entity = world.createEntity();
 			
 			var position:Position = new Position();
@@ -209,7 +210,7 @@ module brokenspork.core {
 			return e;
 		}
 		
-		public static createParticle(world:World, x:number, y:number):Entity {
+		public static createParticle(game:CCLayer, world:World, x:number, y:number):Entity {
 			var e:Entity = world.createEntity();
 			
 			var position:Position = new Position();

@@ -1,16 +1,14 @@
-module artemis {
-	export module utils {
+module artemis.utils {
 
-		export interface ImmutableBag<E> {
-		
-			get(index: number): E;
-		
-			size(): number;
-		
-			isEmpty(): boolean;
-			
-			contains(e: E): boolean;
-		
-		}
+	export interface ImmutableBag<E> {
+
+		get(index: number): E;
+
+		size(): number;
+
+		isEmpty(): boolean;
+
+		contains(e: E): boolean;
+
 	}
 }

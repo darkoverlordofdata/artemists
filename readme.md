@@ -1,7 +1,5 @@
 # Artemis
 
-status ~ 80%
-
 Port of artemis-framework to typescript.
 
 plan demo using typescript port of https://github.com/Flet/spaceship-warrior-redux
@@ -9,6 +7,9 @@ replacing gdx with cocos2d-js
 
 Requires TypeScript 1.5
 cocos2d-x 3.7
+
+#### status
+Port complete. Testng phase.
 
 # MIT License
 
