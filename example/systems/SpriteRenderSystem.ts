@@ -12,32 +12,23 @@ module brokenspork.systems {
 	import Bag = artemis.utils.Bag;
 	import ImmutableBag = artemis.utils.ImmutableBag;
 	import Mapper = artemis.annotations.Mapper;
-	// import com.badlogic.gdx.Gdx;
-	// import com.badlogic.gdx.graphics.OrthographicCamera;
-	// import com.badlogic.gdx.graphics.Texture;
-	// import com.badlogic.gdx.graphics.Texture.TextureFilter;
-	// import com.badlogic.gdx.graphics.g2d.BitmapFont;
-	// import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-	// import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-	// import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
-	// import com.badlogic.gdx.graphics.g2d.TextureRegion;
-	
+	import Constants = brokenspork.core.Constants;
+
 	export class SpriteRenderSystem extends EntitySystem {
 		@Mapper(Position) pm:ComponentMapper<Position>;
 		@Mapper(Sprite) sm:ComponentMapper<Sprite>;
 	
 		private regions:HashMap<String, cc.SpriteFrame>;
-		// private TextureAtlas textureAtlas;
-		// private SpriteBatch batch;
-		// private OrthographicCamera camera;
 		private font:cc.LabelBMFont;
 	
 		private regionsByEntity:Bag<cc.SpriteFrame>;
 		private sortedEntities:Array<Entity>;
-	
-		//@SuppressWarnings("unchecked")
-		constructor() {
+
+    private game:CCLayer;
+
+    constructor(game:CCLayer) {
 			super(Aspect.getAspectForAll(Position, Sprite));
+      this.game = game;
 		}
 	
 		
@@ -59,12 +50,7 @@ module brokenspork.systems {
 		}
 	
 		
-		protected begin() {
-			// batch.setProjectionMatrix(camera.combined);
-			// batch.begin();
-		}
-	
-		
+
 		protected checkProcessing():boolean {
 			return true;
 		}
@@ -80,22 +66,12 @@ module brokenspork.systems {
 			if (this.pm.has(e)) {
 				var position:Position = this.pm.getSafe(e);
 				var sprite:Sprite = this.sm.get(e);
-				//var spriteRegion:cc.SpriteFrame = this.regionsByEntity.get(e.getId());
-				// batch.setColor(sprite.r, sprite.g, sprite.b, sprite.a);
-	
-				// float posX = position.x - (spriteRegion.getRegionWidth() / 2 * sprite.scaleX);
-				// float posY = position.y - (spriteRegion.getRegionHeight() / 2 * sprite.scaleX);
-				// batch.draw(spriteRegion, posX, posY, 0, 0, spriteRegion.getRegionWidth(), spriteRegion.getRegionHeight(), sprite.scaleX, sprite.scaleY, sprite.rotation);
-				// GdxUtils.drawCentered(batch, spriteRegion, position.x,
-				// position.y);
+
+        sprite.sprite_.setPosition(cc.p(position.x*2, Constants.FRAME_HEIGHT - position.y));
 			}
 		}
 	
-		protected end() {
-			//batch.end();
-		}
-	
-		
+
 		public inserted(e:Entity) {
 			var sprite:Sprite = this.sm.get(e);
 			this.regionsByEntity.set(e.getId(), this.regions.get(sprite.name));
@@ -113,6 +89,10 @@ module brokenspork.systems {
 	
 		
 		protected removed(e:Entity) {
+      var c:Sprite = e.getComponentByType(Sprite);
+      //console.log('SpriteRenderSystem::removed', c.name, e.uuid);
+      this.game.removeChild(c.sprite_);
+
 			this.regionsByEntity.set(e.getId(), null);
 			var index = this.sortedEntities.indexOf(e);
 			if (index != -1) {

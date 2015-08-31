@@ -6,7 +6,8 @@ plan demo using typescript port of https://github.com/Flet/spaceship-warrior-red
 replacing gdx with cocos2d-js
 
 Requires TypeScript 1.5
-cocos2d-x 3.7
+
+Example uses cocos2d-x 3.7
 
 #### status
 Port complete. Testng phase.

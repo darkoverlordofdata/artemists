@@ -11,7 +11,6 @@ module brokenspork.systems {
 	export class ExpiringSystem extends DelayedEntityProcessingSystem {
 		@Mapper(Expires) em:ComponentMapper<Expires>;
 	
-		//@SuppressWarnings("unchecked")
 		constructor() {
 			super(Aspect.getAspectForAll(Expires));
 		}

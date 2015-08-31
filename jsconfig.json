@@ -53,6 +53,7 @@
         "web/src/example/systems/HudRenderSystem.js",
         "web/src/example/systems/MovementSystem.js",
         "web/src/example/systems/ParallaxStarRepeatingSystem.js",
+        "web/src/example/systems/PlayerInputSystem.js",
         "web/src/example/systems/RemoveOffscreenShipsSystem.js",
         "web/src/example/systems/ScaleAnimationSystem.js",
         "web/src/example/systems/SoundEffectSystem.js",

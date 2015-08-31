@@ -12,7 +12,8 @@ module brokenspork.core {
 	import SoundEffect = brokenspork.components.SoundEffect;
 	import Sprite = brokenspork.components.Sprite;
 	import Velocity = brokenspork.components.Velocity;
-	
+
+	import Constants = brokenspork.core.Constants;
 	import Layer = brokenspork.components.Layer;
 	import EFFECT = brokenspork.components.EFFECT;
 	
@@ -39,7 +40,7 @@ module brokenspork.core {
 			sprite.b = 129;
 			sprite.layer = Layer.ACTORS_3;
 			e.addComponent(sprite);
-			game.addChild(sprite.sprite_)
+			game.addChild(sprite.sprite_);
 			
 			var velocity:Velocity = new Velocity();
 			velocity.vectorX = 0;
@@ -69,7 +70,8 @@ module brokenspork.core {
 			sprite.name = "bullet";
 			sprite.layer = Layer.PARTICLES;
 			e.addComponent(sprite);
-			
+			game.addChild(sprite.sprite_);
+
 			var velocity:Velocity = new Velocity();
 			velocity.vectorY = 800;
 			e.addComponent(velocity);
@@ -106,7 +108,8 @@ module brokenspork.core {
 			sprite.b = 142;
 			sprite.layer = layer;
 			e.addComponent(sprite);
-			
+			game.addChild(sprite.sprite_);
+
 			var velocity:Velocity = new Velocity();
 			velocity.vectorX = velocityX;
 			velocity.vectorY = velocityY;
@@ -131,7 +134,7 @@ module brokenspork.core {
 			var sf:SoundEffect = new SoundEffect();
 			sf.effect = EFFECT.SMALLASPLODE;
 			e.addComponent(sf);
-			
+
 			return e;
 		}
 		public static createBigExplosion(game:CCLayer, world:World, x:number, y:number):Entity {
@@ -140,7 +143,7 @@ module brokenspork.core {
 			var sf:SoundEffect = new SoundEffect();
 			sf.effect = EFFECT.ASPLODE;
 			e.addComponent(sf);
-			
+
 			return e;
 		}
 		
@@ -162,7 +165,8 @@ module brokenspork.core {
 			sprite.a = 128;
 			sprite.layer = Layer.PARTICLES;
 			e.addComponent(sprite);
-			
+			game.addChild(sprite.sprite_);
+
 			var expires:Expires = new Expires();
 			expires.delay = 0.5;
 			e.addComponent(expires);
@@ -182,8 +186,10 @@ module brokenspork.core {
 			var e:Entity = world.createEntity();
 			
 			var position:Position = new Position();
-			position.x = MathUtils.random(-Constants.FRAME_WIDTH/2, Constants.FRAME_WIDTH/2);
-			position.y = MathUtils.random(-Constants.FRAME_HEIGHT/2, Constants.FRAME_HEIGHT/2);
+			//position.x = MathUtils.random(-Constants.FRAME_WIDTH/2, Constants.FRAME_WIDTH/2);
+			//position.y = MathUtils.random(-Constants.FRAME_HEIGHT/2, Constants.FRAME_HEIGHT/2);
+			position.x = MathUtils.nextInt(Constants.FRAME_WIDTH/2);
+			position.y = MathUtils.nextInt(Constants.FRAME_HEIGHT);
 			e.addComponent(position);
 			
 			var sprite:Sprite = new Sprite();
@@ -192,7 +198,8 @@ module brokenspork.core {
 			sprite.a = MathUtils.random(0.1, 0.5);
 			sprite.layer = Layer.BACKGROUND;
 			e.addComponent(sprite);
-			
+			game.addChild(sprite.sprite_);
+
 			var velocity:Velocity = new Velocity();
 			velocity.vectorY = MathUtils.random(-10, -60);
 			e.addComponent(velocity);
@@ -227,7 +234,8 @@ module brokenspork.core {
 			sprite.a = 1;
 			sprite.layer = Layer.PARTICLES;
 			e.addComponent(sprite);
-			
+			game.addChild(sprite.sprite_);
+
 			var radians:number = MathUtils.random(2*Math.PI);
 			var magnitude:number = MathUtils.random(400);
 			

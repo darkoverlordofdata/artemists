@@ -2,8 +2,8 @@ module brokenspork.core {
 	
 	export class Constants {
 
-			public static FRAME_WIDTH:number = 1280;
-			public static FRAME_HEIGHT:number = 720;
+			public static FRAME_WIDTH:number = 800;
+			public static FRAME_HEIGHT:number = 450;
 				
 			public static Groups = {
 				PLAYER_BULLETS: "player bullets",

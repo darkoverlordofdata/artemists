@@ -27,7 +27,7 @@ module brokenspork.systems {
 					return;
 			}
 			position.x += velocity.vectorX*this.world.delta;
-			position.y += velocity.vectorY*this.world.delta;
+			position.y -= velocity.vectorY*this.world.delta;
 		}
 	
 	}

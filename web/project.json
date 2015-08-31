@@ -65,6 +65,7 @@
         "src/example/systems/HealthRenderSystem.js",
         "src/example/systems/HudRenderSystem.js",
         "src/example/systems/MovementSystem.js",
+        "src/example/systems/PlayerInputSystem.js",
         "src/example/systems/ParallaxStarRepeatingSystem.js",
         "src/example/systems/RemoveOffscreenShipsSystem.js",
         "src/example/systems/ScaleAnimationSystem.js",

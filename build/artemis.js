@@ -338,7 +338,7 @@ var artemis;
             // 	return this.length_;
             // }
             // and(set:BitSet):BitSet {
-            // }	
+            // }
             // or(set:BitSet):BitSet {
             // }
             // nand(set:BitSet):BitSet {
@@ -1046,7 +1046,7 @@ var artemis;
         *            the expected return component type.
         * @return component that matches, or null if none is found.
         */
-        Entity.prototype.getComponentSlow = function (type) {
+        Entity.prototype.getComponentByType = function (type) {
             //return type.cast(getComponent(ComponentType.getTypeFor(type)));
             return this.componentManager_.getComponent(this, artemis.ComponentType.getTypeFor(type));
         };
@@ -1375,10 +1375,6 @@ var artemis;
         World.prototype.getSystem = function (type) {
             return this.systems_.get(type);
         };
-        // public getManager<T extends EntitySystem>(type:Function):T {
-        // public <T extends EntitySystem> T getSystem(Class<T> type) {
-        // 	return type.cast(systems.get(type));
-        // }
         /**
         * Performs an action on each entity.
         * @param entities
@@ -1950,11 +1946,11 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var artemis;
 (function (artemis) {
-    var Bag = artemis.utils.Bag;
-    var HashMap = artemis.utils.HashMap;
-    var Manager = artemis.Manager;
     var managers;
     (function (managers) {
+        var Bag = artemis.utils.Bag;
+        var HashMap = artemis.utils.HashMap;
+        var Manager = artemis.Manager;
         /**
         * If you need to group your entities together, e.g. tanks going into "units" group or explosions into "effects",
         * then use this manager. You must retrieve it using world instance.
@@ -2083,11 +2079,11 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var artemis;
 (function (artemis) {
-    var Bag = artemis.utils.Bag;
-    var HashMap = artemis.utils.HashMap;
-    var Manager = artemis.Manager;
     var managers;
     (function (managers) {
+        var Bag = artemis.utils.Bag;
+        var HashMap = artemis.utils.HashMap;
+        var Manager = artemis.Manager;
         /**
         * You may sometimes want to specify to which player an entity belongs to.
         *
@@ -2206,11 +2202,11 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var artemis;
 (function (artemis) {
-    var Bag = artemis.utils.Bag;
-    var HashMap = artemis.utils.HashMap;
-    var Manager = artemis.Manager;
     var managers;
     (function (managers) {
+        var Bag = artemis.utils.Bag;
+        var HashMap = artemis.utils.HashMap;
+        var Manager = artemis.Manager;
         /**
         * Use this class together with PlayerManager.
         *
@@ -2489,6 +2485,8 @@ var artemis;
             __extends(IntervalEntitySystem, _super);
             function IntervalEntitySystem(aspect, interval) {
                 _super.call(this, aspect);
+                this.acc_ = 0;
+                this.interval_ = 0;
                 this.interval_ = interval;
             }
             IntervalEntitySystem.prototype.checkProcessing = function () {
@@ -2588,7 +2586,7 @@ var artemis;
         define(factory);
     }
     else if ('object' == typeof exports) {
-        module.exports['artemis'] = factory();
+        module.exports = factory();
     }
     else {
         root['artemis'] = factory();
@@ -2602,8 +2600,8 @@ var brokenspork;
         var Constants = (function () {
             function Constants() {
             }
-            Constants.FRAME_WIDTH = 1280;
-            Constants.FRAME_HEIGHT = 720;
+            Constants.FRAME_WIDTH = 800;
+            Constants.FRAME_HEIGHT = 450;
             Constants.Groups = {
                 PLAYER_BULLETS: "player bullets",
                 PLAYER_SHIP: "player ship",
@@ -3130,8 +3128,10 @@ var brokenspork;
                 var p2 = this.cs.pm.get(e2);
                 var b1 = this.cs.bm.get(e1);
                 var b2 = this.cs.bm.get(e2);
+                var a = p1.x - p2.x;
+                var b = p1.y - p2.y;
+                return Math.sqrt(a * a + b * b) - b1.radius < b2.radius;
                 //return Utils.distance(p1.x, p1.y, p2.x, p2.y)-b1.radius < b2.radius;
-                return false;
             };
             return CollisionPair;
         })();
@@ -3214,17 +3214,18 @@ var brokenspork;
             function EntitySpawningTimerSystem(game) {
                 var _this = this;
                 _super.call(this);
+                this.game = game;
                 this.timer1 = new Timer(2, true);
                 this.timer1.execute = function () {
-                    EntityFactory.createEnemyShip(_this.game, _this.world, "enemy1", Layer.ACTORS_3, 10, MathUtils.random(-Constants.FRAME_WIDTH / 2, Constants.FRAME_WIDTH / 2), Constants.FRAME_HEIGHT / 2 + 50, 0, -40, 20).addToWorld();
+                    EntityFactory.createEnemyShip(_this.game, _this.world, "enemy1", Layer.ACTORS_3, 10, MathUtils.nextInt(Constants.FRAME_WIDTH / 2), Constants.FRAME_HEIGHT / 2 - 200, 0, -40, 20).addToWorld();
                 };
                 this.timer2 = new Timer(6, true);
                 this.timer2.execute = function () {
-                    EntityFactory.createEnemyShip(_this.game, _this.world, "enemy2", Layer.ACTORS_2, 20, MathUtils.random(-Constants.FRAME_WIDTH / 2, Constants.FRAME_WIDTH / 2), Constants.FRAME_HEIGHT / 2 + 100, 0, -30, 40).addToWorld();
+                    EntityFactory.createEnemyShip(_this.game, _this.world, "enemy2", Layer.ACTORS_2, 20, MathUtils.nextInt(Constants.FRAME_WIDTH / 2), Constants.FRAME_HEIGHT / 2 - 100, 0, -30, 40).addToWorld();
                 };
                 this.timer3 = new Timer(12, true);
                 this.timer3.execute = function () {
-                    EntityFactory.createEnemyShip(_this.game, _this.world, "enemy3", Layer.ACTORS_1, 60, MathUtils.random(-Constants.FRAME_WIDTH / 2, Constants.FRAME_WIDTH / 2), Constants.FRAME_HEIGHT / 2 + 200, 0, -20, 70).addToWorld();
+                    EntityFactory.createEnemyShip(_this.game, _this.world, "enemy3", Layer.ACTORS_1, 60, MathUtils.nextInt(Constants.FRAME_WIDTH / 2), Constants.FRAME_HEIGHT / 2 - 50, 0, -20, 70).addToWorld();
                 };
             }
             EntitySpawningTimerSystem.prototype.processSystem = function () {
@@ -3262,7 +3263,6 @@ var brokenspork;
         var Mapper = artemis.annotations.Mapper;
         var ExpiringSystem = (function (_super) {
             __extends(ExpiringSystem, _super);
-            //@SuppressWarnings("unchecked")
             function ExpiringSystem() {
                 _super.call(this, Aspect.getAspectForAll(Expires));
             }
@@ -3314,7 +3314,6 @@ var brokenspork;
             //private batch:SpriteBatch;
             // private OrthographicCamera camera;
             // private BitmapFont font;
-            //@SuppressWarnings("unchecked")
             function HealthRenderSystem() {
                 _super.call(this, Aspect.getAspectForAll(Position, Health));
             }
@@ -3330,6 +3329,14 @@ var brokenspork;
                 // batch.setProjectionMatrix(camera.combined);
                 // batch.begin();
             };
+            //public inserted(e:Entity) {
+            //  var c:Sprite = e.getComponentByType(Sprite);
+            //  console.log('HealthRenderSystem::inserted', c.name, e.uuid);
+            //}
+            //protected removed(e:Entity) {
+            //  var c:Sprite = e.getComponentByType(Sprite);
+            //  console.log('HealthRenderSystem::removed', c.name, e.uuid);
+            //}
             HealthRenderSystem.prototype.processEach = function (e) {
                 var position = this.pm.get(e);
                 var health = this.hm.get(e);
@@ -3468,7 +3475,7 @@ var brokenspork;
                     return;
                 }
                 position.x += velocity.vectorX * this.world.delta;
-                position.y += velocity.vectorY * this.world.delta;
+                position.y -= velocity.vectorY * this.world.delta;
             };
             __decorate([
                 Mapper(Position)
@@ -3508,14 +3515,13 @@ var brokenspork;
         var Mapper = artemis.annotations.Mapper;
         var ParallaxStarRepeatingSystem = (function (_super) {
             __extends(ParallaxStarRepeatingSystem, _super);
-            //@SuppressWarnings("unchecked")
             function ParallaxStarRepeatingSystem() {
                 _super.call(this, Aspect.getAspectForAll(ParallaxStar, Position), 1);
             }
             ParallaxStarRepeatingSystem.prototype.processEach = function (e) {
                 var position = this.pm.get(e);
-                if (position.y < -Constants.FRAME_HEIGHT / 2) {
-                    position.y = Constants.FRAME_HEIGHT / 2;
+                if (position.y >= Constants.FRAME_HEIGHT) {
+                    position.y = 0;
                 }
             };
             __decorate([
@@ -3527,6 +3533,98 @@ var brokenspork;
     })(systems = brokenspork.systems || (brokenspork.systems = {}));
 })(brokenspork || (brokenspork = {}));
 //# sourceMappingURL=ParallaxStarRepeatingSystem.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
+    switch (arguments.length) {
+        case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
+        case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
+        case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
+    }
+};
+var brokenspork;
+(function (brokenspork) {
+    var systems;
+    (function (systems) {
+        var Player = brokenspork.components.Player;
+        var Position = brokenspork.components.Position;
+        var Velocity = brokenspork.components.Velocity;
+        var EntityFactory = brokenspork.core.EntityFactory;
+        var Aspect = artemis.Aspect;
+        var Mapper = artemis.annotations.Mapper;
+        var EntityProcessingSystem = artemis.systems.EntityProcessingSystem;
+        var Constants = brokenspork.core.Constants;
+        var PlayerInputSystem = (function (_super) {
+            __extends(PlayerInputSystem, _super);
+            function PlayerInputSystem(game) {
+                _super.call(this, Aspect.getAspectForAll(Position, Velocity, Player));
+                this.timeToFire = 0;
+                this.game = game;
+            }
+            PlayerInputSystem.prototype.initialize = function () {
+                var _this = this;
+                var listener = cc.EventListener.create({
+                    event: cc.EventListener.TOUCH_ONE_BY_ONE,
+                    swallowTouches: true,
+                    onTouchBegan: function (touch, event) {
+                        _this.shoot = true;
+                        _this.mouseVector = touch.getLocation();
+                        return true;
+                    },
+                    onTouchEnded: function (touch, event) {
+                        _this.shoot = false;
+                        _this.mouseVector = touch.getLocation();
+                    }
+                });
+                cc.eventManager.addListener(listener, this.game);
+            };
+            PlayerInputSystem.prototype.processEach = function (e) {
+                if (this.mouseVector === undefined)
+                    return;
+                var position = this.pm.get(e);
+                var velocity = this.vm.get(e);
+                var destinationX = this.mouseVector.x;
+                var destinationY = this.mouseVector.y;
+                if (destinationX === undefined || destinationY === undefined)
+                    return;
+                position.x = this.mouseVector.x / 2;
+                position.y = Constants.FRAME_HEIGHT - this.mouseVector.y;
+                if (this.shoot) {
+                    if (this.timeToFire <= 0) {
+                        EntityFactory.createPlayerBullet(this.game, this.world, position.x - 27, position.y + 2).addToWorld();
+                        EntityFactory.createPlayerBullet(this.game, this.world, position.x + 27, position.y + 2).addToWorld();
+                        this.timeToFire = PlayerInputSystem.FireRate;
+                    }
+                }
+                if (this.timeToFire > 0) {
+                    this.timeToFire -= this.world.delta;
+                    if (this.timeToFire < 0) {
+                        this.timeToFire = 0;
+                    }
+                }
+            };
+            PlayerInputSystem.HorizontalThrusters = 300;
+            PlayerInputSystem.HorizontalMaxSpeed = 300;
+            PlayerInputSystem.VerticalThrusters = 200;
+            PlayerInputSystem.VerticalMaxSpeed = 200;
+            PlayerInputSystem.FireRate = 0.1;
+            __decorate([
+                Mapper(Position)
+            ], PlayerInputSystem.prototype, "pm");
+            __decorate([
+                Mapper(Velocity)
+            ], PlayerInputSystem.prototype, "vm");
+            return PlayerInputSystem;
+        })(EntityProcessingSystem);
+        systems.PlayerInputSystem = PlayerInputSystem;
+    })(systems = brokenspork.systems || (brokenspork.systems = {}));
+})(brokenspork || (brokenspork = {}));
+//# sourceMappingURL=PlayerInputSystem.js.map
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -3723,20 +3821,12 @@ var brokenspork;
         var EntitySystem = artemis.EntitySystem;
         var Bag = artemis.utils.Bag;
         var Mapper = artemis.annotations.Mapper;
-        // import com.badlogic.gdx.Gdx;
-        // import com.badlogic.gdx.graphics.OrthographicCamera;
-        // import com.badlogic.gdx.graphics.Texture;
-        // import com.badlogic.gdx.graphics.Texture.TextureFilter;
-        // import com.badlogic.gdx.graphics.g2d.BitmapFont;
-        // import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-        // import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-        // import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
-        // import com.badlogic.gdx.graphics.g2d.TextureRegion;
+        var Constants = brokenspork.core.Constants;
         var SpriteRenderSystem = (function (_super) {
             __extends(SpriteRenderSystem, _super);
-            //@SuppressWarnings("unchecked")
-            function SpriteRenderSystem() {
+            function SpriteRenderSystem(game) {
                 _super.call(this, Aspect.getAspectForAll(Position, Sprite));
+                this.game = game;
             }
             SpriteRenderSystem.prototype.initialize = function () {
                 this.regions = new HashMap();
@@ -3748,10 +3838,6 @@ var brokenspork;
                 }
                 this.regionsByEntity = new Bag();
                 this.sortedEntities = new Array();
-            };
-            SpriteRenderSystem.prototype.begin = function () {
-                // batch.setProjectionMatrix(camera.combined);
-                // batch.begin();
             };
             SpriteRenderSystem.prototype.checkProcessing = function () {
                 return true;
@@ -3765,10 +3851,8 @@ var brokenspork;
                 if (this.pm.has(e)) {
                     var position = this.pm.getSafe(e);
                     var sprite = this.sm.get(e);
+                    sprite.sprite_.setPosition(cc.p(position.x * 2, Constants.FRAME_HEIGHT - position.y));
                 }
-            };
-            SpriteRenderSystem.prototype.end = function () {
-                //batch.end();
             };
             SpriteRenderSystem.prototype.inserted = function (e) {
                 var _this = this;
@@ -3783,6 +3867,9 @@ var brokenspork;
                 });
             };
             SpriteRenderSystem.prototype.removed = function (e) {
+                var c = e.getComponentByType(Sprite);
+                //console.log('SpriteRenderSystem::removed', c.name, e.uuid);
+                this.game.removeChild(c.sprite_);
                 this.regionsByEntity.set(e.getId(), null);
                 var index = this.sortedEntities.indexOf(e);
                 if (index != -1) {
@@ -3817,6 +3904,7 @@ var brokenspork;
         var SoundEffect = brokenspork.components.SoundEffect;
         var Sprite = brokenspork.components.Sprite;
         var Velocity = brokenspork.components.Velocity;
+        var Constants = brokenspork.core.Constants;
         var Layer = brokenspork.components.Layer;
         var EFFECT = brokenspork.components.EFFECT;
         var GroupManager = artemis.managers.GroupManager;
@@ -3845,7 +3933,7 @@ var brokenspork;
                 bounds.radius = 43;
                 e.addComponent(bounds);
                 e.addComponent(new Player());
-                world.getManager(GroupManager).add(e, core.Constants.Groups.PLAYER_SHIP);
+                world.getManager(GroupManager).add(e, Constants.Groups.PLAYER_SHIP);
                 return e;
             };
             EntityFactory.createPlayerBullet = function (game, world, x, y) {
@@ -3858,6 +3946,7 @@ var brokenspork;
                 sprite.name = "bullet";
                 sprite.layer = Layer.PARTICLES;
                 e.addComponent(sprite);
+                game.addChild(sprite.sprite_);
                 var velocity = new Velocity();
                 velocity.vectorY = 800;
                 e.addComponent(velocity);
@@ -3870,7 +3959,7 @@ var brokenspork;
                 var sf = new SoundEffect();
                 sf.effect = EFFECT.PEW;
                 e.addComponent(sf);
-                world.getManager(GroupManager).add(e, core.Constants.Groups.PLAYER_BULLETS);
+                world.getManager(GroupManager).add(e, Constants.Groups.PLAYER_BULLETS);
                 return e;
             };
             EntityFactory.createEnemyShip = function (game, world, name, layer, health, x, y, velocityX, velocityY, boundsRadius) {
@@ -3886,6 +3975,7 @@ var brokenspork;
                 sprite.b = 142;
                 sprite.layer = layer;
                 e.addComponent(sprite);
+                game.addChild(sprite.sprite_);
                 var velocity = new Velocity();
                 velocity.vectorX = velocityX;
                 velocity.vectorY = velocityY;
@@ -3896,7 +3986,7 @@ var brokenspork;
                 var h = new Health();
                 h.health = h.maximumHealth = health;
                 e.addComponent(h);
-                world.getManager(GroupManager).add(e, core.Constants.Groups.ENEMY_SHIPS);
+                world.getManager(GroupManager).add(e, Constants.Groups.ENEMY_SHIPS);
                 return e;
             };
             EntityFactory.createSmallExplosion = function (game, world, x, y) {
@@ -3928,6 +4018,7 @@ var brokenspork;
                 sprite.a = 128;
                 sprite.layer = Layer.PARTICLES;
                 e.addComponent(sprite);
+                game.addChild(sprite.sprite_);
                 var expires = new Expires();
                 expires.delay = 0.5;
                 e.addComponent(expires);
@@ -3943,8 +4034,10 @@ var brokenspork;
             EntityFactory.createStar = function (game, world) {
                 var e = world.createEntity();
                 var position = new Position();
-                position.x = MathUtils.random(-core.Constants.FRAME_WIDTH / 2, core.Constants.FRAME_WIDTH / 2);
-                position.y = MathUtils.random(-core.Constants.FRAME_HEIGHT / 2, core.Constants.FRAME_HEIGHT / 2);
+                //position.x = MathUtils.random(-Constants.FRAME_WIDTH/2, Constants.FRAME_WIDTH/2);
+                //position.y = MathUtils.random(-Constants.FRAME_HEIGHT/2, Constants.FRAME_HEIGHT/2);
+                position.x = MathUtils.nextInt(Constants.FRAME_WIDTH / 2);
+                position.y = MathUtils.nextInt(Constants.FRAME_HEIGHT);
                 e.addComponent(position);
                 var sprite = new Sprite();
                 sprite.name = "particle";
@@ -3952,6 +4045,7 @@ var brokenspork;
                 sprite.a = MathUtils.random(0.1, 0.5);
                 sprite.layer = Layer.BACKGROUND;
                 e.addComponent(sprite);
+                game.addChild(sprite.sprite_);
                 var velocity = new Velocity();
                 velocity.vectorY = MathUtils.random(-10, -60);
                 e.addComponent(velocity);
@@ -3980,6 +4074,7 @@ var brokenspork;
                 sprite.a = 1;
                 sprite.layer = Layer.PARTICLES;
                 e.addComponent(sprite);
+                game.addChild(sprite.sprite_);
                 var radians = MathUtils.random(2 * Math.PI);
                 var magnitude = MathUtils.random(400);
                 var velocity = new Velocity();
@@ -4016,22 +4111,22 @@ var brokenspork;
         var HudRenderSystem = brokenspork.systems.HudRenderSystem;
         var MovementSystem = brokenspork.systems.MovementSystem;
         var ParallaxStarRepeatingSystem = brokenspork.systems.ParallaxStarRepeatingSystem;
-        //import PlayerInputSystem = brokenspork.systems.PlayerInputSystem;
+        var PlayerInputSystem = brokenspork.systems.PlayerInputSystem;
         var RemoveOffscreenShipsSystem = brokenspork.systems.RemoveOffscreenShipsSystem;
         var ScaleAnimationSystem = brokenspork.systems.ScaleAnimationSystem;
         var SoundEffectSystem = brokenspork.systems.SoundEffectSystem;
         var SpriteRenderSystem = brokenspork.systems.SpriteRenderSystem;
         var GroupManager = artemis.managers.GroupManager;
+        var Constants = brokenspork.core.Constants;
         var GameScreen = (function () {
             function GameScreen(game) {
-                //this.batch = new SpriteBatch();
                 this.game = game;
-                //this.camera = new OrthographicCamera(Constants.FRAME_WIDTH, Constants.FRAME_HEIGHT);
+                this.game = game;
                 this.world = new artemis.World();
                 this.world.setManager(new GroupManager());
                 this.world.setSystem(new MovementSystem());
-                //this.playerInputSystem = new PlayerInputSystem(game);
-                //this.world.setSystem(playerInputSystem);
+                this.playerInputSystem = new PlayerInputSystem(game);
+                this.world.setSystem(this.playerInputSystem);
                 this.world.setSystem(new SoundEffectSystem());
                 this.world.setSystem(new CollisionSystem(game));
                 this.world.setSystem(new ExpiringSystem());
@@ -4040,29 +4135,23 @@ var brokenspork;
                 this.world.setSystem(new ColorAnimationSystem());
                 this.world.setSystem(new ScaleAnimationSystem());
                 this.world.setSystem(new RemoveOffscreenShipsSystem());
-                this.spriteRenderSystem = this.world.setSystem(new SpriteRenderSystem(), true);
+                this.spriteRenderSystem = this.world.setSystem(new SpriteRenderSystem(game), true);
                 this.healthRenderSystem = this.world.setSystem(new HealthRenderSystem(), true);
                 this.hudRenderSystem = this.world.setSystem(new HudRenderSystem(), true);
                 this.world.initialize();
-                core.EntityFactory.createPlayer(this.game, this.world, 0, 0).addToWorld();
+                core.EntityFactory.createPlayer(this.game, this.world, Constants.FRAME_WIDTH / 4, Constants.FRAME_HEIGHT - 80).addToWorld();
                 for (var i = 0; 500 > i; i++) {
                     core.EntityFactory.createStar(this.game, this.world).addToWorld();
                 }
             }
             GameScreen.prototype.render = function (delta) {
                 this.world.setDelta(delta);
-                // if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-                // 	for (var i = 0; 10 > i; i++) {
-                // 		this.world.process();
-                // 	}
-                // }
                 this.world.process();
                 this.spriteRenderSystem.process();
                 this.healthRenderSystem.process();
                 this.hudRenderSystem.process();
             };
-            //private playerInputSystem:PlayerInputSystem;
-            GameScreen.ASPECT_RATIO = core.Constants.FRAME_WIDTH / core.Constants.FRAME_HEIGHT;
+            GameScreen.ASPECT_RATIO = Constants.FRAME_WIDTH / Constants.FRAME_HEIGHT;
             return GameScreen;
         })();
         core.GameScreen = GameScreen;
@@ -4121,7 +4210,7 @@ var brokenspork;
         define(factory);
     }
     else if ('object' == typeof exports) {
-        module.exports['brokenspork'] = factory();
+        module.exports = factory();
     }
     else {
         root['brokenspork'] = factory();

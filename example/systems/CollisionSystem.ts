@@ -128,9 +128,11 @@ module brokenspork.systems {
 			
 			var b1:Bounds = this.cs.bm.get(e1);
 			var b2:Bounds = this.cs.bm.get(e2);
-			
+
+			var a = p1.x - p2.x;
+			var b = p1.y - p2.y;
+			return Math.sqrt(a*a+b*b)-b1.radius < b2.radius;
 			//return Utils.distance(p1.x, p1.y, p2.x, p2.y)-b1.radius < b2.radius;
-			return false;
 		}
 	}
 	

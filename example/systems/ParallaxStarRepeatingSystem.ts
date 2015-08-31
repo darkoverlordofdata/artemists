@@ -13,7 +13,6 @@ module brokenspork.systems {
 	export class ParallaxStarRepeatingSystem extends IntervalEntityProcessingSystem {
 		@Mapper(Position) pm:ComponentMapper<Position>;
 	
-		//@SuppressWarnings("unchecked")
 		constructor() {
 			super(Aspect.getAspectForAll(ParallaxStar, Position), 1);
 		}
@@ -21,10 +20,10 @@ module brokenspork.systems {
 		
 		public processEach(e:Entity) {
 			var position:Position = this.pm.get(e);
-	
-			if (position.y < -Constants.FRAME_HEIGHT / 2) {
-				position.y = Constants.FRAME_HEIGHT / 2;
-			}
+
+			if (position.y >= Constants.FRAME_HEIGHT) {
+        position.y = 0;
+      }
 		}
 	
 	}

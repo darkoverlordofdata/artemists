@@ -187,7 +187,7 @@ module artemis {
 		*            the expected return component type.
 		* @return component that matches, or null if none is found.
 		*/
-		public getComponentSlow(type:Function): Component  {
+		public getComponentByType(type:Function): Component  {
 			//return type.cast(getComponent(ComponentType.getTypeFor(type)));
 			return this.componentManager_.getComponent(this, ComponentType.getTypeFor(type));
 		}

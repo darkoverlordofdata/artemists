@@ -67,6 +67,7 @@
       "example/systems/HudRenderSystem.ts",
       "example/systems/MovementSystem.ts",
       "example/systems/ParallaxStarRepeatingSystem.ts",
+      "example/systems/PlayerInputSystem.ts",
       "example/systems/RemoveOffscreenShipsSystem.ts",
       "example/systems/ScaleAnimationSystem.ts",
       "example/systems/SoundEffectSystem.ts",

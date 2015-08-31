@@ -11,8 +11,8 @@ module artemis.systems {
 	*
 	*/
 	export class IntervalEntitySystem extends EntitySystem {
-		private acc_:number;
-		private interval_:number;
+		private acc_:number=0;
+		private interval_:number=0;
 
 		constructor(aspect:Aspect, interval:number) {
 			super(aspect);

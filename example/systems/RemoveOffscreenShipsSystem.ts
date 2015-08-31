@@ -17,7 +17,6 @@ module brokenspork.systems {
 		@Mapper(Position) pm:ComponentMapper<Position>;
 		@Mapper(Bounds) bm:ComponentMapper<Bounds>;
 	
-		//@SuppressWarnings("unchecked")
 		constructor() {
 			super(Aspect.getAspectForAll(Velocity, Position, Health, Bounds), 5);
 		}
@@ -27,7 +26,7 @@ module brokenspork.systems {
 			var position:Position = this.pm.get(e);
 			var bounds:Bounds = this.bm.get(e);
 			
-			if(position.y < -Constants.FRAME_HEIGHT/2-bounds.radius) {
+			if(position.y < Constants.FRAME_HEIGHT/2-bounds.radius) {
 				e.deleteFromWorld();
 			}
 		}

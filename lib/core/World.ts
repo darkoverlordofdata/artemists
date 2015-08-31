@@ -287,12 +287,7 @@ module artemis {
 		public getSystem(type:Function):EntitySystem {
 			return this.systems_.get(type);
 		}
-		// public getManager<T extends EntitySystem>(type:Function):T {
-		// public <T extends EntitySystem> T getSystem(Class<T> type) {
-		// 	return type.cast(systems.get(type));
-		// }
-	
-		
+
 		/**
 		* Performs an action on each entity.
 		* @param entities
@@ -314,7 +309,8 @@ module artemis {
 		* Process all non-passive systems.
 		*/
 		public process() {
-			this.check(this.added_, {
+
+      this.check(this.added_, {
 				
 				perform: function(observer:EntityObserver, e:Entity) {
 					observer.added(e);

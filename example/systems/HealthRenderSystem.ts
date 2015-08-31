@@ -2,7 +2,8 @@ module brokenspork.systems {
 	
 	import Health = brokenspork.components.Health;
 	import Position = brokenspork.components.Position;
-	
+  import Sprite = brokenspork.components.Sprite;
+
 	import Aspect = artemis.Aspect;
 	import ComponentMapper = artemis.ComponentMapper;
 	import Entity = artemis.Entity;
@@ -18,7 +19,6 @@ module brokenspork.systems {
 		// private OrthographicCamera camera;
 		// private BitmapFont font;
 		
-		//@SuppressWarnings("unchecked")
 		public constructor() {
 			super(Aspect.getAspectForAll(Position, Health));
 		}
@@ -39,18 +39,25 @@ module brokenspork.systems {
 			// batch.setProjectionMatrix(camera.combined);
 			// batch.begin();
 		}
-	
-		
+
+    //public inserted(e:Entity) {
+    //  var c:Sprite = e.getComponentByType(Sprite);
+    //  console.log('HealthRenderSystem::inserted', c.name, e.uuid);
+    //}
+    //protected removed(e:Entity) {
+    //  var c:Sprite = e.getComponentByType(Sprite);
+    //  console.log('HealthRenderSystem::removed', c.name, e.uuid);
+    //}
+
 		public processEach(e:Entity) {
 			var position:Position = this.pm.get(e);
 			var health:Health = this.hm.get(e);
 			
 			var percentage:number = Math.round(health.health/health.maximumHealth*100);
-			
 			//font.draw(batch, percentage+"%", position.x, position.y);
 		}
-		
-		
+
+
 		protected end() {
 			//batch.end();
 		}

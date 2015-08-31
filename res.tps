@@ -4,9 +4,9 @@
         <key>fileFormatVersion</key>
         <int>3</int>
         <key>texturePackerVersion</key>
-        <string>3.8.0</string>
+        <string>3.9.2</string>
         <key>fileName</key>
-        <string>/home/bruce/Git/artemists/lib/res/images-packed/pack.tps</string>
+        <string>/home/bruce/Git/artemists/res.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -43,6 +43,8 @@
         <false/>
         <key>pvrCompressionQuality</key>
         <enum type="SettingsBase::PvrCompressionQuality">PVR_QUALITY_NORMAL</enum>
+        <key>atfCompressData</key>
+        <false/>
         <key>mipMapMinSize</key>
         <uint>32768</uint>
         <key>etc1CompressionQuality</key>
@@ -145,7 +147,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>pack.plist</filename>
+                <filename>lib/res/images-packed/pack.plist</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -188,7 +190,7 @@
         </struct>
         <key>fileList</key>
         <array>
-            <filename>../images</filename>
+            <filename>lib/res/images</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
