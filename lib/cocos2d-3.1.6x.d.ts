@@ -3053,6 +3053,7 @@ declare module cc {
         setString(str:string);
     }
     export class LabelBMFont extends Sprite {
+        constructor(str:string, fntFile:string, width?:number, alignment?:number, imageOffset?:Point);
         setLineBreakWithoutSpace();
         getBlendFunc();
         isOpacityModifyRGB() : boolean;

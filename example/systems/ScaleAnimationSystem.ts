@@ -21,9 +21,10 @@ module brokenspork.systems {
 		
 		public processEach(e:Entity) {
 			var scaleAnimation:ScaleAnimation = this.sa.get(e);
+
 			if (scaleAnimation.active) {
 				var sprite:Sprite = this.sm.get(e);
-	
+
 				sprite.scaleX += scaleAnimation.speed * this.world.delta;
 				sprite.scaleY = sprite.scaleX;
 	

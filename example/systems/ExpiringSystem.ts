@@ -29,7 +29,8 @@ module brokenspork.systems {
 		
 		protected getRemainingDelay(e:Entity):number {
 			var expires:Expires = this.em.get(e);
-			return expires.delay;
+      return expires.delay;
+
 		}
 	}
 }

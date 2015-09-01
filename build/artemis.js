@@ -2909,6 +2909,8 @@ var brokenspork;
             function Sprite() {
                 _super.call(this);
                 this.sprite_ = new cc.Sprite();
+                this.sprite_.setScale(0.5);
+                this.sprite_.setOpacityModifyRGB(true);
             }
             Object.defineProperty(Sprite.prototype, "name", {
                 get: function () { return this.name_; },
@@ -2973,6 +2975,12 @@ var brokenspork;
                 enumerable: true,
                 configurable: true
             });
+            Sprite.prototype.addTo = function (layer) {
+                layer.addChild(this.sprite_);
+            };
+            Sprite.prototype.removeFrom = function (layer) {
+                layer.removeChild(this.sprite_);
+            };
             Sprite.className = 'Sprite';
             return Sprite;
         })(Component);
@@ -3120,9 +3128,8 @@ var brokenspork;
                 }
             };
             CollisionPair.prototype.collisionExists = function (e1, e2) {
-                if (e1 == null || e2 == null) {
+                if (e1 === null || e2 === null)
                     return false;
-                }
                 //NPE!!!
                 var p1 = this.cs.pm.get(e1);
                 var p2 = this.cs.pm.get(e2);
@@ -3306,45 +3313,43 @@ var brokenspork;
     (function (systems) {
         var Health = brokenspork.components.Health;
         var Position = brokenspork.components.Position;
+        var Sprite = brokenspork.components.Sprite;
         var Aspect = artemis.Aspect;
         var EntityProcessingSystem = artemis.systems.EntityProcessingSystem;
         var Mapper = artemis.annotations.Mapper;
+        var Constants = brokenspork.core.Constants;
         var HealthRenderSystem = (function (_super) {
             __extends(HealthRenderSystem, _super);
-            //private batch:SpriteBatch;
-            // private OrthographicCamera camera;
-            // private BitmapFont font;
-            function HealthRenderSystem() {
+            function HealthRenderSystem(game) {
                 _super.call(this, Aspect.getAspectForAll(Position, Health));
+                this.game = game;
+                this.texts = {};
             }
-            HealthRenderSystem.prototype.initialize = function () {
-                // batch = new SpriteBatch();
-                // Texture fontTexture = new Texture(Gdx.files.internal("fonts/normal_0.png"));
-                // fontTexture.setFilter(TextureFilter.Linear, TextureFilter.MipMapLinearLinear);
-                // TextureRegion fontRegion = new TextureRegion(fontTexture);
-                // font = new BitmapFont(Gdx.files.internal("fonts/normal.fnt"), fontRegion, false);
-                // font.setUseIntegerPositions(false);
+            HealthRenderSystem.prototype.inserted = function (e) {
+                // add a text element to the sprite
+                var c = e.getComponentByType(Sprite);
+                var b = new cc.LabelBMFont('100%', "res/fonts/normal.fnt");
+                b.setScale(1 / 2);
+                this.game.addChild(b);
+                this.texts[e.uuid] = b;
             };
-            HealthRenderSystem.prototype.begin = function () {
-                // batch.setProjectionMatrix(camera.combined);
-                // batch.begin();
+            HealthRenderSystem.prototype.removed = function (e) {
+                // remove the text element from the sprite
+                var c = e.getComponentByType(Sprite);
+                this.game.removeChild(this.texts[e.uuid]);
+                this.texts[e.uuid] = null;
+                delete this.texts[e.uuid];
             };
-            //public inserted(e:Entity) {
-            //  var c:Sprite = e.getComponentByType(Sprite);
-            //  console.log('HealthRenderSystem::inserted', c.name, e.uuid);
-            //}
-            //protected removed(e:Entity) {
-            //  var c:Sprite = e.getComponentByType(Sprite);
-            //  console.log('HealthRenderSystem::removed', c.name, e.uuid);
-            //}
             HealthRenderSystem.prototype.processEach = function (e) {
-                var position = this.pm.get(e);
-                var health = this.hm.get(e);
-                var percentage = Math.round(health.health / health.maximumHealth * 100);
-                //font.draw(batch, percentage+"%", position.x, position.y);
-            };
-            HealthRenderSystem.prototype.end = function () {
-                //batch.end();
+                // update the text element on the sprite
+                if (this.texts[e.uuid]) {
+                    var position = this.pm.get(e);
+                    var health = this.hm.get(e);
+                    var text = this.texts[e.uuid];
+                    var percentage = Math.round(health.health / health.maximumHealth * 100);
+                    text.setPosition(cc.p(position.x * 2, Constants.FRAME_HEIGHT - position.y));
+                    text.setString(percentage + "%");
+                }
             };
             __decorate([
                 Mapper(Position)
@@ -3380,52 +3385,31 @@ var brokenspork;
         var Sprite = brokenspork.components.Sprite;
         var VoidEntitySystem = artemis.systems.VoidEntitySystem;
         var Mapper = artemis.annotations.Mapper;
-        // import com.badlogic.gdx.Gdx;
-        // import com.badlogic.gdx.graphics.OrthographicCamera;
-        // import com.badlogic.gdx.graphics.Texture;
-        // import com.badlogic.gdx.graphics.Texture.TextureFilter;
-        // import com.badlogic.gdx.graphics.g2d.BitmapFont;
-        // import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-        // import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-        // import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
-        // import com.badlogic.gdx.graphics.g2d.TextureRegion;
         var HudRenderSystem = (function (_super) {
             __extends(HudRenderSystem, _super);
-            // private HashMap<String, AtlasRegion> regions;
-            // private TextureAtlas textureAtlas;
-            // private SpriteBatch batch;
-            // private OrthographicCamera camera;
-            // private BitmapFont font;
-            function HudRenderSystem() {
+            function HudRenderSystem(game) {
                 _super.call(this);
-                // this.camera = camera;
+                this.game = game;
             }
             HudRenderSystem.prototype.initialize = function () {
-                // regions = new HashMap<String, AtlasRegion>();
-                // textureAtlas = new TextureAtlas("images-packed/pack.atlas");
-                // for (AtlasRegion r : textureAtlas.getRegions()) {
-                // 	regions.put(r.name, r);
-                // }
-                // batch = new SpriteBatch();
-                // Texture fontTexture = new Texture(Gdx.files.internal("fonts/normal_0.png"));
-                // fontTexture.setFilter(TextureFilter.Linear, TextureFilter.MipMapLinearLinear);
-                // TextureRegion fontRegion = new TextureRegion(fontTexture);
-                // font = new BitmapFont(Gdx.files.internal("fonts/normal.fnt"), fontRegion, false);
-                // font.setUseIntegerPositions(false);
-            };
-            HudRenderSystem.prototype.begin = function () {
-                // batch.setProjectionMatrix(camera.combined);
-                // batch.begin();
+                //cc.LabelBMFont
+                //
+                //this.activeEntities = new cc.LabelBMFont("Active entities: ", "res/fonts/normal.fnt", 200, cc.TEXT_ALIGNMENT_LEFT);
+                //this.totalCreated = new cc.LabelBMFont("Total created: ", "res/fonts/normal.fnt", 200, cc.TEXT_ALIGNMENT_LEFT);
+                //this.totalDeleted = new cc.LabelBMFont("Total deleted: ", "res/fonts/normal.fnt", 200, cc.TEXT_ALIGNMENT_LEFT);
+                //
+                //this.activeEntities.setPosition(cc.p(80,140));
+                //this.totalCreated.setPosition(cc.p(80, 160));
+                //this.totalDeleted.setPosition(cc.p(80, 180));
+                //
+                //this.game.addChild(this.activeEntities);
+                //this.game.addChild(this.totalCreated);
+                //this.game.addChild(this.totalDeleted);
             };
             HudRenderSystem.prototype.processSystem = function () {
-                // batch.setColor(1, 1, 1, 1);
-                // font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), -(Constants.FRAME_WIDTH / 2) + 20, Constants.FRAME_HEIGHT / 2 - 20);
-                // font.draw(batch, "Active entities: " + world.getEntityManager().getActiveEntityCount(), -(Constants.FRAME_WIDTH / 2) + 20, Constants.FRAME_HEIGHT / 2 - 40);
-                // font.draw(batch, "Total created: " + world.getEntityManager().getTotalCreated(), -(Constants.FRAME_WIDTH / 2) + 20, Constants.FRAME_HEIGHT / 2 - 60);
-                // font.draw(batch, "Total deleted: " + world.getEntityManager().getTotalDeleted(), -(Constants.FRAME_WIDTH / 2) + 20, Constants.FRAME_HEIGHT / 2 - 80);
-            };
-            HudRenderSystem.prototype.end = function () {
-                // batch.end();
+                //this.activeEntities.setString("Active entities: "+this.world.getEntityManager().getActiveEntityCount());
+                //this.totalCreated.setString("Active entities: "+this.world.getEntityManager().getTotalCreated());
+                //this.totalDeleted.setString("Active entities: "+this.world.getEntityManager().getTotalDeleted());
             };
             __decorate([
                 Mapper(Position)
@@ -3471,9 +3455,6 @@ var brokenspork;
             MovementSystem.prototype.processEach = function (e) {
                 var position = this.pm.get(e);
                 var velocity = this.vm.get(e);
-                if (velocity == null) {
-                    return;
-                }
                 position.x += velocity.vectorX * this.world.delta;
                 position.y -= velocity.vectorY * this.world.delta;
             };
@@ -3576,6 +3557,11 @@ var brokenspork;
                         _this.mouseVector = touch.getLocation();
                         return true;
                     },
+                    onTouchMoved: function (touch, event) {
+                        _this.shoot = true;
+                        _this.mouseVector = touch.getLocation();
+                        return true;
+                    },
                     onTouchEnded: function (touch, event) {
                         _this.shoot = false;
                         _this.mouseVector = touch.getLocation();
@@ -3653,14 +3639,13 @@ var brokenspork;
         var Mapper = artemis.annotations.Mapper;
         var RemoveOffscreenShipsSystem = (function (_super) {
             __extends(RemoveOffscreenShipsSystem, _super);
-            //@SuppressWarnings("unchecked")
             function RemoveOffscreenShipsSystem() {
                 _super.call(this, Aspect.getAspectForAll(Velocity, Position, Health, Bounds), 5);
             }
             RemoveOffscreenShipsSystem.prototype.processEach = function (e) {
                 var position = this.pm.get(e);
                 var bounds = this.bm.get(e);
-                if (position.y < -Constants.FRAME_HEIGHT / 2 - bounds.radius) {
+                if (position.y < Constants.FRAME_HEIGHT / -bounds.radius) {
                     e.deleteFromWorld();
                 }
             };
@@ -3869,7 +3854,7 @@ var brokenspork;
             SpriteRenderSystem.prototype.removed = function (e) {
                 var c = e.getComponentByType(Sprite);
                 //console.log('SpriteRenderSystem::removed', c.name, e.uuid);
-                this.game.removeChild(c.sprite_);
+                c.removeFrom(this.game);
                 this.regionsByEntity.set(e.getId(), null);
                 var index = this.sortedEntities.indexOf(e);
                 if (index != -1) {
@@ -3924,7 +3909,7 @@ var brokenspork;
                 sprite.b = 129;
                 sprite.layer = Layer.ACTORS_3;
                 e.addComponent(sprite);
-                game.addChild(sprite.sprite_);
+                sprite.addTo(game);
                 var velocity = new Velocity();
                 velocity.vectorX = 0;
                 velocity.vectorY = 0;
@@ -3946,7 +3931,7 @@ var brokenspork;
                 sprite.name = "bullet";
                 sprite.layer = Layer.PARTICLES;
                 e.addComponent(sprite);
-                game.addChild(sprite.sprite_);
+                sprite.addTo(game);
                 var velocity = new Velocity();
                 velocity.vectorY = 800;
                 e.addComponent(velocity);
@@ -3975,7 +3960,7 @@ var brokenspork;
                 sprite.b = 142;
                 sprite.layer = layer;
                 e.addComponent(sprite);
-                game.addChild(sprite.sprite_);
+                sprite.addTo(game);
                 var velocity = new Velocity();
                 velocity.vectorX = velocityX;
                 velocity.vectorY = velocityY;
@@ -4018,7 +4003,7 @@ var brokenspork;
                 sprite.a = 128;
                 sprite.layer = Layer.PARTICLES;
                 e.addComponent(sprite);
-                game.addChild(sprite.sprite_);
+                sprite.addTo(game);
                 var expires = new Expires();
                 expires.delay = 0.5;
                 e.addComponent(expires);
@@ -4042,10 +4027,10 @@ var brokenspork;
                 var sprite = new Sprite();
                 sprite.name = "particle";
                 sprite.scaleX = sprite.scaleY = MathUtils.random(0.5, 1);
-                sprite.a = MathUtils.random(0.1, 0.5);
+                sprite.a = MathUtils.random(127);
                 sprite.layer = Layer.BACKGROUND;
                 e.addComponent(sprite);
-                game.addChild(sprite.sprite_);
+                sprite.addTo(game);
                 var velocity = new Velocity();
                 velocity.vectorY = MathUtils.random(-10, -60);
                 e.addComponent(velocity);
@@ -4054,8 +4039,8 @@ var brokenspork;
                 colorAnimation.alphaAnimate = true;
                 colorAnimation.repeat = true;
                 colorAnimation.alphaSpeed = MathUtils.random(0.2, 0.7);
-                colorAnimation.alphaMin = 0.1;
-                colorAnimation.alphaMax = 0.5;
+                colorAnimation.alphaMin = 0;
+                colorAnimation.alphaMax = 255;
                 e.addComponent(colorAnimation);
                 return e;
             };
@@ -4074,7 +4059,7 @@ var brokenspork;
                 sprite.a = 1;
                 sprite.layer = Layer.PARTICLES;
                 e.addComponent(sprite);
-                game.addChild(sprite.sprite_);
+                sprite.addTo(game);
                 var radians = MathUtils.random(2 * Math.PI);
                 var magnitude = MathUtils.random(400);
                 var velocity = new Velocity();
@@ -4108,13 +4093,11 @@ var brokenspork;
         var EntitySpawningTimerSystem = brokenspork.systems.EntitySpawningTimerSystem;
         var ExpiringSystem = brokenspork.systems.ExpiringSystem;
         var HealthRenderSystem = brokenspork.systems.HealthRenderSystem;
-        var HudRenderSystem = brokenspork.systems.HudRenderSystem;
         var MovementSystem = brokenspork.systems.MovementSystem;
         var ParallaxStarRepeatingSystem = brokenspork.systems.ParallaxStarRepeatingSystem;
         var PlayerInputSystem = brokenspork.systems.PlayerInputSystem;
         var RemoveOffscreenShipsSystem = brokenspork.systems.RemoveOffscreenShipsSystem;
         var ScaleAnimationSystem = brokenspork.systems.ScaleAnimationSystem;
-        var SoundEffectSystem = brokenspork.systems.SoundEffectSystem;
         var SpriteRenderSystem = brokenspork.systems.SpriteRenderSystem;
         var GroupManager = artemis.managers.GroupManager;
         var Constants = brokenspork.core.Constants;
@@ -4127,7 +4110,7 @@ var brokenspork;
                 this.world.setSystem(new MovementSystem());
                 this.playerInputSystem = new PlayerInputSystem(game);
                 this.world.setSystem(this.playerInputSystem);
-                this.world.setSystem(new SoundEffectSystem());
+                //this.world.setSystem(new SoundEffectSystem());
                 this.world.setSystem(new CollisionSystem(game));
                 this.world.setSystem(new ExpiringSystem());
                 this.world.setSystem(new EntitySpawningTimerSystem(game));
@@ -4136,11 +4119,11 @@ var brokenspork;
                 this.world.setSystem(new ScaleAnimationSystem());
                 this.world.setSystem(new RemoveOffscreenShipsSystem());
                 this.spriteRenderSystem = this.world.setSystem(new SpriteRenderSystem(game), true);
-                this.healthRenderSystem = this.world.setSystem(new HealthRenderSystem(), true);
-                this.hudRenderSystem = this.world.setSystem(new HudRenderSystem(), true);
+                this.healthRenderSystem = this.world.setSystem(new HealthRenderSystem(game), true);
+                //this.hudRenderSystem = this.world.setSystem(new HudRenderSystem(game), true);
                 this.world.initialize();
                 core.EntityFactory.createPlayer(this.game, this.world, Constants.FRAME_WIDTH / 4, Constants.FRAME_HEIGHT - 80).addToWorld();
-                for (var i = 0; 500 > i; i++) {
+                for (var i = 0; 5 > i; i++) {
                     core.EntityFactory.createStar(this.game, this.world).addToWorld();
                 }
             }
@@ -4149,7 +4132,7 @@ var brokenspork;
                 this.world.process();
                 this.spriteRenderSystem.process();
                 this.healthRenderSystem.process();
-                this.hudRenderSystem.process();
+                //this.hudRenderSystem.process();
             };
             GameScreen.ASPECT_RATIO = Constants.FRAME_WIDTH / Constants.FRAME_HEIGHT;
             return GameScreen;

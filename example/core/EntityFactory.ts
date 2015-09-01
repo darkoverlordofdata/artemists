@@ -40,7 +40,7 @@ module brokenspork.core {
 			sprite.b = 129;
 			sprite.layer = Layer.ACTORS_3;
 			e.addComponent(sprite);
-			game.addChild(sprite.sprite_);
+			sprite.addTo(game);
 			
 			var velocity:Velocity = new Velocity();
 			velocity.vectorX = 0;
@@ -70,7 +70,7 @@ module brokenspork.core {
 			sprite.name = "bullet";
 			sprite.layer = Layer.PARTICLES;
 			e.addComponent(sprite);
-			game.addChild(sprite.sprite_);
+			sprite.addTo(game);
 
 			var velocity:Velocity = new Velocity();
 			velocity.vectorY = 800;
@@ -108,7 +108,7 @@ module brokenspork.core {
 			sprite.b = 142;
 			sprite.layer = layer;
 			e.addComponent(sprite);
-			game.addChild(sprite.sprite_);
+			sprite.addTo(game);
 
 			var velocity:Velocity = new Velocity();
 			velocity.vectorX = velocityX;
@@ -165,7 +165,7 @@ module brokenspork.core {
 			sprite.a = 128;
 			sprite.layer = Layer.PARTICLES;
 			e.addComponent(sprite);
-			game.addChild(sprite.sprite_);
+			sprite.addTo(game);
 
 			var expires:Expires = new Expires();
 			expires.delay = 0.5;
@@ -195,10 +195,10 @@ module brokenspork.core {
 			var sprite:Sprite = new Sprite();
 			sprite.name = "particle";
 			sprite.scaleX = sprite.scaleY = MathUtils.random(0.5, 1);
-			sprite.a = MathUtils.random(0.1, 0.5);
+			sprite.a = MathUtils.random(127);
 			sprite.layer = Layer.BACKGROUND;
 			e.addComponent(sprite);
-			game.addChild(sprite.sprite_);
+			sprite.addTo(game);
 
 			var velocity:Velocity = new Velocity();
 			velocity.vectorY = MathUtils.random(-10, -60);
@@ -210,8 +210,8 @@ module brokenspork.core {
 			colorAnimation.alphaAnimate = true;
 			colorAnimation.repeat = true;
 			colorAnimation.alphaSpeed = MathUtils.random(0.2, 0.7);
-			colorAnimation.alphaMin = 0.1;
-			colorAnimation.alphaMax = 0.5;
+			colorAnimation.alphaMin = 0;
+			colorAnimation.alphaMax = 255;
 			e.addComponent(colorAnimation);
 			
 			return e;
@@ -234,7 +234,7 @@ module brokenspork.core {
 			sprite.a = 1;
 			sprite.layer = Layer.PARTICLES;
 			e.addComponent(sprite);
-			game.addChild(sprite.sprite_);
+			sprite.addTo(game);
 
 			var radians:number = MathUtils.random(2*Math.PI);
 			var magnitude:number = MathUtils.random(400);

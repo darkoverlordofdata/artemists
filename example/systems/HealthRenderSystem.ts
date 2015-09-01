@@ -10,56 +10,51 @@ module brokenspork.systems {
 	import EntityProcessingSystem = artemis.systems.EntityProcessingSystem;
 	import MathUtils = artemis.utils.MathUtils;
 	import Mapper = artemis.annotations.Mapper;
+  import Constants = brokenspork.core.Constants;
 
 	export class HealthRenderSystem extends EntityProcessingSystem {
 		@Mapper(Position) pm:ComponentMapper<Position>;
 		@Mapper(Health) hm:ComponentMapper<Health>;
 		
-		//private batch:SpriteBatch;
-		// private OrthographicCamera camera;
-		// private BitmapFont font;
-		
-		public constructor() {
-			super(Aspect.getAspectForAll(Position, Health));
-		}
-		
-		
-		public initialize() {
-			// batch = new SpriteBatch();
-			
-			// Texture fontTexture = new Texture(Gdx.files.internal("fonts/normal_0.png"));
-			// fontTexture.setFilter(TextureFilter.Linear, TextureFilter.MipMapLinearLinear);
-			// TextureRegion fontRegion = new TextureRegion(fontTexture);
-			// font = new BitmapFont(Gdx.files.internal("fonts/normal.fnt"), fontRegion, false);
-			// font.setUseIntegerPositions(false);
-		}
-		
-		
-		protected begin() {
-			// batch.setProjectionMatrix(camera.combined);
-			// batch.begin();
-		}
+    private texts:Object<string, cc.LabelBMFont>;
+    private game:CCLayer;
 
-    //public inserted(e:Entity) {
-    //  var c:Sprite = e.getComponentByType(Sprite);
-    //  console.log('HealthRenderSystem::inserted', c.name, e.uuid);
-    //}
-    //protected removed(e:Entity) {
-    //  var c:Sprite = e.getComponentByType(Sprite);
-    //  console.log('HealthRenderSystem::removed', c.name, e.uuid);
-    //}
+    constructor(game:CCLayer) {
+			super(Aspect.getAspectForAll(Position, Health));
+      this.game = game;
+      this.texts = {};
+		}
+		
+    public inserted(e:Entity) {
+      // add a text element to the sprite
+      var c:Sprite = e.getComponentByType(Sprite);
+      var b:cc.LabelBMFont = new cc.LabelBMFont('100%', "res/fonts/normal.fnt");
+      b.setScale(1/2);
+
+      this.game.addChild(b);
+      this.texts[e.uuid] = b;
+
+    }
+    protected removed(e:Entity) {
+      // remove the text element from the sprite
+      var c:Sprite = e.getComponentByType(Sprite);
+      this.game.removeChild(this.texts[e.uuid]);
+      this.texts[e.uuid] = null;
+      delete this.texts[e.uuid];
+    }
 
 		public processEach(e:Entity) {
-			var position:Position = this.pm.get(e);
-			var health:Health = this.hm.get(e);
-			
-			var percentage:number = Math.round(health.health/health.maximumHealth*100);
-			//font.draw(batch, percentage+"%", position.x, position.y);
+      // update the text element on the sprite
+      if (this.texts[e.uuid]) {
+        var position:Position = this.pm.get(e);
+        var health:Health = this.hm.get(e);
+        var text:cc.LabelBMFont = this.texts[e.uuid];
+
+        var percentage:number = Math.round(health.health / health.maximumHealth * 100);
+        text.setPosition(cc.p(position.x*2, Constants.FRAME_HEIGHT - position.y));
+        text.setString(`${percentage}%`);
+      }
 		}
 
-
-		protected end() {
-			//batch.end();
-		}
 	}
 }

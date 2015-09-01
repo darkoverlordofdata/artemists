@@ -20,21 +20,20 @@ module brokenspork.systems {
 		
 		protected processEach(e:Entity) {
 			var c:ColorAnimation = this.cam.get(e);
-			var sprite:Sprite = this.sm.get(e);
-			
-			if(c.alphaAnimate) {
-				sprite.a += c.alphaSpeed * this.world.delta;
-				
-				if(sprite.a > c.alphaMax || sprite.a < c.alphaMin) {
-					if(c.repeat) {
-						c.alphaSpeed = -c.alphaSpeed;
-					} else {
-						c.alphaAnimate = false;
-					}
-				}
-			}
+      var sprite:Sprite = this.sm.get(e);
+
+      if(c.alphaAnimate) {
+        sprite.a += c.alphaSpeed * this.world.delta;
+
+        if(sprite.a > c.alphaMax || sprite.a < c.alphaMin) {
+          if(c.repeat) {
+            c.alphaSpeed = -c.alphaSpeed;
+          } else {
+            c.alphaAnimate = false;
+          }
+        }
+      }
 		}
-	
 	}
 }
 

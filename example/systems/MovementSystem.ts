@@ -22,14 +22,11 @@ module brokenspork.systems {
 		public processEach(e:Entity) {
 			var position:Position = this.pm.get(e);
 			var velocity:Velocity = this.vm.get(e);
-			
-			if(velocity == null) {
-					return;
-			}
+
 			position.x += velocity.vectorX*this.world.delta;
 			position.y -= velocity.vectorY*this.world.delta;
 		}
-	
+
 	}
 }
 

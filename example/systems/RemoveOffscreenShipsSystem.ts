@@ -25,8 +25,8 @@ module brokenspork.systems {
 		public processEach(e:Entity) {
 			var position:Position = this.pm.get(e);
 			var bounds:Bounds = this.bm.get(e);
-			
-			if(position.y < Constants.FRAME_HEIGHT/2-bounds.radius) {
+
+			if(position.y < Constants.FRAME_HEIGHT/-bounds.radius) {
 				e.deleteFromWorld();
 			}
 		}

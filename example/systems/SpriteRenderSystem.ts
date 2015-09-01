@@ -74,6 +74,7 @@ module brokenspork.systems {
 
 		public inserted(e:Entity) {
 			var sprite:Sprite = this.sm.get(e);
+
 			this.regionsByEntity.set(e.getId(), this.regions.get(sprite.name));
 	
 			// sortedEntities.add(e);
@@ -91,7 +92,7 @@ module brokenspork.systems {
 		protected removed(e:Entity) {
       var c:Sprite = e.getComponentByType(Sprite);
       //console.log('SpriteRenderSystem::removed', c.name, e.uuid);
-      this.game.removeChild(c.sprite_);
+      c.removeFrom(this.game);
 
 			this.regionsByEntity.set(e.getId(), null);
 			var index = this.sortedEntities.indexOf(e);

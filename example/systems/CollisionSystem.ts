@@ -117,19 +117,17 @@ module brokenspork.systems {
 		}
 		
 		private collisionExists(e1:Entity, e2:Entity):boolean {
-				
-				if(e1 == null || e2 == null) {
-						return false;
-				}
+
+      if(e1 === null || e2 === null) return false;
 				
 				//NPE!!!
 			var p1:Position = this.cs.pm.get(e1);
 			var p2:Position = this.cs.pm.get(e2);
-			
+
 			var b1:Bounds = this.cs.bm.get(e1);
 			var b2:Bounds = this.cs.bm.get(e2);
 
-			var a = p1.x - p2.x;
+      var a = p1.x - p2.x;
 			var b = p1.y - p2.y;
 			return Math.sqrt(a*a+b*b)-b1.radius < b2.radius;
 			//return Utils.distance(p1.x, p1.y, p2.x, p2.y)-b1.radius < b2.radius;

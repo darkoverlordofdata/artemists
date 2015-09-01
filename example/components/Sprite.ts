@@ -36,6 +36,8 @@ module brokenspork.components {
 		constructor() {
 			super();
 			this.sprite_ = new cc.Sprite();
+			this.sprite_.setScale(0.5);
+      this.sprite_.setOpacityModifyRGB(true);
 		}
 			
 		get name():string {return this.name_;}
@@ -76,11 +78,18 @@ module brokenspork.components {
 			this.a_ = value;
 			this.sprite_.setColor(cc.color(this.r_, this.g_, this.b_, this.a_));
 		}
-		
-		
-		
+
+    addTo(layer:CCLayer) {
+      layer.addChild(this.sprite_);
+    }
+
+    removeFrom(layer:CCLayer) {
+      layer.removeChild(this.sprite_);
+    }
+
+
 	}
-		
+
 	Sprite.prototype.layer = Layer.DEFAULT;
 	Sprite.prototype.name_ = '';
 	Sprite.prototype.scaleX_ = 1;

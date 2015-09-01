@@ -33,7 +33,7 @@ module brokenspork.systems {
 		public processEach(e:Entity) {
 	
 			var soundEffect:SoundEffect = this.se.get(e);
-			
+
 			switch (soundEffect.effect) {
 			case EFFECT.PEW:
 				//pew.play();

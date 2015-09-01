@@ -53,6 +53,11 @@ module brokenspork.systems {
           this.mouseVector = touch.getLocation();
           return true;
         },
+        onTouchMoved: (touch, event) => {
+          this.shoot = true;
+          this.mouseVector = touch.getLocation();
+          return true;
+        },
         onTouchEnded: (touch, event) => {
           this.shoot = false;
           this.mouseVector = touch.getLocation();

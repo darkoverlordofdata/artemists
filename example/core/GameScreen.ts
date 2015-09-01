@@ -39,7 +39,7 @@ module brokenspork.core {
 			this.world.setSystem(new MovementSystem());
 			this.playerInputSystem = new PlayerInputSystem(game);
 			this.world.setSystem(this.playerInputSystem);
-			this.world.setSystem(new SoundEffectSystem());
+			//this.world.setSystem(new SoundEffectSystem());
 			this.world.setSystem(new CollisionSystem(game));
 			this.world.setSystem(new ExpiringSystem());
 			this.world.setSystem(new EntitySpawningTimerSystem(game));
@@ -49,14 +49,14 @@ module brokenspork.core {
 			this.world.setSystem(new RemoveOffscreenShipsSystem());
 	
 			this.spriteRenderSystem = this.world.setSystem(new SpriteRenderSystem(game), true);
-			this.healthRenderSystem = this.world.setSystem(new HealthRenderSystem(), true);
-			this.hudRenderSystem = this.world.setSystem(new HudRenderSystem(), true);
+			this.healthRenderSystem = this.world.setSystem(new HealthRenderSystem(game), true);
+			//this.hudRenderSystem = this.world.setSystem(new HudRenderSystem(game), true);
 	
 			this.world.initialize();
 	
 			EntityFactory.createPlayer(this.game, this.world, Constants.FRAME_WIDTH/4, Constants.FRAME_HEIGHT-80).addToWorld();
 	
-			for (var i = 0; 500 > i; i++) {
+			for (var i = 0; 5 > i; i++) {
 				EntityFactory.createStar(this.game, this.world).addToWorld();
 			}
 	
@@ -68,7 +68,7 @@ module brokenspork.core {
 	
 			this.spriteRenderSystem.process();
 			this.healthRenderSystem.process();
-			this.hudRenderSystem.process();
+			//this.hudRenderSystem.process();
 		}
 	
 		

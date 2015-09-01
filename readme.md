@@ -10,7 +10,8 @@ Requires TypeScript 1.5
 Example uses cocos2d-x 3.7
 
 #### status
-Port complete. Testng phase.
+Artemis port complete. 
+Current phase: burn-in
 
 # MIT License
 
