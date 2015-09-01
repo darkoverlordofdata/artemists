@@ -10,31 +10,17 @@ module brokenspork.systems {
   import Entity = artemis.Entity;
   import Mapper = artemis.annotations.Mapper;
   import EntityProcessingSystem = artemis.systems.EntityProcessingSystem;
-  import TrigLUT = artemis.utils.TrigLUT;
-  import Utils = artemis.utils.Utils;
   import Constants = brokenspork.core.Constants;
 
   export class PlayerInputSystem extends EntityProcessingSystem  {
-    private static HorizontalThrusters = 300;
-    private static HorizontalMaxSpeed = 300;
-    private static VerticalThrusters = 200;
-    private static VerticalMaxSpeed = 200;
     private static FireRate = 0.1;
 
     @Mapper(Position) pm:ComponentMapper<Position>;
     @Mapper(Velocity) vm:ComponentMapper<Velocity>;
 
-    private up:boolean;
-    private down:boolean;
-    private left:boolean;
-    private right:boolean;
     private shoot:boolean;
     private timeToFire:number=0;
     private mouseVector;
-
-    private destinationX:number;
-    private destinationY:number;
-
     private game:CCLayer;
 
     constructor(game:CCLayer) {
@@ -43,7 +29,7 @@ module brokenspork.systems {
     }
 
 
-    protected initialize() {
+    public initialize() {
 
       var listener = cc.EventListener.create({
         event: cc.EventListener.TOUCH_ONE_BY_ONE,
@@ -67,7 +53,6 @@ module brokenspork.systems {
 
 
     }
-
 
     protected processEach(e:Entity) {
 
@@ -99,5 +84,7 @@ module brokenspork.systems {
         }
       }
     }
+
+
   }
 }

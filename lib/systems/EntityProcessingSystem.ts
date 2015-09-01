@@ -20,9 +20,7 @@ module artemis.systems {
 		* Process a entity this system is interested in.
 		* @param e the entity to process.
 		*/
-		protected processEach(e:Entity){
-
-		}
+		protected processEach(e:Entity){}
 
 
 		protected processEntities(entities:ImmutableBag<Entity>) {

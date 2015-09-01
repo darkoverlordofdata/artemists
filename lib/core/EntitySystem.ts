@@ -193,7 +193,7 @@ module artemis {
 			this.passive_ = passive;
 		}
 		
-		public getActives():ImmutableBag<Entity> {
+		public getActive():ImmutableBag<Entity> {
 			return this.actives_;
 		}
 	}

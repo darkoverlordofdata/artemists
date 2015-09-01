@@ -26,8 +26,7 @@ module brokenspork.core {
 		private hudRenderSystem:HudRenderSystem;
 		//private batch:SpriteBatch;
 		private viewport;
-		private playerInputSystem:PlayerInputSystem;
-	
+
 		private static ASPECT_RATIO = Constants.FRAME_WIDTH / Constants.FRAME_HEIGHT;
 	
 		constructor(public game:CCLayer) {
@@ -37,8 +36,7 @@ module brokenspork.core {
 	
 			this.world.setManager(new GroupManager());
 			this.world.setSystem(new MovementSystem());
-			this.playerInputSystem = new PlayerInputSystem(game);
-			this.world.setSystem(this.playerInputSystem);
+			this.world.setSystem(new PlayerInputSystem(game));
 			//this.world.setSystem(new SoundEffectSystem());
 			this.world.setSystem(new CollisionSystem(game));
 			this.world.setSystem(new ExpiringSystem());

@@ -12,11 +12,14 @@ module brokenspork.systems {
 	import Mapper = artemis.annotations.Mapper;
   import Constants = brokenspork.core.Constants;
 
+  interface ILabelBMFont {
+    [key: string]: cc.LabelBMFont;
+  }
 	export class HealthRenderSystem extends EntityProcessingSystem {
 		@Mapper(Position) pm:ComponentMapper<Position>;
 		@Mapper(Health) hm:ComponentMapper<Health>;
 		
-    private texts:Object<string, cc.LabelBMFont>;
+    private texts:ILabelBMFont;
     private game:CCLayer;
 
     constructor(game:CCLayer) {
@@ -27,7 +30,7 @@ module brokenspork.systems {
 		
     public inserted(e:Entity) {
       // add a text element to the sprite
-      var c:Sprite = e.getComponentByType(Sprite);
+      var c:Sprite = <Sprite>e.getComponentByType(Sprite);
       var b:cc.LabelBMFont = new cc.LabelBMFont('100%', "res/fonts/normal.fnt");
       b.setScale(1/2);
 
@@ -37,7 +40,7 @@ module brokenspork.systems {
     }
     protected removed(e:Entity) {
       // remove the text element from the sprite
-      var c:Sprite = e.getComponentByType(Sprite);
+      var c:Sprite = <Sprite>e.getComponentByType(Sprite);
       this.game.removeChild(this.texts[e.uuid]);
       this.texts[e.uuid] = null;
       delete this.texts[e.uuid];

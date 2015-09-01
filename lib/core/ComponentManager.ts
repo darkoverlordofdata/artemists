@@ -12,7 +12,7 @@ module artemis {
 		private deleted_: Bag<Entity>;
 	
 		constructor() {
-			super()
+			super();
 			this.componentsByType_ = new Bag<Bag<Component>>();
 			this.deleted_ = new Bag<Entity>();
 		}

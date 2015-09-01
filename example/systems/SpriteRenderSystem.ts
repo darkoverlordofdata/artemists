@@ -90,7 +90,7 @@ module brokenspork.systems {
 	
 		
 		protected removed(e:Entity) {
-      var c:Sprite = e.getComponentByType(Sprite);
+      var c:Sprite = <Sprite> e.getComponentByType(Sprite);
       //console.log('SpriteRenderSystem::removed', c.name, e.uuid);
       c.removeFrom(this.game);
 
