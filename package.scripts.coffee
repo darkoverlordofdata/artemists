@@ -131,6 +131,7 @@ module.exports = (project, options = {}) ->
       ###
       files = require(JSCONFIG).files.join(" LF ")
       step.push """
+        cat #{files} > build/web/src/#{LIB_NAME}.js 
         cat #{files} > build/#{LIB_NAME}.js 
         cat #{files} | \
           java -jar #{COMPILER_JAR} \

@@ -10,12 +10,14 @@
   "ignore": [
     "**/.*",
     "tmp",
-    "build",
+    "build/lib",
+    "build/web",
     "node_modules",
     "packages",
     "src",
     "test",
-    "tests"
+    "tests",
+    "tools"
   ],
   "devDependencies": {
     "closure-compiler": "~0.2.7",

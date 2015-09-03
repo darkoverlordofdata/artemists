@@ -1,54 +1,67 @@
-package com.artemis.utils;
+module artemis.utils {
 
-// Thanks to Riven
-// From: http://riven8192.blogspot.com/2009/08/fastmath-sincos-lookup-tables.html
-public class TrigLUT {
-	public static void main(String[] args) {
-		System.out.println(cos((float) Math.PI));
-		System.out.println(cosDeg(180f));
-	}
+  // Thanks to Riven
+  // From: http://riven8192.blogspot.com/2009/08/fastmath-sincos-lookup-tables.html
+  export class TrigLUT {
+    public static main() {
+      console.log(TrigLUT.cos(Math.PI));
+      console.log(TrigLUT.cosDeg(180));
+    }
 
-	public static final float sin(float rad) {
-		return sin[(int) (rad * radToIndex) & SIN_MASK];
-	}
+    public static sin(rad:number):number {
+      return TrigLUT.sin_[(rad * TrigLUT.radToIndex) & TrigLUT.SIN_MASK];
+    }
 
-	public static final float cos(float rad) {
-		return cos[(int) (rad * radToIndex) & SIN_MASK];
-	}
+    public static cos(rad:number):number {
+      return TrigLUT.cos_[(rad * TrigLUT.radToIndex) & TrigLUT.SIN_MASK];
+    }
 
-	public static final float sinDeg(float deg) {
-		return sin[(int) (deg * degToIndex) & SIN_MASK];
-	}
+    public static sinDeg(deg:number):number {
+      return TrigLUT.sin_[(deg * TrigLUT.degToIndex) & TrigLUT.SIN_MASK];
+    }
 
-	public static final float cosDeg(float deg) {
-		return cos[(int) (deg * degToIndex) & SIN_MASK];
-	}
+    public static cosDeg(deg:number):number {
+      return TrigLUT.cos_[(deg * TrigLUT.degToIndex) & TrigLUT.SIN_MASK];
+    }
 
-	private static final float RAD, DEG;
-	private static final int SIN_BITS, SIN_MASK, SIN_COUNT;
-	private static final float radFull, radToIndex;
-	private static final float degFull, degToIndex;
-	private static final float[] sin, cos;
+    private static RAD:number;
+    private static DEG:number;
+    private static SIN_BITS:number;
+    private static SIN_MASK:number;
+    private static SIN_COUNT:number;
+    private static radFull:number;
+    private static radToIndex:number;
+    private static degFull:number;
+    private static degToIndex:number;
+    private static sin_:number[];
+    private static cos_:number[];
 
-	static {
-		RAD = (float) Math.PI / 180.0f;
-		DEG = 180.0f / (float) Math.PI;
+    static init(update:boolean) {
+      TrigLUT.RAD = Math.PI / 180.0;
+      TrigLUT.DEG = 180.0 / Math.PI;
 
-		SIN_BITS = 12;
-		SIN_MASK = ~(-1 << SIN_BITS);
-		SIN_COUNT = SIN_MASK + 1;
+      TrigLUT.SIN_BITS = 12;
+      TrigLUT.SIN_MASK = ~(-1 << TrigLUT.SIN_BITS);
+      TrigLUT.SIN_COUNT = TrigLUT.SIN_MASK + 1;
 
-		radFull = (float) (Math.PI * 2.0);
-		degFull = (float) (360.0);
-		radToIndex = SIN_COUNT / radFull;
-		degToIndex = SIN_COUNT / degFull;
+      TrigLUT.radFull = (Math.PI * 2.0);
+      TrigLUT.degFull = (360.0);
+      TrigLUT.radToIndex = TrigLUT.SIN_COUNT / TrigLUT.radFull;
+      TrigLUT.degToIndex = TrigLUT.SIN_COUNT / TrigLUT.degFull;
 
-		sin = new float[SIN_COUNT];
-		cos = new float[SIN_COUNT];
+      TrigLUT.sin_ = new Array(TrigLUT.SIN_COUNT);
+      TrigLUT.cos_ = new Array(TrigLUT.SIN_COUNT);
 
-		for (int i = 0; i < SIN_COUNT; i++) {
-			sin[i] = (float) Math.sin((i + 0.5f) / SIN_COUNT * radFull);
-			cos[i] = (float) Math.cos((i + 0.5f) / SIN_COUNT * radFull);
-		}
-	}
+      for (var i = 0; i < TrigLUT.SIN_COUNT; i++) {
+        TrigLUT.sin_[i] = Math.sin((i + 0.5) / TrigLUT.SIN_COUNT * TrigLUT.radFull);
+        TrigLUT.cos_[i] = Math.cos((i + 0.5) / TrigLUT.SIN_COUNT * TrigLUT.radFull);
+      }
+
+      if (update) {
+        Math.sin = TrigLUT.sin;
+        Math.cos = TrigLUT.cos;
+      }
+    }
+  }
 }
+

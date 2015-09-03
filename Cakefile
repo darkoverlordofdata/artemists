@@ -144,16 +144,3 @@ task 'version', 'bump the version', (options) ->
 
 task 'test', 'test', (options) ->
 
-  class Scooby
-  
-    manager: null
-    
-    constructor: (doo = 42) ->
-      @setManager {snacky: doo}
-    
-    setManager: (m) ->
-      this.manager = m
-      console.log this.manager
-      
-  s = new Scooby
-  

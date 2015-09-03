@@ -1,11 +1,10 @@
 module artemis.utils {
 	/*
-	 * BitSets are packed into arrays of "words."  Currently a word is
-	 * an integer, which consists of 32 bits, requiring 5 address bits.
+	 * BitSets are packed into arrays of "words."  Currently a word
+	 * consists of 32 bits, requiring 5 address bits.
 	 */
 	const ADDRESS_BITS_PER_WORD = 5;
-	const BITS_PER_WORD = 1 << ADDRESS_BITS_PER_WORD;
-	const BIT_INDEX_MASK = BITS_PER_WORD - 1;
+	const BITS_PER_WORD = 1 << ADDRESS_BITS_PER_WORD; // 32
 	const WORD_MASK = 0xffffffff;
 
 	/**
@@ -35,7 +34,7 @@ module artemis.utils {
 				this.words_ = [];
 			} else {
 				var words = this.words_ = new Array(((nbits-1) >> ADDRESS_BITS_PER_WORD)+1);
-				for (var i=0; i<words.length; i++) {
+				for (var i=0, l = words.length; i<l; i++) {
 					words[i] = 0;
 				}
 			}
@@ -43,13 +42,13 @@ module artemis.utils {
 
 		nextSetBit(fromIndex:number) {
 
-			var u = fromIndex >> ADDRESS_BITS_PER_WORD
+			var u = fromIndex >> ADDRESS_BITS_PER_WORD;
 			var words = this.words_;
 			var wordsInUse = words.length;
 
 			var word = words[u] & (WORD_MASK << fromIndex);
 			while (true) {
-				if (word != 0)
+				if (word !== 0)
 					return (u * BITS_PER_WORD) + numberOfTrailingZeros(word);
 				if (++u === wordsInUse)
 					return -1;
@@ -117,7 +116,7 @@ module artemis.utils {
 
 			if (wordsInUse < wordsRequired) {
 				words.length = Math.max(2 * wordsInUse, wordsRequired);
-				for (var i=wordsInUse; i<words.length; i++) {
+				for (var i=wordsInUse, l=words.length; i<l; i++) {
 					words[i] = 0;
 				}
 			}
