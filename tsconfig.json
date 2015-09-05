@@ -28,6 +28,7 @@
       "lib/utils/UUID.ts",
       "lib/annotations/Mapper.ts",
       "lib/annotations/EntityTemplate.ts",
+      "lib/blackboard/TriggerStateType.ts",
       "lib/blackboard/BlackBoard.ts",
       "lib/blackboard/Trigger.ts",
       "lib/blackboard/SimpleTrigger.ts",

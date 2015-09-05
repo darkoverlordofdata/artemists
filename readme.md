@@ -15,13 +15,16 @@ Current phase: burn-in
 
 #### extensions
 
-Entity Templates inspired by artemis_CSharp:
+BlackBoard & Entity Templates inspired by artemis_CSharp:
 
 ```typescript
 @EntityTemplate('player')
 export class PlayerTemplate implements artemis.IEntityTemplate {
 
     public buildEntity(entity:artemis.Entity, world:artemis.World, x:number, y:number):artemis.Entity {
+
+        ...
+        sprite.addTo(EntitySystem.blackBoard.getEntry<CCLayer>('game'));
 
 ...
 

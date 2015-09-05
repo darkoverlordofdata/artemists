@@ -26,6 +26,7 @@
         "src/lib/utils/UUID.js",
         "src/lib/annotations/EntityTemplate.js",
         "src/lib/annotations/Mapper.js",
+        "src/lib/blackboard/TriggerStateType.js",
         "src/lib/blackboard/BlackBoard.js",
         "src/lib/blackboard/Trigger.js",
         "src/lib/blackboard/SimpleTrigger.js",
