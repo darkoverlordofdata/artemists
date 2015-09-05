@@ -3,7 +3,6 @@ module brokenspork.systems {
   import Player = brokenspork.components.Player;
   import Position = brokenspork.components.Position;
   import Velocity = brokenspork.components.Velocity;
-  import EntityFactory = brokenspork.core.EntityFactory;
 
   import Aspect = artemis.Aspect;
   import ComponentMapper = artemis.ComponentMapper;
@@ -72,8 +71,9 @@ module brokenspork.systems {
 
       if (this.shoot) {
         if (this.timeToFire <= 0) {
-          EntityFactory.createPlayerBullet(this.game, this.world, position.x - 27, position.y + 2).addToWorld();
-          EntityFactory.createPlayerBullet(this.game, this.world, position.x + 27, position.y + 2).addToWorld();
+
+          this.world.createEntityFromTemplate('bullet', position.x - 27, position.y + 2).addToWorld();
+          this.world.createEntityFromTemplate('bullet', position.x + 27, position.y + 2).addToWorld();
           this.timeToFire = PlayerInputSystem.FireRate;
         }
       }

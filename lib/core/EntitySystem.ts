@@ -5,6 +5,7 @@ module artemis {
 	import BitSet = artemis.utils.BitSet;
 	import HashMap = artemis.utils.HashMap;
 	import EntityObserver = artemis.EntityObserver;
+  import Blackboard = artemis.utils.Blackboard;
 	
 	/**
 	* The most raw entity system. It should not typically be used, but you can create your own
@@ -15,6 +16,8 @@ module artemis {
 	*
 	*/
 	export class EntitySystem implements EntityObserver {
+
+		public static blackboard:Blackboard = new Blackboard();
 		private systemIndex_:number;
 	
 		public world:World;

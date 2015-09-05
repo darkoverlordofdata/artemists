@@ -16,6 +16,8 @@ module brokenspork.core {
 	import World = artemis.World;
 	import GroupManager = artemis.managers.GroupManager;
 	import Constants = brokenspork.core.Constants;
+  import EntitySystem = artemis.EntitySystem;
+  import PlayerTemplate = brokenspork.templates.PlayerTemplate;
 
 	export class GameScreen {
 	
@@ -23,39 +25,34 @@ module brokenspork.core {
 	
 		private spriteRenderSystem:SpriteRenderSystem;
 		private healthRenderSystem:HealthRenderSystem;
-		private hudRenderSystem:HudRenderSystem;
-		//private batch:SpriteBatch;
-		private viewport;
 
-		private static ASPECT_RATIO = Constants.FRAME_WIDTH / Constants.FRAME_HEIGHT;
-	
 		constructor(public game:CCLayer) {
 			this.game = game;
 
-			this.world = new artemis.World();
+			EntitySystem.blackboard.setEntry('game', game);
+
+			var world:World = this.world = new artemis.World();
 	
-			this.world.setManager(new GroupManager());
-			this.world.setSystem(new MovementSystem());
-			this.world.setSystem(new PlayerInputSystem(game));
-			//this.world.setSystem(new SoundEffectSystem());
-			this.world.setSystem(new CollisionSystem(game));
-			this.world.setSystem(new ExpiringSystem());
-			this.world.setSystem(new EntitySpawningTimerSystem(game));
-			this.world.setSystem(new ParallaxStarRepeatingSystem());
-			this.world.setSystem(new ColorAnimationSystem());
-			this.world.setSystem(new ScaleAnimationSystem());
-			this.world.setSystem(new RemoveOffscreenShipsSystem());
+			world.setManager(new GroupManager());
+			world.setSystem(new MovementSystem());
+			world.setSystem(new PlayerInputSystem(game));
+			//world.setSystem(new SoundEffectSystem());
+			world.setSystem(new CollisionSystem(game));
+			world.setSystem(new ExpiringSystem());
+			world.setSystem(new EntitySpawningTimerSystem(game));
+			world.setSystem(new ParallaxStarRepeatingSystem());
+			world.setSystem(new ColorAnimationSystem());
+			world.setSystem(new ScaleAnimationSystem());
+			world.setSystem(new RemoveOffscreenShipsSystem());
 	
-			this.spriteRenderSystem = this.world.setSystem(new SpriteRenderSystem(game), true);
-			this.healthRenderSystem = this.world.setSystem(new HealthRenderSystem(game), true);
-			//this.hudRenderSystem = this.world.setSystem(new HudRenderSystem(game), true);
-	
-			this.world.initialize();
-	
-			EntityFactory.createPlayer(this.game, this.world, Constants.FRAME_WIDTH/4, Constants.FRAME_HEIGHT-80).addToWorld();
+			this.spriteRenderSystem = world.setSystem(new SpriteRenderSystem(game), true);
+			this.healthRenderSystem = world.setSystem(new HealthRenderSystem(game), true);
+
+			world.initialize();
+	    world.createEntityFromTemplate('player', Constants.FRAME_WIDTH/4, Constants.FRAME_HEIGHT-80).addToWorld();
 	
 			for (var i = 0; 5 > i; i++) {
-				EntityFactory.createStar(this.game, this.world).addToWorld();
+        world.createEntityFromTemplate('star').addToWorld();
 			}
 	
 		}
@@ -66,7 +63,6 @@ module brokenspork.core {
 	
 			this.spriteRenderSystem.process();
 			this.healthRenderSystem.process();
-			//this.hudRenderSystem.process();
 		}
 	
 		

@@ -7,7 +7,7 @@
         "preserveConstEnums": false,
         "sourceMap": true,
         "experimentalDecorators": true,
-        "outDir": "web/src"
+        "out": "web/src/artemis.js"
     },
 
     "files": [

@@ -7,7 +7,8 @@
         "preserveConstEnums": false,
         "sourceMap": true,
         "experimentalDecorators": true,
-        "out": "web/src/artemis.js"
+        "outDir": "web/src"
+
     },
 
     "files": [
@@ -15,6 +16,7 @@
       "lib/cclib-dev.ts",
       "lib/utils/Bag.ts",
       "lib/utils/BitSet.ts",
+      "lib/utils/Blackboard.ts",
       "lib/utils/MathUtils.ts",
       "lib/utils/MersenneTwister.ts",
       "lib/utils/Map.ts",
@@ -26,6 +28,8 @@
       "lib/utils/Timer.ts",
       "lib/utils/UUID.ts",
       "lib/annotations/Mapper.ts",
+      "lib/annotations/EntityTemplate.ts",
+      "lib/core/IEntityTemplate.ts",
       "lib/core/EntityObserver.ts",
       "lib/core/Component.ts",
       "lib/core/Aspect.ts",
@@ -59,7 +63,12 @@
       "example/components/SoundEffect.ts",
       "example/components/Sprite.ts",
       "example/components/Velocity.ts",
-      "example/core/EntityFactory.ts",
+      "example/templates/EnemyShipTemplate.ts",
+      "example/templates/ExplosionTemplate.ts",
+      "example/templates/ParticleTemplate.ts",
+      "example/templates/PlayerBulletTemplate.ts",
+      "example/templates/PlayerTemplate.ts",
+      "example/templates/StarTemplate.ts",
       "example/systems/CollisionSystem.ts",
       "example/systems/ColorAnimationSystem.ts",
       "example/systems/EntitySpawningTimerSystem.ts",

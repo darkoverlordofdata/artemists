@@ -15,7 +15,6 @@ module brokenspork.systems {
 	import Sprite = brokenspork.components.Sprite;
 	import Velocity = brokenspork.components.Velocity;
 	import Constants = brokenspork.core.Constants;
-	import EntityFactory = brokenspork.core.EntityFactory;
 	import Mapper = artemis.annotations.Mapper;
 
 	import EntitySystem = artemis.EntitySystem;
@@ -42,7 +41,7 @@ module brokenspork.systems {
 	
 		
 		public initialize() {
-			var self:CollisionSystem = this;
+			//var self:CollisionSystem = this;
 			
 			this.collisionPairs = new Bag<CollisionPair>();
 			
@@ -50,26 +49,24 @@ module brokenspork.systems {
 				{
 				
 				handleCollision: (bullet:Entity, ship:Entity) => {
-					var bp:Position = self.pm.get(bullet);
-					EntityFactory.createSmallExplosion(self.game, self.world, bp.x, bp.y).addToWorld();
-					for(var i = 0; 4 > i; i++) EntityFactory.createParticle(self.game, self.world, bp.x, bp.y).addToWorld();
-					
+					var bp:Position = this.pm.get(bullet);
+          this.world.createEntityFromTemplate('small', bp.x, bp.y).addToWorld();
+					for(var i = 0; 4 > i; i++) {
+            this.world.createEntityFromTemplate('particle', bp.x, bp.y).addToWorld();
+
+          }
+
 					//TODO: calling bullet.deleteFromWorld() was causing null pointer exceptions in ExpiringSystem and CollisionStstem because it did not exist anymore. 
 					//TODO: This did not happen in vanilla artemis.
 					//TODO: is this a Is this a bug in artemis-odb's DelayedEntityProcessingSystem?
 						bullet.deleteFromWorld();
-					//Expires bulletExpires = ex.get(bullet);
-					//if(bulletExpires != null) {
-					//    bulletExpires.delay = -1;
-					//}
-	
-					var health:Health = self.hm.get(ship);
-					var position:Position = self.pm.get(ship);
+					var health:Health = this.hm.get(ship);
+					var position:Position = this.pm.get(ship);
 					health.health -= 1;
 					if(health.health < 0) {
 						health.health = 0;
 						ship.deleteFromWorld();
-						EntityFactory.createBigExplosion(self.game, self.world, position.x, position.y).addToWorld();
+            this.world.createEntityFromTemplate('big', position.x, position.y).addToWorld();
 					}
 				}
 			}));

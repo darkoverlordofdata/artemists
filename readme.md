@@ -13,6 +13,21 @@ Example uses cocos2d-x 3.7
 Artemis port complete. 
 Current phase: burn-in
 
+#### extensions
+
+Entity Templates inspired by artemis_CSharp:
+
+```typescript
+@EntityTemplate('player')
+export class PlayerTemplate implements artemis.IEntityTemplate {
+
+    public buildEntity(entity:artemis.Entity, world:artemis.World, x:number, y:number):artemis.Entity {
+
+...
+
+var player = world.createEntityFromTemplate('player', x, y);
+```
+
 # MIT License
 
 Copyright (c) 2015 Bruce Davidson &lt;darkoverlordofdata@gmail.com&gt;

@@ -5,6 +5,12 @@ module artemis {
 	import HashMap = artemis.utils.HashMap;
 	import Map = artemis.utils.Map;
 	import Mapper = artemis.annotations.Mapper;
+  import IEntityTemplate = artemis.IEntityTemplate;
+  import EntityTemplate = artemis.annotations.EntityTemplate;
+
+  interface IEntityTemplates {
+    [key: string]: IEntityTemplate;
+  }
 
 	/**
 	* The primary instance for the framework. It contains all the managers.
@@ -32,7 +38,9 @@ module artemis {
 		
 		private systems_:Map<Function, EntitySystem>;
 		private systemsBag_:Bag<EntitySystem>;
-	
+
+    private entityTemplates:IEntityTemplates;
+
 		constructor() {
 			this.managers_ = new HashMap<Function, Manager>();
 			this.managersBag_ = new Bag<Manager>();
@@ -66,6 +74,12 @@ module artemis {
 				ComponentMapperInitHelper.config(this.systemsBag_.get(i), this);
 				this.systemsBag_.get(i).initialize();
 			}
+
+      this.entityTemplates = {};
+      for (var component in EntityTemplate['entityTemplates']) {
+        var Template = EntityTemplate['entityTemplates'][component];
+        this.setEntityTemplate(component, new Template);
+      }
 		}
 		
 		
@@ -365,7 +379,29 @@ module artemis {
 		public getMapper<T extends Component>(type:Function):ComponentMapper<T>  {
 			return ComponentMapper.getFor<T>(type, this);
 		}
-		
+
+
+    /**
+     * Set an Entity Template
+     *
+     * @param entityTag
+     * @param entityTemplate
+     */
+    public setEntityTemplate(entityTag:string, entityTemplate:IEntityTemplate) {
+      this.entityTemplates[entityTag] = entityTemplate;
+    }
+    /**
+     * Creates a entity from template.
+     *
+     * @param name
+     * @param args
+     * @returns {Entity}
+     * EntityTemplate
+     */
+		public createEntityFromTemplate(name:string, ...args:any[]):Entity {
+      return this.entityTemplates[name].buildEntity(this.createEntity(), this, ...args);
+		}
+
 	}
 	
 	/*
@@ -384,8 +420,7 @@ module artemis {
 			try {
 				
 				var clazz:any = target.constructor;
-				var className = clazz.className || clazz.name;
-				
+
 				for (var fieldIndex in clazz.declaredFields) {
 					var field = clazz.declaredFields[fieldIndex];
 					if (!target.hasOwnProperty(field)) {

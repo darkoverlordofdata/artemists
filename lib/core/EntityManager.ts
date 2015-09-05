@@ -16,10 +16,14 @@ module artemis {
 		private identifierPool_:IdentifierPool;
 		
 		constructor() {
-			super()
+			super();
 			this.entities_ = new Bag<Entity>();
 			this.disabled_ = new BitSet();
 			this.identifierPool_ = new IdentifierPool();
+			this.active_ = 0;
+      this.added_ = 0;
+      this.created_ = 0;
+      this.deleted_ = 0;
 		}
 		
 		
