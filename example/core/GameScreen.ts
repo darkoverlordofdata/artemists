@@ -29,7 +29,7 @@ module brokenspork.core {
 		constructor(public game:CCLayer) {
 			this.game = game;
 
-			EntitySystem.blackboard.setEntry('game', game);
+			EntitySystem.blackBoard.setEntry('game', game);
 
 			var world:World = this.world = new artemis.World();
 	

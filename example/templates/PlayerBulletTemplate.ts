@@ -29,7 +29,7 @@ module brokenspork.templates {
       sprite.name = "bullet";
       sprite.layer = Layer.PARTICLES;
       entity.addComponent(sprite);
-      sprite.addTo(EntitySystem.blackboard.getEntry<CCLayer>('game'));
+      sprite.addTo(EntitySystem.blackBoard.getEntry<CCLayer>('game'));
 
       var velocity:Velocity = new Velocity();
       velocity.vectorY = 800;

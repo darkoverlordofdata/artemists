@@ -35,7 +35,7 @@ module brokenspork.templates {
       sprite.a = 128;
       sprite.layer = Layer.PARTICLES;
       entity.addComponent(sprite);
-      sprite.addTo(EntitySystem.blackboard.getEntry<CCLayer>('game'));
+      sprite.addTo(EntitySystem.blackBoard.getEntry<CCLayer>('game'));
 
       var expires:Expires = new Expires();
       expires.delay = 0.5;

@@ -32,7 +32,7 @@ module brokenspork.templates {
       sprite.a = 1;
       sprite.layer = Layer.PARTICLES;
       entity.addComponent(sprite);
-      sprite.addTo(EntitySystem.blackboard.getEntry<CCLayer>('game'));
+      sprite.addTo(EntitySystem.blackBoard.getEntry<CCLayer>('game'));
 
       var radians:number = MathUtils.random(2*Math.PI);
       var magnitude:number = MathUtils.random(400);
