@@ -12,15 +12,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
         case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
     }
 };
-var brokenspork;
-(function (brokenspork) {
+var example;
+(function (example) {
     var systems;
     (function (systems) {
-        var Bounds = brokenspork.components.Bounds;
-        var Health = brokenspork.components.Health;
-        var Position = brokenspork.components.Position;
-        var Velocity = brokenspork.components.Velocity;
-        var Constants = brokenspork.core.Constants;
+        var Bounds = example.components.Bounds;
+        var Health = example.components.Health;
+        var Position = example.components.Position;
+        var Velocity = example.components.Velocity;
+        var Constants = example.core.Constants;
         var Aspect = artemis.Aspect;
         var IntervalEntityProcessingSystem = artemis.systems.IntervalEntityProcessingSystem;
         var Mapper = artemis.annotations.Mapper;
@@ -32,7 +32,7 @@ var brokenspork;
             RemoveOffscreenShipsSystem.prototype.processEach = function (e) {
                 var position = this.pm.get(e);
                 var bounds = this.bm.get(e);
-                if (position.y < Constants.FRAME_HEIGHT / 2 - bounds.radius) {
+                if (position.y < Constants.FRAME_HEIGHT / -bounds.radius) {
                     e.deleteFromWorld();
                 }
             };
@@ -45,6 +45,6 @@ var brokenspork;
             return RemoveOffscreenShipsSystem;
         })(IntervalEntityProcessingSystem);
         systems.RemoveOffscreenShipsSystem = RemoveOffscreenShipsSystem;
-    })(systems = brokenspork.systems || (brokenspork.systems = {}));
-})(brokenspork || (brokenspork = {}));
+    })(systems = example.systems || (example.systems = {}));
+})(example || (example = {}));
 //# sourceMappingURL=RemoveOffscreenShipsSystem.js.map

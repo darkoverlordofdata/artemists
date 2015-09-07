@@ -4,8 +4,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var brokenspork;
-(function (brokenspork) {
+var example;
+(function (example) {
     var core;
     (function (core) {
         var SpaceshipWarrior = (function (_super) {
@@ -33,7 +33,6 @@ var brokenspork;
             SpaceshipWarrior.prototype.ctor = function () {
                 this._super();
                 this.gameScreen = new core.GameScreen(this);
-                //setScreen(gameScreen);
                 this.scheduleUpdate();
             };
             SpaceshipWarrior.prototype.update = function (time) {
@@ -42,6 +41,6 @@ var brokenspork;
             return SpaceshipWarrior;
         })(CCLayer);
         core.SpaceshipWarrior = SpaceshipWarrior;
-    })(core = brokenspork.core || (brokenspork.core = {}));
-})(brokenspork || (brokenspork = {}));
+    })(core = example.core || (example.core = {}));
+})(example || (example = {}));
 //# sourceMappingURL=SpaceshipWarrior.js.map

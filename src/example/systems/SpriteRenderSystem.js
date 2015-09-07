@@ -12,21 +12,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
         case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
     }
 };
-var brokenspork;
-(function (brokenspork) {
+var example;
+(function (example) {
     var systems;
     (function (systems) {
         var HashMap = artemis.utils.HashMap;
-        var Position = brokenspork.components.Position;
-        var Sprite = brokenspork.components.Sprite;
+        var Position = example.components.Position;
+        var Sprite = example.components.Sprite;
         var Aspect = artemis.Aspect;
         var EntitySystem = artemis.EntitySystem;
         var Bag = artemis.utils.Bag;
         var Mapper = artemis.annotations.Mapper;
-        var Constants = brokenspork.core.Constants;
+        var Constants = example.core.Constants;
         var SpriteRenderSystem = (function (_super) {
             __extends(SpriteRenderSystem, _super);
             function SpriteRenderSystem(game) {
+                var x = this;
                 _super.call(this, Aspect.getAspectForAll(Position, Sprite));
                 this.game = game;
             }
@@ -70,8 +71,7 @@ var brokenspork;
             };
             SpriteRenderSystem.prototype.removed = function (e) {
                 var c = e.getComponentByType(Sprite);
-                //console.log('SpriteRenderSystem::removed', c.name, e.uuid);
-                this.game.removeChild(c.sprite_);
+                c.removeFrom(this.game);
                 this.regionsByEntity.set(e.getId(), null);
                 var index = this.sortedEntities.indexOf(e);
                 if (index != -1) {
@@ -87,6 +87,6 @@ var brokenspork;
             return SpriteRenderSystem;
         })(EntitySystem);
         systems.SpriteRenderSystem = SpriteRenderSystem;
-    })(systems = brokenspork.systems || (brokenspork.systems = {}));
-})(brokenspork || (brokenspork = {}));
+    })(systems = example.systems || (example.systems = {}));
+})(example || (example = {}));
 //# sourceMappingURL=SpriteRenderSystem.js.map

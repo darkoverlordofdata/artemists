@@ -12,12 +12,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
         case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
     }
 };
-var brokenspork;
-(function (brokenspork) {
+var example;
+(function (example) {
     var systems;
     (function (systems) {
-        var SoundEffect = brokenspork.components.SoundEffect;
-        var EFFECT = brokenspork.components.EFFECT;
+        var SoundEffect = example.components.SoundEffect;
+        var EFFECT = example.components.EFFECT;
         var Aspect = artemis.Aspect;
         var EntityProcessingSystem = artemis.systems.EntityProcessingSystem;
         var Mapper = artemis.annotations.Mapper;
@@ -58,6 +58,6 @@ var brokenspork;
             return SoundEffectSystem;
         })(EntityProcessingSystem);
         systems.SoundEffectSystem = SoundEffectSystem;
-    })(systems = brokenspork.systems || (brokenspork.systems = {}));
-})(brokenspork || (brokenspork = {}));
+    })(systems = example.systems || (example.systems = {}));
+})(example || (example = {}));
 //# sourceMappingURL=SoundEffectSystem.js.map

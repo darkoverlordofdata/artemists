@@ -12,51 +12,49 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
         case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
     }
 };
-var brokenspork;
-(function (brokenspork) {
+var example;
+(function (example) {
     var systems;
     (function (systems) {
-        var Health = brokenspork.components.Health;
-        var Position = brokenspork.components.Position;
+        var Health = example.components.Health;
+        var Position = example.components.Position;
+        var Sprite = example.components.Sprite;
         var Aspect = artemis.Aspect;
         var EntityProcessingSystem = artemis.systems.EntityProcessingSystem;
         var Mapper = artemis.annotations.Mapper;
+        var Constants = example.core.Constants;
         var HealthRenderSystem = (function (_super) {
             __extends(HealthRenderSystem, _super);
-            //private batch:SpriteBatch;
-            // private OrthographicCamera camera;
-            // private BitmapFont font;
-            function HealthRenderSystem() {
+            function HealthRenderSystem(game) {
                 _super.call(this, Aspect.getAspectForAll(Position, Health));
+                this.game = game;
+                this.texts = {};
             }
-            HealthRenderSystem.prototype.initialize = function () {
-                // batch = new SpriteBatch();
-                // Texture fontTexture = new Texture(Gdx.files.internal("fonts/normal_0.png"));
-                // fontTexture.setFilter(TextureFilter.Linear, TextureFilter.MipMapLinearLinear);
-                // TextureRegion fontRegion = new TextureRegion(fontTexture);
-                // font = new BitmapFont(Gdx.files.internal("fonts/normal.fnt"), fontRegion, false);
-                // font.setUseIntegerPositions(false);
+            HealthRenderSystem.prototype.inserted = function (e) {
+                // add a text element to the sprite
+                var c = e.getComponentByType(Sprite);
+                var b = new cc.LabelBMFont('100%', "res/fonts/normal.fnt");
+                b.setScale(1 / 2);
+                this.game.addChild(b);
+                this.texts[e.uuid] = b;
             };
-            HealthRenderSystem.prototype.begin = function () {
-                // batch.setProjectionMatrix(camera.combined);
-                // batch.begin();
+            HealthRenderSystem.prototype.removed = function (e) {
+                // remove the text element from the sprite
+                var c = e.getComponentByType(Sprite);
+                this.game.removeChild(this.texts[e.uuid]);
+                this.texts[e.uuid] = null;
+                delete this.texts[e.uuid];
             };
-            //public inserted(e:Entity) {
-            //  var c:Sprite = e.getComponentByType(Sprite);
-            //  console.log('HealthRenderSystem::inserted', c.name, e.uuid);
-            //}
-            //protected removed(e:Entity) {
-            //  var c:Sprite = e.getComponentByType(Sprite);
-            //  console.log('HealthRenderSystem::removed', c.name, e.uuid);
-            //}
             HealthRenderSystem.prototype.processEach = function (e) {
-                var position = this.pm.get(e);
-                var health = this.hm.get(e);
-                var percentage = Math.round(health.health / health.maximumHealth * 100);
-                //font.draw(batch, percentage+"%", position.x, position.y);
-            };
-            HealthRenderSystem.prototype.end = function () {
-                //batch.end();
+                // update the text element on the sprite
+                if (this.texts[e.uuid]) {
+                    var position = this.pm.get(e);
+                    var health = this.hm.get(e);
+                    var text = this.texts[e.uuid];
+                    var percentage = Math.round(health.health / health.maximumHealth * 100);
+                    text.setPosition(cc.p(position.x * 2, Constants.FRAME_HEIGHT - position.y));
+                    text.setString(percentage + "%");
+                }
             };
             __decorate([
                 Mapper(Position)
@@ -67,6 +65,6 @@ var brokenspork;
             return HealthRenderSystem;
         })(EntityProcessingSystem);
         systems.HealthRenderSystem = HealthRenderSystem;
-    })(systems = brokenspork.systems || (brokenspork.systems = {}));
-})(brokenspork || (brokenspork = {}));
+    })(systems = example.systems || (example.systems = {}));
+})(example || (example = {}));
 //# sourceMappingURL=HealthRenderSystem.js.map

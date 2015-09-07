@@ -1,6 +1,5 @@
 var artemis;
 (function (artemis) {
-    var ComponentType = artemis.ComponentType;
     /**
     * High performance component retrieval from entities. Use this wherever you
     * need to retrieve components from entities often and fast.
@@ -11,7 +10,8 @@ var artemis;
     */
     var ComponentMapper = (function () {
         function ComponentMapper(type, world) {
-            this.type_ = ComponentType.getTypeFor(type);
+            //this.type_ = ComponentType.getTypeFor(type);
+            this.type_ = world.getComponentManager().typeFactory.getTypeFor(type);
             this.components_ = world.getComponentManager().getComponentsByType(this.type_);
             this.classType_ = type;
         }

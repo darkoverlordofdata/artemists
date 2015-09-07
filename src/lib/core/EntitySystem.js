@@ -2,6 +2,7 @@ var artemis;
 (function (artemis) {
     var Bag = artemis.utils.Bag;
     var HashMap = artemis.utils.HashMap;
+    var BlackBoard = artemis.blackboard.BlackBoard;
     /**
     * The most raw entity system. It should not typically be used, but you can create your own
     * entity system handling by extending this. It is recommended that you use the other provided
@@ -18,10 +19,10 @@ var artemis;
         function EntitySystem(aspect) {
             this.actives_ = new Bag();
             this.aspect_ = aspect;
+            this.systemIndex_ = SystemIndexManager.getIndexFor(this.constructor);
             this.allSet_ = aspect.getAllSet();
             this.exclusionSet_ = aspect.getExclusionSet();
             this.oneSet_ = aspect.getOneSet();
-            this.systemIndex_ = SystemIndexManager.getIndexFor(this.constructor);
             this.dummy_ = this.allSet_.isEmpty() && this.oneSet_.isEmpty(); // This system can't possibly be interested in any entity, so it must be "dummy"
         }
         /**
@@ -110,7 +111,6 @@ var artemis;
             this.removed(e);
         };
         EntitySystem.prototype.insertToSystem = function (e) {
-            //console.log('EntitySystem::insertToSystem');
             this.actives_.add(e);
             e.getSystemBits().set(this.systemIndex_);
             this.inserted(e);
@@ -143,9 +143,10 @@ var artemis;
         EntitySystem.prototype.setPassive = function (passive) {
             this.passive_ = passive;
         };
-        EntitySystem.prototype.getActives = function () {
+        EntitySystem.prototype.getActive = function () {
             return this.actives_;
         };
+        EntitySystem.blackBoard = new BlackBoard();
         return EntitySystem;
     })();
     artemis.EntitySystem = EntitySystem;

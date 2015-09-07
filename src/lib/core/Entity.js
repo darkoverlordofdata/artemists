@@ -55,13 +55,29 @@ var artemis;
         Entity.prototype.toString = function () {
             return "Entity[" + this.id_ + "]";
         };
+        Entity.prototype.createComponent = function (componentKlazz) {
+            var args = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                args[_i - 1] = arguments[_i];
+            }
+            var componentManager = this.world_.getComponentManager();
+            var component = componentManager.create(this, componentKlazz);
+            if (args.length) {
+                (_a = component).initialize.apply(_a, args);
+            }
+            var tf = this.world_.getComponentManager().typeFactory;
+            var componentType = tf.getTypeFor(componentKlazz);
+            this.componentBits_.set(componentType.getIndex());
+            return component;
+            var _a;
+        };
         /**
-        * Add a component to this entity.
-        *
-        * @param component to add to this entity
-        *
-        * @return this entity for chaining.
-        */
+              * Add a component to this entity.
+              *
+              * @param component to add to this entity
+              *
+              * @return this entity for chaining.
+              */
         // public addComponent(component: Component):Entity {
         // 	this.addComponent(component, ComponentType.getTypeFor(component.getClass()));
         // 	return this;
@@ -71,14 +87,32 @@ var artemis;
         * in some cases you might need the extra performance.
         *
         * @param component the component to add
-        * @param type of the component
+        * @param args of the component
         *
         * @return this entity for chaining.
         */
-        Entity.prototype.addComponent = function (component, type) {
-            if (type === void 0) { type = artemis.ComponentType.getTypeFor(component.constructor); }
+        //public addComponent(component:Component, type?:ComponentType):Entity {
+        Entity.prototype.addComponent = function (component) {
+            var args = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                args[_i - 1] = arguments[_i];
+            }
+            var type;
+            if (component instanceof artemis.Component) {
+                type = args[0];
+            }
+            else {
+                component = this.createComponent.apply(this, [component].concat(args));
+                type = this.getTypeFor(component.constructor);
+            }
+            if (type === undefined)
+                type = this.getTypeFor(component.constructor);
+            //type = ComponentType.getTypeFor(component.constructor);
             this.componentManager_.addComponent(this, type, component);
             return this;
+        };
+        Entity.prototype.getTypeFor = function (c) {
+            return this.world_.getComponentManager().typeFactory.getTypeFor(c);
         };
         /**
         * Removes the component from this entity.
@@ -88,8 +122,8 @@ var artemis;
         * @return this entity for chaining.
         */
         Entity.prototype.removeComponentInstance = function (component) {
-            //this.removeComponent(component.getClass());
-            this.removeComponent(artemis.ComponentType.getTypeFor(component.constructor));
+            //this.removeComponent(ComponentType.getTypeFor(component.constructor));
+            this.removeComponent(this.getTypeFor(component.constructor));
             return this;
         };
         /**
@@ -110,7 +144,8 @@ var artemis;
         * @return this entity for chaining.
         */
         Entity.prototype.removeComponentByType = function (type) {
-            this.removeComponent(artemis.ComponentType.getTypeFor(type));
+            //this.removeComponent(ComponentType.getTypeFor(type));
+            this.removeComponent(this.getTypeFor(type));
             return this;
         };
         /**
@@ -161,8 +196,8 @@ var artemis;
         * @return component that matches, or null if none is found.
         */
         Entity.prototype.getComponentByType = function (type) {
-            //return type.cast(getComponent(ComponentType.getTypeFor(type)));
-            return this.componentManager_.getComponent(this, artemis.ComponentType.getTypeFor(type));
+            return this.componentManager_.getComponent(this, this.getTypeFor(type));
+            //return this.componentManager_.getComponent(this, ComponentType.getTypeFor(type));
         };
         /**
         * Returns a bag of all components this entity has.

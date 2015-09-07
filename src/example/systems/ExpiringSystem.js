@@ -12,11 +12,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
         case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
     }
 };
-var brokenspork;
-(function (brokenspork) {
+var example;
+(function (example) {
     var systems;
     (function (systems) {
-        var Expires = brokenspork.components.Expires;
+        var Expires = example.components.Expires;
         var Aspect = artemis.Aspect;
         var DelayedEntityProcessingSystem = artemis.systems.DelayedEntityProcessingSystem;
         var Mapper = artemis.annotations.Mapper;
@@ -42,6 +42,6 @@ var brokenspork;
             return ExpiringSystem;
         })(DelayedEntityProcessingSystem);
         systems.ExpiringSystem = ExpiringSystem;
-    })(systems = brokenspork.systems || (brokenspork.systems = {}));
-})(brokenspork || (brokenspork = {}));
+    })(systems = example.systems || (example.systems = {}));
+})(example || (example = {}));
 //# sourceMappingURL=ExpiringSystem.js.map

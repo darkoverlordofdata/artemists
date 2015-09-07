@@ -12,12 +12,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
         case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
     }
 };
-var brokenspork;
-(function (brokenspork) {
+var example;
+(function (example) {
     var systems;
     (function (systems) {
-        var Position = brokenspork.components.Position;
-        var Velocity = brokenspork.components.Velocity;
+        var Position = example.components.Position;
+        var Velocity = example.components.Velocity;
         var Aspect = artemis.Aspect;
         var EntityProcessingSystem = artemis.systems.EntityProcessingSystem;
         var Mapper = artemis.annotations.Mapper;
@@ -30,9 +30,6 @@ var brokenspork;
             MovementSystem.prototype.processEach = function (e) {
                 var position = this.pm.get(e);
                 var velocity = this.vm.get(e);
-                if (velocity == null) {
-                    return;
-                }
                 position.x += velocity.vectorX * this.world.delta;
                 position.y -= velocity.vectorY * this.world.delta;
             };
@@ -45,6 +42,6 @@ var brokenspork;
             return MovementSystem;
         })(EntityProcessingSystem);
         systems.MovementSystem = MovementSystem;
-    })(systems = brokenspork.systems || (brokenspork.systems = {}));
-})(brokenspork || (brokenspork = {}));
+    })(systems = example.systems || (example.systems = {}));
+})(example || (example = {}));
 //# sourceMappingURL=MovementSystem.js.map

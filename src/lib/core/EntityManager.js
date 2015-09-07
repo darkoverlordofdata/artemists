@@ -16,6 +16,10 @@ var artemis;
             this.entities_ = new Bag();
             this.disabled_ = new BitSet();
             this.identifierPool_ = new IdentifierPool();
+            this.active_ = 0;
+            this.added_ = 0;
+            this.created_ = 0;
+            this.deleted_ = 0;
         }
         EntityManager.prototype.initialize = function () {
         };

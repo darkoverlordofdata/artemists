@@ -4,8 +4,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var brokenspork;
-(function (brokenspork) {
+var example;
+(function (example) {
     var components;
     (function (components) {
         var Component = artemis.Component;
@@ -18,6 +18,6 @@ var brokenspork;
             return Player;
         })(Component);
         components.Player = Player;
-    })(components = brokenspork.components || (brokenspork.components = {}));
-})(brokenspork || (brokenspork = {}));
+    })(components = example.components || (example.components = {}));
+})(example || (example = {}));
 //# sourceMappingURL=Player.js.map

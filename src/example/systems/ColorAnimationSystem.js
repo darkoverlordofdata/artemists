@@ -12,12 +12,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
         case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
     }
 };
-var brokenspork;
-(function (brokenspork) {
+var example;
+(function (example) {
     var systems;
     (function (systems) {
-        var ColorAnimation = brokenspork.components.ColorAnimation;
-        var Sprite = brokenspork.components.Sprite;
+        var ColorAnimation = example.components.ColorAnimation;
+        var Sprite = example.components.Sprite;
         var Mapper = artemis.annotations.Mapper;
         var EntityProcessingSystem = artemis.systems.EntityProcessingSystem;
         var Aspect = artemis.Aspect;
@@ -50,6 +50,6 @@ var brokenspork;
             return ColorAnimationSystem;
         })(EntityProcessingSystem);
         systems.ColorAnimationSystem = ColorAnimationSystem;
-    })(systems = brokenspork.systems || (brokenspork.systems = {}));
-})(brokenspork || (brokenspork = {}));
+    })(systems = example.systems || (example.systems = {}));
+})(example || (example = {}));
 //# sourceMappingURL=ColorAnimationSystem.js.map

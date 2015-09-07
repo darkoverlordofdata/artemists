@@ -8,6 +8,7 @@ var artemis;
     var Component = (function () {
         function Component() {
         }
+        Component.prototype.initialize = function () { };
         return Component;
     })();
     artemis.Component = Component;

@@ -12,13 +12,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
         case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
     }
 };
-var brokenspork;
-(function (brokenspork) {
+var example;
+(function (example) {
     var systems;
     (function (systems) {
-        var ParallaxStar = brokenspork.components.ParallaxStar;
-        var Position = brokenspork.components.Position;
-        var Constants = brokenspork.core.Constants;
+        var ParallaxStar = example.components.ParallaxStar;
+        var Position = example.components.Position;
+        var Constants = example.core.Constants;
         var Aspect = artemis.Aspect;
         var IntervalEntityProcessingSystem = artemis.systems.IntervalEntityProcessingSystem;
         var Mapper = artemis.annotations.Mapper;
@@ -39,6 +39,6 @@ var brokenspork;
             return ParallaxStarRepeatingSystem;
         })(IntervalEntityProcessingSystem);
         systems.ParallaxStarRepeatingSystem = ParallaxStarRepeatingSystem;
-    })(systems = brokenspork.systems || (brokenspork.systems = {}));
-})(brokenspork || (brokenspork = {}));
+    })(systems = example.systems || (example.systems = {}));
+})(example || (example = {}));
 //# sourceMappingURL=ParallaxStarRepeatingSystem.js.map

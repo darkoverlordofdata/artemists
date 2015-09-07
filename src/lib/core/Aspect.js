@@ -29,6 +29,9 @@ var artemis;
             this.exclusionSet_ = new BitSet();
             this.oneSet_ = new BitSet();
         }
+        Aspect.prototype.setWorld = function (world) {
+            this.world_ = world;
+        };
         Aspect.prototype.getAllSet = function () {
             return this.allSet_;
         };
@@ -38,21 +41,24 @@ var artemis;
         Aspect.prototype.getOneSet = function () {
             return this.oneSet_;
         };
+        Aspect.prototype.getIndexFor = function (c) {
+            return Aspect.typeFactory.getIndexFor(c);
+        };
         /**
-        * Returns an aspect where an entity must possess all of the specified component types.
-        * @param type a required component type
-        * @param types a required component type
-        * @return an aspect that can be matched against entities
-        */
+            * Returns an aspect where an entity must possess all of the specified component types.
+            * @param type a required component type
+            * @param types a required component type
+            * @return an aspect that can be matched against entities
+            */
         Aspect.prototype.all = function (type) {
             var types = [];
             for (var _i = 1; _i < arguments.length; _i++) {
                 types[_i - 1] = arguments[_i];
             }
-            this.allSet_.set(artemis.ComponentType.getIndexFor(type));
+            this.allSet_.set(this.getIndexFor(type));
             var t;
             for (t in types) {
-                this.allSet_.set(artemis.ComponentType.getIndexFor(types[t]));
+                this.allSet_.set(this.getIndexFor(types[t]));
             }
             return this;
         };
@@ -69,10 +75,10 @@ var artemis;
             for (var _i = 1; _i < arguments.length; _i++) {
                 types[_i - 1] = arguments[_i];
             }
-            this.exclusionSet_.set(artemis.ComponentType.getIndexFor(type));
+            this.exclusionSet_.set(this.getIndexFor(type));
             var t;
             for (t in types) {
-                this.exclusionSet_.set(artemis.ComponentType.getIndexFor(types[t]));
+                this.exclusionSet_.set(this.getIndexFor(types[t]));
             }
             return this;
         };
@@ -87,9 +93,9 @@ var artemis;
             for (var _i = 1; _i < arguments.length; _i++) {
                 types[_i - 1] = arguments[_i];
             }
-            this.oneSet_.set(artemis.ComponentType.getIndexFor(type));
+            this.oneSet_.set(this.getIndexFor(type));
             for (var t in types) {
-                this.oneSet_.set(artemis.ComponentType.getIndexFor(types[t]));
+                this.oneSet_.set(this.getIndexFor(types[t]));
             }
             return this;
         };

@@ -4,8 +4,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var brokenspork;
-(function (brokenspork) {
+var example;
+(function (example) {
     var components;
     (function (components) {
         var Component = artemis.Component;
@@ -14,12 +14,18 @@ var brokenspork;
             function Health() {
                 _super.apply(this, arguments);
             }
+            Health.prototype.initialize = function (health, maximumHealth) {
+                if (health === void 0) { health = 0; }
+                if (maximumHealth === void 0) { maximumHealth = 0; }
+                this.health = health;
+                this.maximumHealth = maximumHealth;
+            };
             Health.className = 'Health';
             return Health;
         })(Component);
         components.Health = Health;
         Health.prototype.health = 0;
         Health.prototype.maximumHealth = 0;
-    })(components = brokenspork.components || (brokenspork.components = {}));
-})(brokenspork || (brokenspork = {}));
+    })(components = example.components || (example.components = {}));
+})(example || (example = {}));
 //# sourceMappingURL=Health.js.map

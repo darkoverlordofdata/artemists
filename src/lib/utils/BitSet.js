@@ -3,12 +3,11 @@ var artemis;
     var utils;
     (function (utils) {
         /*
-         * BitSets are packed into arrays of "words."  Currently a word is
-         * an integer, which consists of 32 bits, requiring 5 address bits.
+         * BitSets are packed into arrays of "words."  Currently a word
+         * consists of 32 bits, requiring 5 address bits.
          */
         var ADDRESS_BITS_PER_WORD = 5;
-        var BITS_PER_WORD = 1 << ADDRESS_BITS_PER_WORD;
-        var BIT_INDEX_MASK = BITS_PER_WORD - 1;
+        var BITS_PER_WORD = 1 << ADDRESS_BITS_PER_WORD; // 32
         var WORD_MASK = 0xffffffff;
         /**
          * @see http://stackoverflow.com/questions/6506356/java-implementation-of-long-numberoftrailingzeros
@@ -57,7 +56,7 @@ var artemis;
                 }
                 else {
                     var words = this.words_ = new Array(((nbits - 1) >> ADDRESS_BITS_PER_WORD) + 1);
-                    for (var i = 0; i < words.length; i++) {
+                    for (var i = 0, l = words.length; i < l; i++) {
                         words[i] = 0;
                     }
                 }
@@ -68,7 +67,7 @@ var artemis;
                 var wordsInUse = words.length;
                 var word = words[u] & (WORD_MASK << fromIndex);
                 while (true) {
-                    if (word != 0)
+                    if (word !== 0)
                         return (u * BITS_PER_WORD) + numberOfTrailingZeros(word);
                     if (++u === wordsInUse)
                         return -1;
@@ -119,7 +118,7 @@ var artemis;
                 var wordsRequired = wordIndex + 1;
                 if (wordsInUse < wordsRequired) {
                     words.length = Math.max(2 * wordsInUse, wordsRequired);
-                    for (var i = wordsInUse; i < words.length; i++) {
+                    for (var i = wordsInUse, l = words.length; i < l; i++) {
                         words[i] = 0;
                     }
                 }

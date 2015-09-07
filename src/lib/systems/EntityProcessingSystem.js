@@ -25,8 +25,7 @@ var artemis;
             * Process a entity this system is interested in.
             * @param e the entity to process.
             */
-            EntityProcessingSystem.prototype.processEach = function (e) {
-            };
+            EntityProcessingSystem.prototype.processEach = function (e) { };
             EntityProcessingSystem.prototype.processEntities = function (entities) {
                 for (var i = 0, s = entities.size(); s > i; i++) {
                     this.processEach(entities.get(i));

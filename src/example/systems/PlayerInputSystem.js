@@ -12,18 +12,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
         case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
     }
 };
-var brokenspork;
-(function (brokenspork) {
+var example;
+(function (example) {
     var systems;
     (function (systems) {
-        var Player = brokenspork.components.Player;
-        var Position = brokenspork.components.Position;
-        var Velocity = brokenspork.components.Velocity;
-        var EntityFactory = brokenspork.core.EntityFactory;
+        var Player = example.components.Player;
+        var Position = example.components.Position;
+        var Velocity = example.components.Velocity;
         var Aspect = artemis.Aspect;
         var Mapper = artemis.annotations.Mapper;
         var EntityProcessingSystem = artemis.systems.EntityProcessingSystem;
-        var Constants = brokenspork.core.Constants;
+        var Constants = example.core.Constants;
         var PlayerInputSystem = (function (_super) {
             __extends(PlayerInputSystem, _super);
             function PlayerInputSystem(game) {
@@ -37,6 +36,11 @@ var brokenspork;
                     event: cc.EventListener.TOUCH_ONE_BY_ONE,
                     swallowTouches: true,
                     onTouchBegan: function (touch, event) {
+                        _this.shoot = true;
+                        _this.mouseVector = touch.getLocation();
+                        return true;
+                    },
+                    onTouchMoved: function (touch, event) {
                         _this.shoot = true;
                         _this.mouseVector = touch.getLocation();
                         return true;
@@ -61,8 +65,8 @@ var brokenspork;
                 position.y = Constants.FRAME_HEIGHT - this.mouseVector.y;
                 if (this.shoot) {
                     if (this.timeToFire <= 0) {
-                        EntityFactory.createPlayerBullet(this.game, this.world, position.x - 27, position.y + 2).addToWorld();
-                        EntityFactory.createPlayerBullet(this.game, this.world, position.x + 27, position.y + 2).addToWorld();
+                        this.world.createEntityFromTemplate('bullet', position.x - 27, position.y + 2).addToWorld();
+                        this.world.createEntityFromTemplate('bullet', position.x + 27, position.y + 2).addToWorld();
                         this.timeToFire = PlayerInputSystem.FireRate;
                     }
                 }
@@ -73,10 +77,6 @@ var brokenspork;
                     }
                 }
             };
-            PlayerInputSystem.HorizontalThrusters = 300;
-            PlayerInputSystem.HorizontalMaxSpeed = 300;
-            PlayerInputSystem.VerticalThrusters = 200;
-            PlayerInputSystem.VerticalMaxSpeed = 200;
             PlayerInputSystem.FireRate = 0.1;
             __decorate([
                 Mapper(Position)
@@ -87,6 +87,6 @@ var brokenspork;
             return PlayerInputSystem;
         })(EntityProcessingSystem);
         systems.PlayerInputSystem = PlayerInputSystem;
-    })(systems = brokenspork.systems || (brokenspork.systems = {}));
-})(brokenspork || (brokenspork = {}));
+    })(systems = example.systems || (example.systems = {}));
+})(example || (example = {}));
 //# sourceMappingURL=PlayerInputSystem.js.map

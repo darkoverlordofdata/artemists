@@ -1,5 +1,5 @@
-var brokenspork;
-(function (brokenspork) {
+var example;
+(function (example) {
     var core;
     (function (core) {
         var Constants = (function () {
@@ -16,6 +16,6 @@ var brokenspork;
             return Constants;
         })();
         core.Constants = Constants;
-    })(core = brokenspork.core || (brokenspork.core = {}));
-})(brokenspork || (brokenspork = {}));
+    })(core = example.core || (example.core = {}));
+})(example || (example = {}));
 //# sourceMappingURL=Constants.js.map

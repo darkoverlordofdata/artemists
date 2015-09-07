@@ -4,11 +4,20 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var brokenspork;
-(function (brokenspork) {
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
+    switch (arguments.length) {
+        case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
+        case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
+        case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
+    }
+};
+var example;
+(function (example) {
     var components;
     (function (components) {
-        var Component = artemis.Component;
+        var PooledComponent = artemis.PooledComponent;
+        var Pooled = artemis.annotations.Pooled;
         (function (Layer) {
             Layer[Layer["DEFAULT"] = 0] = "DEFAULT";
             Layer[Layer["BACKGROUND"] = 1] = "BACKGROUND";
@@ -18,16 +27,26 @@ var brokenspork;
             Layer[Layer["PARTICLES"] = 5] = "PARTICLES";
         })(components.Layer || (components.Layer = {}));
         var Layer = components.Layer;
-        ;
         var Sprite = (function (_super) {
             __extends(Sprite, _super);
-            // public int getLayerId() {
-            // 	return ordinal();
-            // }
             function Sprite() {
-                _super.call(this);
-                this.sprite_ = new cc.Sprite();
+                _super.apply(this, arguments);
             }
+            Sprite.prototype.initialize = function (name, color, lambda) {
+                this.sprite_ = new cc.Sprite();
+                this.sprite_.setScale(0.5);
+                this.sprite_.setOpacityModifyRGB(true);
+                this.name = name;
+                if (color !== undefined && color !== null) {
+                    this.r = color.r;
+                    this.g = color.g;
+                    this.b = color.b;
+                    this.a = color.a;
+                }
+                if (lambda !== undefined) {
+                    lambda(this);
+                }
+            };
             Object.defineProperty(Sprite.prototype, "name", {
                 get: function () { return this.name_; },
                 set: function (value) {
@@ -91,9 +110,21 @@ var brokenspork;
                 enumerable: true,
                 configurable: true
             });
+            Sprite.prototype.addTo = function (layer) {
+                layer.addChild(this.sprite_);
+            };
+            Sprite.prototype.removeFrom = function (layer) {
+                layer.removeChild(this.sprite_);
+            };
+            Sprite.prototype.reset = function () {
+                this.sprite_ = null;
+            };
             Sprite.className = 'Sprite';
+            Sprite = __decorate([
+                Pooled()
+            ], Sprite);
             return Sprite;
-        })(Component);
+        })(PooledComponent);
         components.Sprite = Sprite;
         Sprite.prototype.layer = Layer.DEFAULT;
         Sprite.prototype.name_ = '';
@@ -105,6 +136,6 @@ var brokenspork;
         Sprite.prototype.b_ = 255;
         Sprite.prototype.a_ = 255;
         Sprite.prototype.sprite_ = null;
-    })(components = brokenspork.components || (brokenspork.components = {}));
-})(brokenspork || (brokenspork = {}));
+    })(components = example.components || (example.components = {}));
+})(example || (example = {}));
 //# sourceMappingURL=Sprite.js.map

@@ -2,6 +2,7 @@ var artemis;
 (function (artemis) {
     var Bag = artemis.utils.Bag;
     var HashMap = artemis.utils.HashMap;
+    var EntityTemplate = artemis.annotations.EntityTemplate;
     /**
     * The primary instance for the framework. It contains all the managers.
     *
@@ -38,6 +39,11 @@ var artemis;
             for (var i = 0; i < this.systemsBag_.size(); i++) {
                 ComponentMapperInitHelper.config(this.systemsBag_.get(i), this);
                 this.systemsBag_.get(i).initialize();
+            }
+            this.entityTemplates = {};
+            for (var component in EntityTemplate['entityTemplates']) {
+                var Template = EntityTemplate['entityTemplates'][component];
+                this.setEntityTemplate(component, new Template);
             }
         };
         /**
@@ -285,6 +291,31 @@ var artemis;
         World.prototype.getMapper = function (type) {
             return artemis.ComponentMapper.getFor(type, this);
         };
+        /**
+         * Set an Entity Template
+         *
+         * @param entityTag
+         * @param entityTemplate
+         */
+        World.prototype.setEntityTemplate = function (entityTag, entityTemplate) {
+            this.entityTemplates[entityTag] = entityTemplate;
+        };
+        /**
+         * Creates a entity from template.
+         *
+         * @param name
+         * @param args
+         * @returns {Entity}
+         * EntityTemplate
+         */
+        World.prototype.createEntityFromTemplate = function (name) {
+            var args = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                args[_i - 1] = arguments[_i];
+            }
+            return (_a = this.entityTemplates[name]).buildEntity.apply(_a, [this.createEntity(), this].concat(args));
+            var _a;
+        };
         return World;
     })();
     artemis.World = World;
@@ -294,7 +325,6 @@ var artemis;
         ComponentMapperInitHelper.config = function (target, world) {
             try {
                 var clazz = target.constructor;
-                var className = clazz.className || clazz.name;
                 for (var fieldIndex in clazz.declaredFields) {
                     var field = clazz.declaredFields[fieldIndex];
                     if (!target.hasOwnProperty(field)) {

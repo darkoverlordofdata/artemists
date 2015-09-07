@@ -112,13 +112,35 @@ var artemis;
                 return modified;
             };
             /**
-            * Returns the element at the specified position in Bag.
-            *
-            * @param index
-            *            index of the element to return
-            * @return the element at the specified position in bag
-            */
+             * Returns the element at the specified position in Bag.
+             *
+             * @param index
+             *            index of the element to return
+             * @return the element at the specified position in bag
+         *
+         * @throws ArrayIndexOutOfBoundsException
+             */
             Bag.prototype.get = function (index) {
+                if (index >= this.data_.length) {
+                    throw new Error('ArrayIndexOutOfBoundsException');
+                }
+                return this.data_[index];
+            };
+            /**
+             * Returns the element at the specified position in Bag. This method
+             * ensures that the bag grows if the requested index is outside the bounds
+             * of the current backing array.
+             *
+             * @param index
+             *			index of the element to return
+             *
+             * @return the element at the specified position in bag
+             *
+             */
+            Bag.prototype.safeGet = function (index) {
+                if (index >= this.data_.length) {
+                    this.grow((index * 7) / 4 + 1);
+                }
                 return this.data_[index];
             };
             /**
@@ -183,7 +205,7 @@ var artemis;
             };
             Bag.prototype.grow = function (newCapacity) {
                 if (newCapacity === void 0) { newCapacity = ~~((this.data_.length * 3) / 2) + 1; }
-                this.data_.length = newCapacity;
+                this.data_.length = ~~newCapacity;
             };
             Bag.prototype.ensureCapacity = function (index) {
                 if (index >= this.data_.length) {
@@ -204,8 +226,8 @@ var artemis;
             };
             /**
             * Add all items into this bag.
-            * @param added
-            */
+             * @param items
+             */
             Bag.prototype.addAll = function (items) {
                 var i;
                 for (i = 0; items.size() > i; i++) {

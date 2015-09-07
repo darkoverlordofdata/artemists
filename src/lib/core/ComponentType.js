@@ -1,32 +1,41 @@
 var artemis;
 (function (artemis) {
-    var HashMap = artemis.utils.HashMap;
+    var Pooled = artemis.annotations.Pooled;
+    (function (Taxonomy) {
+        Taxonomy[Taxonomy["BASIC"] = 0] = "BASIC";
+        Taxonomy[Taxonomy["POOLED"] = 1] = "POOLED"; //, PACKED
+    })(artemis.Taxonomy || (artemis.Taxonomy = {}));
+    var Taxonomy = artemis.Taxonomy;
     var ComponentType = (function () {
-        function ComponentType(type) {
-            this.index_ = ComponentType.INDEX++;
+        function ComponentType(type, index) {
+            this.index_ = 0;
+            if (index !== undefined) {
+                this.index_ = ComponentType.INDEX++;
+            }
+            else {
+                this.index_ = index;
+            }
             this.type_ = type;
+            if (Pooled['pooledComponents'][artemis.getClassName(type)] === type) {
+                this.taxonomy_ = Taxonomy.POOLED;
+            }
+            else {
+                this.taxonomy_ = Taxonomy.BASIC;
+            }
         }
+        ComponentType.prototype.getName = function () {
+            return artemis.getClassName(this.type_);
+        };
         ComponentType.prototype.getIndex = function () {
             return this.index_;
         };
+        ComponentType.prototype.getTaxonomy = function () {
+            return this.taxonomy_;
+        };
         ComponentType.prototype.toString = function () {
-            var klass = ComponentType;
-            return "ComponentType[" + klass.name + "] (" + this.index_ + ")";
-            // return "ComponentType["+klass.getSimpleName()+"] ("+this.index_+")";
-        };
-        ComponentType.getTypeFor = function (c) {
-            var type = ComponentType.componentTypes.get(c);
-            if (type == null) {
-                type = new ComponentType(c);
-                ComponentType.componentTypes.put(c, type);
-            }
-            return type;
-        };
-        ComponentType.getIndexFor = function (c) {
-            return ComponentType.getTypeFor(c).getIndex();
+            return "ComponentType[" + artemis.getClassName(ComponentType) + "] (" + this.index_ + ")";
         };
         ComponentType.INDEX = 0;
-        ComponentType.componentTypes = new HashMap();
         return ComponentType;
     })();
     artemis.ComponentType = ComponentType;

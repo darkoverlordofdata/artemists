@@ -12,17 +12,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
         case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
     }
 };
-var brokenspork;
-(function (brokenspork) {
+var example;
+(function (example) {
     var systems;
     (function (systems) {
         var Bag = artemis.utils.Bag;
-        var Bounds = brokenspork.components.Bounds;
-        var Expires = brokenspork.components.Expires;
-        var Health = brokenspork.components.Health;
-        var Position = brokenspork.components.Position;
-        var Constants = brokenspork.core.Constants;
-        var EntityFactory = brokenspork.core.EntityFactory;
+        var Bounds = example.components.Bounds;
+        var Expires = example.components.Expires;
+        var Health = example.components.Health;
+        var Position = example.components.Position;
+        var Constants = example.core.Constants;
         var Mapper = artemis.annotations.Mapper;
         var EntitySystem = artemis.EntitySystem;
         var Aspect = artemis.Aspect;
@@ -34,29 +33,26 @@ var brokenspork;
                 this.game = game;
             }
             CollisionSystem.prototype.initialize = function () {
-                var self = this;
+                var _this = this;
                 this.collisionPairs = new Bag();
                 this.collisionPairs.add(new CollisionPair(this, Constants.Groups.PLAYER_BULLETS, Constants.Groups.ENEMY_SHIPS, {
                     handleCollision: function (bullet, ship) {
-                        var bp = self.pm.get(bullet);
-                        EntityFactory.createSmallExplosion(self.game, self.world, bp.x, bp.y).addToWorld();
-                        for (var i = 0; 4 > i; i++)
-                            EntityFactory.createParticle(self.game, self.world, bp.x, bp.y).addToWorld();
+                        var bp = _this.pm.get(bullet);
+                        _this.world.createEntityFromTemplate('small', bp.x, bp.y).addToWorld();
+                        for (var i = 0; 4 > i; i++) {
+                            _this.world.createEntityFromTemplate('particle', bp.x, bp.y).addToWorld();
+                        }
                         //TODO: calling bullet.deleteFromWorld() was causing null pointer exceptions in ExpiringSystem and CollisionStstem because it did not exist anymore. 
                         //TODO: This did not happen in vanilla artemis.
                         //TODO: is this a Is this a bug in artemis-odb's DelayedEntityProcessingSystem?
                         bullet.deleteFromWorld();
-                        //Expires bulletExpires = ex.get(bullet);
-                        //if(bulletExpires != null) {
-                        //    bulletExpires.delay = -1;
-                        //}
-                        var health = self.hm.get(ship);
-                        var position = self.pm.get(ship);
+                        var health = _this.hm.get(ship);
+                        var position = _this.pm.get(ship);
                         health.health -= 1;
                         if (health.health < 0) {
                             health.health = 0;
                             ship.deleteFromWorld();
-                            EntityFactory.createBigExplosion(self.game, self.world, position.x, position.y).addToWorld();
+                            _this.world.createEntityFromTemplate('big', position.x, position.y).addToWorld();
                         }
                     }
                 }));
@@ -103,9 +99,8 @@ var brokenspork;
                 }
             };
             CollisionPair.prototype.collisionExists = function (e1, e2) {
-                if (e1 == null || e2 == null) {
+                if (e1 === null || e2 === null)
                     return false;
-                }
                 //NPE!!!
                 var p1 = this.cs.pm.get(e1);
                 var p2 = this.cs.pm.get(e2);
@@ -118,6 +113,6 @@ var brokenspork;
             };
             return CollisionPair;
         })();
-    })(systems = brokenspork.systems || (brokenspork.systems = {}));
-})(brokenspork || (brokenspork = {}));
+    })(systems = example.systems || (example.systems = {}));
+})(example || (example = {}));
 //# sourceMappingURL=CollisionSystem.js.map

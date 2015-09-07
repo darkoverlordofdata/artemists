@@ -1,46 +1,41 @@
-var brokenspork;
-(function (brokenspork) {
+var example;
+(function (example) {
     var core;
     (function (core) {
-        var CollisionSystem = brokenspork.systems.CollisionSystem;
-        var ColorAnimationSystem = brokenspork.systems.ColorAnimationSystem;
-        var EntitySpawningTimerSystem = brokenspork.systems.EntitySpawningTimerSystem;
-        var ExpiringSystem = brokenspork.systems.ExpiringSystem;
-        var HealthRenderSystem = brokenspork.systems.HealthRenderSystem;
-        var HudRenderSystem = brokenspork.systems.HudRenderSystem;
-        var MovementSystem = brokenspork.systems.MovementSystem;
-        var ParallaxStarRepeatingSystem = brokenspork.systems.ParallaxStarRepeatingSystem;
-        var PlayerInputSystem = brokenspork.systems.PlayerInputSystem;
-        var RemoveOffscreenShipsSystem = brokenspork.systems.RemoveOffscreenShipsSystem;
-        var ScaleAnimationSystem = brokenspork.systems.ScaleAnimationSystem;
-        var SoundEffectSystem = brokenspork.systems.SoundEffectSystem;
-        var SpriteRenderSystem = brokenspork.systems.SpriteRenderSystem;
+        var CollisionSystem = example.systems.CollisionSystem;
+        var ColorAnimationSystem = example.systems.ColorAnimationSystem;
+        var EntitySpawningTimerSystem = example.systems.EntitySpawningTimerSystem;
+        var ExpiringSystem = example.systems.ExpiringSystem;
+        var HealthRenderSystem = example.systems.HealthRenderSystem;
+        var MovementSystem = example.systems.MovementSystem;
+        var ParallaxStarRepeatingSystem = example.systems.ParallaxStarRepeatingSystem;
+        var PlayerInputSystem = example.systems.PlayerInputSystem;
+        var RemoveOffscreenShipsSystem = example.systems.RemoveOffscreenShipsSystem;
+        var ScaleAnimationSystem = example.systems.ScaleAnimationSystem;
+        var SpriteRenderSystem = example.systems.SpriteRenderSystem;
         var GroupManager = artemis.managers.GroupManager;
-        var Constants = brokenspork.core.Constants;
+        var EntitySystem = artemis.EntitySystem;
         var GameScreen = (function () {
             function GameScreen(game) {
-                this.game = game;
-                this.game = game;
-                this.world = new artemis.World();
-                this.world.setManager(new GroupManager());
-                this.world.setSystem(new MovementSystem());
-                this.playerInputSystem = new PlayerInputSystem(game);
-                this.world.setSystem(this.playerInputSystem);
-                this.world.setSystem(new SoundEffectSystem());
-                this.world.setSystem(new CollisionSystem(game));
-                this.world.setSystem(new ExpiringSystem());
-                this.world.setSystem(new EntitySpawningTimerSystem(game));
-                this.world.setSystem(new ParallaxStarRepeatingSystem());
-                this.world.setSystem(new ColorAnimationSystem());
-                this.world.setSystem(new ScaleAnimationSystem());
-                this.world.setSystem(new RemoveOffscreenShipsSystem());
-                this.spriteRenderSystem = this.world.setSystem(new SpriteRenderSystem(game), true);
-                this.healthRenderSystem = this.world.setSystem(new HealthRenderSystem(), true);
-                this.hudRenderSystem = this.world.setSystem(new HudRenderSystem(), true);
-                this.world.initialize();
-                core.EntityFactory.createPlayer(this.game, this.world, Constants.FRAME_WIDTH / 4, Constants.FRAME_HEIGHT - 80).addToWorld();
-                for (var i = 0; 500 > i; i++) {
-                    core.EntityFactory.createStar(this.game, this.world).addToWorld();
+                EntitySystem.blackBoard.setEntry('game', game);
+                var world = this.world = new artemis.World();
+                world.setManager(new GroupManager());
+                world.setSystem(new MovementSystem());
+                world.setSystem(new PlayerInputSystem(game));
+                //world.setSystem(new SoundEffectSystem());
+                world.setSystem(new CollisionSystem(game));
+                world.setSystem(new ExpiringSystem());
+                world.setSystem(new EntitySpawningTimerSystem(game));
+                world.setSystem(new ParallaxStarRepeatingSystem());
+                world.setSystem(new ColorAnimationSystem());
+                world.setSystem(new ScaleAnimationSystem());
+                world.setSystem(new RemoveOffscreenShipsSystem());
+                this.spriteRenderSystem = world.setSystem(new SpriteRenderSystem(game), true);
+                this.healthRenderSystem = world.setSystem(new HealthRenderSystem(game), true);
+                world.initialize();
+                world.createEntityFromTemplate('player').addToWorld();
+                for (var i = 0; 5 > i; i++) {
+                    world.createEntityFromTemplate('star').addToWorld();
                 }
             }
             GameScreen.prototype.render = function (delta) {
@@ -48,12 +43,10 @@ var brokenspork;
                 this.world.process();
                 this.spriteRenderSystem.process();
                 this.healthRenderSystem.process();
-                this.hudRenderSystem.process();
             };
-            GameScreen.ASPECT_RATIO = Constants.FRAME_WIDTH / Constants.FRAME_HEIGHT;
             return GameScreen;
         })();
         core.GameScreen = GameScreen;
-    })(core = brokenspork.core || (brokenspork.core = {}));
-})(brokenspork || (brokenspork = {}));
+    })(core = example.core || (example.core = {}));
+})(example || (example = {}));
 //# sourceMappingURL=GameScreen.js.map
