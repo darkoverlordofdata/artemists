@@ -1,8 +1,8 @@
-module brokenspork.systems {
+module example.systems {
 	
-	import ParallaxStar = brokenspork.components.ParallaxStar;
-	import Position = brokenspork.components.Position;
-	import Constants = brokenspork.core.Constants;
+	import ParallaxStar = example.components.ParallaxStar;
+	import Position = example.components.Position;
+	import Constants = example.core.Constants;
 	
 	import Aspect = artemis.Aspect;
 	import ComponentMapper = artemis.ComponentMapper;

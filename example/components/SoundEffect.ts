@@ -1,15 +1,21 @@
-module brokenspork.components {
+module example.components {
 	
 	import Component = artemis.Component;
+	import PooledComponent = artemis.PooledComponent;
+	import Pooled = artemis.annotations.Pooled;
 
 	export enum EFFECT {
 		PEW, ASPLODE, SMALLASPLODE
 		
-	};
-		
-	export class SoundEffect extends Component {
+	}
+
+  @Pooled()
+	export class SoundEffect extends PooledComponent {
 		
   	public static className = 'SoundEffect';
+		public initialize(effect:EFFECT=EFFECT.PEW) {
+			this.effect = effect;
+		}
 		public effect:EFFECT;
 		
 	}

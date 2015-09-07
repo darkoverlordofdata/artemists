@@ -19,7 +19,8 @@ module artemis {
 		private components_: Bag<Component>;
 	
 		constructor(type:Function, world:World) {
-			this.type_ = ComponentType.getTypeFor(type);
+			//this.type_ = ComponentType.getTypeFor(type);
+      this.type_ = world.getComponentManager().typeFactory.getTypeFor(type);
 			this.components_ = world.getComponentManager().getComponentsByType(this.type_);
 			this.classType_ = type;
 		}

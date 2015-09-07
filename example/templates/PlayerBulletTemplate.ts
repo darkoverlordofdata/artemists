@@ -1,16 +1,24 @@
-module brokenspork.templates {
+module example.templates {
 
-  import Position = brokenspork.components.Position;
-  import Sprite = brokenspork.components.Sprite;
-  import Velocity = brokenspork.components.Velocity;
-  import Bounds = brokenspork.components.Bounds;
-  import Expires = brokenspork.components.Expires;
-  import SoundEffect = brokenspork.components.SoundEffect;
-  import Layer = brokenspork.components.Layer;
-  import EFFECT = brokenspork.components.EFFECT;
+  /**
+   * Position
+   * Sprite
+   * Velocity
+   * Bounds
+   * Expires
+   * SoundEffect
+   */
+  import Position = example.components.Position;
+  import Sprite = example.components.Sprite;
+  import Velocity = example.components.Velocity;
+  import Bounds = example.components.Bounds;
+  import Expires = example.components.Expires;
+  import SoundEffect = example.components.SoundEffect;
+  import Layer = example.components.Layer;
+  import EFFECT = example.components.EFFECT;
   import GroupManager = artemis.managers.GroupManager;
   import EntitySystem = artemis.EntitySystem;
-  import Constants = brokenspork.core.Constants;
+  import Constants = example.core.Constants;
   import EntityTemplate = artemis.annotations.EntityTemplate;
   import IEntityTemplate = artemis.IEntityTemplate;
 
@@ -20,38 +28,17 @@ module brokenspork.templates {
 
     public buildEntity(entity:artemis.Entity, world:artemis.World, x:number, y:number):artemis.Entity {
 
-      var position:Position = new Position();
-      position.x = x;
-      position.y = y;
-      entity.addComponent(position);
-
-      var sprite:Sprite = new Sprite();
-      sprite.name = "bullet";
-      sprite.layer = Layer.PARTICLES;
-      entity.addComponent(sprite);
-      sprite.addTo(EntitySystem.blackBoard.getEntry<CCLayer>('game'));
-
-      var velocity:Velocity = new Velocity();
-      velocity.vectorY = 800;
-      entity.addComponent(velocity);
-
-      var bounds:Bounds = new Bounds();
-      bounds.radius = 5;
-      entity.addComponent(bounds);
-
-      var expires:Expires = new Expires();
-      expires.delay = 5;
-      entity.addComponent(expires);
-
-      var sf:SoundEffect = new SoundEffect();
-      sf.effect = EFFECT.PEW;
-      entity.addComponent(sf);
-
+      entity.addComponent(Position, x, y);
+      entity.addComponent(Velocity, 0, 800);
+      entity.addComponent(Bounds, 5);
+      entity.addComponent(Expires, 5);
+      entity.addComponent(SoundEffect, EFFECT.PEW);
+      entity.addComponent(Sprite, 'bullet', cc.color(255, 255, 255), (sprite:Sprite) => {
+        sprite.layer = Layer.PARTICLES;
+        sprite.addTo(EntitySystem.blackBoard.getEntry<cc.Layer>('game'));
+      });
       world.getManager<GroupManager>(GroupManager).add(entity, Constants.Groups.PLAYER_BULLETS);
-
-
       return entity;
-
     }
   }
 }

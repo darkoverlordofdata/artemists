@@ -1,4 +1,4 @@
-module brokenspork.components {
+module example.components {
 	
 	import Component = artemis.Component;
 

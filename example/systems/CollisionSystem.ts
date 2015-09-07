@@ -1,20 +1,20 @@
-module brokenspork.systems {
+module example.systems {
 	
 	import ImmutableBag = artemis.utils.ImmutableBag;
 	
 	import Bag = artemis.utils.Bag;
-	import Bounds = brokenspork.components.Bounds;
-	import ColorAnimation = brokenspork.components.ColorAnimation;
-	import Expires = brokenspork.components.Expires;
-	import Health = brokenspork.components.Health;
-	import ParallaxStar = brokenspork.components.ParallaxStar;
-	import Player = brokenspork.components.Player;
-	import Position = brokenspork.components.Position;
-	import ScaleAnimation = brokenspork.components.ScaleAnimation;
-	import SoundEffect = brokenspork.components.SoundEffect;
-	import Sprite = brokenspork.components.Sprite;
-	import Velocity = brokenspork.components.Velocity;
-	import Constants = brokenspork.core.Constants;
+	import Bounds = example.components.Bounds;
+	import ColorAnimation = example.components.ColorAnimation;
+	import Expires = example.components.Expires;
+	import Health = example.components.Health;
+	import ParallaxStar = example.components.ParallaxStar;
+	import Player = example.components.Player;
+	import Position = example.components.Position;
+	import ScaleAnimation = example.components.ScaleAnimation;
+	import SoundEffect = example.components.SoundEffect;
+	import Sprite = example.components.Sprite;
+	import Velocity = example.components.Velocity;
+	import Constants = example.core.Constants;
 	import Mapper = artemis.annotations.Mapper;
 
 	import EntitySystem = artemis.EntitySystem;

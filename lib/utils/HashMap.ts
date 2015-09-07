@@ -8,8 +8,8 @@ module artemis.utils {
 		switch(typeof key) {
 			case 'boolean': 	return ''+key;
 			case 'number': 		return ''+key;
-			case 'string': 		return key;
-			case 'function': 	return key.className || key.name;
+			case 'string': 		return ''+key;
+			case 'function': 	return artemis.getClassName(key);
 			default:
 				key.uuid = key.uuid ? key.uuid : UUID.randomUUID();
 				return key.uuid

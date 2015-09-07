@@ -1,7 +1,7 @@
-module brokenspork.systems {
+module example.systems {
 	
-	import SoundEffect = brokenspork.components.SoundEffect;
-	import EFFECT = brokenspork.components.EFFECT;
+	import SoundEffect = example.components.SoundEffect;
+	import EFFECT = example.components.EFFECT;
 	
 	import Aspect = artemis.Aspect;
 	import ComponentMapper = artemis.ComponentMapper;

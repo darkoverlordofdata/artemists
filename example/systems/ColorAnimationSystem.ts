@@ -1,7 +1,7 @@
-module brokenspork.systems {
+module example.systems {
 	
-	import ColorAnimation = brokenspork.components.ColorAnimation;
-	import Sprite = brokenspork.components.Sprite;
+	import ColorAnimation = example.components.ColorAnimation;
+	import Sprite = example.components.Sprite;
 	import Mapper = artemis.annotations.Mapper;
 	
 	import EntityProcessingSystem = artemis.systems.EntityProcessingSystem;

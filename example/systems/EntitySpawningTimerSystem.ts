@@ -1,9 +1,9 @@
-module brokenspork.systems {
+module example.systems {
 	
 	import MathUtils = artemis.utils.MathUtils;
-	import Sprite = brokenspork.components.Sprite;
-	import Layer = brokenspork.components.Layer;
-	import Constants = brokenspork.core.Constants;
+	import Sprite = example.components.Sprite;
+	import Layer = example.components.Layer;
+	import Constants = example.core.Constants;
 
 	import VoidEntitySystem = artemis.systems.VoidEntitySystem;
 	

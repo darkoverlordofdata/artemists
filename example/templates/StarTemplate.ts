@@ -1,16 +1,16 @@
-module brokenspork.templates {
+module example.templates {
 
   import MathUtils = artemis.utils.MathUtils;
-  import Position = brokenspork.components.Position;
-  import Sprite = brokenspork.components.Sprite;
-  import Velocity = brokenspork.components.Velocity;
-  import Bounds = brokenspork.components.Bounds;
-  import ParallaxStar = brokenspork.components.ParallaxStar;
-  import ColorAnimation = brokenspork.components.ColorAnimation;
-  import Layer = brokenspork.components.Layer;
+  import Position = example.components.Position;
+  import Sprite = example.components.Sprite;
+  import Velocity = example.components.Velocity;
+  import Bounds = example.components.Bounds;
+  import ParallaxStar = example.components.ParallaxStar;
+  import ColorAnimation = example.components.ColorAnimation;
+  import Layer = example.components.Layer;
   import GroupManager = artemis.managers.GroupManager;
   import EntitySystem = artemis.EntitySystem;
-  import Constants = brokenspork.core.Constants;
+  import Constants = example.core.Constants;
   import EntityTemplate = artemis.annotations.EntityTemplate;
   import IEntityTemplate = artemis.IEntityTemplate;
 
@@ -19,35 +19,26 @@ module brokenspork.templates {
 
     public buildEntity(entity:artemis.Entity, world:artemis.World):artemis.Entity {
 
-      var position:Position = new Position();
-      position.x = MathUtils.nextInt(Constants.FRAME_WIDTH/2);
-      position.y = MathUtils.nextInt(Constants.FRAME_HEIGHT);
-      entity.addComponent(position);
+      var x = MathUtils.nextInt(Constants.FRAME_WIDTH/2);
+      var y = MathUtils.nextInt(Constants.FRAME_HEIGHT);
 
-      var sprite:Sprite = new Sprite();
-      sprite.name = "particle";
-      sprite.scaleX = sprite.scaleY = MathUtils.random(0.5, 1);
-      sprite.a = MathUtils.random(127);
-      sprite.layer = Layer.BACKGROUND;
-      entity.addComponent(sprite);
-      sprite.addTo(EntitySystem.blackBoard.getEntry<CCLayer>('game'));
-
-      var velocity:Velocity = new Velocity();
-      velocity.vectorY = MathUtils.random(-10, -60);
-      entity.addComponent(velocity);
-
-      entity.addComponent(new ParallaxStar());
-
-      var colorAnimation:ColorAnimation = new ColorAnimation();
-      colorAnimation.alphaAnimate = true;
-      colorAnimation.repeat = true;
-      colorAnimation.alphaSpeed = MathUtils.random(0.2, 0.7);
-      colorAnimation.alphaMin = 0;
-      colorAnimation.alphaMax = 255;
-      entity.addComponent(colorAnimation);
-
+      entity.addComponent(Position, x, y);
+      entity.addComponent(Velocity, 0, MathUtils.random(-10, -60));
+      entity.addComponent(ParallaxStar);
+      entity.addComponent(Sprite, 'particle', cc.color(255, 216, 0, 255), (sprite:Sprite) => {
+        sprite.scaleX = sprite.scaleY = MathUtils.random(0.5, 1);
+        sprite.a = MathUtils.random(127);
+        sprite.layer = Layer.BACKGROUND;
+        sprite.addTo(EntitySystem.blackBoard.getEntry<cc.Layer>('game'));
+      });
+      entity.addComponent(ColorAnimation, (colorAnimation:ColorAnimation) => {
+        colorAnimation.alphaAnimate = true;
+        colorAnimation.repeat = true;
+        colorAnimation.alphaSpeed = MathUtils.random(0.2, 0.7);
+        colorAnimation.alphaMin = 0;
+        colorAnimation.alphaMax = 255;
+      });
       return entity;
-
     }
   }
 }

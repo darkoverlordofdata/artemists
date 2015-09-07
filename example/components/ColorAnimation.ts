@@ -1,11 +1,11 @@
-module brokenspork.components {
+module example.components {
 	
 	import Component = artemis.Component;
 
 	export class ColorAnimation extends Component {
 		
     public static className = 'ColorAnimation';
-		
+
 		public redMin:number;
 		public redMax:number;
 		public redSpeed:number;
@@ -24,6 +24,13 @@ module brokenspork.components {
 		public blueAnimate:boolean;
 		public alphaAnimate:boolean;
 		public repeat:boolean;
+
+    public initialize(lambda?) {
+      if (lambda !== undefined) {
+        lambda(this);
+      }
+    }
+
 	}
 	
 	ColorAnimation.prototype.redMin = 0;

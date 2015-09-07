@@ -14,6 +14,20 @@ Artemis port complete.
 Current phase: burn-in
 
 #### extensions
+Components declare as pooled are auto pooled:
+
+```typescript
+@Pooled()
+export class Position extends PooledComponent {
+public static className = 'Position';
+    public initialize(x:number=0, y:number=0) {
+        this.x = x;
+  this.y = y;
+    }
+    public x:number;
+    public y:number;
+}
+```
 
 BlackBoard & Entity Templates inspired by artemis_CSharp:
 
@@ -23,9 +37,18 @@ export class PlayerTemplate implements artemis.IEntityTemplate {
 
     public buildEntity(entity:artemis.Entity, world:artemis.World, x:number, y:number):artemis.Entity {
 
-        ...
-        sprite.addTo(EntitySystem.blackBoard.getEntry<CCLayer>('game'));
-
+        entity.addComponent(Position, x, y);
+        entity.addComponent(Velocity, 0, 0);
+        entity.addComponent(Bounds, 43);
+        entity.addComponent(Player);
+        entity.addComponent(Sprite, 'fighter', cc.color(93, 255, 129), (sprite) => {
+            sprite.layer = Layer.ACTORS_3;
+            sprite.addTo(EntitySystem.blackBoard.getEntry<cc.Layer>('game'));
+        });
+        world.getManager<GroupManager>(GroupManager).add(entity, Constants.Groups.PLAYER_SHIP);
+        return entity;
+    }
+}
 ...
 
 var player = world.createEntityFromTemplate('player', x, y);

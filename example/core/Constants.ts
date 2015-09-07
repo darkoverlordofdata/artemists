@@ -1,4 +1,4 @@
-module brokenspork.core {
+module example.core {
 	
 	export class Constants {
 

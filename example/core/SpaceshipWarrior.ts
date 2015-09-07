@@ -1,4 +1,4 @@
-module brokenspork.core {
+module example.core {
   
   export class SpaceshipWarrior extends CCLayer {
   
@@ -28,7 +28,6 @@ module brokenspork.core {
     ctor() {
         this._super();
         this.gameScreen = new GameScreen(this);
-        //setScreen(gameScreen);
         this.scheduleUpdate();
     }
   

@@ -41,10 +41,10 @@ module artemis {
 		constructor(aspect:Aspect) {
 			this.actives_ = new Bag<Entity>();
 			this.aspect_ = aspect;
+			this.systemIndex_ = SystemIndexManager.getIndexFor(this.constructor);
 			this.allSet_ = aspect.getAllSet();
 			this.exclusionSet_ = aspect.getExclusionSet();
 			this.oneSet_ = aspect.getOneSet();
-			this.systemIndex_ = SystemIndexManager.getIndexFor(this.constructor);
 			this.dummy_ = this.allSet_.isEmpty() && this.oneSet_.isEmpty(); // This system can't possibly be interested in any entity, so it must be "dummy"
 		}
 		
@@ -147,7 +147,6 @@ module artemis {
 		}
 	
 		private insertToSystem(e:Entity) {
-			//console.log('EntitySystem::insertToSystem');
 			this.actives_.add(e);
 			e.getSystemBits().set(this.systemIndex_);
 			this.inserted(e);
@@ -177,8 +176,7 @@ module artemis {
 				this.removeFromSystem(e);
 			}
 		}
-		
-		
+
 		public enabled(e:Entity) {
 			this.check(e);
 		}

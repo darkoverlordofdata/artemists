@@ -1,15 +1,15 @@
-module brokenspork.systems {
+module example.systems {
 
-  import Player = brokenspork.components.Player;
-  import Position = brokenspork.components.Position;
-  import Velocity = brokenspork.components.Velocity;
+  import Player = example.components.Player;
+  import Position = example.components.Position;
+  import Velocity = example.components.Velocity;
 
   import Aspect = artemis.Aspect;
   import ComponentMapper = artemis.ComponentMapper;
   import Entity = artemis.Entity;
   import Mapper = artemis.annotations.Mapper;
   import EntityProcessingSystem = artemis.systems.EntityProcessingSystem;
-  import Constants = brokenspork.core.Constants;
+  import Constants = example.core.Constants;
 
   export class PlayerInputSystem extends EntityProcessingSystem  {
     private static FireRate = 0.1;

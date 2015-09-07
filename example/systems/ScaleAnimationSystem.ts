@@ -1,7 +1,7 @@
-module brokenspork.systems {
+module example.systems {
 	
-	import ScaleAnimation = brokenspork.components.ScaleAnimation;
-	import Sprite = brokenspork.components.Sprite;
+	import ScaleAnimation = example.components.ScaleAnimation;
+	import Sprite = example.components.Sprite;
 	
 	import Aspect = artemis.Aspect;
 	import ComponentMapper = artemis.ComponentMapper;

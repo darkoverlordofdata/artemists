@@ -128,15 +128,38 @@ module artemis.utils {
 		}
 
 		/**
-		* Returns the element at the specified position in Bag.
-		*
-		* @param index
-		*            index of the element to return
-		* @return the element at the specified position in bag
-		*/
+		 * Returns the element at the specified position in Bag.
+		 *
+		 * @param index
+		 *            index of the element to return
+		 * @return the element at the specified position in bag
+     *
+     * @throws ArrayIndexOutOfBoundsException
+		 */
 		get(index:number):E {
+      if (index >= this.data_.length) {
+        throw new Error('ArrayIndexOutOfBoundsException')
+      }
 			return this.data_[index];
 		}
+
+    /**
+     * Returns the element at the specified position in Bag. This method
+     * ensures that the bag grows if the requested index is outside the bounds
+     * of the current backing array.
+     *
+     * @param index
+     *			index of the element to return
+     *
+     * @return the element at the specified position in bag
+     *
+     */
+    safeGet(index:number):E {
+      if (index >= this.data_.length) {
+        this.grow((index * 7) / 4 + 1)
+      }
+      return this.data_[index];
+    }
 
 		/**
 		* Returns the number of elements in this bag.
@@ -206,7 +229,7 @@ module artemis.utils {
 		}
 
 		grow(newCapacity:number=~~((this.data_.length * 3) / 2) + 1) {
-			this.data_.length = newCapacity;
+			this.data_.length = ~~newCapacity;
 		}
 
 		ensureCapacity(index:number) {
@@ -231,8 +254,8 @@ module artemis.utils {
 
 		/**
 		* Add all items into this bag.
-		* @param added
-		*/
+		 * @param items
+		 */
 		addAll(items:ImmutableBag<E>) {
 			var i:number;
 

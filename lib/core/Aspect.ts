@@ -1,6 +1,8 @@
 module artemis {
 	
 	import BitSet = artemis.utils.BitSet;
+  import World = artemis.World;
+  import ComponentTypeFactory = artemis.ComponentTypeFactory;
 	
 	/**
 	* An Aspects is used by systems as a matcher against entities, to check if a system is
@@ -25,15 +27,21 @@ module artemis {
 	*
 	*/
 	export class Aspect {
-		
+
+    public static typeFactory:ComponentTypeFactory;
 		private allSet_:BitSet;
 		private exclusionSet_:BitSet;
 		private oneSet_:BitSet;
+    private world_:World;
 		
 		constructor() {
 			this.allSet_ = new BitSet();
 			this.exclusionSet_ = new BitSet();
 			this.oneSet_ = new BitSet();
+		}
+
+		public setWorld(world:World) {
+      this.world_ = world;
 		}
 		
 		public getAllSet():BitSet {
@@ -47,19 +55,23 @@ module artemis {
 		public getOneSet():BitSet {
 			return this.oneSet_;
 		}
-		
-		/**
+
+    private getIndexFor(c) {
+      return Aspect.typeFactory.getIndexFor(c);
+    }
+
+    /**
 		* Returns an aspect where an entity must possess all of the specified component types.
 		* @param type a required component type
 		* @param types a required component type
 		* @return an aspect that can be matched against entities
 		*/
 		all(type:Function, ...types:Function[]):Aspect {
-			this.allSet_.set(ComponentType.getIndexFor(type));
+			this.allSet_.set(this.getIndexFor(type));
 
 			var t;
 			for (t in types) {
-				this.allSet_.set(ComponentType.getIndexFor(types[t]));
+				this.allSet_.set(this.getIndexFor(types[t]));
 			}
 	
 			return this;
@@ -74,11 +86,11 @@ module artemis {
 		* @return an aspect that can be matched against entities
 		*/
 		exclude(type:Function, ...types:Function[]):Aspect {
-			this.exclusionSet_.set(ComponentType.getIndexFor(type));
+			this.exclusionSet_.set(this.getIndexFor(type));
 
       var t;
 			for (t in types) {
-				this.exclusionSet_.set(ComponentType.getIndexFor(types[t]));
+				this.exclusionSet_.set(this.getIndexFor(types[t]));
 			}
 			return this;
 		}
@@ -90,31 +102,31 @@ module artemis {
 		* @return an aspect that can be matched against entities
 		*/
 		one(type:Function, ...types:Function[]):Aspect {
-			this.oneSet_.set(ComponentType.getIndexFor(type));
+			this.oneSet_.set(this.getIndexFor(type));
 			
 			for (var t in types) {
-				this.oneSet_.set(ComponentType.getIndexFor(types[t]));
+				this.oneSet_.set(this.getIndexFor(types[t]));
 			}
 			return this;
 		}
 		
 		/**
 		* Creates an aspect where an entity must possess all of the specified component types.
-		* 
+		*
 		* @param type the type the entity must possess
 		* @param types the type the entity must possess
 		* @return an aspect that can be matched against entities
-		* 
+		*
 		* @deprecated
 		* @see getAspectForAll
 		*/
 		static getAspectFor(type:Function, ...types:Function[]):Aspect {
 			return Aspect.getAspectForAll(type, ...types);
 		}
-		
+
 		/**
 		* Creates an aspect where an entity must possess all of the specified component types.
-		* 
+		*
 		* @param type a required component type
 		* @param types a required component type
 		* @return an aspect that can be matched against entities
@@ -124,10 +136,10 @@ module artemis {
 			aspect.all(type, ...types);
 			return aspect;
 		}
-		
+
 		/**
 		* Creates an aspect where an entity must possess one of the specified component types.
-		* 
+		*
 		* @param type one of the types the entity must possess
 		* @param types one of the types the entity must possess
 		* @return an aspect that can be matched against entities

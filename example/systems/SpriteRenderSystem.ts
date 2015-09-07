@@ -1,9 +1,9 @@
-module brokenspork.systems {
+module example.systems {
 	
 	import HashMap = artemis.utils.HashMap;
 	
-	import Position = brokenspork.components.Position;
-	import Sprite = brokenspork.components.Sprite;
+	import Position = example.components.Position;
+	import Sprite = example.components.Sprite;
 	
 	import Aspect = artemis.Aspect;
 	import ComponentMapper = artemis.ComponentMapper;
@@ -12,7 +12,7 @@ module brokenspork.systems {
 	import Bag = artemis.utils.Bag;
 	import ImmutableBag = artemis.utils.ImmutableBag;
 	import Mapper = artemis.annotations.Mapper;
-	import Constants = brokenspork.core.Constants;
+	import Constants = example.core.Constants;
 
 	export class SpriteRenderSystem extends EntitySystem {
 		@Mapper(Position) pm:ComponentMapper<Position>;
@@ -91,7 +91,6 @@ module brokenspork.systems {
 		
 		protected removed(e:Entity) {
       var c:Sprite = <Sprite> e.getComponentByType(Sprite);
-      //console.log('SpriteRenderSystem::removed', c.name, e.uuid);
       c.removeFrom(this.game);
 
 			this.regionsByEntity.set(e.getId(), null);

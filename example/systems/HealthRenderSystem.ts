@@ -1,8 +1,8 @@
-module brokenspork.systems {
+module example.systems {
 	
-	import Health = brokenspork.components.Health;
-	import Position = brokenspork.components.Position;
-  import Sprite = brokenspork.components.Sprite;
+	import Health = example.components.Health;
+	import Position = example.components.Position;
+  import Sprite = example.components.Sprite;
 
 	import Aspect = artemis.Aspect;
 	import ComponentMapper = artemis.ComponentMapper;
@@ -10,7 +10,7 @@ module brokenspork.systems {
 	import EntityProcessingSystem = artemis.systems.EntityProcessingSystem;
 	import MathUtils = artemis.utils.MathUtils;
 	import Mapper = artemis.annotations.Mapper;
-  import Constants = brokenspork.core.Constants;
+  import Constants = example.core.Constants;
 
   interface ILabelBMFont {
     [key: string]: cc.LabelBMFont;

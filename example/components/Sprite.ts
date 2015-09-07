@@ -1,6 +1,8 @@
-module brokenspork.components {
+module example.components {
 	
 	import Component = artemis.Component;
+  import PooledComponent = artemis.PooledComponent;
+  import Pooled = artemis.annotations.Pooled;
 
 	export enum Layer {
 		DEFAULT,
@@ -13,9 +15,10 @@ module brokenspork.components {
 		// getLayerId() {
 		// 	return ordinal();
 		// }
-	};
-	
-	export class Sprite extends Component {
+	}
+
+  @Pooled()
+	export class Sprite extends PooledComponent {
     public static className = 'Sprite';
 		public layer:Layer;
 		
@@ -29,15 +32,20 @@ module brokenspork.components {
 		public a_:number;
 		public sprite_:cc.Sprite;
 		
-			// public int getLayerId() {
-			// 	return ordinal();
-			// }
-			
-		constructor() {
-			super();
+    initialize(name?:string, color?, lambda?) {
 			this.sprite_ = new cc.Sprite();
 			this.sprite_.setScale(0.5);
       this.sprite_.setOpacityModifyRGB(true);
+      this.name = name;
+      if (color !== undefined && color !== null) {
+        this.r = color.r;
+        this.g = color.g;
+        this.b = color.b;
+        this.a = color.a;
+      }
+      if (lambda !== undefined) {
+        lambda(this);
+      }
 		}
 			
 		get name():string {return this.name_;}
@@ -79,16 +87,19 @@ module brokenspork.components {
 			this.sprite_.setColor(cc.color(this.r_, this.g_, this.b_, this.a_));
 		}
 
-    addTo(layer:CCLayer) {
+    addTo(layer:cc.Layer) {
       layer.addChild(this.sprite_);
     }
 
-    removeFrom(layer:CCLayer) {
+    removeFrom(layer:cc.Layer) {
       layer.removeChild(this.sprite_);
     }
 
+		public reset(){
+			this.sprite_ = null;
+		}
 
-	}
+  }
 
 	Sprite.prototype.layer = Layer.DEFAULT;
 	Sprite.prototype.name_ = '';

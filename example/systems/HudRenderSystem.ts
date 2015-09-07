@@ -1,11 +1,11 @@
-module brokenspork.systems {
+module example.systems {
 	
 	
 	import HashMap = artemis.utils.HashMap;
 	
-	import Position = brokenspork.components.Position;
-	import Sprite = brokenspork.components.Sprite;
-	import Constants = brokenspork.core.Constants;
+	import Position = example.components.Position;
+	import Sprite = example.components.Sprite;
+	import Constants = example.core.Constants;
 	
 	import ComponentMapper = artemis.ComponentMapper;
 	import VoidEntitySystem = artemis.systems.VoidEntitySystem;

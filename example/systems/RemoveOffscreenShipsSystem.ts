@@ -1,11 +1,11 @@
-module brokenspork.systems {
+module example.systems {
 	
-	import Bounds = brokenspork.components.Bounds;
-	import Health = brokenspork.components.Health;
-	import Player = brokenspork.components.Player;
-	import Position = brokenspork.components.Position;
-	import Velocity = brokenspork.components.Velocity;
-	import Constants = brokenspork.core.Constants;
+	import Bounds = example.components.Bounds;
+	import Health = example.components.Health;
+	import Player = example.components.Player;
+	import Position = example.components.Position;
+	import Velocity = example.components.Velocity;
+	import Constants = example.core.Constants;
 	
 	import Aspect = artemis.Aspect;
 	import ComponentMapper = artemis.ComponentMapper;

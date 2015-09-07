@@ -1,6 +1,6 @@
-module brokenspork.systems {
+module example.systems {
 	
-	import Expires = brokenspork.components.Expires;
+	import Expires = example.components.Expires;
 	
 	import Aspect = artemis.Aspect;
 	import ComponentMapper = artemis.ComponentMapper;

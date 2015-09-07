@@ -3,6 +3,7 @@ module artemis {
 	import Bag = artemis.utils.Bag;
 	import BitSet = artemis.utils.BitSet;
 	import UUID = artemis.utils.UUID;
+  import ComponentManager = artemis.ComponentManager;
 	
 	/**
 	* The entity class. Cannot be instantiated outside the framework, you must
@@ -74,8 +75,23 @@ module artemis {
 		public toString():string {
 			return "Entity[" + this.id_ + "]";
 		}
-	
-		/**
+
+    public createComponent<T extends Component>(componentKlazz, ...args:any[]):T {
+      var componentManager:ComponentManager = this.world_.getComponentManager();
+      var component:T = componentManager.create<T>(this, componentKlazz);
+      if (args.length) {
+        (<any>component).initialize(...args);
+      }
+
+      var tf:ComponentTypeFactory = this.world_.getComponentManager().typeFactory;
+      var componentType:ComponentType = tf.getTypeFor(componentKlazz);
+      this.componentBits_.set(componentType.getIndex());
+
+      return component;
+
+    }
+
+  /**
 		* Add a component to this entity.
 		* 
 		* @param component to add to this entity
@@ -92,15 +108,31 @@ module artemis {
 		* in some cases you might need the extra performance.
 		* 
 		* @param component the component to add
-		* @param type of the component
+		* @param args of the component
 		* 
 		* @return this entity for chaining.
 		*/
-		public addComponent(component:Component, type:ComponentType=ComponentType.getTypeFor(component.constructor)):Entity {
-			this.componentManager_.addComponent(this, type, component);
+    //public addComponent(component:Component, type?:ComponentType):Entity {
+		public addComponent(component:Component|Function, ...args:any[]):Entity {
+
+      var type:ComponentType;
+      if (component instanceof Component) {
+        type = args[0];
+      }  else {
+        component = this.createComponent(component, ...args);
+        type = this.getTypeFor(component.constructor);
+      }
+      if (type === undefined)
+        type = this.getTypeFor(component.constructor);
+
+      //type = ComponentType.getTypeFor(component.constructor);
+      this.componentManager_.addComponent(this, type, <Component>component);
 			return this;
 		}
-	
+
+    private getTypeFor(c) {
+      return this.world_.getComponentManager().typeFactory.getTypeFor(c);
+    }
 		/**
 		* Removes the component from this entity.
 		* 
@@ -109,8 +141,8 @@ module artemis {
 		* @return this entity for chaining.
 		*/
 		public removeComponentInstance(component:Component):Entity {
-			//this.removeComponent(component.getClass());
-			this.removeComponent(ComponentType.getTypeFor(component.constructor));
+			//this.removeComponent(ComponentType.getTypeFor(component.constructor));
+      this.removeComponent(this.getTypeFor(component.constructor));
 			return this;
 		}
 	
@@ -133,7 +165,8 @@ module artemis {
 		* @return this entity for chaining.
 		*/
 		public removeComponentByType(type:Function):Entity {
-			this.removeComponent(ComponentType.getTypeFor(type));
+			//this.removeComponent(ComponentType.getTypeFor(type));
+      this.removeComponent(this.getTypeFor(type));
 			return this;
 		}
 	
@@ -188,8 +221,8 @@ module artemis {
 		* @return component that matches, or null if none is found.
 		*/
 		public getComponentByType(type:Function): Component  {
-			//return type.cast(getComponent(ComponentType.getTypeFor(type)));
-			return this.componentManager_.getComponent(this, ComponentType.getTypeFor(type));
+			return this.componentManager_.getComponent(this, this.getTypeFor(type));
+      //return this.componentManager_.getComponent(this, ComponentType.getTypeFor(type));
 		}
 	
 		/**

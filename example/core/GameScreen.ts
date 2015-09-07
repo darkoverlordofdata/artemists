@@ -1,23 +1,23 @@
-module brokenspork.core {
+module example.core {
 	
-	import CollisionSystem = brokenspork.systems.CollisionSystem;
-	import ColorAnimationSystem = brokenspork.systems.ColorAnimationSystem;
-	import EntitySpawningTimerSystem = brokenspork.systems.EntitySpawningTimerSystem;
-	import ExpiringSystem = brokenspork.systems.ExpiringSystem;
-	import HealthRenderSystem = brokenspork.systems.HealthRenderSystem;
-	import HudRenderSystem = brokenspork.systems.HudRenderSystem;
-	import MovementSystem = brokenspork.systems.MovementSystem;
-	import ParallaxStarRepeatingSystem = brokenspork.systems.ParallaxStarRepeatingSystem;
-	import PlayerInputSystem = brokenspork.systems.PlayerInputSystem;
-	import RemoveOffscreenShipsSystem = brokenspork.systems.RemoveOffscreenShipsSystem;
-	import ScaleAnimationSystem = brokenspork.systems.ScaleAnimationSystem;
-	import SoundEffectSystem = brokenspork.systems.SoundEffectSystem;
-	import SpriteRenderSystem = brokenspork.systems.SpriteRenderSystem;
+	import CollisionSystem = example.systems.CollisionSystem;
+	import ColorAnimationSystem = example.systems.ColorAnimationSystem;
+	import EntitySpawningTimerSystem = example.systems.EntitySpawningTimerSystem;
+	import ExpiringSystem = example.systems.ExpiringSystem;
+	import HealthRenderSystem = example.systems.HealthRenderSystem;
+	import HudRenderSystem = example.systems.HudRenderSystem;
+	import MovementSystem = example.systems.MovementSystem;
+	import ParallaxStarRepeatingSystem = example.systems.ParallaxStarRepeatingSystem;
+	import PlayerInputSystem = example.systems.PlayerInputSystem;
+	import RemoveOffscreenShipsSystem = example.systems.RemoveOffscreenShipsSystem;
+	import ScaleAnimationSystem = example.systems.ScaleAnimationSystem;
+	import SoundEffectSystem = example.systems.SoundEffectSystem;
+	import SpriteRenderSystem = example.systems.SpriteRenderSystem;
 	import World = artemis.World;
 	import GroupManager = artemis.managers.GroupManager;
-	import Constants = brokenspork.core.Constants;
+	import Constants = example.core.Constants;
   import EntitySystem = artemis.EntitySystem;
-  import PlayerTemplate = brokenspork.templates.PlayerTemplate;
+  import PlayerTemplate = example.templates.PlayerTemplate;
 
 	export class GameScreen {
 	
