@@ -1,5 +1,6 @@
 module artemis {
-	
+
+	interface Class extends Function {}
 	import BitSet = artemis.utils.BitSet;
   import World = artemis.World;
   import ComponentTypeFactory = artemis.ComponentTypeFactory;
@@ -66,7 +67,7 @@ module artemis {
 		* @param types a required component type
 		* @return an aspect that can be matched against entities
 		*/
-		all(type:Function, ...types:Function[]):Aspect {
+		all(type:Class, ...types:Class[]):Aspect {
 			this.allSet_.set(this.getIndexFor(type));
 
 			var t;
@@ -85,7 +86,7 @@ module artemis {
 		* @param types component type to exclude
 		* @return an aspect that can be matched against entities
 		*/
-		exclude(type:Function, ...types:Function[]):Aspect {
+		exclude(type:Class, ...types:Class[]):Aspect {
 			this.exclusionSet_.set(this.getIndexFor(type));
 
       var t;
@@ -101,7 +102,7 @@ module artemis {
 		* @param types one of the types the entity must possess
 		* @return an aspect that can be matched against entities
 		*/
-		one(type:Function, ...types:Function[]):Aspect {
+		one(type:Class, ...types:Class[]):Aspect {
 			this.oneSet_.set(this.getIndexFor(type));
 			
 			for (var t in types) {
@@ -120,7 +121,7 @@ module artemis {
 		* @deprecated
 		* @see getAspectForAll
 		*/
-		static getAspectFor(type:Function, ...types:Function[]):Aspect {
+		static getAspectFor(type:Class, ...types:Class[]):Aspect {
 			return Aspect.getAspectForAll(type, ...types);
 		}
 
@@ -131,7 +132,7 @@ module artemis {
 		* @param types a required component type
 		* @return an aspect that can be matched against entities
 		*/
-		static getAspectForAll(type:Function, ...types:Function[]):Aspect {
+		static getAspectForAll(type:Class, ...types:Class[]):Aspect {
 			var aspect:Aspect = new Aspect();
 			aspect.all(type, ...types);
 			return aspect;
@@ -144,7 +145,7 @@ module artemis {
 		* @param types one of the types the entity must possess
 		* @return an aspect that can be matched against entities
 		*/
-		static getAspectForOne(type:Function, ...types:Function[]):Aspect {
+		static getAspectForOne(type:Class, ...types:Class[]):Aspect {
 			var aspect:Aspect = new Aspect();
 			aspect.one(type, ...types);
 			return aspect;

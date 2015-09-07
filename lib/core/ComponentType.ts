@@ -1,5 +1,7 @@
 module artemis {
-	
+
+  interface Class extends Function {}
+
 	import HashMap = artemis.utils.HashMap;
 	import PooledComponent = artemis.PooledComponent;
   import Pooled = artemis.annotations.Pooled;
@@ -13,10 +15,10 @@ module artemis {
     public static componentManager:ComponentManager;
 	
 		private index_:number=0;
-		private type_:Function;
+		private type_:Class;
     private taxonomy_:Taxonomy;
 
-		constructor(type:Function, index?:number) {
+		constructor(type:Class, index?:number) {
       if (index !== undefined) {
         this.index_ = ComponentType.INDEX++;
       } else {

@@ -14,6 +14,7 @@
         "src/resource.js",
         "src/app.js",
         "src/artemis.js",
+        "src/example/cclib-rt.js",
         "src/example/core/Constants.js",
         "src/example/components/Bounds.js",
         "src/example/components/ColorAnimation.js",
@@ -27,7 +28,12 @@
         "src/example/components/SoundEffect.js",
         "src/example/components/Sprite.js",
         "src/example/components/Velocity.js",
-        "src/example/core/EntityFactory.js",
+        "src/example/templates/EnemyShipTemplate.js",
+        "src/example/templates/ExplosionTemplate.js",
+        "src/example/templates/ParticleTemplate.js",
+        "src/example/templates/PlayerBulletTemplate.js",
+        "src/example/templates/PlayerTemplate.js",
+        "src/example/templates/StarTemplate.js",
         "src/example/systems/CollisionSystem.js",
         "src/example/systems/ColorAnimationSystem.js",
         "src/example/systems/EntitySpawningTimerSystem.js",
@@ -43,6 +49,6 @@
         "src/example/systems/SpriteRenderSystem.js",
         "src/example/core/GameScreen.js",
         "src/example/core/SpaceshipWarrior.js"
-        
+
     ]
 }

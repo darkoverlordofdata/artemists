@@ -1,5 +1,7 @@
 module artemis {
-	
+
+  interface Class extends Function {}
+
 	import Bag = artemis.utils.Bag;
 	import BitSet = artemis.utils.BitSet;
 	import Manager = artemis.Manager;
@@ -29,7 +31,7 @@ module artemis {
 		public initialize() {
 		}
 
-    create<T extends Component>(owner:Entity, componentClass:Function):T {
+    create<T extends Component>(owner:Entity, componentClass:Class):T {
 
       var type:ComponentType = this.typeFactory.getTypeFor(componentClass);
       var component:T = null;

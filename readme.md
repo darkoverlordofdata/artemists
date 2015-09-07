@@ -35,7 +35,7 @@ BlackBoard & Entity Templates inspired by artemis_CSharp:
 @EntityTemplate('player')
 export class PlayerTemplate implements artemis.IEntityTemplate {
 
-    public buildEntity(entity:artemis.Entity, world:artemis.World, x:number, y:number):artemis.Entity {
+    public buildEntity(entity:Entity, world:World, x:number, y:number):Entity {
 
         entity.addComponent(Position, x, y);
         entity.addComponent(Velocity, 0, 0);

@@ -1,11 +1,13 @@
 module artemis.annotations {
-  
+
+  interface Class extends Function {}
+
   /**
    * EntityTemplate
    *
    */
   export function EntityTemplate(component: string) {
-    return function (target:Function, propertyKey?: string, descriptor?: TypedPropertyDescriptor<any>) {
+    return function (target:Class, propertyKey?: string, descriptor?: TypedPropertyDescriptor<any>) {
 
       EntityTemplate['entityTemplates'] = EntityTemplate['entityTemplates'] || {};
 

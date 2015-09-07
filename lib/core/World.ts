@@ -8,6 +8,8 @@ module artemis {
   import IEntityTemplate = artemis.IEntityTemplate;
   import EntityTemplate = artemis.annotations.EntityTemplate;
 
+	interface Class extends Function {}
+
   interface IEntityTemplates {
     [key: string]: IEntityTemplate;
   }
@@ -126,7 +128,7 @@ module artemis {
 		*            class type of the manager
 		* @return the manager
 		*/
-		public getManager<T extends Manager>(managerType:Function):T {
+		public getManager<T extends Manager>(managerType:Class):T {
 			return this.managers_.get(managerType);
 		}
 		
@@ -298,7 +300,7 @@ module artemis {
 		* @param type type of system.
 		* @return instance of the system in this world.
 		*/
-		public getSystem(type:Function):EntitySystem {
+		public getSystem(type:Class):EntitySystem {
 			return this.systems_.get(type);
 		}
 
@@ -376,7 +378,7 @@ module artemis {
 		* @param type of component to get mapper for.
 		* @return mapper for specified component type.
 		*/
-		public getMapper<T extends Component>(type:Function):ComponentMapper<T>  {
+		public getMapper<T extends Component>(type:Class):ComponentMapper<T>  {
 			return ComponentMapper.getFor<T>(type, this);
 		}
 

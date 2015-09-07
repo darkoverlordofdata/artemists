@@ -41,11 +41,8 @@ module example.systems {
 	
 		
 		public initialize() {
-			//var self:CollisionSystem = this;
-			
 			this.collisionPairs = new Bag<CollisionPair>();
-			
-			this.collisionPairs.add(new CollisionPair(this, Constants.Groups.PLAYER_BULLETS, Constants.Groups.ENEMY_SHIPS, 
+			this.collisionPairs.add(new CollisionPair(this, Constants.Groups.PLAYER_BULLETS, Constants.Groups.ENEMY_SHIPS,
 				{
 				
 				handleCollision: (bullet:Entity, ship:Entity) => {

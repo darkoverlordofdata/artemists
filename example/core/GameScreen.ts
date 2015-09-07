@@ -26,8 +26,7 @@ module example.core {
 		private spriteRenderSystem:SpriteRenderSystem;
 		private healthRenderSystem:HealthRenderSystem;
 
-		constructor(public game:CCLayer) {
-			this.game = game;
+		constructor(game:CCLayer) {
 
 			EntitySystem.blackBoard.setEntry('game', game);
 
@@ -49,7 +48,7 @@ module example.core {
 			this.healthRenderSystem = world.setSystem(new HealthRenderSystem(game), true);
 
 			world.initialize();
-	    world.createEntityFromTemplate('player', Constants.FRAME_WIDTH/4, Constants.FRAME_HEIGHT-80).addToWorld();
+	    world.createEntityFromTemplate('player').addToWorld();
 	
 			for (var i = 0; 5 > i; i++) {
         world.createEntityFromTemplate('star').addToWorld();

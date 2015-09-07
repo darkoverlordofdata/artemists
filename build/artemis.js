@@ -1,34 +1,3 @@
-/**
- * Cocos2d-js run-time wrappers
- *
- */
-
-/**
- *
- * @constructor
- */
-function CCLayer(){}
-/**
- *
- * @constructor
- */
-function CCLayerColor(){}
-/**
- *
- * @constructor
- */
-function CCNode(){}
-/**
- *
- * @constructor
- */
-function CCSprite(){}
-/**
- *
- * @constructor
- */
-function CCScene(){}
-
 var artemis;
 (function (artemis) {
     var utils;
@@ -143,13 +112,35 @@ var artemis;
                 return modified;
             };
             /**
-            * Returns the element at the specified position in Bag.
-            *
-            * @param index
-            *            index of the element to return
-            * @return the element at the specified position in bag
-            */
+             * Returns the element at the specified position in Bag.
+             *
+             * @param index
+             *            index of the element to return
+             * @return the element at the specified position in bag
+         *
+         * @throws ArrayIndexOutOfBoundsException
+             */
             Bag.prototype.get = function (index) {
+                if (index >= this.data_.length) {
+                    throw new Error('ArrayIndexOutOfBoundsException');
+                }
+                return this.data_[index];
+            };
+            /**
+             * Returns the element at the specified position in Bag. This method
+             * ensures that the bag grows if the requested index is outside the bounds
+             * of the current backing array.
+             *
+             * @param index
+             *			index of the element to return
+             *
+             * @return the element at the specified position in bag
+             *
+             */
+            Bag.prototype.safeGet = function (index) {
+                if (index >= this.data_.length) {
+                    this.grow((index * 7) / 4 + 1);
+                }
                 return this.data_[index];
             };
             /**
@@ -214,7 +205,7 @@ var artemis;
             };
             Bag.prototype.grow = function (newCapacity) {
                 if (newCapacity === void 0) { newCapacity = ~~((this.data_.length * 3) / 2) + 1; }
-                this.data_.length = newCapacity;
+                this.data_.length = ~~newCapacity;
             };
             Bag.prototype.ensureCapacity = function (index) {
                 if (index >= this.data_.length) {
@@ -235,8 +226,8 @@ var artemis;
             };
             /**
             * Add all items into this bag.
-            * @param added
-            */
+             * @param items
+             */
             Bag.prototype.addAll = function (items) {
                 var i;
                 for (i = 0; items.size() > i; i++) {
@@ -461,8 +452,8 @@ var artemis;
             switch (typeof key) {
                 case 'boolean': return '' + key;
                 case 'number': return '' + key;
-                case 'string': return key;
-                case 'function': return key.className || key.name;
+                case 'string': return '' + key;
+                case 'function': return artemis.getClassName(key);
                 default:
                     key.uuid = key.uuid ? key.uuid : utils.UUID.randomUUID();
                     return key.uuid;
@@ -543,47 +534,58 @@ var artemis;
 })(artemis || (artemis = {}));
 //# sourceMappingURL=HashMap.js.map
 //# sourceMappingURL=ImmutableBag.js.map
-//# sourceMappingURL=IRandum.js.map
-/**
- *--------------------------------------------------------------------+
- * Randum.ts
- *--------------------------------------------------------------------+
- * Copyright DarkOverlordOfData (c) 2014-2015
- *--------------------------------------------------------------------+
- *
- * This file is a part of Alien Zone
- *
- * Alien Zone is free software; you can copy, modify, and distribute
- * it under the terms of the GPLv3 License
- *
- *--------------------------------------------------------------------+
- *
- * Wrap the native PRNG
- */
-var Randum = (function () {
-    function Randum() {
-    }
-    /*
-     * Generates a random boolean value.
-    */
-    Randum.prototype.nextBool = function () {
-        return ((~~(Math.random() * 32767)) & 1) === 1;
-    };
-    /*
-     * Generates a random real value from 0.0, inclusive, to 1.0, exclusive.
-    */
-    Randum.prototype.nextDouble = function () {
-        return Math.random();
-    };
-    /*
-     * Generates a random int value from 0, inclusive, to max, exclusive.
-    */
-    Randum.prototype.nextInt = function (max) {
-        return ~~(Math.random() * max);
-    };
-    return Randum;
-})();
-//# sourceMappingURL=Randum.js.map
+var artemis;
+(function (artemis) {
+    var utils;
+    (function (utils) {
+        // Thanks to Riven
+        // From: http://riven8192.blogspot.com/2009/08/fastmath-sincos-lookup-tables.html
+        var TrigLUT = (function () {
+            function TrigLUT() {
+            }
+            TrigLUT.main = function () {
+                console.log(TrigLUT.cos(Math.PI));
+                console.log(TrigLUT.cosDeg(180));
+            };
+            TrigLUT.sin = function (rad) {
+                return TrigLUT.sin_[(rad * TrigLUT.radToIndex) & TrigLUT.SIN_MASK];
+            };
+            TrigLUT.cos = function (rad) {
+                return TrigLUT.cos_[(rad * TrigLUT.radToIndex) & TrigLUT.SIN_MASK];
+            };
+            TrigLUT.sinDeg = function (deg) {
+                return TrigLUT.sin_[(deg * TrigLUT.degToIndex) & TrigLUT.SIN_MASK];
+            };
+            TrigLUT.cosDeg = function (deg) {
+                return TrigLUT.cos_[(deg * TrigLUT.degToIndex) & TrigLUT.SIN_MASK];
+            };
+            TrigLUT.init = function (update) {
+                TrigLUT.RAD = Math.PI / 180.0;
+                TrigLUT.DEG = 180.0 / Math.PI;
+                TrigLUT.SIN_BITS = 12;
+                TrigLUT.SIN_MASK = ~(-1 << TrigLUT.SIN_BITS);
+                TrigLUT.SIN_COUNT = TrigLUT.SIN_MASK + 1;
+                TrigLUT.radFull = (Math.PI * 2.0);
+                TrigLUT.degFull = (360.0);
+                TrigLUT.radToIndex = TrigLUT.SIN_COUNT / TrigLUT.radFull;
+                TrigLUT.degToIndex = TrigLUT.SIN_COUNT / TrigLUT.degFull;
+                TrigLUT.sin_ = new Array(TrigLUT.SIN_COUNT);
+                TrigLUT.cos_ = new Array(TrigLUT.SIN_COUNT);
+                for (var i = 0; i < TrigLUT.SIN_COUNT; i++) {
+                    TrigLUT.sin_[i] = Math.sin((i + 0.5) / TrigLUT.SIN_COUNT * TrigLUT.radFull);
+                    TrigLUT.cos_[i] = Math.cos((i + 0.5) / TrigLUT.SIN_COUNT * TrigLUT.radFull);
+                }
+                if (update) {
+                    Math.sin = TrigLUT.sin;
+                    Math.cos = TrigLUT.cos;
+                }
+            };
+            return TrigLUT;
+        })();
+        utils.TrigLUT = TrigLUT;
+    })(utils = artemis.utils || (artemis.utils = {}));
+})(artemis || (artemis = {}));
+//# sourceMappingURL=TrigLUT.js.map
 var artemis;
 (function (artemis) {
     var utils;
@@ -718,6 +720,330 @@ var artemis;
 //# sourceMappingURL=Mapper.js.map
 var artemis;
 (function (artemis) {
+    var annotations;
+    (function (annotations) {
+        /**
+        * Mapper artemis.component.Position
+        * em:ComponentMapper<artemis.component.Position>;
+        *
+        */
+        function Pooled() {
+            return function (klass, propertyKey, descriptor) {
+                Pooled['pooledComponents'] = Pooled['pooledComponents'] || {};
+                Pooled['pooledComponents'][artemis.getClassName(klass)] = klass;
+            };
+        }
+        annotations.Pooled = Pooled;
+        Pooled['pooledComponents'] = {};
+    })(annotations = artemis.annotations || (artemis.annotations = {}));
+})(artemis || (artemis = {}));
+//# sourceMappingURL=Pooled.js.map
+var artemis;
+(function (artemis) {
+    var annotations;
+    (function (annotations) {
+        /**
+         * EntityTemplate
+         *
+         */
+        function EntityTemplate(component) {
+            return function (target, propertyKey, descriptor) {
+                EntityTemplate['entityTemplates'] = EntityTemplate['entityTemplates'] || {};
+                EntityTemplate['entityTemplates'][component] = target;
+            };
+        }
+        annotations.EntityTemplate = EntityTemplate;
+    })(annotations = artemis.annotations || (artemis.annotations = {}));
+})(artemis || (artemis = {}));
+//# sourceMappingURL=EntityTemplate.js.map
+var artemis;
+(function (artemis) {
+    var blackboard;
+    (function (blackboard) {
+        /**
+         *
+         */
+        (function (TriggerStateType) {
+            TriggerStateType[TriggerStateType["ValueAdded"] = 1] = "ValueAdded";
+            TriggerStateType[TriggerStateType["ValueRemoved"] = 16] = "ValueRemoved";
+            TriggerStateType[TriggerStateType["ValueChanged"] = 256] = "ValueChanged";
+            TriggerStateType[TriggerStateType["TriggerAdded"] = 4096] = "TriggerAdded";
+        })(blackboard.TriggerStateType || (blackboard.TriggerStateType = {}));
+        var TriggerStateType = blackboard.TriggerStateType;
+    })(blackboard = artemis.blackboard || (artemis.blackboard = {}));
+})(artemis || (artemis = {}));
+//# sourceMappingURL=TriggerStateType.js.map
+var artemis;
+(function (artemis) {
+    var blackboard;
+    (function (blackboard) {
+        /**
+         *
+         */
+        var BlackBoard = (function () {
+            /**
+             * Initializes a new instance of the BlackBoard class
+             */
+            function BlackBoard() {
+                this.intelligence = {};
+                this.triggers = {};
+            }
+            /**
+             * Adds the trigger.
+             *
+             * @param trigger   The trigger.
+             * @param evaluateNow if set to true [evaluate now].
+             */
+            BlackBoard.prototype.addTrigger = function (trigger, evaluateNow) {
+                if (evaluateNow === void 0) { evaluateNow = false; }
+                trigger.blackboard = this;
+                for (var i in trigger.worldPropertiesMonitored) {
+                    var intelName = trigger.worldPropertiesMonitored[i];
+                    if (this.triggers[name]) {
+                        this.triggers[name].push(trigger);
+                    }
+                    else {
+                        this.triggers[name] = [trigger];
+                    }
+                }
+                if (evaluateNow) {
+                    if (trigger.isFired === false) {
+                        trigger.fire(blackboard.TriggerStateType.TriggerAdded);
+                    }
+                }
+            };
+            /**
+             * Atomics the operate on entry.
+             * @param operation The operation.
+             */
+            BlackBoard.prototype.atomicOperateOnEntry = function (operation) {
+                operation(this);
+            };
+            /**
+             * Gets the entry.
+             *
+             * @param name  The name.
+             * @returns {T} The specified element.
+             */
+            BlackBoard.prototype.getEntry = function (name) {
+                return this.intelligence[name];
+            };
+            /**
+             * Removes the entry.
+             * @param name  The name.
+             */
+            BlackBoard.prototype.removeEntry = function (name) {
+                if (this.intelligence[name]) {
+                    delete this.intelligence[name];
+                    if (this.triggers[name]) {
+                        for (var i in this.triggers[name]) {
+                            var item = this.triggers[name][i];
+                            if (item.isFired === false) {
+                                item.fire(blackboard.TriggerStateType.ValueRemoved);
+                            }
+                        }
+                    }
+                }
+            };
+            /**
+             * Removes the trigger.
+             * @param trigger The trigger.
+             */
+            BlackBoard.prototype.removeTrigger = function (trigger) {
+                for (var i in trigger.worldPropertiesMonitored) {
+                    var intelName = trigger.worldPropertiesMonitored[i];
+                    var t = this.triggers[intelName].indexOf(trigger);
+                    if (t !== -1) {
+                        this.triggers[intelName].slice(t, 1);
+                    }
+                }
+            };
+            /**
+             * Sets the entry.
+             * @param name  The name.
+             * @param intel The intel.
+             */
+            BlackBoard.prototype.setEntry = function (name, intel) {
+                var triggerStateType = this.intelligence[name] ? blackboard.TriggerStateType.ValueChanged : blackboard.TriggerStateType.ValueAdded;
+                this.intelligence[name] = intel;
+                if (this.triggers[name]) {
+                    for (var i in this.triggers[name]) {
+                        var item = this.triggers[name][i];
+                        if (item.isFired === false) {
+                            item.fire(triggerStateType);
+                        }
+                    }
+                }
+            };
+            /**
+             * Get a list of all related triggers.]
+             *
+             * @param name  The name.
+             * @returns {Array<Trigger>}  List of appropriated triggers.
+             */
+            BlackBoard.prototype.triggerList = function (name) {
+                return this.triggers[name];
+            };
+            return BlackBoard;
+        })();
+        blackboard.BlackBoard = BlackBoard;
+    })(blackboard = artemis.blackboard || (artemis.blackboard = {}));
+})(artemis || (artemis = {}));
+//# sourceMappingURL=BlackBoard.js.map
+var artemis;
+(function (artemis) {
+    var blackboard;
+    (function (blackboard) {
+        var Trigger = (function () {
+            /**
+             * Initializes a new instance of the Trigger class
+             * @param propertyName Name of the property.
+             */
+            function Trigger(propertyName) {
+                this.isFired = false;
+                this.worldPropertiesMonitored = [].concat(propertyName);
+            }
+            /**
+             * Removes the this trigger.
+             */
+            Trigger.prototype.removeThisTrigger = function () {
+                this.blackboard.removeTrigger(this);
+            };
+            /**
+             * Fires the specified trigger state.
+             * @param triggerStateType
+             */
+            Trigger.prototype.fire = function (triggerStateType) {
+                this.isFired = true;
+                this.triggerStateType = triggerStateType;
+                if (this.checkConditionToFire()) {
+                    this.calledOnFire(triggerStateType);
+                    if (this.onFire !== null) {
+                        this.onFire(this);
+                    }
+                }
+                this.isFired = false;
+            };
+            /**
+             * Called if is fired.
+             * @param triggerStateType  State of the trigger.
+             */
+            Trigger.prototype.calledOnFire = function (triggerStateType) { };
+            /**
+             * Checks the condition to fire.
+             * @returns {boolean} if XXXX, false otherwise
+             */
+            Trigger.prototype.checkConditionToFire = function () {
+                return true;
+            };
+            return Trigger;
+        })();
+        blackboard.Trigger = Trigger;
+    })(blackboard = artemis.blackboard || (artemis.blackboard = {}));
+})(artemis || (artemis = {}));
+//# sourceMappingURL=Trigger.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var artemis;
+(function (artemis) {
+    var blackboard;
+    (function (blackboard) {
+        var SimpleTrigger = (function (_super) {
+            __extends(SimpleTrigger, _super);
+            /**
+             * Initializes a new instance of the SimpleTrigger class.
+             *
+             * @param name  The name.
+             * @param condition The condition.
+             * @param onFire  The event.
+             */
+            function SimpleTrigger(name, condition, onFire) {
+                _super.call(this, [name]);
+                this.condition = condition;
+                this.onFire = onFire;
+            }
+            /**
+             * Called if is fired.
+             * @param triggerStateType  State of the trigger.
+             */
+            SimpleTrigger.prototype.calledOnFire = function (triggerStateType) {
+                if (this.onFire !== null) {
+                    this.onFire(triggerStateType);
+                }
+            };
+            /**
+             * Checks the condition to fire.
+             * @returns {boolean} if XXXX, false otherwise
+             */
+            SimpleTrigger.prototype.checkConditionToFire = function () {
+                return this.condition(this.blackboard, this.triggerStateType);
+            };
+            return SimpleTrigger;
+        })(blackboard.Trigger);
+        blackboard.SimpleTrigger = SimpleTrigger;
+    })(blackboard = artemis.blackboard || (artemis.blackboard = {}));
+})(artemis || (artemis = {}));
+//# sourceMappingURL=SimpleTrigger.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var artemis;
+(function (artemis) {
+    var blackboard;
+    (function (blackboard) {
+        var TriggerMultiCondition = (function (_super) {
+            __extends(TriggerMultiCondition, _super);
+            /**
+             * Initializes a new instance of the SimpleTrigger class.
+             *
+             * @param condition The condition.
+             * @param onFire  The event.
+             * @param names  The names.
+             */
+            function TriggerMultiCondition(condition, onFire, names) {
+                _super.call(this, names);
+                this.condition = condition;
+                this.onFire = onFire;
+            }
+            /**
+             * Removes the this trigger.
+             */
+            TriggerMultiCondition.prototype.removeThisTrigger = function () {
+                this.blackboard.removeTrigger(this);
+            };
+            /**
+             * Called if is fired.
+             * @param triggerStateType  State of the trigger.
+             */
+            TriggerMultiCondition.prototype.calledOnFire = function (triggerStateType) {
+                if (this.onFire !== null) {
+                    this.onFire(triggerStateType);
+                }
+            };
+            /**
+             * Checks the condition to fire.
+             * @returns {boolean} if XXXX, false otherwise
+             */
+            TriggerMultiCondition.prototype.checkConditionToFire = function () {
+                return this.condition(this.blackboard, this.triggerStateType);
+            };
+            return TriggerMultiCondition;
+        })(blackboard.Trigger);
+        blackboard.TriggerMultiCondition = TriggerMultiCondition;
+    })(blackboard = artemis.blackboard || (artemis.blackboard = {}));
+})(artemis || (artemis = {}));
+//# sourceMappingURL=TriggerMultiCondition.js.map
+//# sourceMappingURL=IEntityTemplate.js.map
+//# sourceMappingURL=EntityObserver.js.map
+var artemis;
+(function (artemis) {
     /**
      * A tag class. All components in the system must extend this class.
      *
@@ -726,11 +1052,36 @@ var artemis;
     var Component = (function () {
         function Component() {
         }
+        Component.prototype.initialize = function () { };
         return Component;
     })();
     artemis.Component = Component;
 })(artemis || (artemis = {}));
 //# sourceMappingURL=Component.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var artemis;
+(function (artemis) {
+    /**
+     * Component type that recycles instances.
+     * <p>
+     * Expects no <code>final</code> fields.
+     */
+    var PooledComponent = (function (_super) {
+        __extends(PooledComponent, _super);
+        function PooledComponent() {
+            _super.apply(this, arguments);
+        }
+        PooledComponent.prototype.reset = function () { };
+        return PooledComponent;
+    })(artemis.Component);
+    artemis.PooledComponent = PooledComponent;
+})(artemis || (artemis = {}));
+//# sourceMappingURL=PooledComponent.js.map
 var artemis;
 (function (artemis) {
     var BitSet = artemis.utils.BitSet;
@@ -762,6 +1113,9 @@ var artemis;
             this.exclusionSet_ = new BitSet();
             this.oneSet_ = new BitSet();
         }
+        Aspect.prototype.setWorld = function (world) {
+            this.world_ = world;
+        };
         Aspect.prototype.getAllSet = function () {
             return this.allSet_;
         };
@@ -771,21 +1125,24 @@ var artemis;
         Aspect.prototype.getOneSet = function () {
             return this.oneSet_;
         };
+        Aspect.prototype.getIndexFor = function (c) {
+            return Aspect.typeFactory.getIndexFor(c);
+        };
         /**
-        * Returns an aspect where an entity must possess all of the specified component types.
-        * @param type a required component type
-        * @param types a required component type
-        * @return an aspect that can be matched against entities
-        */
+            * Returns an aspect where an entity must possess all of the specified component types.
+            * @param type a required component type
+            * @param types a required component type
+            * @return an aspect that can be matched against entities
+            */
         Aspect.prototype.all = function (type) {
             var types = [];
             for (var _i = 1; _i < arguments.length; _i++) {
                 types[_i - 1] = arguments[_i];
             }
-            this.allSet_.set(artemis.ComponentType.getIndexFor(type));
+            this.allSet_.set(this.getIndexFor(type));
             var t;
             for (t in types) {
-                this.allSet_.set(artemis.ComponentType.getIndexFor(types[t]));
+                this.allSet_.set(this.getIndexFor(types[t]));
             }
             return this;
         };
@@ -802,10 +1159,10 @@ var artemis;
             for (var _i = 1; _i < arguments.length; _i++) {
                 types[_i - 1] = arguments[_i];
             }
-            this.exclusionSet_.set(artemis.ComponentType.getIndexFor(type));
+            this.exclusionSet_.set(this.getIndexFor(type));
             var t;
             for (t in types) {
-                this.exclusionSet_.set(artemis.ComponentType.getIndexFor(types[t]));
+                this.exclusionSet_.set(this.getIndexFor(types[t]));
             }
             return this;
         };
@@ -820,9 +1177,9 @@ var artemis;
             for (var _i = 1; _i < arguments.length; _i++) {
                 types[_i - 1] = arguments[_i];
             }
-            this.oneSet_.set(artemis.ComponentType.getIndexFor(type));
+            this.oneSet_.set(this.getIndexFor(type));
             for (var t in types) {
-                this.oneSet_.set(artemis.ComponentType.getIndexFor(types[t]));
+                this.oneSet_.set(this.getIndexFor(types[t]));
             }
             return this;
         };
@@ -951,13 +1308,29 @@ var artemis;
         Entity.prototype.toString = function () {
             return "Entity[" + this.id_ + "]";
         };
+        Entity.prototype.createComponent = function (componentKlazz) {
+            var args = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                args[_i - 1] = arguments[_i];
+            }
+            var componentManager = this.world_.getComponentManager();
+            var component = componentManager.create(this, componentKlazz);
+            if (args.length) {
+                (_a = component).initialize.apply(_a, args);
+            }
+            var tf = this.world_.getComponentManager().typeFactory;
+            var componentType = tf.getTypeFor(componentKlazz);
+            this.componentBits_.set(componentType.getIndex());
+            return component;
+            var _a;
+        };
         /**
-        * Add a component to this entity.
-        *
-        * @param component to add to this entity
-        *
-        * @return this entity for chaining.
-        */
+              * Add a component to this entity.
+              *
+              * @param component to add to this entity
+              *
+              * @return this entity for chaining.
+              */
         // public addComponent(component: Component):Entity {
         // 	this.addComponent(component, ComponentType.getTypeFor(component.getClass()));
         // 	return this;
@@ -967,14 +1340,32 @@ var artemis;
         * in some cases you might need the extra performance.
         *
         * @param component the component to add
-        * @param type of the component
+        * @param args of the component
         *
         * @return this entity for chaining.
         */
-        Entity.prototype.addComponent = function (component, type) {
-            if (type === void 0) { type = artemis.ComponentType.getTypeFor(component.constructor); }
+        //public addComponent(component:Component, type?:ComponentType):Entity {
+        Entity.prototype.addComponent = function (component) {
+            var args = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                args[_i - 1] = arguments[_i];
+            }
+            var type;
+            if (component instanceof artemis.Component) {
+                type = args[0];
+            }
+            else {
+                component = this.createComponent.apply(this, [component].concat(args));
+                type = this.getTypeFor(component.constructor);
+            }
+            if (type === undefined)
+                type = this.getTypeFor(component.constructor);
+            //type = ComponentType.getTypeFor(component.constructor);
             this.componentManager_.addComponent(this, type, component);
             return this;
+        };
+        Entity.prototype.getTypeFor = function (c) {
+            return this.world_.getComponentManager().typeFactory.getTypeFor(c);
         };
         /**
         * Removes the component from this entity.
@@ -984,8 +1375,8 @@ var artemis;
         * @return this entity for chaining.
         */
         Entity.prototype.removeComponentInstance = function (component) {
-            //this.removeComponent(component.getClass());
-            this.removeComponent(artemis.ComponentType.getTypeFor(component.constructor));
+            //this.removeComponent(ComponentType.getTypeFor(component.constructor));
+            this.removeComponent(this.getTypeFor(component.constructor));
             return this;
         };
         /**
@@ -1006,7 +1397,8 @@ var artemis;
         * @return this entity for chaining.
         */
         Entity.prototype.removeComponentByType = function (type) {
-            this.removeComponent(artemis.ComponentType.getTypeFor(type));
+            //this.removeComponent(ComponentType.getTypeFor(type));
+            this.removeComponent(this.getTypeFor(type));
             return this;
         };
         /**
@@ -1057,8 +1449,8 @@ var artemis;
         * @return component that matches, or null if none is found.
         */
         Entity.prototype.getComponentByType = function (type) {
-            //return type.cast(getComponent(ComponentType.getTypeFor(type)));
-            return this.componentManager_.getComponent(this, artemis.ComponentType.getTypeFor(type));
+            return this.componentManager_.getComponent(this, this.getTypeFor(type));
+            //return this.componentManager_.getComponent(this, ComponentType.getTypeFor(type));
         };
         /**
         * Returns a bag of all components this entity has.
@@ -1163,6 +1555,7 @@ var artemis;
 (function (artemis) {
     var Bag = artemis.utils.Bag;
     var HashMap = artemis.utils.HashMap;
+    var EntityTemplate = artemis.annotations.EntityTemplate;
     /**
     * The primary instance for the framework. It contains all the managers.
     *
@@ -1199,6 +1592,11 @@ var artemis;
             for (var i = 0; i < this.systemsBag_.size(); i++) {
                 ComponentMapperInitHelper.config(this.systemsBag_.get(i), this);
                 this.systemsBag_.get(i).initialize();
+            }
+            this.entityTemplates = {};
+            for (var component in EntityTemplate['entityTemplates']) {
+                var Template = EntityTemplate['entityTemplates'][component];
+                this.setEntityTemplate(component, new Template);
             }
         };
         /**
@@ -1446,6 +1844,31 @@ var artemis;
         World.prototype.getMapper = function (type) {
             return artemis.ComponentMapper.getFor(type, this);
         };
+        /**
+         * Set an Entity Template
+         *
+         * @param entityTag
+         * @param entityTemplate
+         */
+        World.prototype.setEntityTemplate = function (entityTag, entityTemplate) {
+            this.entityTemplates[entityTag] = entityTemplate;
+        };
+        /**
+         * Creates a entity from template.
+         *
+         * @param name
+         * @param args
+         * @returns {Entity}
+         * EntityTemplate
+         */
+        World.prototype.createEntityFromTemplate = function (name) {
+            var args = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                args[_i - 1] = arguments[_i];
+            }
+            return (_a = this.entityTemplates[name]).buildEntity.apply(_a, [this.createEntity(), this].concat(args));
+            var _a;
+        };
         return World;
     })();
     artemis.World = World;
@@ -1455,7 +1878,6 @@ var artemis;
         ComponentMapperInitHelper.config = function (target, world) {
             try {
                 var clazz = target.constructor;
-                var className = clazz.className || clazz.name;
                 for (var fieldIndex in clazz.declaredFields) {
                     var field = clazz.declaredFields[fieldIndex];
                     if (!target.hasOwnProperty(field)) {
@@ -1482,22 +1904,100 @@ var artemis;
 (function (artemis) {
     var Bag = artemis.utils.Bag;
     var Manager = artemis.Manager;
+    var ComponentTypeFactory = artemis.ComponentTypeFactory;
+    var ComponentPool = artemis.ComponentPool;
+    var Taxonomy = artemis.Taxonomy;
     var ComponentManager = (function (_super) {
         __extends(ComponentManager, _super);
         function ComponentManager() {
             _super.call(this);
             this.componentsByType_ = new Bag();
+            this.pooledComponents_ = new ComponentPool();
             this.deleted_ = new Bag();
+            this.typeFactory = new ComponentTypeFactory();
         }
         ComponentManager.prototype.initialize = function () {
         };
+        ComponentManager.prototype.create = function (owner, componentClass) {
+            var type = this.typeFactory.getTypeFor(componentClass);
+            var component = null;
+            switch (type.getTaxonomy()) {
+                case Taxonomy.BASIC:
+                    //console.log('create BASIC');
+                    component = this.newInstance(componentClass, false);
+                    break;
+                case Taxonomy.POOLED:
+                    //console.log('create POOLED');
+                    this.reclaimPooled(owner, type);
+                    /**
+                     * YUK! <T> is not working here.
+                     * It should be ok, since it will be the same as 'type'
+                     */
+                    component = this.pooledComponents_.obtain(componentClass, type);
+                    break;
+                default:
+                    throw new Error('InvalidComponentException unknown component type:' + type.getTaxonomy());
+            }
+            this.addComponent(owner, type, component);
+            return component;
+        };
+        ComponentManager.prototype.reclaimPooled = function (owner, type) {
+            var components = this.componentsByType_.safeGet(type.getIndex());
+            if (components == null)
+                return;
+            var old = components.safeGet(owner.getId());
+            if (old !== undefined && old !== null) {
+                this.pooledComponents_.free(old, type);
+            }
+        };
+        ComponentManager.prototype.newInstance = function (constructor, constructorHasWorldParameter) {
+            if (constructorHasWorldParameter) {
+                return new constructor(this.world_);
+            }
+            else {
+                return new constructor();
+            }
+        };
+        /**
+         * Removes all components from the entity associated in this manager.
+         *
+         * @param e
+         *			the entity to remove components from
+         */
         ComponentManager.prototype.removeComponentsOfEntity = function (e) {
             var componentBits = e.getComponentBits();
             for (var i = componentBits.nextSetBit(0); i >= 0; i = componentBits.nextSetBit(i + 1)) {
-                this.componentsByType_.get(i).set(e.getId(), null);
+                switch (this.typeFactory.getTaxonomy(i)) {
+                    case Taxonomy.BASIC:
+                        //console.log('remove BASIC');
+                        this.componentsByType_.get(i).set(e.getId(), null);
+                        break;
+                    case Taxonomy.POOLED:
+                        //console.log('remove POOLED');
+                        var pooled = this.componentsByType_.get(i).get(e.getId());
+                        this.pooledComponents_.freeByIndex(pooled, i);
+                        this.componentsByType_.get(i).set(e.getId(), null);
+                        break;
+                    default:
+                        throw new Error('InvalidComponentException' + " unknown component type: " + this.typeFactory.getTaxonomy(i));
+                }
             }
             componentBits.clear();
         };
+        /**
+         * Adds the component of the given type to the entity.
+         * <p>
+         * Only one component of given type can be associated with a entity at the
+         * same time.
+         * </p>
+         *
+         * @param e
+         *			the entity to add to
+         * @param type
+         *			the type of component being added
+         * @param component
+         *			the component to add
+         */
         ComponentManager.prototype.addComponent = function (e, type, component) {
             this.componentsByType_.ensureCapacity(type.getIndex());
             var components = this.componentsByType_.get(type.getIndex());
@@ -1508,12 +2008,38 @@ var artemis;
             components.set(e.getId(), component);
             e.getComponentBits().set(type.getIndex());
         };
+        /**
+         * Removes the component of given type from the entity.
+         *
+         * @param e
+         *			the entity to remove from
+         * @param type
+         *			the type of component being removed
+         */
         ComponentManager.prototype.removeComponent = function (e, type) {
-            if (e.getComponentBits().get(type.getIndex())) {
-                this.componentsByType_.get(type.getIndex()).set(e.getId(), null);
-                e.getComponentBits().clear(type.getIndex());
+            var index = type.getIndex();
+            switch (type.getTaxonomy()) {
+                case Taxonomy.BASIC:
+                    this.componentsByType_.get(index).set(e.getId(), null);
+                    e.getComponentBits().clear(type.getIndex());
+                    break;
+                case Taxonomy.POOLED:
+                    var pooled = this.componentsByType_.get(index).get(e.getId());
+                    e.getComponentBits().clear(type.getIndex());
+                    this.pooledComponents_.free(pooled, type);
+                    this.componentsByType_.get(index).set(e.getId(), null);
+                    break;
+                default:
+                    throw new Error('InvalidComponentException' + type + " unknown component type: " + type.getTaxonomy());
             }
         };
+        /**
+         * Get all components from all entities for a given type.
+         *
+         * @param type
+         *			the type of components to get
+         * @return a bag containing all components of the given type
+         */
         ComponentManager.prototype.getComponentsByType = function (type) {
             var components = this.componentsByType_.get(type.getIndex());
             if (components == null) {
@@ -1522,6 +2048,15 @@ var artemis;
             }
             return components;
         };
+        /**
+         * Get a component of an entity.
+         *
+         * @param e
+         *			the entity associated with the component
+         * @param type
+         *			the type of component to get
+         * @return the component of given type
+         */
         ComponentManager.prototype.getComponent = function (e, type) {
             var components = this.componentsByType_.get(type.getIndex());
             if (components != null) {
@@ -1529,6 +2064,15 @@ var artemis;
             }
             return null;
         };
+        /**
+         * Get all component associated with an entity.
+         *
+         * @param e
+         *			the entity to get components from
+         * @param fillBag
+         *			a bag to be filled with components
+         * @return the {@code fillBag}, filled with the entities components
+         */
         ComponentManager.prototype.getComponentsFor = function (e, fillBag) {
             var componentBits = e.getComponentBits();
             for (var i = componentBits.nextSetBit(0); i >= 0; i = componentBits.nextSetBit(i + 1)) {
@@ -1554,33 +2098,42 @@ var artemis;
 //# sourceMappingURL=ComponentManager.js.map
 var artemis;
 (function (artemis) {
-    var HashMap = artemis.utils.HashMap;
+    var Pooled = artemis.annotations.Pooled;
+    (function (Taxonomy) {
+        Taxonomy[Taxonomy["BASIC"] = 0] = "BASIC";
+        Taxonomy[Taxonomy["POOLED"] = 1] = "POOLED"; //, PACKED
+    })(artemis.Taxonomy || (artemis.Taxonomy = {}));
+    var Taxonomy = artemis.Taxonomy;
     var ComponentType = (function () {
-        function ComponentType(type) {
-            this.index_ = ComponentType.INDEX++;
+        function ComponentType(type, index) {
+            this.index_ = 0;
+            if (index !== undefined) {
+                this.index_ = ComponentType.INDEX++;
+            }
+            else {
+                this.index_ = index;
+            }
             this.type_ = type;
+            if (Pooled['pooledComponents'][artemis.getClassName(type)] === type) {
+                this.taxonomy_ = Taxonomy.POOLED;
+            }
+            else {
+                this.taxonomy_ = Taxonomy.BASIC;
+            }
         }
+        ComponentType.prototype.getName = function () {
+            return artemis.getClassName(this.type_);
+        };
         ComponentType.prototype.getIndex = function () {
             return this.index_;
         };
+        ComponentType.prototype.getTaxonomy = function () {
+            return this.taxonomy_;
+        };
         ComponentType.prototype.toString = function () {
-            var klass = ComponentType;
-            return "ComponentType[" + klass.name + "] (" + this.index_ + ")";
-            // return "ComponentType["+klass.getSimpleName()+"] ("+this.index_+")";
-        };
-        ComponentType.getTypeFor = function (c) {
-            var type = ComponentType.componentTypes.get(c);
-            if (type == null) {
-                type = new ComponentType(c);
-                ComponentType.componentTypes.put(c, type);
-            }
-            return type;
-        };
-        ComponentType.getIndexFor = function (c) {
-            return ComponentType.getTypeFor(c).getIndex();
+            return "ComponentType[" + artemis.getClassName(ComponentType) + "] (" + this.index_ + ")";
         };
         ComponentType.INDEX = 0;
-        ComponentType.componentTypes = new HashMap();
         return ComponentType;
     })();
     artemis.ComponentType = ComponentType;
@@ -1588,7 +2141,63 @@ var artemis;
 //# sourceMappingURL=ComponentType.js.map
 var artemis;
 (function (artemis) {
+    var Bag = artemis.utils.Bag;
     var ComponentType = artemis.ComponentType;
+    var Aspect = artemis.Aspect;
+    var ComponentTypeFactory = (function () {
+        function ComponentTypeFactory() {
+            /** Amount of generated component types. */
+            this.componentTypeCount_ = 0;
+            this.componentTypes_ = {};
+            this.types = new Bag();
+            Aspect.typeFactory = this;
+        }
+        /**
+         * Gets the component type for the given component class.
+         * <p>
+         * If no component type exists yet, a new one will be created and stored
+         * for later retrieval.
+         * </p>
+         *
+         * @param c
+         *			the component's class to get the type for
+         *
+         * @return the component's {@link ComponentType}
+         */
+        ComponentTypeFactory.prototype.getTypeFor = function (c) {
+            if ('number' === typeof c) {
+                return this.types.get(parseInt(c));
+            }
+            var type = this.componentTypes_[artemis.getClassName(c)];
+            if (type == null) {
+                var index = this.componentTypeCount_++;
+                type = new ComponentType(c, index);
+                this.componentTypes_[artemis.getClassName(c)] = type;
+                this.types.set(index, type);
+            }
+            return type;
+        };
+        /**
+         * Get the index of the component type of given component class.
+         *
+         * @param c
+         *			the component class to get the type index for
+         *
+         * @return the component type's index
+         */
+        ComponentTypeFactory.prototype.getIndexFor = function (c) {
+            return this.getTypeFor(c).getIndex();
+        };
+        ComponentTypeFactory.prototype.getTaxonomy = function (index) {
+            return this.types.get(index).getTaxonomy();
+        };
+        return ComponentTypeFactory;
+    })();
+    artemis.ComponentTypeFactory = ComponentTypeFactory;
+})(artemis || (artemis = {}));
+//# sourceMappingURL=ComponentTypeFactory.js.map
+var artemis;
+(function (artemis) {
     /**
     * High performance component retrieval from entities. Use this wherever you
     * need to retrieve components from entities often and fast.
@@ -1599,7 +2208,8 @@ var artemis;
     */
     var ComponentMapper = (function () {
         function ComponentMapper(type, world) {
-            this.type_ = ComponentType.getTypeFor(type);
+            //this.type_ = ComponentType.getTypeFor(type);
+            this.type_ = world.getComponentManager().typeFactory.getTypeFor(type);
             this.components_ = world.getComponentManager().getComponentsByType(this.type_);
             this.classType_ = type;
         }
@@ -1650,6 +2260,52 @@ var artemis;
     artemis.ComponentMapper = ComponentMapper;
 })(artemis || (artemis = {}));
 //# sourceMappingURL=ComponentMapper.js.map
+var artemis;
+(function (artemis) {
+    var Bag = artemis.utils.Bag;
+    var ComponentPool = (function () {
+        function ComponentPool() {
+            this.pools = new Bag();
+        }
+        ComponentPool.prototype.obtain = function (componentClass, type) {
+            var pool = this.getPool(type.getIndex());
+            return ((pool.size() > 0) ? pool.obtain() : new componentClass());
+        };
+        ComponentPool.prototype.free = function (c, type) {
+            this.freeByIndex(c, type.getIndex());
+        };
+        ComponentPool.prototype.freeByIndex = function (c, typeIndex) {
+            c.reset();
+            this.getPool(typeIndex).free(c);
+        };
+        ComponentPool.prototype.getPool = function (typeIndex) {
+            var pool = this.pools.safeGet(typeIndex);
+            if (pool == null) {
+                pool = new Pool();
+                this.pools.set(typeIndex, pool);
+            }
+            return pool;
+        };
+        return ComponentPool;
+    })();
+    artemis.ComponentPool = ComponentPool;
+    var Pool = (function () {
+        function Pool() {
+            this.cache = new Bag();
+        }
+        Pool.prototype.obtain = function () {
+            return this.cache.removeLast();
+        };
+        Pool.prototype.size = function () {
+            return this.cache.size();
+        };
+        Pool.prototype.free = function (component) {
+            this.cache.add(component);
+        };
+        return Pool;
+    })();
+})(artemis || (artemis = {}));
+//# sourceMappingURL=ComponentPool.js.map
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -1668,6 +2324,10 @@ var artemis;
             this.entities_ = new Bag();
             this.disabled_ = new BitSet();
             this.identifierPool_ = new IdentifierPool();
+            this.active_ = 0;
+            this.added_ = 0;
+            this.created_ = 0;
+            this.deleted_ = 0;
         }
         EntityManager.prototype.initialize = function () {
         };
@@ -1780,6 +2440,7 @@ var artemis;
 (function (artemis) {
     var Bag = artemis.utils.Bag;
     var HashMap = artemis.utils.HashMap;
+    var BlackBoard = artemis.blackboard.BlackBoard;
     /**
     * The most raw entity system. It should not typically be used, but you can create your own
     * entity system handling by extending this. It is recommended that you use the other provided
@@ -1796,10 +2457,10 @@ var artemis;
         function EntitySystem(aspect) {
             this.actives_ = new Bag();
             this.aspect_ = aspect;
+            this.systemIndex_ = SystemIndexManager.getIndexFor(this.constructor);
             this.allSet_ = aspect.getAllSet();
             this.exclusionSet_ = aspect.getExclusionSet();
             this.oneSet_ = aspect.getOneSet();
-            this.systemIndex_ = SystemIndexManager.getIndexFor(this.constructor);
             this.dummy_ = this.allSet_.isEmpty() && this.oneSet_.isEmpty(); // This system can't possibly be interested in any entity, so it must be "dummy"
         }
         /**
@@ -1888,7 +2549,6 @@ var artemis;
             this.removed(e);
         };
         EntitySystem.prototype.insertToSystem = function (e) {
-            //console.log('EntitySystem::insertToSystem');
             this.actives_.add(e);
             e.getSystemBits().set(this.systemIndex_);
             this.inserted(e);
@@ -1924,6 +2584,7 @@ var artemis;
         EntitySystem.prototype.getActive = function () {
             return this.actives_;
         };
+        EntitySystem.blackBoard = new BlackBoard();
         return EntitySystem;
     })();
     artemis.EntitySystem = EntitySystem;

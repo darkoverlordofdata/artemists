@@ -1,5 +1,7 @@
 module artemis {
-	
+
+	interface Class extends Function {}
+
 	import Bag = artemis.utils.Bag;
 	import BitSet = artemis.utils.BitSet;
 	import UUID = artemis.utils.UUID;
@@ -164,7 +166,7 @@ module artemis {
 		* 
 		* @return this entity for chaining.
 		*/
-		public removeComponentByType(type:Function):Entity {
+		public removeComponentByType(type:Class):Entity {
 			//this.removeComponent(ComponentType.getTypeFor(type));
       this.removeComponent(this.getTypeFor(type));
 			return this;
@@ -220,7 +222,7 @@ module artemis {
 		*            the expected return component type.
 		* @return component that matches, or null if none is found.
 		*/
-		public getComponentByType(type:Function): Component  {
+		public getComponentByType(type:Class): Component  {
 			return this.componentManager_.getComponent(this, this.getTypeFor(type));
       //return this.componentManager_.getComponent(this, ComponentType.getTypeFor(type));
 		}

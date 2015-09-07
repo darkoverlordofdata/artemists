@@ -1,5 +1,7 @@
 module artemis {
-	
+
+	interface Class extends Function {}
+
 	import Bag = artemis.utils.Bag;
 	import ImmutableBag = artemis.utils.ImmutableBag;
 	import BitSet = artemis.utils.BitSet;
@@ -206,7 +208,7 @@ module artemis {
 		private static INDEX:number = 0;
 		private static indices:HashMap<Function, number>  = new HashMap<Function, number>();
 		
-		public static getIndexFor(es:Function):number {
+		public static getIndexFor(es:Class):number {
 
 			var index:number = SystemIndexManager.indices.get(es);
 			if(index === undefined) {

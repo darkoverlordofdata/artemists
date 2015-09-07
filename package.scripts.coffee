@@ -64,7 +64,7 @@ module.exports = (project, options = {}) ->
     if isCocos2d
       files = getCocos2dFiles(false).join(' LF ')
       step.push """
-        cp -f lib/src/cclib-rt.js web/src/#{LIB_NAME}/cclib-rt.js
+        cp -f lib/src/example/cclib-rt.js web/src/example/cclib-rt.js
         cp -f web/main.js #{ANDROID_ASSETS}/main.js
         cp -f web/project_android.json #{ANDROID_ASSETS}/project.json
       """
@@ -138,7 +138,6 @@ module.exports = (project, options = {}) ->
             --compilation_level #{options.compile} \
             --js_output_file build/#{LIB_NAME}.min,js
       """
-        
     return step
       
   ### delete the prior build items ###

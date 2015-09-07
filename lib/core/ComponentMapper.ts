@@ -1,5 +1,7 @@
 module artemis {
-	
+
+	interface Class extends Function {}
+
 	import Bag = artemis.utils.Bag;
 	import Component = artemis.Component;
 	import ComponentType = artemis.ComponentType;
@@ -15,10 +17,10 @@ module artemis {
 	*/
 	export class ComponentMapper<A extends Component> {
 		private type_: ComponentType;
-		private classType_: Function;
+		private classType_:Class;
 		private components_: Bag<Component>;
 	
-		constructor(type:Function, world:World) {
+		constructor(type:Class, world:World) {
 			//this.type_ = ComponentType.getTypeFor(type);
       this.type_ = world.getComponentManager().typeFactory.getTypeFor(type);
 			this.components_ = world.getComponentManager().getComponentsByType(this.type_);

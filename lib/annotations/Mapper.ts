@@ -1,11 +1,12 @@
 module artemis.annotations {
-  
+
+  interface Class extends Function {}
   /**
   * Mapper artemis.component.Position
   * em:ComponentMapper<artemis.component.Position>;
   * 
   */
-  export function Mapper(component: Function) {
+  export function Mapper(component:Class) {
     return function (target: Object, propertyKey?: string, descriptor?: TypedPropertyDescriptor<any>) {
       
        var klass:any = target.constructor;
