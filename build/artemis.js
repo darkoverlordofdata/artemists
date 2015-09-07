@@ -1,5 +1,12 @@
 var artemis;
 (function (artemis) {
+    function getClassName(klass) {
+        return klass.className || klass.name;
+    }
+    artemis.getClassName = getClassName;
+})(artemis || (artemis = {}));
+var artemis;
+(function (artemis) {
     var utils;
     (function (utils) {
         /**
@@ -239,7 +246,6 @@ var artemis;
         utils.Bag = Bag;
     })(utils = artemis.utils || (artemis.utils = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=Bag.js.map
 var artemis;
 (function (artemis) {
     var utils;
@@ -398,7 +404,6 @@ var artemis;
         utils.BitSet = BitSet;
     })(utils = artemis.utils || (artemis.utils = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=BitSet.js.map
 var artemis;
 (function (artemis) {
     var utils;
@@ -437,8 +442,6 @@ var artemis;
         utils.MathUtils = MathUtils;
     })(utils = artemis.utils || (artemis.utils = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=MathUtils.js.map
-//# sourceMappingURL=Map.js.map
 var artemis;
 (function (artemis) {
     var utils;
@@ -532,8 +535,6 @@ var artemis;
         utils.HashMap = HashMap;
     })(utils = artemis.utils || (artemis.utils = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=HashMap.js.map
-//# sourceMappingURL=ImmutableBag.js.map
 var artemis;
 (function (artemis) {
     var utils;
@@ -585,7 +586,6 @@ var artemis;
         utils.TrigLUT = TrigLUT;
     })(utils = artemis.utils || (artemis.utils = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=TrigLUT.js.map
 var artemis;
 (function (artemis) {
     var utils;
@@ -646,7 +646,6 @@ var artemis;
         utils.Timer = Timer;
     })(utils = artemis.utils || (artemis.utils = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=Timer.js.map
 var artemis;
 (function (artemis) {
     var utils;
@@ -696,7 +695,6 @@ var artemis;
         utils.UUID = UUID;
     })(utils = artemis.utils || (artemis.utils = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=UUID.js.map
 var artemis;
 (function (artemis) {
     var annotations;
@@ -717,7 +715,6 @@ var artemis;
         annotations.Mapper = Mapper;
     })(annotations = artemis.annotations || (artemis.annotations = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=Mapper.js.map
 var artemis;
 (function (artemis) {
     var annotations;
@@ -737,7 +734,6 @@ var artemis;
         Pooled['pooledComponents'] = {};
     })(annotations = artemis.annotations || (artemis.annotations = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=Pooled.js.map
 var artemis;
 (function (artemis) {
     var annotations;
@@ -755,7 +751,6 @@ var artemis;
         annotations.EntityTemplate = EntityTemplate;
     })(annotations = artemis.annotations || (artemis.annotations = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=EntityTemplate.js.map
 var artemis;
 (function (artemis) {
     var blackboard;
@@ -772,7 +767,6 @@ var artemis;
         var TriggerStateType = blackboard.TriggerStateType;
     })(blackboard = artemis.blackboard || (artemis.blackboard = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=TriggerStateType.js.map
 var artemis;
 (function (artemis) {
     var blackboard;
@@ -889,7 +883,6 @@ var artemis;
         blackboard.BlackBoard = BlackBoard;
     })(blackboard = artemis.blackboard || (artemis.blackboard = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=BlackBoard.js.map
 var artemis;
 (function (artemis) {
     var blackboard;
@@ -941,7 +934,6 @@ var artemis;
         blackboard.Trigger = Trigger;
     })(blackboard = artemis.blackboard || (artemis.blackboard = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=Trigger.js.map
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -987,13 +979,6 @@ var artemis;
         blackboard.SimpleTrigger = SimpleTrigger;
     })(blackboard = artemis.blackboard || (artemis.blackboard = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=SimpleTrigger.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var artemis;
 (function (artemis) {
     var blackboard;
@@ -1039,9 +1024,6 @@ var artemis;
         blackboard.TriggerMultiCondition = TriggerMultiCondition;
     })(blackboard = artemis.blackboard || (artemis.blackboard = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=TriggerMultiCondition.js.map
-//# sourceMappingURL=IEntityTemplate.js.map
-//# sourceMappingURL=EntityObserver.js.map
 var artemis;
 (function (artemis) {
     /**
@@ -1057,13 +1039,6 @@ var artemis;
     })();
     artemis.Component = Component;
 })(artemis || (artemis = {}));
-//# sourceMappingURL=Component.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var artemis;
 (function (artemis) {
     /**
@@ -1081,7 +1056,6 @@ var artemis;
     })(artemis.Component);
     artemis.PooledComponent = PooledComponent;
 })(artemis || (artemis = {}));
-//# sourceMappingURL=PooledComponent.js.map
 var artemis;
 (function (artemis) {
     var BitSet = artemis.utils.BitSet;
@@ -1250,7 +1224,6 @@ var artemis;
     })();
     artemis.Aspect = Aspect;
 })(artemis || (artemis = {}));
-//# sourceMappingURL=Aspect.js.map
 var artemis;
 (function (artemis) {
     var BitSet = artemis.utils.BitSet;
@@ -1516,7 +1489,6 @@ var artemis;
     })();
     artemis.Entity = Entity;
 })(artemis || (artemis = {}));
-//# sourceMappingURL=Entity.js.map
 var artemis;
 (function (artemis) {
     /**
@@ -1550,7 +1522,6 @@ var artemis;
     })();
     artemis.Manager = Manager;
 })(artemis || (artemis = {}));
-//# sourceMappingURL=Manager.js.map
 var artemis;
 (function (artemis) {
     var Bag = artemis.utils.Bag;
@@ -1893,13 +1864,6 @@ var artemis;
         return ComponentMapperInitHelper;
     })();
 })(artemis || (artemis = {}));
-//# sourceMappingURL=World.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var artemis;
 (function (artemis) {
     var Bag = artemis.utils.Bag;
@@ -2095,7 +2059,6 @@ var artemis;
     })(Manager);
     artemis.ComponentManager = ComponentManager;
 })(artemis || (artemis = {}));
-//# sourceMappingURL=ComponentManager.js.map
 var artemis;
 (function (artemis) {
     var Pooled = artemis.annotations.Pooled;
@@ -2138,7 +2101,6 @@ var artemis;
     })();
     artemis.ComponentType = ComponentType;
 })(artemis || (artemis = {}));
-//# sourceMappingURL=ComponentType.js.map
 var artemis;
 (function (artemis) {
     var Bag = artemis.utils.Bag;
@@ -2195,7 +2157,6 @@ var artemis;
     })();
     artemis.ComponentTypeFactory = ComponentTypeFactory;
 })(artemis || (artemis = {}));
-//# sourceMappingURL=ComponentTypeFactory.js.map
 var artemis;
 (function (artemis) {
     /**
@@ -2259,7 +2220,6 @@ var artemis;
     })();
     artemis.ComponentMapper = ComponentMapper;
 })(artemis || (artemis = {}));
-//# sourceMappingURL=ComponentMapper.js.map
 var artemis;
 (function (artemis) {
     var Bag = artemis.utils.Bag;
@@ -2305,13 +2265,6 @@ var artemis;
         return Pool;
     })();
 })(artemis || (artemis = {}));
-//# sourceMappingURL=ComponentPool.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var artemis;
 (function (artemis) {
     var Bag = artemis.utils.Bag;
@@ -2435,7 +2388,6 @@ var artemis;
         return IdentifierPool;
     })();
 })(artemis || (artemis = {}));
-//# sourceMappingURL=EntityManager.js.map
 var artemis;
 (function (artemis) {
     var Bag = artemis.utils.Bag;
@@ -2608,13 +2560,6 @@ var artemis;
         return SystemIndexManager;
     })();
 })(artemis || (artemis = {}));
-//# sourceMappingURL=EntitySystem.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var artemis;
 (function (artemis) {
     var managers;
@@ -2741,13 +2686,6 @@ var artemis;
         managers.GroupManager = GroupManager;
     })(managers = artemis.managers || (artemis.managers = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=GroupManager.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var artemis;
 (function (artemis) {
     var managers;
@@ -2808,13 +2746,6 @@ var artemis;
         managers.PlayerManager = PlayerManager;
     })(managers = artemis.managers || (artemis.managers = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=PlayerManager.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var artemis;
 (function (artemis) {
     var managers;
@@ -2864,13 +2795,6 @@ var artemis;
         managers.TagManager = TagManager;
     })(managers = artemis.managers || (artemis.managers = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=TagManager.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var artemis;
 (function (artemis) {
     var managers;
@@ -2928,13 +2852,6 @@ var artemis;
         managers.TeamManager = TeamManager;
     })(managers = artemis.managers || (artemis.managers = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=TeamManager.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var artemis;
 (function (artemis) {
     var systems;
@@ -3090,13 +3007,6 @@ var artemis;
         systems.DelayedEntityProcessingSystem = DelayedEntityProcessingSystem;
     })(systems = artemis.systems || (artemis.systems = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=DelayedEntityProcessingSystem.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var artemis;
 (function (artemis) {
     var systems;
@@ -3132,13 +3042,6 @@ var artemis;
         systems.EntityProcessingSystem = EntityProcessingSystem;
     })(systems = artemis.systems || (artemis.systems = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=EntityProcessingSystem.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var artemis;
 (function (artemis) {
     var systems;
@@ -3172,13 +3075,6 @@ var artemis;
         systems.IntervalEntitySystem = IntervalEntitySystem;
     })(systems = artemis.systems || (artemis.systems = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=IntervalEntitySystem.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var artemis;
 (function (artemis) {
     var systems;
@@ -3210,13 +3106,6 @@ var artemis;
         systems.VoidEntitySystem = VoidEntitySystem;
     })(systems = artemis.systems || (artemis.systems = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=VoidEntitySystem.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var artemis;
 (function (artemis) {
     var systems;
@@ -3250,15 +3139,4 @@ var artemis;
         systems.IntervalEntityProcessingSystem = IntervalEntityProcessingSystem;
     })(systems = artemis.systems || (artemis.systems = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=IntervalEntityProcessingSystem.js.map
-(function (root, factory) {
-    if ('function' === typeof define && undefined.amd) {
-        define(factory);
-    }
-    else if ('object' == typeof exports) {
-        module.exports = factory();
-    }
-    else {
-        root['artemis'] = factory();
-    }
-})(this, function () { return artemis; });
+//# sourceMappingURL=artemis.js.map

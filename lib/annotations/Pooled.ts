@@ -1,6 +1,6 @@
 module artemis.annotations {
 
-  interface Class extends Function {}
+  import Class = artemis.Class;
   /**
   * Mapper artemis.component.Position
   * em:ComponentMapper<artemis.component.Position>;

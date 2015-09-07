@@ -1,7 +1,6 @@
 module artemis {
 
-  interface Class extends Function {}
-
+  import Class = artemis.Class;
 	import HashMap = artemis.utils.HashMap;
 	import PooledComponent = artemis.PooledComponent;
   import Pooled = artemis.annotations.Pooled;

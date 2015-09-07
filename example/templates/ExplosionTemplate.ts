@@ -17,7 +17,7 @@ module example.templates {
   import IEntityTemplate = artemis.IEntityTemplate;
 
 
-  class ExplosionTemplate implements IEntityTemplate {
+  export class ExplosionTemplate implements IEntityTemplate {
 
     public buildEntity(entity:artemis.Entity, world:artemis.World, x:number, y:number, scale:number):artemis.Entity {
 

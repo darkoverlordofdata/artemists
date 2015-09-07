@@ -1,6 +1,6 @@
 module artemis.annotations {
 
-  interface Class extends Function {}
+  import Class = artemis.Class;
 
   /**
    * EntityTemplate

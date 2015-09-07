@@ -7,8 +7,7 @@ module artemis {
 	import Mapper = artemis.annotations.Mapper;
   import IEntityTemplate = artemis.IEntityTemplate;
   import EntityTemplate = artemis.annotations.EntityTemplate;
-
-	interface Class extends Function {}
+	import Class = artemis.Class;
 
   interface IEntityTemplates {
     [key: string]: IEntityTemplate;

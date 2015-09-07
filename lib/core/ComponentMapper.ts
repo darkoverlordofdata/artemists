@@ -1,7 +1,6 @@
 module artemis {
 
-	interface Class extends Function {}
-
+	import Class = artemis.Class;
 	import Bag = artemis.utils.Bag;
 	import Component = artemis.Component;
 	import ComponentType = artemis.ComponentType;

@@ -1,6 +1,6 @@
 module artemis {
 
-	interface Class extends Function {}
+	import Class = artemis.Class;
 	import BitSet = artemis.utils.BitSet;
   import World = artemis.World;
   import ComponentTypeFactory = artemis.ComponentTypeFactory;
