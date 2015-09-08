@@ -8,12 +8,13 @@
         "sourceMap": true,
         "experimentalDecorators": true,
         "declaration": true,
-        "out": "build/web/artemis.js"
+        "out": "build/artemis.js"
 
     },
 
     "files": [
       "lib/prolog.ts",
+      "lib/exports.ts",
       "lib/utils/Bag.ts",
       "lib/utils/BitSet.ts",
       "lib/utils/MathUtils.ts",

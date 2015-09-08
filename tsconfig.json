@@ -13,6 +13,7 @@
 
     "files": [
       "lib/prolog.ts",
+      "lib/exports.ts",
       "lib/utils/Bag.ts",
       "lib/utils/BitSet.ts",
       "lib/utils/MathUtils.ts",
