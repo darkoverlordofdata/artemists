@@ -224,6 +224,7 @@ module.exports = (project, options = {}) ->
 
   ### prepare for build ###
   prebuild: """
+    tsc --project .
     npm run clean -s
   """
 
