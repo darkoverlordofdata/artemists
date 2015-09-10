@@ -4,6 +4,6 @@ node_js:
 before_script:
   - npm run build
 before_install:
-  - npm install coffee-script
+  - npm install typescript
   - npm install -g bower
   - npm install -g bower-installer
