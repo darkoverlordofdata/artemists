@@ -56,6 +56,7 @@
       "lib/systems/VoidEntitySystem.ts",
       "lib/systems/IntervalEntityProcessingSystem.ts",
       "example/cocos2d-3.1.6x.d.ts",
+      "example/resource.ts",
       "example/cclib-dev.ts",
       "example/core/Constants",
       "example/components/Bounds.ts",

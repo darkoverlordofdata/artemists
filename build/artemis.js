@@ -1,16 +1,37 @@
+/**
+ *
+ *      ___       __            _   ______
+ *     / _ | ____/ /____ __ _  (_)_/_  __/__
+ *    / __ |/ __/ __/ -_)  ' \/ (_-</ / (_-<
+ *   /_/ |_/_/  \__/\__/_/_/_/_/___/_/ /___/
+ *
+ *
+ */
 var artemis;
 (function (artemis) {
+    /**
+     * Gets Class Metadata - Name
+     *
+     * @param klass
+     * @returns {string|SVGAnimatedString|string|string|string|string|*}
+     */
     function getClassName(klass) {
         return klass.className || klass.name;
     }
     artemis.getClassName = getClassName;
 })(artemis || (artemis = {}));
 //# sourceMappingURL=prolog.js.map
+/**
+ * Universal Module Interface
+ */
 (function (root, factory) {
-    if ('function' === typeof define && undefined.amd) {
+    /**
+     * Are we using requirejs?
+     */
+    if ('function' === typeof define && define.amd) {
         define(factory);
     }
-    else if ('object' == typeof exports) {
+    else if ('object' === typeof exports) {
         module.exports['artemis'] = factory();
     }
     else {

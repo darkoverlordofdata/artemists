@@ -11,8 +11,6 @@
     "modules" : ["cocos2d"],
 
     "jsList" : [
-        "src/resource.js",
-        "src/app.js",
         "src/lib/prolog.js",
         "src/lib/utils/Bag.js",
         "src/lib/utils/BitSet.js",
@@ -53,6 +51,7 @@
         "src/lib/systems/IntervalEntitySystem.js",
         "src/lib/systems/VoidEntitySystem.js",
         "src/lib/systems/IntervalEntityProcessingSystem.js",
+        "src/example/resource.js",
         "src/example/cclib-rt.js",
         "src/example/core/Constants.js",
         "src/example/components/Bounds.js",

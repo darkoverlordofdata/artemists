@@ -1,10 +1,26 @@
+declare var define;
+declare var exports;
+declare var module;
+
+/**
+ * Universal Module Interface
+ */
 (function (root, factory) {
-    if ('function' === typeof define && undefined.amd) {
+    /**
+     * Are we using requirejs?
+     */
+    if ('function' === typeof define && define.amd) {
         define(factory);
     }
-    else if ('object' == typeof exports) {
+    /**
+     * How about commonjs?
+     */
+    else if ('object' === typeof exports) {
         module.exports['artemis'] = factory();
     }
+    /**
+     * fallback to global
+     */
     else {
         root['artemis'] = factory();
     }
