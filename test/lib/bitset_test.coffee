@@ -7,7 +7,7 @@ describe 'BitSet test: ' , ->
       b = new artemis.utils.BitSet(40)
       b.words_.length.should.equal(2)
       
-    it "Set But", ->
+    it "Set Bit", ->
       
       b = new artemis.utils.BitSet(40)
       b.set(32, true)

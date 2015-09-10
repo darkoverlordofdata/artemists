@@ -11,14 +11,3 @@ describe 'Smoke test: ' , ->
     it "has a systems module", ->
       artemis.should.have.property 'systems'
 
-    it "has a components nodule", ->
-      brokenspork.should.have.property 'components'
-
-    it "has a core nodule", ->
-    brokenspork.should.have.property 'core'
-
-    it "has a systems nodule", ->
-    brokenspork.should.have.property 'systems'
-
-    it 'create world', ->
-      w = new artemis.World()

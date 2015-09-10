@@ -9,7 +9,16 @@ Requires TypeScript 1.5
 
 Example uses cocos2d-x 3.7
 
-#### status
+#### Build
+```bash
+$ git clone https://github.com/darkoverlordofdata/artemists
+$ cd artemists
+$ npm install
+$ tools/configure
+$ npm run build
+$ npm test
+```
+#### Status
 Artemis port complete. 
 Current phase: burn-in
 
