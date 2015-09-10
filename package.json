@@ -4,7 +4,9 @@
   "description": "Artemis TS",
   "main": "index.js",
   "config": {
-    "build": [],
+    "build": [
+      "mkdir -p build/web/src"
+    ],
     "build_example": [
       "cp -f web/main.js build/web/main.js",
       "cp -f web/index.html build/web/index.html",
