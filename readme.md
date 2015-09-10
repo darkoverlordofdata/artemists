@@ -1,4 +1,5 @@
 # Artemis
+[![Build Status](https://travis-ci.org/darkoverlordofdata/artemists.svg?branch=master)](https://travis-ci.org/darkoverlordofdata/artemists)
 
 Port of artemis-framework to typescript.
 
