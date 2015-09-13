@@ -20,7 +20,7 @@
     "tools"
   ],
   "devDependencies": {
-    "closure-compiler": "~0.2.7",
+    "closure-compiler": "0.2.7",
     "google-closure-library": "*"
   },
   "dependencies": {
