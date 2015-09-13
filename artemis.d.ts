@@ -12,6 +12,66 @@ declare module artemis {
     }
     function getClassName(klass: any): any;
 }
+declare module artemis.signals {
+  class ListenerNode {
+    previous: ListenerNode;
+    next: ListenerNode;
+    listener: Function;
+    once: boolean;
+  }
+}
+declare module artemis.signals {
+  class ListenerNodePool {
+    tail: ListenerNode;
+    cacheTail: ListenerNode;
+    get(): ListenerNode;
+    dispose(node: ListenerNode): void;
+    cache(node: ListenerNode): void;
+    releaseCache(): void;
+  }
+}
+declare module artemis.signals {
+  class SignalBase {
+    head: ListenerNode;
+    tail: ListenerNode;
+    numListeners: number;
+    keys: any;
+    nodes: any;
+    listenerNodePool: ListenerNodePool;
+    toAddHead: ListenerNode;
+    toAddTail: ListenerNode;
+    dispatching: boolean;
+    constructor();
+    startDispatch(): void;
+    endDispatch(): void;
+    getNode(listener: Function): void;
+    add(listener: Function): void;
+    addOnce(listener: Function): void;
+    addNode(node: ListenerNode): void;
+    remove(listener: Function): void;
+    removeAll(): void;
+  }
+}
+declare module artemis.signals {
+  class Signal0 extends SignalBase {
+    dispatch(): void;
+  }
+}
+declare module artemis.signals {
+  class Signal1 extends SignalBase {
+    dispatch($1: any): void;
+  }
+}
+declare module artemis.signals {
+  class Signal2 extends SignalBase {
+    dispatch($1: any, $2: any): void;
+  }
+}
+declare module artemis.signals {
+  class Signal3 extends SignalBase {
+    dispatch($1: any, $2: any, $3: any): void;
+  }
+}
 declare module artemis.utils {
     /**
     * Collection type a bit like ArrayList but does not preserve the order of its
@@ -1608,23 +1668,25 @@ declare module artemis.systems {
     }
 }
 declare module artemis.systems {
-    import ImmutableBag = artemis.utils.ImmutableBag;
-    import IntervalEntitySystem = artemis.systems.IntervalEntitySystem;
+  import ImmutableBag = artemis.utils.ImmutableBag;
+  import IntervalEntitySystem = artemis.systems.IntervalEntitySystem;
+  /**
+   * If you need to process entities at a certain interval then use this.
+   * A typical usage would be to regenerate ammo or health at certain intervals, no need
+   * to do that every game loop, but perhaps every 100 ms. or every second.
+   *
+   * @author Arni Arent
+   *
+   */
+  class IntervalEntityProcessingSystem extends IntervalEntitySystem {
+    constructor(aspect:Aspect, interval:number);
+
     /**
-    * If you need to process entities at a certain interval then use this.
-    * A typical usage would be to regenerate ammo or health at certain intervals, no need
-    * to do that every game loop, but perhaps every 100 ms. or every second.
-    *
-    * @author Arni Arent
-    *
-    */
-    class IntervalEntityProcessingSystem extends IntervalEntitySystem {
-        constructor(aspect: Aspect, interval: number);
-        /**
-        * Process a entity this system is interested in.
-        * @param e the entity to process.
-        */
-        processEach(e: Entity): void;
-        protected processEntities(entities: ImmutableBag<Entity>): void;
-    }
+     * Process a entity this system is interested in.
+     * @param e the entity to process.
+     */
+    processEach(e:Entity):void;
+
+    protected processEntities(entities:ImmutableBag<Entity>):void;
+  }
 }

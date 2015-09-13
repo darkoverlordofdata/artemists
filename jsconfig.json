@@ -2,6 +2,13 @@
     "files": [
         "web/src/lib/prolog.js",
         "web/src/lib/exports.js",
+        "web/src/lib/signals/ListenerNode.js",
+        "web/src/lib/signals/ListenerNodePool.js",
+        "web/src/lib/signals/Signal0.js",
+        "web/src/lib/signals/Signal1.js",
+        "web/src/lib/signals/Signal2.js",
+        "web/src/lib/signals/Signal3.js",
+        "web/src/lib/signals/SignalBase.js",
         "web/src/lib/utils/Bag.js",
         "web/src/lib/utils/BitSet.js",
         "web/src/lib/utils/MathUtils.js",
