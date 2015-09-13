@@ -6,7 +6,7 @@ module artemis {
  * @author Arni Arent
  */
 	export class Component {
-		public initialize() {}
+		public initialize(...args:any[]) {}
 
 	}
 }

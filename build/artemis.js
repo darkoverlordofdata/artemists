@@ -491,10 +491,14 @@ var artemis;
          */
         function decode(key) {
             switch (typeof key) {
-                case 'boolean': return '' + key;
-                case 'number': return '' + key;
-                case 'string': return '' + key;
-                case 'function': return artemis.getClassName(key);
+                case 'boolean':
+                    return '' + key;
+                case 'number':
+                    return '' + key;
+                case 'string':
+                    return '' + key;
+                case 'function':
+                    return artemis.getClassName(key);
                 default:
                     key.uuid = key.uuid ? key.uuid : utils.UUID.randomUUID();
                     return key.uuid;
@@ -562,8 +566,10 @@ var artemis;
             };
             HashMap.prototype.remove = function (key) {
                 var k = decode(key);
+                var value = this.map_[k];
                 delete this.map_[k];
                 delete this.keys_[k];
+                return value;
             };
             HashMap.prototype.size = function () {
                 return Object.keys(this.map_).length;
@@ -1091,7 +1097,12 @@ var artemis;
     var Component = (function () {
         function Component() {
         }
-        Component.prototype.initialize = function () { };
+        Component.prototype.initialize = function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i - 0] = arguments[_i];
+            }
+        };
         return Component;
     })();
     artemis.Component = Component;

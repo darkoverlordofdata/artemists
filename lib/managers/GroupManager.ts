@@ -20,7 +20,7 @@ module artemis.managers {
 		private groupsByEntity_:Map<Entity, Bag<String>>;
 
 		constructor() {
-			super()
+			super();
 			this.entitiesByGroup_ = new HashMap<String, Bag<Entity>>();
 			this.groupsByEntity_ = new HashMap<Entity, Bag<String>>();
 		}

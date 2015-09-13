@@ -16,7 +16,7 @@ module artemis.managers {
 		private tagsByEntity_:Map<Entity, String>;
 
 		constructor() {
-			super()
+			super();
 			this.entitiesByTag_ = new HashMap<String, Entity>();
 			this.tagsByEntity_ = new HashMap<Entity, String>();
 		}

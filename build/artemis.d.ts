@@ -200,7 +200,7 @@ declare module artemis.utils {
          * if key is a string, use as is, else use key.id_ or key.name
          */
         put(key: any, value: any): void;
-        remove(key: any): void;
+        remove(key: any): any;
         size(): number;
     }
 }
