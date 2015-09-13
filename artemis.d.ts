@@ -536,7 +536,7 @@ declare module artemis {
      * @author Arni Arent
      */
     class Component {
-        initialize(): void;
+        initialize(...args:any[]): void;
     }
 }
 declare module artemis {
