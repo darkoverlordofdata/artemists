@@ -140,176 +140,6 @@ var artemis;
     })(signals = artemis.signals || (artemis.signals = {}));
 })(artemis || (artemis = {}));
 //# sourceMappingURL=ListenerNodePool.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
-var artemis;
-(function (artemis) {
-    var signals;
-    (function (signals) {
-        /**
-         * @extends {artemis.signals.SignalBase}
-         * @constructor
-         */
-        var Signal0 = (function (_super) {
-            __extends(Signal0, _super);
-            function Signal0() {
-                _super.apply(this, arguments);
-            }
-            /**
-             * dispatch the event
-             */
-            Signal0.prototype.dispatch = function () {
-                var node;
-                this.startDispatch();
-                node = this.head;
-                while (node !== null) {
-                    node.listener();
-                    if (node.once) {
-                        this.remove(node.listener);
-                    }
-                    node = node.next;
-                }
-                return this.endDispatch();
-            };
-            return Signal0;
-        })(artemis.signals.SignalBase);
-        signals.Signal0 = Signal0;
-    })(signals = artemis.signals || (artemis.signals = {}));
-})(artemis || (artemis = {}));
-//# sourceMappingURL=Signal0.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
-var artemis;
-(function (artemis) {
-    var signals;
-    (function (signals) {
-        /**
-         * @extends {artemis.signals.SignalBase}
-         * @constructor
-         */
-        var Signal1 = (function (_super) {
-            __extends(Signal1, _super);
-            function Signal1() {
-                _super.apply(this, arguments);
-            }
-            /**
-             * dispatch the event
-             * @param {Object} $1
-             */
-            Signal1.prototype.dispatch = function ($1) {
-                var node;
-                this.startDispatch();
-                node = this.head;
-                while (node !== null) {
-                    node.listener($1);
-                    if (node.once) {
-                        this.remove(node.listener);
-                    }
-                    node = node.next;
-                }
-                return this.endDispatch();
-            };
-            return Signal1;
-        })(artemis.signals.SignalBase);
-        signals.Signal1 = Signal1;
-    })(signals = artemis.signals || (artemis.signals = {}));
-})(artemis || (artemis = {}));
-//# sourceMappingURL=Signal1.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
-var artemis;
-(function (artemis) {
-    var signals;
-    (function (signals) {
-        /**
-         * @extends {artemis.signals.SignalBase}
-         * @constructor
-         */
-        var Signal2 = (function (_super) {
-            __extends(Signal2, _super);
-            function Signal2() {
-                _super.apply(this, arguments);
-            }
-            /**
-             * dispatch the event
-             * @param {Object} $1
-             * @param {Object} $2
-             */
-            Signal2.prototype.dispatch = function ($1, $2) {
-                var node;
-                this.startDispatch();
-                node = this.head;
-                while (node) {
-                    node.listener($1, $2);
-                    if (node.once) {
-                        this.remove(node.listener);
-                    }
-                    node = node.next;
-                }
-                return this.endDispatch();
-            };
-            return Signal2;
-        })(artemis.signals.SignalBase);
-        signals.Signal2 = Signal2;
-    })(signals = artemis.signals || (artemis.signals = {}));
-})(artemis || (artemis = {}));
-//# sourceMappingURL=Signal2.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
-var artemis;
-(function (artemis) {
-    var signals;
-    (function (signals) {
-        /**
-         * @extends {artemis.signals.SignalBase}
-         * @constructor
-         */
-        var Signal3 = (function (_super) {
-            __extends(Signal3, _super);
-            function Signal3() {
-                _super.apply(this, arguments);
-            }
-            /**
-             * dispatch the event
-             * @param {Object} $1
-             * @param {Object} $2
-             * @param {Object} $3
-             */
-            Signal3.prototype.dispatch = function ($1, $2, $3) {
-                var node;
-                this.startDispatch();
-                node = this.head;
-                while (node !== null) {
-                    node.listener($1, $2, $3);
-                    if (node.once) {
-                        this.remove(node.listener);
-                    }
-                    node = node.next;
-                }
-                return this.endDispatch();
-            };
-            return Signal3;
-        })(artemis.signals.SignalBase);
-        signals.Signal3 = Signal3;
-    })(signals = artemis.signals || (artemis.signals = {}));
-})(artemis || (artemis = {}));
-//# sourceMappingURL=Signal3.js.map
 var artemis;
 (function (artemis) {
     var signals;
@@ -506,6 +336,176 @@ var artemis;
     })(signals = artemis.signals || (artemis.signals = {}));
 })(artemis || (artemis = {}));
 //# sourceMappingURL=SignalBase.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var artemis;
+(function (artemis) {
+    var signals;
+    (function (signals) {
+        /**
+         * @extends {artemis.signals.SignalBase}
+         * @constructor
+         */
+        var Signal0 = (function (_super) {
+            __extends(Signal0, _super);
+            function Signal0() {
+                _super.apply(this, arguments);
+            }
+            /**
+             * dispatch the event
+             */
+            Signal0.prototype.dispatch = function () {
+                var node;
+                this.startDispatch();
+                node = this.head;
+                while (node !== null) {
+                    node.listener();
+                    if (node.once) {
+                        this.remove(node.listener);
+                    }
+                    node = node.next;
+                }
+                return this.endDispatch();
+            };
+            return Signal0;
+        })(artemis.signals.SignalBase);
+        signals.Signal0 = Signal0;
+    })(signals = artemis.signals || (artemis.signals = {}));
+})(artemis || (artemis = {}));
+//# sourceMappingURL=Signal0.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var artemis;
+(function (artemis) {
+    var signals;
+    (function (signals) {
+        /**
+         * @extends {artemis.signals.SignalBase}
+         * @constructor
+         */
+        var Signal1 = (function (_super) {
+            __extends(Signal1, _super);
+            function Signal1() {
+                _super.apply(this, arguments);
+            }
+            /**
+             * dispatch the event
+             * @param {Object} $1
+             */
+            Signal1.prototype.dispatch = function ($1) {
+                var node;
+                this.startDispatch();
+                node = this.head;
+                while (node !== null) {
+                    node.listener($1);
+                    if (node.once) {
+                        this.remove(node.listener);
+                    }
+                    node = node.next;
+                }
+                return this.endDispatch();
+            };
+            return Signal1;
+        })(artemis.signals.SignalBase);
+        signals.Signal1 = Signal1;
+    })(signals = artemis.signals || (artemis.signals = {}));
+})(artemis || (artemis = {}));
+//# sourceMappingURL=Signal1.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var artemis;
+(function (artemis) {
+    var signals;
+    (function (signals) {
+        /**
+         * @extends {artemis.signals.SignalBase}
+         * @constructor
+         */
+        var Signal2 = (function (_super) {
+            __extends(Signal2, _super);
+            function Signal2() {
+                _super.apply(this, arguments);
+            }
+            /**
+             * dispatch the event
+             * @param {Object} $1
+             * @param {Object} $2
+             */
+            Signal2.prototype.dispatch = function ($1, $2) {
+                var node;
+                this.startDispatch();
+                node = this.head;
+                while (node) {
+                    node.listener($1, $2);
+                    if (node.once) {
+                        this.remove(node.listener);
+                    }
+                    node = node.next;
+                }
+                return this.endDispatch();
+            };
+            return Signal2;
+        })(artemis.signals.SignalBase);
+        signals.Signal2 = Signal2;
+    })(signals = artemis.signals || (artemis.signals = {}));
+})(artemis || (artemis = {}));
+//# sourceMappingURL=Signal2.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var artemis;
+(function (artemis) {
+    var signals;
+    (function (signals) {
+        /**
+         * @extends {artemis.signals.SignalBase}
+         * @constructor
+         */
+        var Signal3 = (function (_super) {
+            __extends(Signal3, _super);
+            function Signal3() {
+                _super.apply(this, arguments);
+            }
+            /**
+             * dispatch the event
+             * @param {Object} $1
+             * @param {Object} $2
+             * @param {Object} $3
+             */
+            Signal3.prototype.dispatch = function ($1, $2, $3) {
+                var node;
+                this.startDispatch();
+                node = this.head;
+                while (node !== null) {
+                    node.listener($1, $2, $3);
+                    if (node.once) {
+                        this.remove(node.listener);
+                    }
+                    node = node.next;
+                }
+                return this.endDispatch();
+            };
+            return Signal3;
+        })(artemis.signals.SignalBase);
+        signals.Signal3 = Signal3;
+    })(signals = artemis.signals || (artemis.signals = {}));
+})(artemis || (artemis = {}));
+//# sourceMappingURL=Signal3.js.map
 var artemis;
 (function (artemis) {
     var utils;
