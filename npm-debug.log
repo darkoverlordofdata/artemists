@@ -1,25 +1,245 @@
 0 info it worked if it ends with ok
-1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'run', 'build' ]
+1 verbose cli [ '/home/bruce/.nvm/v0.10.38/bin/node',
+1 verbose cli   '/home/bruce/.nvm/v0.10.38/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '-g',
+1 verbose cli   'ts2jsdoc' ]
 2 info using npm@1.4.28
 3 info using node@v0.10.38
-4 verbose run-script [ 'prebuild', 'build', 'postbuild' ]
-5 info prebuild artemists@0.0.2
-6 verbose unsafe-perm in lifecycle true
-7 info artemists@0.0.2 Failed to exec prebuild script
-8 error artemists@0.0.2 prebuild: `tsc --project . && npm run clean -s`
-8 error Exit status 2
-9 error Failed at the artemists@0.0.2 prebuild script.
-9 error This is most likely a problem with the artemists package,
-9 error not with npm itself.
-9 error Tell the author that this fails on your system:
-9 error     tsc --project . && npm run clean -s
-9 error You can get their info via:
-9 error     npm owner ls artemists
-9 error There is likely additional logging output above.
-10 error System Linux 3.13.0-24-generic
-11 error command "/usr/local/bin/node" "/usr/local/bin/npm" "run" "build"
-12 error cwd /home/bruce/Git/artemists
-13 error node -v v0.10.38
-14 error npm -v 1.4.28
-15 error code ELIFECYCLE
-16 verbose exit [ 1, true ]
+4 verbose cache add [ 'ts2jsdoc', null ]
+5 verbose cache add name=undefined spec="ts2jsdoc" args=["ts2jsdoc",null]
+6 verbose parsed url { protocol: null,
+6 verbose parsed url   slashes: null,
+6 verbose parsed url   auth: null,
+6 verbose parsed url   host: null,
+6 verbose parsed url   port: null,
+6 verbose parsed url   hostname: null,
+6 verbose parsed url   hash: null,
+6 verbose parsed url   search: null,
+6 verbose parsed url   query: null,
+6 verbose parsed url   pathname: 'ts2jsdoc',
+6 verbose parsed url   path: 'ts2jsdoc',
+6 verbose parsed url   href: 'ts2jsdoc' }
+7 silly lockFile 61040346-ts2jsdoc ts2jsdoc
+8 verbose lock ts2jsdoc /home/bruce/.npm/61040346-ts2jsdoc.lock
+9 silly lockFile 61040346-ts2jsdoc ts2jsdoc
+10 silly lockFile 61040346-ts2jsdoc ts2jsdoc
+11 verbose addNamed [ 'ts2jsdoc', '' ]
+12 verbose addNamed [ null, '*' ]
+13 silly lockFile fd183d17-ts2jsdoc ts2jsdoc@
+14 verbose lock ts2jsdoc@ /home/bruce/.npm/fd183d17-ts2jsdoc.lock
+15 silly addNameRange { name: 'ts2jsdoc', range: '*', hasData: false }
+16 verbose request where is /ts2jsdoc
+17 verbose request registry https://registry.npmjs.org/
+18 verbose request id baab18267a5a8e2e
+19 verbose url raw /ts2jsdoc
+20 verbose url resolving [ 'https://registry.npmjs.org/', './ts2jsdoc' ]
+21 verbose url resolved https://registry.npmjs.org/ts2jsdoc
+22 verbose request where is https://registry.npmjs.org/ts2jsdoc
+23 info trying registry request attempt 1 at 08:30:41
+24 http GET https://registry.npmjs.org/ts2jsdoc
+25 http 200 https://registry.npmjs.org/ts2jsdoc
+26 silly registry.get cb [ 200,
+26 silly registry.get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+26 silly registry.get     etag: '"2UBNLRE0Q2KW61GG5UE4KGTGU"',
+26 silly registry.get     'content-type': 'application/json',
+26 silly registry.get     'cache-control': 'max-age=60',
+26 silly registry.get     'content-length': '12783',
+26 silly registry.get     'accept-ranges': 'bytes',
+26 silly registry.get     date: 'Mon, 14 Sep 2015 15:30:42 GMT',
+26 silly registry.get     via: '1.1 varnish',
+26 silly registry.get     age: '0',
+26 silly registry.get     connection: 'keep-alive',
+26 silly registry.get     'x-served-by': 'cache-sjc3123-SJC',
+26 silly registry.get     'x-cache': 'MISS',
+26 silly registry.get     'x-cache-hits': '0',
+26 silly registry.get     'x-timer': 'S1442244641.929725,VS0,VE92',
+26 silly registry.get     vary: 'Accept' } ]
+27 silly addNameRange number 2 { name: 'ts2jsdoc', range: '*', hasData: true }
+28 silly addNameRange versions [ 'ts2jsdoc', [ '0.1.0', '0.1.1', '0.1.2' ] ]
+29 verbose addNamed [ 'ts2jsdoc', '0.1.2' ]
+30 verbose addNamed [ '0.1.2', '0.1.2' ]
+31 silly lockFile ca98e246-ts2jsdoc-0-1-2 ts2jsdoc@0.1.2
+32 verbose lock ts2jsdoc@0.1.2 /home/bruce/.npm/ca98e246-ts2jsdoc-0-1-2.lock
+33 silly lockFile 4e558fe9--org-ts2jsdoc-ts2jsdoc-0-1-2-tgz https://registry.npmjs.org/ts2jsdoc/-/ts2jsdoc-0.1.2.tgz
+34 verbose lock https://registry.npmjs.org/ts2jsdoc/-/ts2jsdoc-0.1.2.tgz /home/bruce/.npm/4e558fe9--org-ts2jsdoc-ts2jsdoc-0-1-2-tgz.lock
+35 verbose addRemoteTarball [ 'https://registry.npmjs.org/ts2jsdoc/-/ts2jsdoc-0.1.2.tgz',
+35 verbose addRemoteTarball   '709c74be9a777a61327540a764f00d03322edfca' ]
+36 info retry fetch attempt 1 at 08:30:42
+37 verbose fetch to= /tmp/npm-4765-V8qcwuTH/registry.npmjs.org/ts2jsdoc/-/ts2jsdoc-0.1.2.tgz
+38 http GET https://registry.npmjs.org/ts2jsdoc/-/ts2jsdoc-0.1.2.tgz
+39 http 200 https://registry.npmjs.org/ts2jsdoc/-/ts2jsdoc-0.1.2.tgz
+40 silly lockFile 4e558fe9--org-ts2jsdoc-ts2jsdoc-0-1-2-tgz https://registry.npmjs.org/ts2jsdoc/-/ts2jsdoc-0.1.2.tgz
+41 silly lockFile 4e558fe9--org-ts2jsdoc-ts2jsdoc-0-1-2-tgz https://registry.npmjs.org/ts2jsdoc/-/ts2jsdoc-0.1.2.tgz
+42 silly lockFile ca98e246-ts2jsdoc-0-1-2 ts2jsdoc@0.1.2
+43 silly lockFile ca98e246-ts2jsdoc-0-1-2 ts2jsdoc@0.1.2
+44 silly lockFile fd183d17-ts2jsdoc ts2jsdoc@
+45 silly lockFile fd183d17-ts2jsdoc ts2jsdoc@
+46 silly resolved [ { name: 'ts2jsdoc',
+46 silly resolved     version: '0.1.2',
+46 silly resolved     description: 'A JSDoc plugin with an optional template which automatically adds JSDoc comments based on Typescript definitions.',
+46 silly resolved     license: 'MIT',
+46 silly resolved     main: 'lib/ast.js',
+46 silly resolved     bin: { jsdocts: 'bin/ts2jsdoc' },
+46 silly resolved     author: { name: 'SPATools', email: 'spa@touchify.co' },
+46 silly resolved     repository:
+46 silly resolved      { type: 'git',
+46 silly resolved        url: 'git+https://github.com/spatools/ts2jsdoc.git' },
+46 silly resolved     directories: { bin: 'bin', lib: 'lib' },
+46 silly resolved     peerDependencies: { typescript: '~1.4.0' },
+46 silly resolved     devDependencies:
+46 silly resolved      { grunt: '^0.4.5',
+46 silly resolved        'grunt-contrib-clean': '^0.6.0',
+46 silly resolved        'grunt-contrib-connect': '^0.10.1',
+46 silly resolved        'grunt-contrib-copy': '^0.8.0',
+46 silly resolved        'grunt-contrib-watch': '^0.6.1',
+46 silly resolved        'grunt-gh-pages': '^0.10.0',
+46 silly resolved        'grunt-jsdoc': '^0.6.3',
+46 silly resolved        'grunt-markdown': '^0.7.0',
+46 silly resolved        'grunt-tslint': '^2.2.0-beta',
+46 silly resolved        'grunt-typescript': '^0.6.1',
+46 silly resolved        'jit-grunt': '^0.9.1',
+46 silly resolved        'time-grunt': '^1.2.0',
+46 silly resolved        tslint: '^2.2.0-beta' },
+46 silly resolved     gitHead: 'deea65790a6ab608ed4de1b3d7a125b503b44e34',
+46 silly resolved     bugs: { url: 'https://github.com/spatools/ts2jsdoc/issues' },
+46 silly resolved     homepage: 'https://github.com/spatools/ts2jsdoc#readme',
+46 silly resolved     _id: 'ts2jsdoc@0.1.2',
+46 silly resolved     scripts: {},
+46 silly resolved     _shasum: '709c74be9a777a61327540a764f00d03322edfca',
+46 silly resolved     _from: 'ts2jsdoc@',
+46 silly resolved     _npmVersion: '2.8.4',
+46 silly resolved     _nodeVersion: '0.10.38',
+46 silly resolved     _npmUser: { name: 'spatools', email: 'spa@somatic.fr' },
+46 silly resolved     maintainers: [ [Object] ],
+46 silly resolved     dist:
+46 silly resolved      { shasum: '709c74be9a777a61327540a764f00d03322edfca',
+46 silly resolved        tarball: 'http://registry.npmjs.org/ts2jsdoc/-/ts2jsdoc-0.1.2.tgz' },
+46 silly resolved     _resolved: 'https://registry.npmjs.org/ts2jsdoc/-/ts2jsdoc-0.1.2.tgz' } ]
+47 info install ts2jsdoc@0.1.2 into /home/bruce/.nvm/v0.10.38/lib
+48 info installOne ts2jsdoc@0.1.2
+49 verbose lib/node_modules/ts2jsdoc unbuild
+50 verbose tar unpack /home/bruce/.npm/ts2jsdoc/0.1.2/package.tgz
+51 silly lockFile 97393bd4--10-38-lib-node-modules-ts2jsdoc tar:///home/bruce/.nvm/v0.10.38/lib/node_modules/ts2jsdoc
+52 verbose lock tar:///home/bruce/.nvm/v0.10.38/lib/node_modules/ts2jsdoc /home/bruce/.npm/97393bd4--10-38-lib-node-modules-ts2jsdoc.lock
+53 silly lockFile 382d4bc3-e-npm-ts2jsdoc-0-1-2-package-tgz tar:///home/bruce/.npm/ts2jsdoc/0.1.2/package.tgz
+54 verbose lock tar:///home/bruce/.npm/ts2jsdoc/0.1.2/package.tgz /home/bruce/.npm/382d4bc3-e-npm-ts2jsdoc-0-1-2-package-tgz.lock
+55 silly gunzTarPerm modes [ '755', '644' ]
+56 silly gunzTarPerm extractEntry package.json
+57 silly gunzTarPerm modified mode [ 'package.json', 438, 420 ]
+58 silly gunzTarPerm extractEntry .npmignore
+59 silly gunzTarPerm modified mode [ '.npmignore', 438, 420 ]
+60 silly gunzTarPerm extractEntry README.md
+61 silly gunzTarPerm modified mode [ 'README.md', 438, 420 ]
+62 silly gunzTarPerm extractEntry LICENSE
+63 silly gunzTarPerm modified mode [ 'LICENSE', 438, 420 ]
+64 silly gunzTarPerm extractEntry plugin.js
+65 silly gunzTarPerm modified mode [ 'plugin.js', 438, 420 ]
+66 silly gunzTarPerm extractEntry bin/ts2jsdoc.js
+67 silly gunzTarPerm modified mode [ 'bin/ts2jsdoc.js', 438, 420 ]
+68 silly gunzTarPerm extractEntry bin/ts2jsdoc
+69 silly gunzTarPerm modified mode [ 'bin/ts2jsdoc', 438, 420 ]
+70 silly gunzTarPerm extractEntry conf.json
+71 silly gunzTarPerm modified mode [ 'conf.json', 438, 420 ]
+72 silly gunzTarPerm extractEntry lib/ast.js
+73 silly gunzTarPerm modified mode [ 'lib/ast.js', 438, 420 ]
+74 silly gunzTarPerm extractEntry lib/common.js
+75 silly gunzTarPerm modified mode [ 'lib/common.js', 438, 420 ]
+76 silly gunzTarPerm extractEntry lib/jsdoc.js
+77 silly gunzTarPerm modified mode [ 'lib/jsdoc.js', 438, 420 ]
+78 silly gunzTarPerm extractEntry lib/processor.js
+79 silly gunzTarPerm modified mode [ 'lib/processor.js', 438, 420 ]
+80 silly gunzTarPerm extractEntry lib/syntax.js
+81 silly gunzTarPerm modified mode [ 'lib/syntax.js', 438, 420 ]
+82 silly gunzTarPerm extractEntry lib/tsc.js
+83 silly gunzTarPerm modified mode [ 'lib/tsc.js', 438, 420 ]
+84 silly gunzTarPerm extractEntry lib/typehelper.js
+85 silly gunzTarPerm modified mode [ 'lib/typehelper.js', 438, 420 ]
+86 silly gunzTarPerm extractEntry lib/utils.js
+87 silly gunzTarPerm modified mode [ 'lib/utils.js', 438, 420 ]
+88 silly gunzTarPerm extractEntry template/publish.js
+89 silly gunzTarPerm modified mode [ 'template/publish.js', 438, 420 ]
+90 silly gunzTarPerm extractEntry template/static/scripts/applytoc.js
+91 silly gunzTarPerm modified mode [ 'template/static/scripts/applytoc.js', 438, 420 ]
+92 silly gunzTarPerm extractEntry template/static/scripts/main.js
+93 silly gunzTarPerm modified mode [ 'template/static/scripts/main.js', 438, 420 ]
+94 silly gunzTarPerm extractEntry template/static/styles/main.css
+95 silly gunzTarPerm modified mode [ 'template/static/styles/main.css', 438, 420 ]
+96 silly gunzTarPerm extractEntry template/tmpl/members.tmpl
+97 silly gunzTarPerm modified mode [ 'template/tmpl/members.tmpl', 438, 420 ]
+98 silly gunzTarPerm extractEntry template/tmpl/container.tmpl
+99 silly gunzTarPerm modified mode [ 'template/tmpl/container.tmpl', 438, 420 ]
+100 silly gunzTarPerm extractEntry template/tmpl/example.tmpl
+101 silly gunzTarPerm modified mode [ 'template/tmpl/example.tmpl', 438, 420 ]
+102 silly gunzTarPerm extractEntry template/tmpl/examples.tmpl
+103 silly gunzTarPerm modified mode [ 'template/tmpl/examples.tmpl', 438, 420 ]
+104 silly gunzTarPerm extractEntry template/tmpl/exceptions.tmpl
+105 silly gunzTarPerm modified mode [ 'template/tmpl/exceptions.tmpl', 438, 420 ]
+106 silly gunzTarPerm extractEntry template/tmpl/fires.tmpl
+107 silly gunzTarPerm modified mode [ 'template/tmpl/fires.tmpl', 438, 420 ]
+108 silly gunzTarPerm extractEntry template/tmpl/layout.tmpl
+109 silly gunzTarPerm modified mode [ 'template/tmpl/layout.tmpl', 438, 420 ]
+110 silly gunzTarPerm extractEntry template/tmpl/mainpage.tmpl
+111 silly gunzTarPerm modified mode [ 'template/tmpl/mainpage.tmpl', 438, 420 ]
+112 silly gunzTarPerm extractEntry template/tmpl/details.tmpl
+113 silly gunzTarPerm modified mode [ 'template/tmpl/details.tmpl', 438, 420 ]
+114 silly gunzTarPerm extractEntry template/tmpl/method.tmpl
+115 silly gunzTarPerm modified mode [ 'template/tmpl/method.tmpl', 438, 420 ]
+116 silly gunzTarPerm extractEntry template/tmpl/nav/side-notoc.tmpl
+117 silly gunzTarPerm modified mode [ 'template/tmpl/nav/side-notoc.tmpl', 438, 420 ]
+118 silly gunzTarPerm extractEntry template/tmpl/nav/side-toc.tmpl
+119 silly gunzTarPerm modified mode [ 'template/tmpl/nav/side-toc.tmpl', 438, 420 ]
+120 silly gunzTarPerm extractEntry template/tmpl/nav/side.tmpl
+121 silly gunzTarPerm modified mode [ 'template/tmpl/nav/side.tmpl', 438, 420 ]
+122 silly gunzTarPerm extractEntry template/tmpl/nav/top-notoc.tmpl
+123 silly gunzTarPerm modified mode [ 'template/tmpl/nav/top-notoc.tmpl', 438, 420 ]
+124 silly gunzTarPerm extractEntry template/tmpl/nav/top-toc.tmpl
+125 silly gunzTarPerm modified mode [ 'template/tmpl/nav/top-toc.tmpl', 438, 420 ]
+126 silly gunzTarPerm extractEntry template/tmpl/nav/top.tmpl
+127 silly gunzTarPerm modified mode [ 'template/tmpl/nav/top.tmpl', 438, 420 ]
+128 silly gunzTarPerm extractEntry template/tmpl/params.tmpl
+129 silly gunzTarPerm modified mode [ 'template/tmpl/params.tmpl', 438, 420 ]
+130 silly gunzTarPerm extractEntry template/tmpl/properties.tmpl
+131 silly gunzTarPerm modified mode [ 'template/tmpl/properties.tmpl', 438, 420 ]
+132 silly gunzTarPerm extractEntry template/tmpl/returns.tmpl
+133 silly gunzTarPerm modified mode [ 'template/tmpl/returns.tmpl', 438, 420 ]
+134 silly gunzTarPerm extractEntry template/tmpl/source.tmpl
+135 silly gunzTarPerm modified mode [ 'template/tmpl/source.tmpl', 438, 420 ]
+136 silly gunzTarPerm extractEntry template/tmpl/tutorial.tmpl
+137 silly gunzTarPerm modified mode [ 'template/tmpl/tutorial.tmpl', 438, 420 ]
+138 silly gunzTarPerm extractEntry template/tmpl/type.tmpl
+139 silly gunzTarPerm modified mode [ 'template/tmpl/type.tmpl', 438, 420 ]
+140 silly lockFile 97393bd4--10-38-lib-node-modules-ts2jsdoc tar:///home/bruce/.nvm/v0.10.38/lib/node_modules/ts2jsdoc
+141 silly lockFile 97393bd4--10-38-lib-node-modules-ts2jsdoc tar:///home/bruce/.nvm/v0.10.38/lib/node_modules/ts2jsdoc
+142 silly lockFile 382d4bc3-e-npm-ts2jsdoc-0-1-2-package-tgz tar:///home/bruce/.npm/ts2jsdoc/0.1.2/package.tgz
+143 silly lockFile 382d4bc3-e-npm-ts2jsdoc-0-1-2-package-tgz tar:///home/bruce/.npm/ts2jsdoc/0.1.2/package.tgz
+144 info preinstall ts2jsdoc@0.1.2
+145 verbose readDependencies using package.json deps
+146 verbose readDependencies using package.json deps
+147 silly resolved []
+148 verbose about to build /home/bruce/.nvm/v0.10.38/lib/node_modules/ts2jsdoc
+149 info build /home/bruce/.nvm/v0.10.38/lib/node_modules/ts2jsdoc
+150 verbose linkStuff [ true,
+150 verbose linkStuff   '/home/bruce/.nvm/v0.10.38/lib/node_modules',
+150 verbose linkStuff   true,
+150 verbose linkStuff   '/home/bruce/.nvm/v0.10.38/lib/node_modules' ]
+151 info linkStuff ts2jsdoc@0.1.2
+152 verbose linkBins ts2jsdoc@0.1.2
+153 verbose link bins [ { jsdocts: 'bin/ts2jsdoc' },
+153 verbose link bins   '/home/bruce/.nvm/v0.10.38/bin',
+153 verbose link bins   true ]
+154 verbose linkMans ts2jsdoc@0.1.2
+155 verbose rebuildBundles ts2jsdoc@0.1.2
+156 info install ts2jsdoc@0.1.2
+157 info postinstall ts2jsdoc@0.1.2
+158 verbose already installed skipping typescript@~1.4.0 /home/bruce/.nvm/v0.10.38/lib
+159 silly resolved []
+160 error peerinvalid The package typescript does not satisfy its siblings' peerDependencies requirements!
+160 error peerinvalid Peer ts2jsdoc@0.1.2 wants typescript@~1.4.0
+161 error System Linux 3.13.0-24-generic
+162 error command "/home/bruce/.nvm/v0.10.38/bin/node" "/home/bruce/.nvm/v0.10.38/bin/npm" "install" "-g" "ts2jsdoc"
+163 error cwd /home/bruce/Git/artemists
+164 error node -v v0.10.38
+165 error npm -v 1.4.28
+166 error code EPEERINVALID
+167 verbose exit [ 1, true ]

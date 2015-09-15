@@ -3,12 +3,13 @@
 
 Port of artemis-framework to typescript.
 
-plan demo using typescript port of https://github.com/Flet/spaceship-warrior-redux
-replacing gdx with cocos2d-js
+[Demo](https://darkoverlordofdata.com/spaceship-warrior-ts/) at https://darkoverlordofdata.com/spaceship-warrior-ts/
+ using typescript port of https://github.com/Flet/spaceship-warrior-redux
+replacing gdx with webgl
 
 Requires TypeScript 1.5
 
-Example uses cocos2d-x 3.7
+Example uses PIXI 3.0.7
 
 #### Build
 ```bash
@@ -22,7 +23,7 @@ $ npm test
 #### Status
 Artemis port complete. 
 Current phase: burn-in
-
+typedoc
 #### extensions
 Components declare as pooled are auto pooled:
 

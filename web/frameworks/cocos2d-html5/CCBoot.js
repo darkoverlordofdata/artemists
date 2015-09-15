@@ -1645,7 +1645,7 @@ cc._initSys = function (config, CONFIG_KEY) {
 
         var supportWebGL = win.WebGLRenderingContext;
 
-        if(userRenderMode === 2 || (userRenderMode === 0 && supportWebGL && shieldOs.indexOf(sys.os) === -1 && shieldBrowser.indexOf(sys.browserType) === -1))
+        if(userRenderMode === 2 || (userRenderMode === 0 && supportWebGL)) //&& shieldOs.indexOf(sys.os) === -1 && shieldBrowser.indexOf(sys.browserType) === -1))
             try{
                 var context = cc.create3DContext(tmpCanvas, {'stencil': true, 'preserveDrawingBuffer': true });
                 if(context){

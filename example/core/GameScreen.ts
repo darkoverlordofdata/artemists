@@ -50,7 +50,7 @@ module example.core {
 			world.initialize();
 	    world.createEntityFromTemplate('player').addToWorld();
 	
-			for (var i = 0; 5 > i; i++) {
+			for (var i = 0; 500 > i; i++) {
         world.createEntityFromTemplate('star').addToWorld();
 			}
 	
