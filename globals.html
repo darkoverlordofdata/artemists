@@ -64,86 +64,73 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<div class="tsd-panel tsd-typography">
-				<h1 id="artemis">Artemis</h1>
-				<p><a href="https://travis-ci.org/darkoverlordofdata/artemists"><img src="https://travis-ci.org/darkoverlordofdata/artemists.svg?branch=master" alt="Build Status"></a></p>
-				<p>Port of artemis-framework to typescript.</p>
-				<p><a href="https://darkoverlordofdata.com/spaceship-warrior-ts/">Demo</a> at <a href="https://darkoverlordofdata.com/spaceship-warrior-ts/">https://darkoverlordofdata.com/spaceship-warrior-ts/</a>
-					using typescript port of <a href="https://github.com/Flet/spaceship-warrior-redux">https://github.com/Flet/spaceship-warrior-redux</a>
-				replacing gdx with webgl</p>
-				<p>Requires TypeScript 1.5</p>
-				<p>Example uses PIXI 3.0.7</p>
-				<h4 id="build">Build</h4>
-				<pre><code class="lang-bash">$ git <span class="hljs-built_in">clone</span> https://github.com/darkoverlordofdata/artemists
-$ <span class="hljs-built_in">cd</span> artemists
-$ npm install
-$ tools/configure
-$ npm run build
-$ npm <span class="hljs-built_in">test</span>
-</code></pre>
-				<h4 id="status">Status</h4>
-				<p>Artemis port complete.
-					Current phase: burn-in
-				typedoc</p>
-				<h4 id="extensions">extensions</h4>
-				<p>Components declare as pooled are auto pooled:</p>
-				<pre><code class="lang-typescript">@Pooled()
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> Position extends PooledComponent {
-<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> className = <span class="hljs-string">'Position'</span>;
-    <span class="hljs-keyword">public</span> initialize(x:<span class="hljs-built_in">number</span>=<span class="hljs-number">0</span>, y:<span class="hljs-built_in">number</span>=<span class="hljs-number">0</span>) {
-        <span class="hljs-keyword">this</span>.x = x;
-  <span class="hljs-keyword">this</span>.y = y;
-    }
-    <span class="hljs-keyword">public</span> x:<span class="hljs-built_in">number</span>;
-    <span class="hljs-keyword">public</span> y:<span class="hljs-built_in">number</span>;
-}
-</code></pre>
-				<p>BlackBoard &amp; Entity Templates inspired by artemis_CSharp:</p>
-				<pre><code class="lang-typescript">@EntityTemplate(<span class="hljs-string">'player'</span>)
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> PlayerTemplate <span class="hljs-keyword">implements</span> artemis.IEntityTemplate {
-
-    <span class="hljs-keyword">public</span> buildEntity(entity:Entity, world:World, x:<span class="hljs-built_in">number</span>, y:<span class="hljs-built_in">number</span>):Entity {
-
-        entity.addComponent(Position, x, y);
-        entity.addComponent(Velocity, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
-        entity.addComponent(Bounds, <span class="hljs-number">43</span>);
-        entity.addComponent(Player);
-        entity.addComponent(Sprite, <span class="hljs-string">'fighter'</span>, cc.color(<span class="hljs-number">93</span>, <span class="hljs-number">255</span>, <span class="hljs-number">129</span>), (sprite) =&gt; {
-            sprite.layer = Layer.ACTORS_3;
-            sprite.addTo(EntitySystem.blackBoard.getEntry&lt;cc.Layer&gt;(<span class="hljs-string">'game'</span>));
-        });
-        world.getManager&lt;GroupManager&gt;(GroupManager).add(entity, Constants.Groups.PLAYER_SHIP);
-        <span class="hljs-keyword">return</span> entity;
-    }
-}
-...
-
-<span class="hljs-keyword">var</span> player = world.createEntityFromTemplate(<span class="hljs-string">'player'</span>, x, y);
-</code></pre>
-				<h1 id="mit-license">MIT License</h1>
-				<p>Copyright (c) 2015 Bruce Davidson &lt;darkoverlordofdata@gmail.com&gt;</p>
-				<p>Permission is hereby granted, free of charge, to any person obtaining
-					a copy of this software and associated documentation files (the
-					&#39;Software&#39;), to deal in the Software without restriction, including
-					without limitation the rights to use, copy, modify, merge, publish,
-					distribute, sublicense, and/or sell copies of the Software, and to
-					permit persons to whom the Software is furnished to do so, subject to
-				the following conditions:</p>
-				<p>The above copyright notice and this permission notice shall be
-				included in all copies or substantial portions of the Software.</p>
-				<p>THE SOFTWARE IS PROVIDED &#39;AS IS&#39;, WITHOUT WARRANTY OF ANY KIND,
-					EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-					MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-					IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-					CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-					TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-				SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
-			</div>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>External modules</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-external-module"><a href="modules/_annotations_entitytemplate_.html" class="tsd-kind-icon">"annotations/<wbr>Entity<wbr>Template"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_annotations_mapper_.html" class="tsd-kind-icon">"annotations/<wbr>Mapper"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_annotations_pooled_.html" class="tsd-kind-icon">"annotations/<wbr>Pooled"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_blackboard_blackboard_.html" class="tsd-kind-icon">"blackboard/<wbr>Black<wbr>Board"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_blackboard_simpletrigger_.html" class="tsd-kind-icon">"blackboard/<wbr>Simple<wbr>Trigger"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_blackboard_trigger_.html" class="tsd-kind-icon">"blackboard/<wbr>Trigger"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_blackboard_triggermulticondition_.html" class="tsd-kind-icon">"blackboard/<wbr>Trigger<wbr>Multi<wbr>Condition"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_blackboard_triggerstatetype_.html" class="tsd-kind-icon">"blackboard/<wbr>Trigger<wbr>State<wbr>Type"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_core_aspect_.html" class="tsd-kind-icon">"core/<wbr>Aspect"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_core_component_.html" class="tsd-kind-icon">"core/<wbr>Component"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_core_componentmanager_.html" class="tsd-kind-icon">"core/<wbr>Component<wbr>Manager"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_core_componentmapper_.html" class="tsd-kind-icon">"core/<wbr>Component<wbr>Mapper"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_core_componentpool_.html" class="tsd-kind-icon">"core/<wbr>Component<wbr>Pool"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_core_componenttype_.html" class="tsd-kind-icon">"core/<wbr>Component<wbr>Type"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_core_componenttypefactory_.html" class="tsd-kind-icon">"core/<wbr>Component<wbr>Type<wbr>Factory"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_core_entity_.html" class="tsd-kind-icon">"core/<wbr>Entity"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_core_entitymanager_.html" class="tsd-kind-icon">"core/<wbr>Entity<wbr>Manager"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_core_entityobserver_.html" class="tsd-kind-icon">"core/<wbr>Entity<wbr>Observer"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_core_entitysystem_.html" class="tsd-kind-icon">"core/<wbr>Entity<wbr>System"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_core_ientitytemplate_.html" class="tsd-kind-icon">"core/IEntity<wbr>Template"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_core_manager_.html" class="tsd-kind-icon">"core/<wbr>Manager"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_core_pooledcomponent_.html" class="tsd-kind-icon">"core/<wbr>Pooled<wbr>Component"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_core_world_.html" class="tsd-kind-icon">"core/<wbr>World"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_exports_.html" class="tsd-kind-icon">"exports"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_managers_groupmanager_.html" class="tsd-kind-icon">"managers/<wbr>Group<wbr>Manager"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_managers_playermanager_.html" class="tsd-kind-icon">"managers/<wbr>Player<wbr>Manager"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_managers_tagmanager_.html" class="tsd-kind-icon">"managers/<wbr>Tag<wbr>Manager"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_managers_teammanager_.html" class="tsd-kind-icon">"managers/<wbr>Team<wbr>Manager"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_prolog_.html" class="tsd-kind-icon">"prolog"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_signals_listenernode_.html" class="tsd-kind-icon">"signals/<wbr>Listener<wbr>Node"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_signals_listenernodepool_.html" class="tsd-kind-icon">"signals/<wbr>Listener<wbr>Node<wbr>Pool"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_signals_signal0_.html" class="tsd-kind-icon">"signals/<wbr>Signal0"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_signals_signal1_.html" class="tsd-kind-icon">"signals/<wbr>Signal1"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_signals_signal2_.html" class="tsd-kind-icon">"signals/<wbr>Signal2"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_signals_signal3_.html" class="tsd-kind-icon">"signals/<wbr>Signal3"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_signals_signalbase_.html" class="tsd-kind-icon">"signals/<wbr>Signal<wbr>Base"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_systems_delayedentityprocessingsystem_.html" class="tsd-kind-icon">"systems/<wbr>Delayed<wbr>Entity<wbr>Processing<wbr>System"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_systems_entityprocessingsystem_.html" class="tsd-kind-icon">"systems/<wbr>Entity<wbr>Processing<wbr>System"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_systems_intervalentityprocessingsystem_.html" class="tsd-kind-icon">"systems/<wbr>Interval<wbr>Entity<wbr>Processing<wbr>System"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_systems_intervalentitysystem_.html" class="tsd-kind-icon">"systems/<wbr>Interval<wbr>Entity<wbr>System"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_systems_voidentitysystem_.html" class="tsd-kind-icon">"systems/<wbr>Void<wbr>Entity<wbr>System"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_utils_bag_.html" class="tsd-kind-icon">"utils/<wbr>Bag"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_utils_bitset_.html" class="tsd-kind-icon">"utils/<wbr>Bit<wbr>Set"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_utils_hashmap_.html" class="tsd-kind-icon">"utils/<wbr>Hash<wbr>Map"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_utils_immutablebag_.html" class="tsd-kind-icon">"utils/<wbr>Immutable<wbr>Bag"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_utils_map_.html" class="tsd-kind-icon">"utils/<wbr>Map"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_utils_mathutils_.html" class="tsd-kind-icon">"utils/<wbr>Math<wbr>Utils"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_utils_timer_.html" class="tsd-kind-icon">"utils/<wbr>Timer"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_utils_triglut_.html" class="tsd-kind-icon">"utils/<wbr>TrigLUT"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_utils_uuid_.html" class="tsd-kind-icon">"utils/UUID"</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
+					<li class="globals current ">
 						<a href="globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-external-module">
