@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: signals/SignalBase.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: signals/SignalBase.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>var artemis;
+(function (artemis) {
+    var signals;
+    (function (signals) {
+        var ListenerNodePool = artemis.signals.ListenerNodePool;
+        var SignalBase = (function () {
+            /**
+             * @constructor
+             */
+            function SignalBase() {
+                /** @type {artemis.signals.ListenerNode} */
+                this.head = null;
+                /** @type {artemis.signals.ListenerNode} */
+                this.tail = null;
+                /** @type {number} */
+                this.numListeners = 0;
+                /** @type {Array&lt;Object>} */
+                this.keys = null;
+                /** @type {artemis.signals.ListenerNode} */
+                this.nodes = null;
+                /** @type {artemis.signals.ListenerNodePool} */
+                this.listenerNodePool = null;
+                /** @type {artemis.signals.ListenerNode} */
+                this.toAddHead = null;
+                /** @type {artemis.signals.ListenerNode} */
+                this.toAddTail = null;
+                /** @type {boolean} */
+                this.dispatching = false;
+                this.nodes = [];
+                this.keys = [];
+                this.listenerNodePool = new ListenerNodePool();
+                this.numListeners = 0;
+            }
+            /**
+             */
+            SignalBase.prototype.startDispatch = function () {
+                this.dispatching = true; // Void
+            };
+            /**
+             */
+            SignalBase.prototype.endDispatch = function () {
+                this.dispatching = false;
+                if (this.toAddHead) {
+                    if (!this.head) {
+                        this.head = this.toAddHead;
+                        this.tail = this.toAddTail;
+                    }
+                    else {
+                        this.tail.next = this.toAddHead;
+                        this.toAddHead.previous = this.tail;
+                        this.tail = this.toAddTail;
+                    }
+                    this.toAddHead = null;
+                    this.toAddTail = null;
+                }
+                this.listenerNodePool.releaseCache(); // Void
+            };
+            /**
+             * @param {Object} listener
+             */
+            SignalBase.prototype.getNode = function (listener) {
+                var node;
+                node = this.head;
+                while (node !== null) {
+                    if (node.listener === listener) {
+                        break;
+                    }
+                    node = node.next;
+                }
+                if (node === null) {
+                    node = this.toAddHead;
+                    while (node !== null) {
+                        if (node.listener === listener) {
+                            break;
+                        }
+                        node = node.next;
+                    }
+                }
+                return node;
+            };
+            /**
+             * @param {Object} listener
+             */
+            SignalBase.prototype.add = function (listener) {
+                var node;
+                if (this.keys.indexOf(listener) !== -1) {
+                    return;
+                }
+                node = this.listenerNodePool.get();
+                node.listener = listener;
+                this.nodes.push(node);
+                this.keys.push(listener);
+                this.addNode(node); // Void
+            };
+            /**
+             * @param {Object} listener
+             */
+            SignalBase.prototype.addOnce = function (listener) {
+                var node;
+                if (this.keys.indexOf(listener) !== -1) {
+                    return;
+                }
+                node = this.listenerNodePool.get();
+                node.listener = listener;
+                node.once = true;
+                this.nodes.push(node);
+                this.keys.push(listener);
+                this.addNode(node); // Void
+            };
+            /**
+             * @param {artemis.signals.ListenerNode} node
+             */
+            SignalBase.prototype.addNode = function (node) {
+                if (this.dispatching) {
+                    if (this.toAddHead === null) {
+                        this.toAddHead = this.toAddTail = node;
+                    }
+                    else {
+                        this.toAddTail.next = node;
+                        node.previous = this.toAddTail;
+                        this.toAddTail = node;
+                    }
+                }
+                else {
+                    if (this.head === null) {
+                        this.head = this.tail = node;
+                    }
+                    else {
+                        this.tail.next = node;
+                        node.previous = this.tail;
+                        this.tail = node;
+                    }
+                }
+                this.numListeners++; // Void
+            };
+            /**
+             * @param {Object} listener
+             */
+            SignalBase.prototype.remove = function (listener) {
+                var index, node;
+                index = this.keys.indexOf(listener);
+                node = this.nodes[index];
+                if (node) {
+                    if (this.head === node) {
+                        this.head = this.head.next;
+                    }
+                    if (this.tail === node) {
+                        this.tail = this.tail.previous;
+                    }
+                    if (this.toAddHead === node) {
+                        this.toAddHead = this.toAddHead.next;
+                    }
+                    if (this.toAddTail === node) {
+                        this.toAddTail = this.toAddTail.previous;
+                    }
+                    if (node.previous) {
+                        node.previous.next = node.next;
+                    }
+                    if (node.next) {
+                        node.next.previous = node.previous;
+                    }
+                    this.nodes.splice(index, 1);
+                    this.keys.splice(index, 1);
+                    if (this.dispatching) {
+                        this.listenerNodePool.cache(node);
+                    }
+                    else {
+                        this.listenerNodePool.dispose(node);
+                    }
+                    this.numListeners--; // Void
+                }
+            };
+            /**
+             */
+            SignalBase.prototype.removeAll = function () {
+                var index, node;
+                while (this.head) {
+                    node = this.head;
+                    this.head = this.head.next;
+                    index = this.keys.indexOf(node.listener);
+                    this.nodes.splice(index, 1);
+                    this.listenerNodePool.dispose(node);
+                }
+                this.nodes = [];
+                this.keys = [];
+                this.tail = null;
+                this.toAddHead = null;
+                this.toAddTail = null;
+                this.numListeners = 0; // Void
+            };
+            return SignalBase;
+        })();
+        signals.SignalBase = SignalBase;
+    })(signals = artemis.signals || (artemis.signals = {}));
+})(artemis || (artemis = {}));
+//# sourceMappingURL=SignalBase.js.map</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#artemis">artemis</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Tue Sep 15 2015 16:40:15 GMT-0700 (PDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

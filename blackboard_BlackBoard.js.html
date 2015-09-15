@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: blackboard/BlackBoard.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: blackboard/BlackBoard.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>var artemis;
+(function (artemis) {
+    var blackboard;
+    (function (blackboard) {
+        /**
+         *
+         */
+        var BlackBoard = (function () {
+            /**
+             * Initializes a new instance of the BlackBoard class
+             */
+            function BlackBoard() {
+                this.intelligence = {};
+                this.triggers = {};
+            }
+            /**
+             * Adds the trigger.
+             *
+             * @param trigger   The trigger.
+             * @param evaluateNow if set to true [evaluate now].
+             */
+            BlackBoard.prototype.addTrigger = function (trigger, evaluateNow) {
+                if (evaluateNow === void 0) { evaluateNow = false; }
+                trigger.blackboard = this;
+                for (var i in trigger.worldPropertiesMonitored) {
+                    var intelName = trigger.worldPropertiesMonitored[i];
+                    if (this.triggers[name]) {
+                        this.triggers[name].push(trigger);
+                    }
+                    else {
+                        this.triggers[name] = [trigger];
+                    }
+                }
+                if (evaluateNow) {
+                    if (trigger.isFired === false) {
+                        trigger.fire(blackboard.TriggerStateType.TriggerAdded);
+                    }
+                }
+            };
+            /**
+             * Atomics the operate on entry.
+             * @param operation The operation.
+             */
+            BlackBoard.prototype.atomicOperateOnEntry = function (operation) {
+                operation(this);
+            };
+            /**
+             * Gets the entry.
+             *
+             * @param name  The name.
+             * @returns {T} The specified element.
+             */
+            BlackBoard.prototype.getEntry = function (name) {
+                return this.intelligence[name];
+            };
+            /**
+             * Removes the entry.
+             * @param name  The name.
+             */
+            BlackBoard.prototype.removeEntry = function (name) {
+                if (this.intelligence[name]) {
+                    delete this.intelligence[name];
+                    if (this.triggers[name]) {
+                        for (var i in this.triggers[name]) {
+                            var item = this.triggers[name][i];
+                            if (item.isFired === false) {
+                                item.fire(blackboard.TriggerStateType.ValueRemoved);
+                            }
+                        }
+                    }
+                }
+            };
+            /**
+             * Removes the trigger.
+             * @param trigger The trigger.
+             */
+            BlackBoard.prototype.removeTrigger = function (trigger) {
+                for (var i in trigger.worldPropertiesMonitored) {
+                    var intelName = trigger.worldPropertiesMonitored[i];
+                    var t = this.triggers[intelName].indexOf(trigger);
+                    if (t !== -1) {
+                        this.triggers[intelName].slice(t, 1);
+                    }
+                }
+            };
+            /**
+             * Sets the entry.
+             * @param name  The name.
+             * @param intel The intel.
+             */
+            BlackBoard.prototype.setEntry = function (name, intel) {
+                var triggerStateType = this.intelligence[name] ? blackboard.TriggerStateType.ValueChanged : blackboard.TriggerStateType.ValueAdded;
+                this.intelligence[name] = intel;
+                if (this.triggers[name]) {
+                    for (var i in this.triggers[name]) {
+                        var item = this.triggers[name][i];
+                        if (item.isFired === false) {
+                            item.fire(triggerStateType);
+                        }
+                    }
+                }
+            };
+            /**
+             * Get a list of all related triggers.]
+             *
+             * @param name  The name.
+             * @returns {Array&lt;Trigger>}  List of appropriated triggers.
+             */
+            BlackBoard.prototype.triggerList = function (name) {
+                return this.triggers[name];
+            };
+            return BlackBoard;
+        })();
+        blackboard.BlackBoard = BlackBoard;
+    })(blackboard = artemis.blackboard || (artemis.blackboard = {}));
+})(artemis || (artemis = {}));
+//# sourceMappingURL=BlackBoard.js.map</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#artemis">artemis</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Tue Sep 15 2015 16:40:15 GMT-0700 (PDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
