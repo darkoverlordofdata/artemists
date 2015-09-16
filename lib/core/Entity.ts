@@ -150,7 +150,7 @@ module artemis {
 		/**
 		* Faster removal of components from a entity.
 		* 
-		* @param component to remove from this entity.
+		* @param type to remove from this entity.
 		* 
 		* @return this entity for chaining.
 		*/

@@ -7,6 +7,11 @@
  *
  *
  */
+
+/**
+ * artemis namespace
+ * @const
+ */
 module artemis {
 
   /**
@@ -17,8 +22,8 @@ module artemis {
   /**
    * Gets Class Metadata - Name
    *
-   * @param klass
-   * @returns {string|SVGAnimatedString|string|string|string|string|*}
+   * @param {Function} klass
+   * @return {string}
    */
   export function getClassName(klass) {
     return klass.className || klass.name;

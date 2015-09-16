@@ -185,7 +185,7 @@ module.exports = (project, options = {}) ->
 
   ###  create documentation ###
   jsdoc: """
-    jsdoc goog/lib -r \
+    jsdoc web/src/lib -r \
       --template ../jaguarjs-jsdoc \
       --configure ./conf.json \
       --readme ./readme.md \

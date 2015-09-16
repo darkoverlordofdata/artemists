@@ -28,7 +28,7 @@
     "depswriter": "python packages/google-closure-library/closure/bin/build/depswriter.py --root_with_prefix='packages/artemis/goog/lib ../../../../packages/artemis/goog/lib' --root_with_prefix='goog/warrior ../../../../goog/warrior' --root_with_prefix='web ../../../../web' > web/artemis.dep.js",
     "get": "bower-installer && cake get",
     "publish": "gulp publish",
-    "jsdoc": "jsdoc goog/lib -r --template ../jaguarjs-jsdoc --configure ./conf.json --readme ./readme.md --destination ./build/web",
+    "jsdoc": "jsdoc web/src/lib -r --template ../jaguarjs-jsdoc --configure ./conf.json --readme ./readme.md --destination ./build/web",
     "manifest": "gulp manifest",
     "postbuild": "cp -f web/project_build.json build/web/project.json",
     "postclosure": "cp -f web/asteroids.min.js build/web",

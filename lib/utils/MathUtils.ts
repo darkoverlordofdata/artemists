@@ -23,7 +23,7 @@ module artemis.utils {
     
     
     public static random(start, end?) {
-      if (end === null) {
+      if (end === undefined) {
         return MathUtils.nextInt(start+1);
       } else if (parseInt(start) === parseFloat(start) && parseInt(end) === parseFloat(end)) {
         return start + MathUtils.nextInt(end - start + 1);

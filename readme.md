@@ -2,14 +2,11 @@
 [![Build Status](https://travis-ci.org/darkoverlordofdata/artemists.svg?branch=master)](https://travis-ci.org/darkoverlordofdata/artemists)
 
 Port of artemis-framework to typescript.
+ArtemisTS requires TypeScript >= 1.5
 
-[Demo](https://darkoverlordofdata.com/spaceship-warrior-ts/) at https://darkoverlordofdata.com/spaceship-warrior-ts/
- using typescript port of https://github.com/Flet/spaceship-warrior-redux
-replacing gdx with webgl
+[Play the demo](https://darkoverlordofdata.com/spaceship-warrior-ts/) at https://darkoverlordofdata.com/spaceship-warrior-ts/
 
-Requires TypeScript 1.5
-
-Example uses PIXI 3.0.7
+The demo is a port of https://github.com/Flet/spaceship-warrior-redux and requires Pixi.js 3.0.7
 
 #### Build
 ```bash
@@ -20,10 +17,7 @@ $ tools/configure
 $ npm run build
 $ npm test
 ```
-#### Status
-Artemis port complete. 
-Current phase: burn-in
-typedoc
+
 #### extensions
 Components declare as pooled are auto pooled:
 
@@ -33,7 +27,7 @@ export class Position extends PooledComponent {
 public static className = 'Position';
     public initialize(x:number=0, y:number=0) {
         this.x = x;
-  this.y = y;
+        this.y = y;
     }
     public x:number;
     public y:number;
@@ -52,9 +46,9 @@ export class PlayerTemplate implements artemis.IEntityTemplate {
         entity.addComponent(Velocity, 0, 0);
         entity.addComponent(Bounds, 43);
         entity.addComponent(Player);
-        entity.addComponent(Sprite, 'fighter', cc.color(93, 255, 129), (sprite) => {
+        entity.addComponent(Sprite, 'fighter', 0x5dff81), (sprite) => {
             sprite.layer = Layer.ACTORS_3;
-            sprite.addTo(EntitySystem.blackBoard.getEntry<cc.Layer>('game'));
+            sprite.addTo(EntitySystem.blackBoard.getEntry<PIXI.Container>('sprites'));
         });
         world.getManager<GroupManager>(GroupManager).add(entity, Constants.Groups.PLAYER_SHIP);
         return entity;

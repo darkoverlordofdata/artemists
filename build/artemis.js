@@ -7,13 +7,17 @@
  *
  *
  */
+/**
+ * artemis namespace
+ * @const
+ */
 var artemis;
 (function (artemis) {
     /**
      * Gets Class Metadata - Name
      *
-     * @param klass
-     * @returns {string|SVGAnimatedString|string|string|string|string|*}
+     * @param {Function} klass
+     * @return {string}
      */
     function getClassName(klass) {
         return klass.className || klass.name;
@@ -930,7 +934,7 @@ var artemis;
                 return ~~(Math.random() * max);
             };
             MathUtils.random = function (start, end) {
-                if (end === null) {
+                if (end === undefined) {
                     return MathUtils.nextInt(start + 1);
                 }
                 else if (parseInt(start) === parseFloat(start) && parseInt(end) === parseFloat(end)) {
@@ -1603,33 +1607,40 @@ var artemis;
 (function (artemis) {
     var BitSet = artemis.utils.BitSet;
     /**
-    * An Aspects is used by systems as a matcher against entities, to check if a system is
-    * interested in an entity. Aspects define what sort of component types an entity must
-    * possess, or not possess.
-    *
-    * This creates an aspect where an entity must possess A and B and C:
-    * Aspect.getAspectForAll(A.class, B.class, C.class)
-    *
-    * This creates an aspect where an entity must possess A and B and C, but must not possess U or V.
-    * Aspect.getAspectForAll(A.class, B.class, C.class).exclude(U.class, V.class)
-    *
-    * This creates an aspect where an entity must possess A and B and C, but must not possess U or V, but must possess one of X or Y or Z.
-    * Aspect.getAspectForAll(A.class, B.class, C.class).exclude(U.class, V.class).one(X.class, Y.class, Z.class)
-    *
-    * You can create and compose aspects in many ways:
-    * Aspect.getEmpty().one(X.class, Y.class, Z.class).all(A.class, B.class, C.class).exclude(U.class, V.class)
-    * is the same as:
-    * Aspect.getAspectForAll(A.class, B.class, C.class).exclude(U.class, V.class).one(X.class, Y.class, Z.class)
-    *
-    * @author Arni Arent
-    *
-    */
+     * An Aspects is used by systems as a matcher against entities, to check if a system is
+     * interested in an entity. Aspects define what sort of component types an entity must
+     * possess, or not possess.
+     *
+     * This creates an aspect where an entity must possess A and B and C:
+     * Aspect.getAspectForAll(A.class, B.class, C.class)
+     *
+     * This creates an aspect where an entity must possess A and B and C, but must not possess U or V.
+     * Aspect.getAspectForAll(A.class, B.class, C.class).exclude(U.class, V.class)
+     *
+     * This creates an aspect where an entity must possess A and B and C, but must not possess U or V, but must possess one of X or Y or Z.
+     * Aspect.getAspectForAll(A.class, B.class, C.class).exclude(U.class, V.class).one(X.class, Y.class, Z.class)
+     *
+     * You can create and compose aspects in many ways:
+     * Aspect.getEmpty().one(X.class, Y.class, Z.class).all(A.class, B.class, C.class).exclude(U.class, V.class)
+     * is the same as:
+     * Aspect.getAspectForAll(A.class, B.class, C.class).exclude(U.class, V.class).one(X.class, Y.class, Z.class)
+     *
+     * @author Arni Arent
+     *
+     */
     var Aspect = (function () {
+        /**
+         * @constructor
+         */
         function Aspect() {
             this.allSet_ = new BitSet();
             this.exclusionSet_ = new BitSet();
             this.oneSet_ = new BitSet();
         }
+        /**
+         *
+         * @param {artemis.World} world
+         */
         Aspect.prototype.setWorld = function (world) {
             this.world_ = world;
         };
@@ -1646,11 +1657,11 @@ var artemis;
             return Aspect.typeFactory.getIndexFor(c);
         };
         /**
-            * Returns an aspect where an entity must possess all of the specified component types.
-            * @param type a required component type
-            * @param types a required component type
-            * @return an aspect that can be matched against entities
-            */
+         * Returns an aspect where an entity must possess all of the specified component types.
+         * @param {Class} type a required component type
+         * @param {Array<Class>} types a required component type
+         * @return {artemis.Aspect} an aspect that can be matched against entities
+         */
         Aspect.prototype.all = function (type) {
             var types = [];
             for (var _i = 1; _i < arguments.length; _i++) {
@@ -1664,13 +1675,13 @@ var artemis;
             return this;
         };
         /**
-        * Excludes all of the specified component types from the aspect. A system will not be
-        * interested in an entity that possesses one of the specified exclusion component types.
-        *
-        * @param type component type to exclude
-        * @param types component type to exclude
-        * @return an aspect that can be matched against entities
-        */
+         * Excludes all of the specified component types from the aspect. A system will not be
+         * interested in an entity that possesses one of the specified exclusion component types.
+         *
+         * @param {Class} type component type to exclude
+         * @param {Array<Class>} types component type to exclude
+         * @return {artemis.Aspect} an aspect that can be matched against entities
+         */
         Aspect.prototype.exclude = function (type) {
             var types = [];
             for (var _i = 1; _i < arguments.length; _i++) {
@@ -1684,11 +1695,11 @@ var artemis;
             return this;
         };
         /**
-        * Returns an aspect where an entity must possess one of the specified component types.
-        * @param type one of the types the entity must possess
-        * @param types one of the types the entity must possess
-        * @return an aspect that can be matched against entities
-        */
+         * Returns an aspect where an entity must possess one of the specified component types.
+         * @param {Class} type one of the types the entity must possess
+         * @param {Array<Class>} types one of the types the entity must possess
+         * @return {artemis.Aspect} an aspect that can be matched against entities
+         */
         Aspect.prototype.one = function (type) {
             var types = [];
             for (var _i = 1; _i < arguments.length; _i++) {
@@ -1701,15 +1712,15 @@ var artemis;
             return this;
         };
         /**
-        * Creates an aspect where an entity must possess all of the specified component types.
-        *
-        * @param type the type the entity must possess
-        * @param types the type the entity must possess
-        * @return an aspect that can be matched against entities
-        *
-        * @deprecated
-        * @see getAspectForAll
-        */
+         * Creates an aspect where an entity must possess all of the specified component types.
+         *
+         * @param {Class} type the type the entity must possess
+         * @param {Array<Class>} types the type the entity must possess
+         * @return {artemis.Aspect} an aspect that can be matched against entities
+         *
+         * @deprecated
+         * @see getAspectForAll
+         */
         Aspect.getAspectFor = function (type) {
             var types = [];
             for (var _i = 1; _i < arguments.length; _i++) {
@@ -1718,12 +1729,12 @@ var artemis;
             return Aspect.getAspectForAll.apply(Aspect, [type].concat(types));
         };
         /**
-        * Creates an aspect where an entity must possess all of the specified component types.
-        *
-        * @param type a required component type
-        * @param types a required component type
-        * @return an aspect that can be matched against entities
-        */
+         * Creates an aspect where an entity must possess all of the specified component types.
+         *
+         * @param {Class} type a required component type
+         * @param {Array<Class>} types a required component type
+         * @return {artemis.Aspect} an aspect that can be matched against entities
+         */
         Aspect.getAspectForAll = function (type) {
             var types = [];
             for (var _i = 1; _i < arguments.length; _i++) {
@@ -1734,12 +1745,12 @@ var artemis;
             return aspect;
         };
         /**
-        * Creates an aspect where an entity must possess one of the specified component types.
-        *
-        * @param type one of the types the entity must possess
-        * @param types one of the types the entity must possess
-        * @return an aspect that can be matched against entities
-        */
+         * Creates an aspect where an entity must possess one of the specified component types.
+         *
+         * @param {Class} type one of the types the entity must possess
+         * @param {Array<Class>} types one of the types the entity must possess
+         * @return {artemis.Aspect} an aspect that can be matched against entities
+         */
         Aspect.getAspectForOne = function (type) {
             var types = [];
             for (var _i = 1; _i < arguments.length; _i++) {
@@ -1750,16 +1761,16 @@ var artemis;
             return aspect;
         };
         /**
-        * Creates and returns an empty aspect. This can be used if you want a system that processes no entities, but
-        * still gets invoked. Typical usages is when you need to create special purpose systems for debug rendering,
-        * like rendering FPS, how many entities are active in the world, etc.
-        *
-        * You can also use the all, one and exclude methods on this aspect, so if you wanted to create a system that
-        * processes only entities possessing just one of the components A or B or C, then you can do:
-        * Aspect.getEmpty().one(A,B,C);
-        *
-        * @return an empty Aspect that will reject all entities.
-        */
+         * Creates and returns an empty aspect. This can be used if you want a system that processes no entities, but
+         * still gets invoked. Typical usages is when you need to create special purpose systems for debug rendering,
+         * like rendering FPS, how many entities are active in the world, etc.
+         *
+         * You can also use the all, one and exclude methods on this aspect, so if you wanted to create a system that
+         * processes only entities possessing just one of the components A or B or C, then you can do:
+         * Aspect.getEmpty().one(A,B,C);
+         *
+         * @return {artemis.Aspect} an empty Aspect that will reject all entities.
+         */
         Aspect.getEmpty = function () {
             return new Aspect();
         };
@@ -1899,7 +1910,7 @@ var artemis;
         /**
         * Faster removal of components from a entity.
         *
-        * @param component to remove from this entity.
+        * @param type to remove from this entity.
         *
         * @return this entity for chaining.
         */
