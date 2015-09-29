@@ -73,7 +73,7 @@ module artemis.managers {
 		public removeFromAllGroups(e:Entity) {
 			var groups:Bag<String> = this.groupsByEntity_.get(e);
 			if(groups != null) {
-				for(var i = 0; groups.size() > i; i++) {
+				for(var i = 0, s = groups.size(); s > i; i++) {
 					var entities:Bag<Entity> = this.entitiesByGroup_.get(groups.get(i));
 					if(entities != null) {
 						entities.remove(e);
@@ -123,7 +123,7 @@ module artemis.managers {
 		public isInGroup(e:Entity, group:string):boolean {
 			if(group != null) {
 				var groups:Bag<string> = this.groupsByEntity_.get(e);
-				for(var i = 0; groups.size() > i; i++) {
+				for(var i = 0, s = groups.size(); s > i; i++) {
 					var g:string = groups.get(i);
 					if(group === g) {
 						return true;

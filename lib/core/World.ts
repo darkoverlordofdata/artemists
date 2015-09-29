@@ -288,7 +288,7 @@ module artemis {
 		}
 	
 		private notifyManagers(performer:Performer, e:Entity) {
-			for(var a = 0; this.managersBag_.size() > a; a++) {
+			for(var a = 0, s = this.managersBag_.size(); s > a; a++) {
 				performer.perform(this.managersBag_.get(a), e);
 			}
 		}
@@ -310,7 +310,7 @@ module artemis {
 		*/
 		private check(entities:Bag<Entity>, performer:Performer) {
 			if (!entities.isEmpty()) {
-				for (var i = 0; entities.size() > i; i++) {
+				for (var i = 0, s = entities.size(); s > i; i++) {
 					var e:Entity = entities.get(i);
 					this.notifyManagers(performer, e);
 					this.notifySystems(performer, e);

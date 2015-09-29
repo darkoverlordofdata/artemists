@@ -73,9 +73,10 @@ module artemis.systems {
 
 		protected checkProcessing():boolean {
 			if(this.running_) {
-				this.acc_ += this.world.getDelta();
+				//this.acc_ += this.world.getDelta();
 
-				if(this.acc_ >= this.delay_) {
+				//if(this.acc_ >= this.delay_) {
+				if((this.acc_ += this.world.getDelta()) >= this.delay_) {
 					return true;
 				}
 			}

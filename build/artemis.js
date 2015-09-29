@@ -2306,7 +2306,7 @@ var artemis;
             }
         };
         World.prototype.notifyManagers = function (performer, e) {
-            for (var a = 0; this.managersBag_.size() > a; a++) {
+            for (var a = 0, s = this.managersBag_.size(); s > a; a++) {
                 performer.perform(this.managersBag_.get(a), e);
             }
         };
@@ -2326,7 +2326,7 @@ var artemis;
         */
         World.prototype.check = function (entities, performer) {
             if (!entities.isEmpty()) {
-                for (var i = 0; entities.size() > i; i++) {
+                for (var i = 0, s = entities.size(); s > i; i++) {
                     var e = entities.get(i);
                     this.notifyManagers(performer, e);
                     this.notifySystems(performer, e);
@@ -3211,7 +3211,7 @@ var artemis;
             GroupManager.prototype.removeFromAllGroups = function (e) {
                 var groups = this.groupsByEntity_.get(e);
                 if (groups != null) {
-                    for (var i = 0; groups.size() > i; i++) {
+                    for (var i = 0, s = groups.size(); s > i; i++) {
                         var entities = this.entitiesByGroup_.get(groups.get(i));
                         if (entities != null) {
                             entities.remove(e);
@@ -3257,7 +3257,7 @@ var artemis;
             GroupManager.prototype.isInGroup = function (e, group) {
                 if (group != null) {
                     var groups = this.groupsByEntity_.get(e);
-                    for (var i = 0; groups.size() > i; i++) {
+                    for (var i = 0, s = groups.size(); s > i; i++) {
                         var g = groups.get(i);
                         if (group === g) {
                             return true;
@@ -3530,8 +3530,9 @@ var artemis;
             };
             DelayedEntityProcessingSystem.prototype.checkProcessing = function () {
                 if (this.running_) {
-                    this.acc_ += this.world.getDelta();
-                    if (this.acc_ >= this.delay_) {
+                    //this.acc_ += this.world.getDelta();
+                    //if(this.acc_ >= this.delay_) {
+                    if ((this.acc_ += this.world.getDelta()) >= this.delay_) {
                         return true;
                     }
                 }
@@ -3687,8 +3688,9 @@ var artemis;
                 this.interval_ = interval;
             }
             IntervalEntitySystem.prototype.checkProcessing = function () {
-                this.acc_ += this.world.getDelta();
-                if (this.acc_ >= this.interval_) {
+                //this.acc_ += this.world.getDelta();
+                //if(this.acc_ >= this.interval_) {
+                if ((this.acc_ += this.world.getDelta()) >= this.interval_) {
                     this.acc_ -= this.interval_;
                     return true;
                 }

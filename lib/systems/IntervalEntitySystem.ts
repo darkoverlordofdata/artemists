@@ -21,8 +21,10 @@ module artemis.systems {
 
 
 		protected checkProcessing():boolean {
-			this.acc_ += this.world.getDelta();
-			if(this.acc_ >= this.interval_) {
+			//this.acc_ += this.world.getDelta();
+			//if(this.acc_ >= this.interval_) {
+
+			if((this.acc_ += this.world.getDelta()) >= this.interval_) {
 				this.acc_ -= this.interval_;
 				return true;
 			}

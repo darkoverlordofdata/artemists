@@ -1,6 +1,6 @@
 {
   "name": "artemists",
-  "version": "0.0.4",
+  "version": "0.0.5tools",
   "description": "Artemis TS",
   "main": "index.js",
   "config": {
