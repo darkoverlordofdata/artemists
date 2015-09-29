@@ -1404,20 +1404,20 @@ declare module artemis.managers {
         * @param group group to add the entity into.
         * @param e entity to add into the group.
         */
-        add(e: Entity, group: string): void;
+        add(e: Entity, group: string|number): void;
         /**
         * Remove the entity from the specified group.
         * @param e
         * @param group
         */
-        remove(e: Entity, group: string): void;
+        remove(e: Entity, group: string|number): void;
         removeFromAllGroups(e: Entity): void;
         /**
         * Get all entities that belong to the provided group.
         * @param group name of the group.
         * @return read-only bag of entities belonging to the group.
         */
-        getEntities(group: string): ImmutableBag<Entity>;
+        getEntities(group: string|number): ImmutableBag<Entity>;
         /**
         * @param e entity
         * @return the groups the entity belongs to, null if none.
@@ -1435,7 +1435,7 @@ declare module artemis.managers {
         * @param e the entity to check for.
         * @return true if the entity is in the supplied group, false if not.
         */
-        isInGroup(e: Entity, group: string): boolean;
+        isInGroup(e: Entity, group: string|number): boolean;
         deleted(e: Entity): void;
     }
 }
@@ -1454,8 +1454,8 @@ declare module artemis.managers {
         private playerByEntity_;
         private entitiesByPlayer_;
         constructor();
-        setPlayer(e: Entity, player: string): void;
-        getEntitiesOfPlayer(player: string): ImmutableBag<Entity>;
+        setPlayer(e: Entity, player: string|number): void;
+        getEntitiesOfPlayer(player: string|number): ImmutableBag<Entity>;
         removeFromPlayer(e: Entity): void;
         getPlayer(e: Entity): any;
         initialize(): void;
@@ -1475,10 +1475,10 @@ declare module artemis.managers {
         private entitiesByTag_;
         private tagsByEntity_;
         constructor();
-        register(tag: string, e: Entity): void;
-        unregister(tag: string): void;
-        isRegistered(tag: string): boolean;
-        getEntity(tag: string): Entity;
+        register(tag: string|number, e: Entity): void;
+        unregister(tag: string|number): void;
+        isRegistered(tag: string|number): boolean;
+        getEntity(tag: string|number): Entity;
         getRegisteredTags(): string[];
         deleted(e: Entity): void;
         initialize(): void;
@@ -1503,10 +1503,10 @@ declare module artemis.managers {
         private teamByPlayer_;
         constructor();
         initialize(): void;
-        getTeam(player: string): string;
-        setTeam(player: string, team: string): void;
-        getPlayers(team: string): ImmutableBag<String>;
-        removeFromTeam(player: string): void;
+        getTeam(player: string|number): string;
+        setTeam(player: string|number, team: string|number): void;
+        getPlayers(team: string|number): ImmutableBag<String>;
+        removeFromTeam(player: string|number): void;
     }
 }
 declare module artemis.systems {

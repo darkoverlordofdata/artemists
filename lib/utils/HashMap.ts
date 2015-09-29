@@ -41,16 +41,20 @@ module artemis.utils {
 
     values() {
       var result = [];
-      for (var key in this.map_) {
-        result.push(this.map_[key]);
+      var map = this.map_;
+
+      for (var key in map) {
+        result.push(map[key]);
       }
       return result;
     }
 
 
     contains(value):boolean {
-      for (var key in this.map_) {
-        if (value === this.map_[key]) {
+      var map = this.map_;
+
+      for (var key in map) {
+        if (value === map[key]) {
           return true;
         }
       }
@@ -62,8 +66,10 @@ module artemis.utils {
     }
 
     containsValue(value):boolean {
-      for (var key in this.map_) {
-        if (value === this.map_[key]) {
+      var map = this.map_;
+
+      for (var key in map) {
+        if (value === map[key]) {
           return true;
         }
       }
@@ -80,9 +86,11 @@ module artemis.utils {
     }
 
     keys() {
+      var keys = this.map_;
+
       var result = [];
-      for (var key in this.keys_) {
-        result.push(this.keys_[key]);
+      for (var key in keys) {
+        result.push(keys[key]);
       }
       return result;
     }
@@ -97,9 +105,10 @@ module artemis.utils {
     }
 
     remove(key) {
+      var map = this.map_;
       var k = decode(key);
-      var value = this.map_[k];
-      delete this.map_[k];
+      var value = map[k];
+      delete map[k];
       delete this.keys_[k];
       return value;
     }

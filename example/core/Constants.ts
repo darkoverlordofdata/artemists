@@ -2,8 +2,8 @@ module example.core {
 	
 	export class Constants {
 
-			public static FRAME_WIDTH:number = 800;
-			public static FRAME_HEIGHT:number = 450;
+			public static FRAME_WIDTH:number = window.innerWidth;
+			public static FRAME_HEIGHT:number = window.innerHeight;
 				
 			public static Groups = {
 				PLAYER_BULLETS: "player bullets",

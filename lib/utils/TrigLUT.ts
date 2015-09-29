@@ -3,10 +3,6 @@ module artemis.utils {
   // Thanks to Riven
   // From: http://riven8192.blogspot.com/2009/08/fastmath-sincos-lookup-tables.html
   export class TrigLUT {
-    public static main() {
-      console.log(TrigLUT.cos(Math.PI));
-      console.log(TrigLUT.cosDeg(180));
-    }
 
     public static sin(rad:number):number {
       return TrigLUT.sin_[(rad * TrigLUT.radToIndex) & TrigLUT.SIN_MASK];

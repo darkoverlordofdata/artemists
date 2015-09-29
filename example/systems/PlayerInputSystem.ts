@@ -30,27 +30,45 @@ module example.systems {
 
     public initialize() {
 
-      var listener = cc.EventListener.create({
-        event: cc.EventListener.TOUCH_ONE_BY_ONE,
-        swallowTouches: true,
-        onTouchBegan: (touch, event) => {
-          this.shoot = true;
-          this.mouseVector = touch.getLocation();
-          return true;
-        },
-        onTouchMoved: (touch, event) => {
-          this.shoot = true;
-          this.mouseVector = touch.getLocation();
-          return true;
-        },
-        onTouchEnded: (touch, event) => {
-          this.shoot = false;
-          this.mouseVector = touch.getLocation();
-        }
-      });
-      cc.eventManager.addListener(listener, this.game);
+      if (cc.sys.isMobile) {
+        var inputListener = cc.EventListener.create({
+          event: cc.EventListener.TOUCH_ONE_BY_ONE,
+          swallowTouches: true,
+          onTouchBegan: (touch, event) => {
+            this.shoot = true;
+            this.mouseVector = touch.getLocation();
+            return true;
+          },
+          onTouchMoved: (touch, event) => {
+            //this.shoot = true;
+            this.mouseVector = touch.getLocation();
+            return true;
+          },
+          onTouchEnded: (touch, event) => {
+            this.shoot = false;
+            this.mouseVector = touch.getLocation();
+          }
+        });
 
-
+      } else {
+        var inputListener = cc.EventListener.create({
+          event: cc.EventListener.MOUSE,
+          onMouseMove: (event) => {
+            this.mouseVector = {x:event.getLocationX(), y:event.getLocationY()};
+            return true;
+          },
+          onMouseUp: (event) => {
+            this.shoot = false;
+            this.mouseVector = {x:event.getLocationX(), y:event.getLocationY()};
+          },
+          onMouseDown: (event) => {
+            this.shoot = true;
+            this.mouseVector = {x:event.getLocationX(), y:event.getLocationY()};
+            return true;
+          }
+        });
+      }
+      cc.eventManager.addListener(inputListener, this.game);
     }
 
     protected processEach(e:Entity) {
@@ -72,8 +90,8 @@ module example.systems {
       if (this.shoot) {
         if (this.timeToFire <= 0) {
 
-          this.world.createEntityFromTemplate('bullet', position.x - 27, position.y + 2).addToWorld();
-          this.world.createEntityFromTemplate('bullet', position.x + 27, position.y + 2).addToWorld();
+          this.world.createEntityFromTemplate('bullet', position.x - 27/2, position.y + 2).addToWorld();
+          this.world.createEntityFromTemplate('bullet', position.x + 27/2, position.y + 2).addToWorld();
           this.timeToFire = PlayerInputSystem.FireRate;
         }
       }
@@ -84,7 +102,5 @@ module example.systems {
         }
       }
     }
-
-
   }
 }

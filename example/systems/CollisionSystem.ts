@@ -123,7 +123,7 @@ module example.systems {
 
       var a = p1.x - p2.x;
 			var b = p1.y - p2.y;
-			return Math.sqrt(a*a+b*b)-b1.radius < b2.radius;
+			return Math.sqrt(a*a+b*b)-(b1.radius/window.devicePixelRatio) < (b2.radius/window.devicePixelRatio);
 			//return Utils.distance(p1.x, p1.y, p2.x, p2.y)-b1.radius < b2.radius;
 		}
 	}

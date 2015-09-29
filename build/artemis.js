@@ -343,8 +343,7 @@ var artemis;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var artemis;
 (function (artemis) {
@@ -384,8 +383,7 @@ var artemis;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var artemis;
 (function (artemis) {
@@ -426,8 +424,7 @@ var artemis;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var artemis;
 (function (artemis) {
@@ -469,8 +466,7 @@ var artemis;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var artemis;
 (function (artemis) {
@@ -515,104 +511,112 @@ var artemis;
     var utils;
     (function (utils) {
         /**
-        * Collection type a bit like ArrayList but does not preserve the order of its
-        * entities, speedwise it is very good, especially suited for games.
-        */
+         * Collection type a bit like ArrayList but does not preserve the order of its
+         * entities, speedwise it is very good, especially suited for games.
+         */
         var Bag = (function () {
             /**
-            * Constructs an empty Bag with the specified initial capacity.
-            * Constructs an empty Bag with an initial capacity of 64.
-            *
-            * @param capacity
-            *            the initial capacity of Bag
-            */
+             * Constructs an empty Bag with the specified initial capacity.
+             * Constructs an empty Bag with an initial capacity of 64.
+             *
+             * @param capacity
+             *            the initial capacity of Bag
+             */
             function Bag(capacity) {
                 if (capacity === void 0) { capacity = 64; }
                 this.size_ = 0;
                 this.data_ = new Array(capacity);
             }
             /**
-            * Removes the element at the specified position in this Bag. does this by
-            * overwriting it was last element then removing last element
-            *
-            * @param index
-            *            the index of element to be removed
-            * @return element that was removed from the Bag
-            */
+             * Removes the element at the specified position in this Bag. does this by
+             * overwriting it was last element then removing last element
+             *
+             * @param index
+             *            the index of element to be removed
+             * @return element that was removed from the Bag
+             */
             Bag.prototype.removeAt = function (index) {
-                var e = this.data_[index]; // make copy of element to remove so it can be returned
-                this.data_[index] = this.data_[--this.size_]; // overwrite item to remove with last element
-                this.data_[this.size_] = null; // null last element, so gc can do its work
+                var data = this.data_;
+                var e = data[index]; // make copy of element to remove so it can be returned
+                data[index] = data[--this.size_]; // overwrite item to remove with last element
+                data[this.size_] = null; // null last element, so gc can do its work
                 return e;
             };
             /**
-            * Removes the first occurrence of the specified element from this Bag, if
-            * it is present. If the Bag does not contain the element, it is unchanged.
-            * does this by overwriting it was last element then removing last element
-            *
-            * @param e
-            *            element to be removed from this list, if present
-            * @return <tt>true</tt> if this list contained the specified element
-            */
+             * Removes the first occurrence of the specified element from this Bag, if
+             * it is present. If the Bag does not contain the element, it is unchanged.
+             * does this by overwriting it was last element then removing last element
+             *
+             * @param e
+             *            element to be removed from this list, if present
+             * @return <tt>true</tt> if this list contained the specified element
+             */
             Bag.prototype.remove = function (e) {
                 var i;
                 var e2;
+                var data;
                 for (i = 0; i < this.size_; i++) {
-                    e2 = this.data_[i];
+                    data = this.data_;
+                    e2 = data[i];
                     if (e == e2) {
-                        this.data_[i] = this.data_[--this.size_]; // overwrite item to remove with last element
-                        this.data_[this.size_] = null; // null last element, so gc can do its work
+                        data[i] = data[--this.size_]; // overwrite item to remove with last element
+                        data[this.size_] = null; // null last element, so gc can do its work
                         return true;
                     }
                 }
                 return false;
             };
             /**
-            * Remove and return the last object in the bag.
-            *
-            * @return the last object in the bag, null if empty.
-            */
+             * Remove and return the last object in the bag.
+             *
+             * @return the last object in the bag, null if empty.
+             */
             Bag.prototype.removeLast = function () {
                 if (this.size_ > 0) {
-                    var e = this.data_[--this.size_];
-                    this.data_[this.size_] = null;
+                    var data = this.data_;
+                    var e = data[--this.size_];
+                    data[this.size_] = null;
                     return e;
                 }
                 return null;
             };
             /**
-            * Check if bag contains this element.
-            *
-            * @param e
-            * @return
-            */
+             * Check if bag contains this element.
+             *
+             * @param e
+             * @return
+             */
             Bag.prototype.contains = function (e) {
                 var i;
-                for (i = 0; this.size_ > i; i++) {
-                    if (e === this.data_[i]) {
+                var size;
+                var data = this.data_;
+                for (i = 0, size = this.size_; size > i; i++) {
+                    if (e === data[i]) {
                         return true;
                     }
                 }
                 return false;
             };
             /**
-            * Removes from this Bag all of its elements that are contained in the
-            * specified Bag.
-            *
-            * @param bag
-            *            Bag containing elements to be removed from this Bag
-            * @return {@code true} if this Bag changed as a result of the call
-            */
+             * Removes from this Bag all of its elements that are contained in the
+             * specified Bag.
+             *
+             * @param bag
+             *            Bag containing elements to be removed from this Bag
+             * @return {@code true} if this Bag changed as a result of the call
+             */
             Bag.prototype.removeAll = function (bag) {
                 var modified = false;
                 var i;
                 var j;
+                var l;
                 var e1;
                 var e2;
-                for (i = 0; i < bag.size(); i++) {
+                var data = this.data_;
+                for (i = 0, l = bag.size(); i < l; i++) {
                     e1 = bag.get(i);
                     for (j = 0; j < this.size_; j++) {
-                        e2 = this.data_[j];
+                        e2 = data[j];
                         if (e1 === e2) {
                             this.removeAt(j);
                             j--;
@@ -629,14 +633,15 @@ var artemis;
              * @param index
              *            index of the element to return
              * @return the element at the specified position in bag
-         *
-         * @throws ArrayIndexOutOfBoundsException
+             *
+             * @throws ArrayIndexOutOfBoundsException
              */
             Bag.prototype.get = function (index) {
-                if (index >= this.data_.length) {
+                var data = this.data_;
+                if (index >= data.length) {
                     throw new Error('ArrayIndexOutOfBoundsException');
                 }
-                return this.data_[index];
+                return data[index];
             };
             /**
              * Returns the element at the specified position in Bag. This method
@@ -644,76 +649,79 @@ var artemis;
              * of the current backing array.
              *
              * @param index
-             *			index of the element to return
+             *      index of the element to return
              *
              * @return the element at the specified position in bag
              *
              */
             Bag.prototype.safeGet = function (index) {
-                if (index >= this.data_.length) {
+                var data = this.data_;
+                if (index >= data.length) {
                     this.grow((index * 7) / 4 + 1);
                 }
-                return this.data_[index];
+                return data[index];
             };
             /**
-            * Returns the number of elements in this bag.
-            *
-            * @return the number of elements in this bag
-            */
+             * Returns the number of elements in this bag.
+             *
+             * @return the number of elements in this bag
+             */
             Bag.prototype.size = function () {
                 return this.size_;
             };
             /**
-            * Returns the number of elements the bag can hold without growing.
-            *
-            * @return the number of elements the bag can hold without growing.
-            */
+             * Returns the number of elements the bag can hold without growing.
+             *
+             * @return the number of elements the bag can hold without growing.
+             */
             Bag.prototype.getCapacity = function () {
                 return this.data_.length;
             };
             /**
-            * Checks if the internal storage supports this index.
-            *
-            * @param index
-            * @return
-            */
+             * Checks if the internal storage supports this index.
+             *
+             * @param index
+             * @return
+             */
             Bag.prototype.isIndexWithinBounds = function (index) {
                 return index < this.getCapacity();
             };
             /**
-            * Returns true if this list contains no elements.
-            *
-            * @return true if this list contains no elements
-            */
+             * Returns true if this list contains no elements.
+             *
+             * @return true if this list contains no elements
+             */
             Bag.prototype.isEmpty = function () {
                 return this.size_ == 0;
             };
             /**
-            * Adds the specified element to the end of this bag. if needed also
-            * increases the capacity of the bag.
-            *
-            * @param e
-            *            element to be added to this list
-            */
+             * Adds the specified element to the end of this bag. if needed also
+             * increases the capacity of the bag.
+             *
+             * @param e
+             *            element to be added to this list
+             */
             Bag.prototype.add = function (e) {
                 // is size greater than capacity increase capacity
-                if (this.size_ === this.data_.length) {
+                var data = this.data_;
+                if (this.size_ === data.length) {
                     this.grow();
                 }
-                this.data_[this.size_++] = e;
+                data[this.size_++] = e;
             };
             /**
-            * Set element at specified index in the bag.
-            *
-            * @param index position of element
-            * @param e the element
-            */
+             * Set element at specified index in the bag.
+             *
+             * @param index position of element
+             * @param e the element
+             */
             Bag.prototype.set = function (index, e) {
-                if (index >= this.data_.length) {
+                var data = this.data_;
+                if (index >= data.length) {
                     this.grow(index * 2);
                 }
                 this.size_ = index + 1;
-                this.data_[index] = e;
+                data[index] = e;
             };
             Bag.prototype.grow = function (newCapacity) {
                 if (newCapacity === void 0) { newCapacity = ~~((this.data_.length * 3) / 2) + 1; }
@@ -725,19 +733,21 @@ var artemis;
                 }
             };
             /**
-            * Removes all of the elements from this bag. The bag will be empty after
-            * this call returns.
-            */
+             * Removes all of the elements from this bag. The bag will be empty after
+             * this call returns.
+             */
             Bag.prototype.clear = function () {
                 var i;
+                var size;
+                var data = this.data_;
                 // null all elements so gc can clean up
-                for (i = 0; i < this.size_; i++) {
-                    this.data_[i] = null;
+                for (i = 0, size = this.size_; i < size; i++) {
+                    data[i] = null;
                 }
                 this.size_ = 0;
             };
             /**
-            * Add all items into this bag.
+             * Add all items into this bag.
              * @param items
              */
             Bag.prototype.addAll = function (items) {
@@ -990,14 +1000,16 @@ var artemis;
             };
             HashMap.prototype.values = function () {
                 var result = [];
-                for (var key in this.map_) {
-                    result.push(this.map_[key]);
+                var map = this.map_;
+                for (var key in map) {
+                    result.push(map[key]);
                 }
                 return result;
             };
             HashMap.prototype.contains = function (value) {
-                for (var key in this.map_) {
-                    if (value === this.map_[key]) {
+                var map = this.map_;
+                for (var key in map) {
+                    if (value === map[key]) {
                         return true;
                     }
                 }
@@ -1007,8 +1019,9 @@ var artemis;
                 return decode(key) in this.map_;
             };
             HashMap.prototype.containsValue = function (value) {
-                for (var key in this.map_) {
-                    if (value === this.map_[key]) {
+                var map = this.map_;
+                for (var key in map) {
+                    if (value === map[key]) {
                         return true;
                     }
                 }
@@ -1021,9 +1034,10 @@ var artemis;
                 return Object.keys(this.map_).length === 0;
             };
             HashMap.prototype.keys = function () {
+                var keys = this.map_;
                 var result = [];
-                for (var key in this.keys_) {
-                    result.push(this.keys_[key]);
+                for (var key in keys) {
+                    result.push(keys[key]);
                 }
                 return result;
             };
@@ -1036,9 +1050,10 @@ var artemis;
                 this.keys_[k] = key;
             };
             HashMap.prototype.remove = function (key) {
+                var map = this.map_;
                 var k = decode(key);
-                var value = this.map_[k];
-                delete this.map_[k];
+                var value = map[k];
+                delete map[k];
                 delete this.keys_[k];
                 return value;
             };
@@ -1122,10 +1137,6 @@ var artemis;
         var TrigLUT = (function () {
             function TrigLUT() {
             }
-            TrigLUT.main = function () {
-                console.log(TrigLUT.cos(Math.PI));
-                console.log(TrigLUT.cosDeg(180));
-            };
             TrigLUT.sin = function (rad) {
                 return TrigLUT.sin_[(rad * TrigLUT.radToIndex) & TrigLUT.SIN_MASK];
             };
@@ -1463,8 +1474,7 @@ var artemis;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var artemis;
 (function (artemis) {
@@ -1509,8 +1519,7 @@ var artemis;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var artemis;
 (function (artemis) {
@@ -1582,8 +1591,7 @@ var artemis;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var artemis;
 (function (artemis) {
@@ -2571,8 +2579,7 @@ var artemis;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var artemis;
 (function (artemis) {
@@ -2837,8 +2844,7 @@ var artemis;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var artemis;
 (function (artemis) {
@@ -3140,8 +3146,7 @@ var artemis;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var artemis;
 (function (artemis) {
@@ -3273,8 +3278,7 @@ var artemis;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var artemis;
 (function (artemis) {
@@ -3340,8 +3344,7 @@ var artemis;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var artemis;
 (function (artemis) {
@@ -3396,8 +3399,7 @@ var artemis;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var artemis;
 (function (artemis) {
@@ -3460,8 +3462,7 @@ var artemis;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var artemis;
 (function (artemis) {
@@ -3622,8 +3623,7 @@ var artemis;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var artemis;
 (function (artemis) {
@@ -3664,8 +3664,7 @@ var artemis;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var artemis;
 (function (artemis) {
@@ -3704,8 +3703,7 @@ var artemis;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var artemis;
 (function (artemis) {
@@ -3742,8 +3740,7 @@ var artemis;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var artemis;
 (function (artemis) {

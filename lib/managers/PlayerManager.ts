@@ -19,7 +19,7 @@ module artemis.managers {
 		private entitiesByPlayer_:Map<String, Bag<Entity>>;
 
 		constructor() {
-			super()
+			super();
 			this.playerByEntity_ = new HashMap<Entity, String>();
 			this.entitiesByPlayer_ = new HashMap<String, Bag<Entity>>();
 		}

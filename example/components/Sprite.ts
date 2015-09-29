@@ -34,7 +34,6 @@ module example.components {
 		
     initialize(name?:string, color?, lambda?) {
 			this.sprite_ = new cc.Sprite();
-			this.sprite_.setScale(0.5);
       this.sprite_.setOpacityModifyRGB(true);
       this.name = name;
       if (color !== undefined && color !== null) {

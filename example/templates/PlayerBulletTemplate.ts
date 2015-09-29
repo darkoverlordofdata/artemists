@@ -28,7 +28,7 @@ module example.templates {
 
     public buildEntity(entity:artemis.Entity, world:artemis.World, x:number, y:number):artemis.Entity {
 
-      entity.addComponent(Position, x, y);
+      entity.addComponent(Position, ~~x, ~~y);
       entity.addComponent(Velocity, 0, 800);
       entity.addComponent(Bounds, 5);
       entity.addComponent(Expires, 5);
