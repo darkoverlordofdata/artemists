@@ -50,10 +50,10 @@ module artemis.utils {
     remove(e:E):boolean {
       var i:number;
       var e2:E;
-      var data;
+      var data = this.data_;
+      var size = this.size_;
 
-      for (i = 0; i < this.size_; i++) {
-        data = this.data_;
+      for (i = 0; i < size; i++) {
         e2 = data[i];
 
         if (e == e2) {

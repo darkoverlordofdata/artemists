@@ -27,6 +27,7 @@
       "lib/utils/Map.ts",
       "lib/utils/HashMap.ts",
       "lib/utils/ImmutableBag.ts",
+      "lib/utils/Signal.ts",
       "lib/utils/TrigLUT.ts",
       "lib/utils/Timer.ts",
       "lib/utils/UUID.ts",

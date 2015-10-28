@@ -15,6 +15,7 @@
         "web/src/lib/utils/Map.js",
         "web/src/lib/utils/HashMap.js",
         "web/src/lib/utils/ImmutableBag.js",
+        "web/src/lib/utils/Signal.js",
         "web/src/lib/utils/Timer.js",
         "web/src/lib/utils/TrigLUT.js",
         "web/src/lib/utils/UUID.js",
