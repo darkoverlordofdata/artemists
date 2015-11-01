@@ -24,7 +24,6 @@ var artemis;
     }
     artemis.getClassName = getClassName;
 })(artemis || (artemis = {}));
-//# sourceMappingURL=prolog.js.map
 /**
  * Universal Module Interface
  */
@@ -42,7 +41,6 @@ var artemis;
         root['artemis'] = factory();
     }
 })(this, function () { return artemis; });
-//# sourceMappingURL=exports.js.map
 /**
  * A node in the list of listeners in a signal.
 */
@@ -69,7 +67,6 @@ var artemis;
         signals.ListenerNode = ListenerNode;
     })(signals = artemis.signals || (artemis.signals = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=ListenerNode.js.map
 /**
  * This internal class maintains a pool of deleted listener nodes for reuse by framework. This reduces
  * the overhead from object creation and garbage collection.
@@ -143,7 +140,6 @@ var artemis;
         signals.ListenerNodePool = ListenerNodePool;
     })(signals = artemis.signals || (artemis.signals = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=ListenerNodePool.js.map
 var artemis;
 (function (artemis) {
     var signals;
@@ -339,7 +335,6 @@ var artemis;
         signals.SignalBase = SignalBase;
     })(signals = artemis.signals || (artemis.signals = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=SignalBase.js.map
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -379,12 +374,6 @@ var artemis;
         signals.Signal0 = Signal0;
     })(signals = artemis.signals || (artemis.signals = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=Signal0.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var artemis;
 (function (artemis) {
     var signals;
@@ -420,12 +409,6 @@ var artemis;
         signals.Signal1 = Signal1;
     })(signals = artemis.signals || (artemis.signals = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=Signal1.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var artemis;
 (function (artemis) {
     var signals;
@@ -462,12 +445,6 @@ var artemis;
         signals.Signal2 = Signal2;
     })(signals = artemis.signals || (artemis.signals = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=Signal2.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var artemis;
 (function (artemis) {
     var signals;
@@ -505,7 +482,6 @@ var artemis;
         signals.Signal3 = Signal3;
     })(signals = artemis.signals || (artemis.signals = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=Signal3.js.map
 var artemis;
 (function (artemis) {
     var utils;
@@ -554,9 +530,9 @@ var artemis;
             Bag.prototype.remove = function (e) {
                 var i;
                 var e2;
-                var data;
-                for (i = 0; i < this.size_; i++) {
-                    data = this.data_;
+                var data = this.data_;
+                var size = this.size_;
+                for (i = 0; i < size; i++) {
                     e2 = data[i];
                     if (e == e2) {
                         data[i] = data[--this.size_]; // overwrite item to remove with last element
@@ -761,7 +737,6 @@ var artemis;
         utils.Bag = Bag;
     })(utils = artemis.utils || (artemis.utils = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=Bag.js.map
 var artemis;
 (function (artemis) {
     var utils;
@@ -920,7 +895,6 @@ var artemis;
         utils.BitSet = BitSet;
     })(utils = artemis.utils || (artemis.utils = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=BitSet.js.map
 var artemis;
 (function (artemis) {
     var utils;
@@ -959,8 +933,6 @@ var artemis;
         utils.MathUtils = MathUtils;
     })(utils = artemis.utils || (artemis.utils = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=MathUtils.js.map
-//# sourceMappingURL=Map.js.map
 var artemis;
 (function (artemis) {
     var utils;
@@ -1065,8 +1037,142 @@ var artemis;
         utils.HashMap = HashMap;
     })(utils = artemis.utils || (artemis.utils = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=HashMap.js.map
-//# sourceMappingURL=ImmutableBag.js.map
+var artemis;
+(function (artemis) {
+    var utils;
+    (function (utils) {
+        var Bag = artemis.utils.Bag;
+        var Signal = (function () {
+            /**
+             *
+             * @param context
+             * @param alloc
+             */
+            function Signal(context, alloc) {
+                if (alloc === void 0) { alloc = 16; }
+                this._listeners = new Bag();
+                this._context = context;
+                this._alloc = alloc;
+                this.active = false;
+            }
+            /**
+             * Dispatch event
+             *
+             * @param $0
+             * @param $1
+             * @param $2
+             * @param $3
+             * @param $4
+             */
+            Signal.prototype.dispatch = function ($0, $1, $2, $3, $4) {
+                var listeners = this._listeners;
+                var size = listeners.size();
+                if (size <= 0)
+                    return; // bail early
+                var context = this._context;
+                for (var i = 0; i < size; i++) {
+                    listeners[i].call(context, $0, $1, $2, $3, $4);
+                }
+            };
+            /**
+             * Add event listener
+             * @param listener
+             */
+            Signal.prototype.add = function (listener) {
+                this._listeners.add(listener);
+                this.active = true;
+            };
+            /**
+             * Remove event listener
+             * @param listener
+             */
+            Signal.prototype.remove = function (listener) {
+                var listeners = this._listeners;
+                listeners.remove(listener);
+                this.active = listeners.size() > 0;
+            };
+            /**
+             * Clear and reset to original alloc
+             */
+            Signal.prototype.clear = function () {
+                this._listeners.clear();
+                this.active = false;
+            };
+            return Signal;
+        })();
+        utils.Signal = Signal;
+    })(utils = artemis.utils || (artemis.utils = {}));
+})(artemis || (artemis = {}));
+/**
+ * event delegate boilerplate:
+ *
+ *
+ *   export module Entity {
+
+    export interface EntityChanged {(e:Entity, index:number, component:IComponent):void;}
+    export interface IEntityChanged<T> extends ISignal<T> {
+      dispatch(e:Entity, index:number, component:IComponent):void;
+    }
+
+  }
+ ...
+ public onComponentAdded:IEntityChanged<EntityChanged>;
+
+ ...
+ this.onComponentAdded = new Signal<EntityChanged>(this);
+
+ ...
+ var onComponentAdded:any = this.onComponentAdded;
+ if (onComponentAdded.active) onComponentAdded.dispatch(this, index, component);
+
+ */
+var artemis;
+(function (artemis) {
+    var utils;
+    (function (utils) {
+        // Thanks to Riven
+        // From: http://riven8192.blogspot.com/2009/08/fastmath-sincos-lookup-tables.html
+        var TrigLUT = (function () {
+            function TrigLUT() {
+            }
+            TrigLUT.sin = function (rad) {
+                return TrigLUT.sin_[(rad * TrigLUT.radToIndex) & TrigLUT.SIN_MASK];
+            };
+            TrigLUT.cos = function (rad) {
+                return TrigLUT.cos_[(rad * TrigLUT.radToIndex) & TrigLUT.SIN_MASK];
+            };
+            TrigLUT.sinDeg = function (deg) {
+                return TrigLUT.sin_[(deg * TrigLUT.degToIndex) & TrigLUT.SIN_MASK];
+            };
+            TrigLUT.cosDeg = function (deg) {
+                return TrigLUT.cos_[(deg * TrigLUT.degToIndex) & TrigLUT.SIN_MASK];
+            };
+            TrigLUT.init = function (update) {
+                TrigLUT.RAD = Math.PI / 180.0;
+                TrigLUT.DEG = 180.0 / Math.PI;
+                TrigLUT.SIN_BITS = 12;
+                TrigLUT.SIN_MASK = ~(-1 << TrigLUT.SIN_BITS);
+                TrigLUT.SIN_COUNT = TrigLUT.SIN_MASK + 1;
+                TrigLUT.radFull = (Math.PI * 2.0);
+                TrigLUT.degFull = (360.0);
+                TrigLUT.radToIndex = TrigLUT.SIN_COUNT / TrigLUT.radFull;
+                TrigLUT.degToIndex = TrigLUT.SIN_COUNT / TrigLUT.degFull;
+                TrigLUT.sin_ = new Array(TrigLUT.SIN_COUNT);
+                TrigLUT.cos_ = new Array(TrigLUT.SIN_COUNT);
+                for (var i = 0; i < TrigLUT.SIN_COUNT; i++) {
+                    TrigLUT.sin_[i] = Math.sin((i + 0.5) / TrigLUT.SIN_COUNT * TrigLUT.radFull);
+                    TrigLUT.cos_[i] = Math.cos((i + 0.5) / TrigLUT.SIN_COUNT * TrigLUT.radFull);
+                }
+                if (update) {
+                    Math.sin = TrigLUT.sin;
+                    Math.cos = TrigLUT.cos;
+                }
+            };
+            return TrigLUT;
+        })();
+        utils.TrigLUT = TrigLUT;
+    })(utils = artemis.utils || (artemis.utils = {}));
+})(artemis || (artemis = {}));
 var artemis;
 (function (artemis) {
     var utils;
@@ -1127,55 +1233,6 @@ var artemis;
         utils.Timer = Timer;
     })(utils = artemis.utils || (artemis.utils = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=Timer.js.map
-var artemis;
-(function (artemis) {
-    var utils;
-    (function (utils) {
-        // Thanks to Riven
-        // From: http://riven8192.blogspot.com/2009/08/fastmath-sincos-lookup-tables.html
-        var TrigLUT = (function () {
-            function TrigLUT() {
-            }
-            TrigLUT.sin = function (rad) {
-                return TrigLUT.sin_[(rad * TrigLUT.radToIndex) & TrigLUT.SIN_MASK];
-            };
-            TrigLUT.cos = function (rad) {
-                return TrigLUT.cos_[(rad * TrigLUT.radToIndex) & TrigLUT.SIN_MASK];
-            };
-            TrigLUT.sinDeg = function (deg) {
-                return TrigLUT.sin_[(deg * TrigLUT.degToIndex) & TrigLUT.SIN_MASK];
-            };
-            TrigLUT.cosDeg = function (deg) {
-                return TrigLUT.cos_[(deg * TrigLUT.degToIndex) & TrigLUT.SIN_MASK];
-            };
-            TrigLUT.init = function (update) {
-                TrigLUT.RAD = Math.PI / 180.0;
-                TrigLUT.DEG = 180.0 / Math.PI;
-                TrigLUT.SIN_BITS = 12;
-                TrigLUT.SIN_MASK = ~(-1 << TrigLUT.SIN_BITS);
-                TrigLUT.SIN_COUNT = TrigLUT.SIN_MASK + 1;
-                TrigLUT.radFull = (Math.PI * 2.0);
-                TrigLUT.degFull = (360.0);
-                TrigLUT.radToIndex = TrigLUT.SIN_COUNT / TrigLUT.radFull;
-                TrigLUT.degToIndex = TrigLUT.SIN_COUNT / TrigLUT.degFull;
-                TrigLUT.sin_ = new Array(TrigLUT.SIN_COUNT);
-                TrigLUT.cos_ = new Array(TrigLUT.SIN_COUNT);
-                for (var i = 0; i < TrigLUT.SIN_COUNT; i++) {
-                    TrigLUT.sin_[i] = Math.sin((i + 0.5) / TrigLUT.SIN_COUNT * TrigLUT.radFull);
-                    TrigLUT.cos_[i] = Math.cos((i + 0.5) / TrigLUT.SIN_COUNT * TrigLUT.radFull);
-                }
-                if (update) {
-                    Math.sin = TrigLUT.sin;
-                    Math.cos = TrigLUT.cos;
-                }
-            };
-            return TrigLUT;
-        })();
-        utils.TrigLUT = TrigLUT;
-    })(utils = artemis.utils || (artemis.utils = {}));
-})(artemis || (artemis = {}));
-//# sourceMappingURL=TrigLUT.js.map
 var artemis;
 (function (artemis) {
     var utils;
@@ -1225,25 +1282,6 @@ var artemis;
         utils.UUID = UUID;
     })(utils = artemis.utils || (artemis.utils = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=UUID.js.map
-var artemis;
-(function (artemis) {
-    var annotations;
-    (function (annotations) {
-        /**
-         * EntityTemplate
-         *
-         */
-        function EntityTemplate(component) {
-            return function (target, propertyKey, descriptor) {
-                EntityTemplate['entityTemplates'] = EntityTemplate['entityTemplates'] || {};
-                EntityTemplate['entityTemplates'][component] = target;
-            };
-        }
-        annotations.EntityTemplate = EntityTemplate;
-    })(annotations = artemis.annotations || (artemis.annotations = {}));
-})(artemis || (artemis = {}));
-//# sourceMappingURL=EntityTemplate.js.map
 var artemis;
 (function (artemis) {
     var annotations;
@@ -1264,7 +1302,6 @@ var artemis;
         annotations.Mapper = Mapper;
     })(annotations = artemis.annotations || (artemis.annotations = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=Mapper.js.map
 var artemis;
 (function (artemis) {
     var annotations;
@@ -1284,7 +1321,23 @@ var artemis;
         Pooled['pooledComponents'] = {};
     })(annotations = artemis.annotations || (artemis.annotations = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=Pooled.js.map
+var artemis;
+(function (artemis) {
+    var annotations;
+    (function (annotations) {
+        /**
+         * EntityTemplate
+         *
+         */
+        function EntityTemplate(component) {
+            return function (target, propertyKey, descriptor) {
+                EntityTemplate['entityTemplates'] = EntityTemplate['entityTemplates'] || {};
+                EntityTemplate['entityTemplates'][component] = target;
+            };
+        }
+        annotations.EntityTemplate = EntityTemplate;
+    })(annotations = artemis.annotations || (artemis.annotations = {}));
+})(artemis || (artemis = {}));
 var artemis;
 (function (artemis) {
     var blackboard;
@@ -1301,7 +1354,6 @@ var artemis;
         var TriggerStateType = blackboard.TriggerStateType;
     })(blackboard = artemis.blackboard || (artemis.blackboard = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=TriggerStateType.js.map
 var artemis;
 (function (artemis) {
     var blackboard;
@@ -1418,7 +1470,6 @@ var artemis;
         blackboard.BlackBoard = BlackBoard;
     })(blackboard = artemis.blackboard || (artemis.blackboard = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=BlackBoard.js.map
 var artemis;
 (function (artemis) {
     var blackboard;
@@ -1470,12 +1521,6 @@ var artemis;
         blackboard.Trigger = Trigger;
     })(blackboard = artemis.blackboard || (artemis.blackboard = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=Trigger.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var artemis;
 (function (artemis) {
     var blackboard;
@@ -1515,12 +1560,6 @@ var artemis;
         blackboard.SimpleTrigger = SimpleTrigger;
     })(blackboard = artemis.blackboard || (artemis.blackboard = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=SimpleTrigger.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var artemis;
 (function (artemis) {
     var blackboard;
@@ -1566,7 +1605,6 @@ var artemis;
         blackboard.TriggerMultiCondition = TriggerMultiCondition;
     })(blackboard = artemis.blackboard || (artemis.blackboard = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=TriggerMultiCondition.js.map
 var artemis;
 (function (artemis) {
     /**
@@ -1587,12 +1625,6 @@ var artemis;
     })();
     artemis.Component = Component;
 })(artemis || (artemis = {}));
-//# sourceMappingURL=Component.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var artemis;
 (function (artemis) {
     /**
@@ -1610,7 +1642,6 @@ var artemis;
     })(artemis.Component);
     artemis.PooledComponent = PooledComponent;
 })(artemis || (artemis = {}));
-//# sourceMappingURL=PooledComponent.js.map
 var artemis;
 (function (artemis) {
     var BitSet = artemis.utils.BitSet;
@@ -1786,7 +1817,6 @@ var artemis;
     })();
     artemis.Aspect = Aspect;
 })(artemis || (artemis = {}));
-//# sourceMappingURL=Aspect.js.map
 var artemis;
 (function (artemis) {
     var BitSet = artemis.utils.BitSet;
@@ -2052,7 +2082,6 @@ var artemis;
     })();
     artemis.Entity = Entity;
 })(artemis || (artemis = {}));
-//# sourceMappingURL=Entity.js.map
 var artemis;
 (function (artemis) {
     /**
@@ -2086,7 +2115,6 @@ var artemis;
     })();
     artemis.Manager = Manager;
 })(artemis || (artemis = {}));
-//# sourceMappingURL=Manager.js.map
 var artemis;
 (function (artemis) {
     var Bag = artemis.utils.Bag;
@@ -2429,158 +2457,6 @@ var artemis;
         return ComponentMapperInitHelper;
     })();
 })(artemis || (artemis = {}));
-//# sourceMappingURL=World.js.map
-var artemis;
-(function (artemis) {
-    var Bag = artemis.utils.Bag;
-    var ComponentPool = (function () {
-        function ComponentPool() {
-            this.pools = new Bag();
-        }
-        ComponentPool.prototype.obtain = function (componentClass, type) {
-            var pool = this.getPool(type.getIndex());
-            return ((pool.size() > 0) ? pool.obtain() : new componentClass());
-        };
-        ComponentPool.prototype.free = function (c, type) {
-            this.freeByIndex(c, type.getIndex());
-        };
-        ComponentPool.prototype.freeByIndex = function (c, typeIndex) {
-            c.reset();
-            this.getPool(typeIndex).free(c);
-        };
-        ComponentPool.prototype.getPool = function (typeIndex) {
-            var pool = this.pools.safeGet(typeIndex);
-            if (pool == null) {
-                pool = new Pool();
-                this.pools.set(typeIndex, pool);
-            }
-            return pool;
-        };
-        return ComponentPool;
-    })();
-    artemis.ComponentPool = ComponentPool;
-    var Pool = (function () {
-        function Pool() {
-            this.cache = new Bag();
-        }
-        Pool.prototype.obtain = function () {
-            return this.cache.removeLast();
-        };
-        Pool.prototype.size = function () {
-            return this.cache.size();
-        };
-        Pool.prototype.free = function (component) {
-            this.cache.add(component);
-        };
-        return Pool;
-    })();
-})(artemis || (artemis = {}));
-//# sourceMappingURL=ComponentPool.js.map
-var artemis;
-(function (artemis) {
-    var Pooled = artemis.annotations.Pooled;
-    (function (Taxonomy) {
-        Taxonomy[Taxonomy["BASIC"] = 0] = "BASIC";
-        Taxonomy[Taxonomy["POOLED"] = 1] = "POOLED"; //, PACKED
-    })(artemis.Taxonomy || (artemis.Taxonomy = {}));
-    var Taxonomy = artemis.Taxonomy;
-    var ComponentType = (function () {
-        function ComponentType(type, index) {
-            this.index_ = 0;
-            if (index !== undefined) {
-                this.index_ = ComponentType.INDEX++;
-            }
-            else {
-                this.index_ = index;
-            }
-            this.type_ = type;
-            if (Pooled['pooledComponents'][artemis.getClassName(type)] === type) {
-                this.taxonomy_ = Taxonomy.POOLED;
-            }
-            else {
-                this.taxonomy_ = Taxonomy.BASIC;
-            }
-        }
-        ComponentType.prototype.getName = function () {
-            return artemis.getClassName(this.type_);
-        };
-        ComponentType.prototype.getIndex = function () {
-            return this.index_;
-        };
-        ComponentType.prototype.getTaxonomy = function () {
-            return this.taxonomy_;
-        };
-        ComponentType.prototype.toString = function () {
-            return "ComponentType[" + artemis.getClassName(ComponentType) + "] (" + this.index_ + ")";
-        };
-        ComponentType.INDEX = 0;
-        return ComponentType;
-    })();
-    artemis.ComponentType = ComponentType;
-})(artemis || (artemis = {}));
-//# sourceMappingURL=ComponentType.js.map
-var artemis;
-(function (artemis) {
-    var Bag = artemis.utils.Bag;
-    var ComponentType = artemis.ComponentType;
-    var Aspect = artemis.Aspect;
-    var ComponentTypeFactory = (function () {
-        function ComponentTypeFactory() {
-            /** Amount of generated component types. */
-            this.componentTypeCount_ = 0;
-            this.componentTypes_ = {};
-            this.types = new Bag();
-            Aspect.typeFactory = this;
-        }
-        /**
-         * Gets the component type for the given component class.
-         * <p>
-         * If no component type exists yet, a new one will be created and stored
-         * for later retrieval.
-         * </p>
-         *
-         * @param c
-         *			the component's class to get the type for
-         *
-         * @return the component's {@link ComponentType}
-         */
-        ComponentTypeFactory.prototype.getTypeFor = function (c) {
-            if ('number' === typeof c) {
-                return this.types.get(parseInt(c));
-            }
-            var type = this.componentTypes_[artemis.getClassName(c)];
-            if (type == null) {
-                var index = this.componentTypeCount_++;
-                type = new ComponentType(c, index);
-                this.componentTypes_[artemis.getClassName(c)] = type;
-                this.types.set(index, type);
-            }
-            return type;
-        };
-        /**
-         * Get the index of the component type of given component class.
-         *
-         * @param c
-         *			the component class to get the type index for
-         *
-         * @return the component type's index
-         */
-        ComponentTypeFactory.prototype.getIndexFor = function (c) {
-            return this.getTypeFor(c).getIndex();
-        };
-        ComponentTypeFactory.prototype.getTaxonomy = function (index) {
-            return this.types.get(index).getTaxonomy();
-        };
-        return ComponentTypeFactory;
-    })();
-    artemis.ComponentTypeFactory = ComponentTypeFactory;
-})(artemis || (artemis = {}));
-//# sourceMappingURL=ComponentTypeFactory.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var artemis;
 (function (artemis) {
     var Bag = artemis.utils.Bag;
@@ -2776,7 +2652,104 @@ var artemis;
     })(Manager);
     artemis.ComponentManager = ComponentManager;
 })(artemis || (artemis = {}));
-//# sourceMappingURL=ComponentManager.js.map
+var artemis;
+(function (artemis) {
+    var Pooled = artemis.annotations.Pooled;
+    (function (Taxonomy) {
+        Taxonomy[Taxonomy["BASIC"] = 0] = "BASIC";
+        Taxonomy[Taxonomy["POOLED"] = 1] = "POOLED"; //, PACKED
+    })(artemis.Taxonomy || (artemis.Taxonomy = {}));
+    var Taxonomy = artemis.Taxonomy;
+    var ComponentType = (function () {
+        function ComponentType(type, index) {
+            this.index_ = 0;
+            if (index !== undefined) {
+                this.index_ = ComponentType.INDEX++;
+            }
+            else {
+                this.index_ = index;
+            }
+            this.type_ = type;
+            if (Pooled['pooledComponents'][artemis.getClassName(type)] === type) {
+                this.taxonomy_ = Taxonomy.POOLED;
+            }
+            else {
+                this.taxonomy_ = Taxonomy.BASIC;
+            }
+        }
+        ComponentType.prototype.getName = function () {
+            return artemis.getClassName(this.type_);
+        };
+        ComponentType.prototype.getIndex = function () {
+            return this.index_;
+        };
+        ComponentType.prototype.getTaxonomy = function () {
+            return this.taxonomy_;
+        };
+        ComponentType.prototype.toString = function () {
+            return "ComponentType[" + artemis.getClassName(ComponentType) + "] (" + this.index_ + ")";
+        };
+        ComponentType.INDEX = 0;
+        return ComponentType;
+    })();
+    artemis.ComponentType = ComponentType;
+})(artemis || (artemis = {}));
+var artemis;
+(function (artemis) {
+    var Bag = artemis.utils.Bag;
+    var ComponentType = artemis.ComponentType;
+    var Aspect = artemis.Aspect;
+    var ComponentTypeFactory = (function () {
+        function ComponentTypeFactory() {
+            /** Amount of generated component types. */
+            this.componentTypeCount_ = 0;
+            this.componentTypes_ = {};
+            this.types = new Bag();
+            Aspect.typeFactory = this;
+        }
+        /**
+         * Gets the component type for the given component class.
+         * <p>
+         * If no component type exists yet, a new one will be created and stored
+         * for later retrieval.
+         * </p>
+         *
+         * @param c
+         *			the component's class to get the type for
+         *
+         * @return the component's {@link ComponentType}
+         */
+        ComponentTypeFactory.prototype.getTypeFor = function (c) {
+            if ('number' === typeof c) {
+                return this.types.get(parseInt(c));
+            }
+            var type = this.componentTypes_[artemis.getClassName(c)];
+            if (type == null) {
+                var index = this.componentTypeCount_++;
+                type = new ComponentType(c, index);
+                this.componentTypes_[artemis.getClassName(c)] = type;
+                this.types.set(index, type);
+            }
+            return type;
+        };
+        /**
+         * Get the index of the component type of given component class.
+         *
+         * @param c
+         *			the component class to get the type index for
+         *
+         * @return the component type's index
+         */
+        ComponentTypeFactory.prototype.getIndexFor = function (c) {
+            return this.getTypeFor(c).getIndex();
+        };
+        ComponentTypeFactory.prototype.getTaxonomy = function (index) {
+            return this.types.get(index).getTaxonomy();
+        };
+        return ComponentTypeFactory;
+    })();
+    artemis.ComponentTypeFactory = ComponentTypeFactory;
+})(artemis || (artemis = {}));
 var artemis;
 (function (artemis) {
     /**
@@ -2840,12 +2813,51 @@ var artemis;
     })();
     artemis.ComponentMapper = ComponentMapper;
 })(artemis || (artemis = {}));
-//# sourceMappingURL=ComponentMapper.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var artemis;
+(function (artemis) {
+    var Bag = artemis.utils.Bag;
+    var ComponentPool = (function () {
+        function ComponentPool() {
+            this.pools = new Bag();
+        }
+        ComponentPool.prototype.obtain = function (componentClass, type) {
+            var pool = this.getPool(type.getIndex());
+            return ((pool.size() > 0) ? pool.obtain() : new componentClass());
+        };
+        ComponentPool.prototype.free = function (c, type) {
+            this.freeByIndex(c, type.getIndex());
+        };
+        ComponentPool.prototype.freeByIndex = function (c, typeIndex) {
+            c.reset();
+            this.getPool(typeIndex).free(c);
+        };
+        ComponentPool.prototype.getPool = function (typeIndex) {
+            var pool = this.pools.safeGet(typeIndex);
+            if (pool == null) {
+                pool = new Pool();
+                this.pools.set(typeIndex, pool);
+            }
+            return pool;
+        };
+        return ComponentPool;
+    })();
+    artemis.ComponentPool = ComponentPool;
+    var Pool = (function () {
+        function Pool() {
+            this.cache = new Bag();
+        }
+        Pool.prototype.obtain = function () {
+            return this.cache.removeLast();
+        };
+        Pool.prototype.size = function () {
+            return this.cache.size();
+        };
+        Pool.prototype.free = function (component) {
+            this.cache.add(component);
+        };
+        return Pool;
+    })();
+})(artemis || (artemis = {}));
 var artemis;
 (function (artemis) {
     var Bag = artemis.utils.Bag;
@@ -2969,7 +2981,6 @@ var artemis;
         return IdentifierPool;
     })();
 })(artemis || (artemis = {}));
-//# sourceMappingURL=EntityManager.js.map
 var artemis;
 (function (artemis) {
     var Bag = artemis.utils.Bag;
@@ -3142,12 +3153,6 @@ var artemis;
         return SystemIndexManager;
     })();
 })(artemis || (artemis = {}));
-//# sourceMappingURL=EntitySystem.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var artemis;
 (function (artemis) {
     var managers;
@@ -3274,12 +3279,6 @@ var artemis;
         managers.GroupManager = GroupManager;
     })(managers = artemis.managers || (artemis.managers = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=GroupManager.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var artemis;
 (function (artemis) {
     var managers;
@@ -3340,12 +3339,6 @@ var artemis;
         managers.PlayerManager = PlayerManager;
     })(managers = artemis.managers || (artemis.managers = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=PlayerManager.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var artemis;
 (function (artemis) {
     var managers;
@@ -3395,12 +3388,6 @@ var artemis;
         managers.TagManager = TagManager;
     })(managers = artemis.managers || (artemis.managers = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=TagManager.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var artemis;
 (function (artemis) {
     var managers;
@@ -3458,12 +3445,6 @@ var artemis;
         managers.TeamManager = TeamManager;
     })(managers = artemis.managers || (artemis.managers = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=TeamManager.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var artemis;
 (function (artemis) {
     var systems;
@@ -3620,12 +3601,6 @@ var artemis;
         systems.DelayedEntityProcessingSystem = DelayedEntityProcessingSystem;
     })(systems = artemis.systems || (artemis.systems = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=DelayedEntityProcessingSystem.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var artemis;
 (function (artemis) {
     var systems;
@@ -3661,12 +3636,6 @@ var artemis;
         systems.EntityProcessingSystem = EntityProcessingSystem;
     })(systems = artemis.systems || (artemis.systems = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=EntityProcessingSystem.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var artemis;
 (function (artemis) {
     var systems;
@@ -3701,12 +3670,6 @@ var artemis;
         systems.IntervalEntitySystem = IntervalEntitySystem;
     })(systems = artemis.systems || (artemis.systems = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=IntervalEntitySystem.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var artemis;
 (function (artemis) {
     var systems;
@@ -3738,12 +3701,6 @@ var artemis;
         systems.VoidEntitySystem = VoidEntitySystem;
     })(systems = artemis.systems || (artemis.systems = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=VoidEntitySystem.js.map
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var artemis;
 (function (artemis) {
     var systems;
@@ -3777,4 +3734,4 @@ var artemis;
         systems.IntervalEntityProcessingSystem = IntervalEntityProcessingSystem;
     })(systems = artemis.systems || (artemis.systems = {}));
 })(artemis || (artemis = {}));
-//# sourceMappingURL=IntervalEntityProcessingSystem.js.map
+//# sourceMappingURL=artemis.js.map

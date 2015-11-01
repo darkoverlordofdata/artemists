@@ -1,0 +1,81 @@
+{
+  "namespace": "example",
+  "src": "example/src",
+  "output": {
+    "javascript": "web/src/example/generatedExtensions.js",
+    "typescript": "example/src/generatedComponents.ts",
+    "declaration": "example/ext/example.d.ts"
+  },
+  "components": {
+    "Bounds": [
+      "radius:number"
+    ],
+    "ColorAnimation": [
+      "redMin:number",
+      "redMax:number",
+      "redSpeed:number",
+      "greenMin:number",
+      "greenMax:number",
+      "greenSpeed:number",
+      "blueMin:number",
+      "blueMax:number",
+      "blueSpeed:number",
+      "alphaMin:number",
+      "alphaMax:number",
+      "alphaSpeed:number",
+      "redAnimate:boolean",
+      "greenAnimate:boolean",
+      "blueAnimate:boolean",
+      "alphaAnimate:boolean",
+      "repeat:boolean"
+    ],
+    "Enemy": false,
+    "Expires": [
+      "delay:number"
+    ],
+    "Health": [
+      "health:number",
+      "maximumHealth:number"
+    ],
+    "ParallaxStar": false,
+    "Player": false,
+    "Position": [
+      "x:number",
+      "y:number"
+    ],
+    "ScaleAnimation": [
+      "min:number",
+      "max:number",
+      "speed:number",
+      "repeat:boolean",
+      "active:boolean"
+    ],
+    "SoundEffect": [
+      "effect:number"
+    ],
+    "Sprite": [
+      "layer:number",
+      "object:Object"
+    ],
+    "Velocity": [
+      "x:number",
+      "y:number"
+    ]
+  },
+  "systems": {
+    "DestroySystem": true,
+    "ProcessInputSystem": true,
+    "RenderPositionSystem": true,
+    "AddViewSystem": true,
+    "RemoveViewSystem": true,
+    "ScoreSystem": true,
+    "InputSystem": true,
+    "MotionSystem": true,
+    "CreatePlayerSystem": true,
+    "FiringSystem": true,
+    "PlayerMoveSystem": true,
+    "CreateEnemySystem": true
+  },
+  "entities": {
+  }
+}

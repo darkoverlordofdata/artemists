@@ -1,70 +1,96 @@
 /**
- * A brief explanation for "project.json":
- * Here is the content of project.json file, this is the global configuration for your game, you can modify it to customize some behavior.
- * The detail of each field is under it.
- {
-    "project_type": "javascript",
-    // "project_type" indicate the program language of your project, you can ignore this field
-
-    "debugMode"     : 1,
-    // "debugMode" possible values :
-    //      0 - No message will be printed.
-    //      1 - cc.error, cc.assert, cc.warn, cc.log will print in console.
-    //      2 - cc.error, cc.assert, cc.warn will print in console.
-    //      3 - cc.error, cc.assert will print in console.
-    //      4 - cc.error, cc.assert, cc.warn, cc.log will print on canvas, available only on web.
-    //      5 - cc.error, cc.assert, cc.warn will print on canvas, available only on web.
-    //      6 - cc.error, cc.assert will print on canvas, available only on web.
-
-    "showFPS"       : true,
-    // Left bottom corner fps information will show when "showFPS" equals true, otherwise it will be hide.
-
-    "frameRate"     : 60,
-    // "frameRate" set the wanted frame rate for your game, but the real fps depends on your game implementation and the running environment.
-
-    "id"            : "gameCanvas",
-    // "gameCanvas" sets the id of your canvas element on the web page, it's useful only on web.
-
-    "renderMode"    : 0,
-    // "renderMode" sets the renderer type, only useful on web :
-    //      0 - Automatically chosen by engine
-    //      1 - Forced to use canvas renderer
-    //      2 - Forced to use WebGL renderer, but this will be ignored on mobile browsers
-
-    "engineDir"     : "frameworks/cocos2d-html5/",
-    // In debug mode, if you use the whole engine to develop your game, you should specify its relative path with "engineDir",
-    // but if you are using a single engine file, you can ignore it.
-
-    "modules"       : ["cocos2d"],
-    // "modules" defines which modules you will need in your game, it's useful only on web,
-    // using this can greatly reduce your game's resource size, and the cocos console tool can package your game with only the modules you set.
-    // For details about modules definitions, you can refer to "../../frameworks/cocos2d-html5/modulesConfig.json".
-
-    "jsList"        : [
-    ]
-    // "jsList" sets the list of js files in your game.
- }
+ *
+ *     __  __         ___                            ___  ___
+ *    / /_/ /  ___   / _ \___ _    _____ ____  ___  / _/ / _ )___  ___ _______
+ *   / __/ _ \/ -_) / ___/ _ \ |/|/ / -_) __/ / _ \/ _/ / _  / _ \(_-</ __/ _ \
+ *   \__/_//_/\__/ /_/   \___/__,__/\__/_/    \___/_/  /____/\___/___/\__/\___/
+ *
+ *
  *
  */
+bosco.start({
+    "namespace": "example",
+    "controllers": [
+        "GameController"
+    ],
+    "width": window.innerWidth,
+    "height": window.innerHeight,
+    "fullScreen": false,
+    "scale": false,
+    "scaleType": "FILL",
+    "stats": true,
+    "storage": false,
+    "options": {
+        "antialiasing": false,
+        "transparent": false,
+        "resolution": window.devicePixelRatio,
+        "autoResize": true,
+        "backgroundColor": "0x3c3c3c"
+    },
+    "assets": {
+        "images": (window.devicePixelRatio >= 2) ? "res/images@2x.json" : "res/images.json",
+        "normal_fnt"        : "res/fonts/normal.fnt",
+        "hud_fnt"           : "res/fonts/hud.fnt"
+    },
+    "resources": {
+        "bullet" : {
+            "path": "bullet.png",
+            "tint": 0xffd800ff,
+            "anchor": {x:0.5, y:0.5}
+        },
+        "enemy1"  : {
+            "path": "enemy1.png",
+            "tint": 0xff008e,
+            "anchor": {x:0.5, y:0.5}
 
-cc.game.onStart = function(){
-    //if(!cc.sys.isNative && document.getElementById("cocosLoading")) //If referenced loading.js, please remove it
-    //    document.body.removeChild(document.getElementById("cocosLoading"));
+        },
+        "enemy2"  : {
+            "path": "enemy2.png",
+            "tint": 0xff008e,
+            "anchor": {x:0.5, y:0.5}
 
-    // Pass true to enable retina display, disabled by default to improve performance
-    cc.view.enableRetina(false);
-    // Adjust viewport meta
-    cc.view.adjustViewPort(true);
-    // Setup the resolution policy and design resolution size
-    cc.view.setDesignResolutionSize(window.innerWidth, window.innerHeight, cc.ResolutionPolicy.SHOW_ALL);
-    // The game will be resized when browser size change
-    //cc.view.setDesignResolutionSize(800, 450, cc.ResolutionPolicy.SHOW_ALL);
-    //// The game will be resized when browser size change
-    cc.view.resizeWithBrowserSize(true);
-    //load resources
-    cc.LoaderScene.preload(g_resources, function () {
-        return cc.director.runScene(example.core.SpaceshipWarrior.start());
-        // cc.director.runScene(new HelloWorldScene());
-    }, this);
-};
-cc.game.run();
+        },
+        "enemy3"  : {
+            "path": "enemy3.png",
+            "tint": 0xff008e,
+            "anchor": {x:0.5, y:0.5}
+
+        },
+        "explosion"  : {
+            "path": "explosion.png",
+            "tint": 0xffd80080,
+            "anchor": {x:0.5, y:0.5}
+
+        },
+        "fighter"  : {
+            "path": "fighter.png",
+            "tint": 0x5dff81,
+            "anchor": {x:0.5, y:0.5}
+
+        },
+        "particle"  : {
+            "path": "particle.png",
+            "tint": 0xffd800ff,
+            "anchor": {x:0.5, y:0.5}
+
+        },
+        "star"  : {
+            "path": "particle.png",
+            "tint": 0xffd800ff,
+            "anchor": {x:0.5, y:0.5}
+
+        }
+
+    },
+
+
+    "properties": {
+        "skip": "false",
+        "leaderboard": "off",
+        "player": "",
+        "userId": "",
+        "playMusic": "true",
+        "playSfx": "true"
+    }
+});
+

@@ -1,0 +1,54 @@
+{
+    "compilerOptions": {
+        "target": "ES5",
+        "module": "commonjs",
+        "noImplicitAny": false,
+        "removeComments": false,
+        "preserveConstEnums": false,
+        "sourceMap": true,
+        "experimentalDecorators": true,
+        "outDir": "web/src/example"
+
+    },
+
+    "files": [
+      "example/cocos2d-3.1.6x.d.ts",
+      "example/resource.ts",
+      "example/cclib-dev.ts",
+      "example/core/Constants",
+      "example/components/Bounds.ts",
+      "example/components/ColorAnimation.ts",
+      "example/components/Enemy.ts",
+      "example/components/Expires.ts",
+      "example/components/Health.ts",
+      "example/components/ParallaxStar.ts",
+      "example/components/Player.ts",
+      "example/components/Position.ts",
+      "example/components/ScaleAnimation.ts",
+      "example/components/SoundEffect.ts",
+      "example/components/Sprite.ts",
+      "example/components/Velocity.ts",
+      "example/templates/EnemyShipTemplate.ts",
+      "example/templates/ExplosionTemplate.ts",
+      "example/templates/ParticleTemplate.ts",
+      "example/templates/PlayerBulletTemplate.ts",
+      "example/templates/PlayerTemplate.ts",
+      "example/templates/StarTemplate.ts",
+      "example/systems/CollisionSystem.ts",
+      "example/systems/ColorAnimationSystem.ts",
+      "example/systems/EntitySpawningTimerSystem.ts",
+      "example/systems/ExpiringSystem.ts",
+      "example/systems/HealthRenderSystem.ts",
+      "example/systems/HudRenderSystem.ts",
+      "example/systems/MovementSystem.ts",
+      "example/systems/ParallaxStarRepeatingSystem.ts",
+      "example/systems/PlayerInputSystem.ts",
+      "example/systems/RemoveOffscreenShipsSystem.ts",
+      "example/systems/ScaleAnimationSystem.ts",
+      "example/systems/SoundEffectSystem.ts",
+      "example/systems/SpriteRenderSystem.ts",
+      "example/core/GameScreen.ts",
+      "example/core/SpaceshipWarrior.ts"
+   ]
+	
+}

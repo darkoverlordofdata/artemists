@@ -83,63 +83,129 @@ module.exports = (project, options = {}) ->
 
     return step
 
+#  ### build the project ###
+#  build: do ->
+#    options.compile ?= 'ADVANCED_OPTIMIZATIONS'
+#
+#    step = [].concat(project.config.build)
+#
+#    # if isCocos2d
+#    #   ###
+#    #   # Use cocos2d project.json to build the target
+#    #   ###
+#    #   #files = getCocos2dFiles(true).join(' LF ')
+#    #   files = getCocos2dFiles(false).join(' LF ')
+#    #   if options.compile?
+#    #     step.push """
+#    #       cat #{files} | java -jar #{COMPILER_JAR} \
+#    #         --jscomp_error=checkTypes \
+#    #         --warning_level=QUIET \
+#    #         --compilation_level #{options.compile} \
+#    #         --formatting PRETTY_PRINT \
+#    #         --js_output_file build/web/main.js
+#    #     """
+#    #   else
+#    #     step.push """
+#    #       cp -fr web/src build/web/src
+#    #       mkdir build/web/frameworks
+#    #       cp -fr web/frameworks/cocos2d-html5 build/web/frameworks/cocos2d-html5
+#    #     """
+#
+#    # else
+#    if projectType is CoffeeScript
+#      ###
+#      # Build after recompiling all coffeescript together
+#      ###
+#      files = require(CSCONFIG).files.join(" LF ")
+#      step.push """
+#        cat #{files} | coffee -cs > build/#{LIB_NAME}.js
+#        cat #{files} | coffee -cs | \
+#          java -jar #{COMPILER_JAR} \
+#            --compilation_level #{options.compile} \
+#            --js_output_file build/#{LIB_NAME}.min.js
+#      """
+#
+#    else
+#      ###
+#      # Build directly from the raw transpiled javascript
+#      ###
+#      files = require(JSCONFIG).files.join(" LF ")
+#      step.push """
+#        cat #{files} > build/web/src/#{LIB_NAME}.js
+#        cat #{files} > build/#{LIB_NAME}.js
+#        cat #{files} | \
+#          java -jar #{COMPILER_JAR} \
+#            --compilation_level #{options.compile} \
+#            --js_output_file build/#{LIB_NAME}.min.js
+#      """
+#    return step
+
   ### build the project ###
   build: do ->
     options.compile ?= 'ADVANCED_OPTIMIZATIONS'
-    
+
     step = [].concat(project.config.build)
-      
-    # if isCocos2d
-    #   ###
-    #   # Use cocos2d project.json to build the target
-    #   ###
-    #   #files = getCocos2dFiles(true).join(' LF ')
-    #   files = getCocos2dFiles(false).join(' LF ')
-    #   if options.compile?
-    #     step.push """
-    #       cat #{files} | java -jar #{COMPILER_JAR} \
-    #         --jscomp_error=checkTypes \
-    #         --warning_level=QUIET \
-    #         --compilation_level #{options.compile} \
-    #         --formatting PRETTY_PRINT \
-    #         --js_output_file build/web/main.js
-    #     """
-    #   else
-    #     step.push """
-    #       cp -fr web/src build/web/src
-    #       mkdir build/web/frameworks
-    #       cp -fr web/frameworks/cocos2d-html5 build/web/frameworks/cocos2d-html5
-    #     """
-    
-    # else 
+
+#    if isCocos2d
+#      ###
+#      # Use cocos2d project.json to build the target
+#      ###
+#      files = getCocos2dFiles(true).join(' LF ')
+#      if options.compile?
+#        step.push """
+#          cat #{files} | java -jar #{COMPILER_JAR} \
+#            --jscomp_error=checkTypes \
+#            --warning_level=QUIET \
+#            --compilation_level #{options.compile} \
+#            --js_output_file build/web/main.js
+#        """
+#      else
+#        step.push """
+#          cp -fr web/src build/web/src
+#          mkdir build/web/frameworks
+#          cp -fr web/frameworks/cocos2d-html5 build/web/frameworks/cocos2d-html5
+#        """
+#
+#    else
     if projectType is CoffeeScript
       ###
       # Build after recompiling all coffeescript together
       ###
       files = require(CSCONFIG).files.join(" LF ")
       step.push """
-        cat #{files} | coffee -cs > build/#{LIB_NAME}.js 
+        cat #{files} | coffee -cs > build/#{LIB_NAME}.js
         cat #{files} | coffee -cs | \
           java -jar #{COMPILER_JAR} \
             --compilation_level #{options.compile} \
             --js_output_file build/#{LIB_NAME}.min.js
       """
-      
+
+    else if projectType is TypeScript
+      ###
+      # Build with tsc, then compress
+      ###
+      step.push """
+        tsc -p . --outFile build/#{LIB_NAME}.js -d
+        cat build/#{LIB_NAME}.js | \
+          java -jar #{COMPILER_JAR} \
+            --compilation_level #{options.compile} \
+            --js_output_file build/#{LIB_NAME}.min.js
+      """
+
     else
       ###
-      # Build directly from the raw transpiled javascript
+      # Build directly from the raw javascript
       ###
       files = require(JSCONFIG).files.join(" LF ")
       step.push """
-        cat #{files} > build/web/src/#{LIB_NAME}.js 
-        cat #{files} > build/#{LIB_NAME}.js 
+        cat #{files} > build/#{LIB_NAME}.js
         cat #{files} | \
           java -jar #{COMPILER_JAR} \
             --compilation_level #{options.compile} \
             --js_output_file build/#{LIB_NAME}.min.js
       """
     return step
-      
+
   ### delete the prior build items ###
   clean: """
     rm -rf build/*
