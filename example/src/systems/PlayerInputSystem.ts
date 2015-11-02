@@ -6,10 +6,13 @@ module example.systems {
   import Constants = example.core.Constants;
   import Layer = example.components.Layer;
   import EFFECT = example.components.EFFECT;
+  import EntitySystem = artemis.EntitySystem;
   import PlayerComponent = artemis.components.PlayerComponent;
   import PositionComponent = artemis.components.PositionComponent;
   import VelocityComponent = artemis.components.VelocityComponent;
   import EntityProcessingSystem = artemis.systems.EntityProcessingSystem;
+
+  import Container = PIXI.Container;
 
   export class PlayerInputSystem extends EntityProcessingSystem  {
     private static FireRate = .1;
@@ -17,11 +20,11 @@ module example.systems {
     private shoot:boolean;
     private timeToFire:number=0;
     private mouseVector;
-    private sprites:PIXI.Container;
+    private sprites:Container;
 
-    constructor(sprites:PIXI.Container) {
+    constructor() {
       super(Aspect.getAspectForAll(PositionComponent, VelocityComponent, PlayerComponent));
-      this.sprites = sprites;
+      this.sprites = EntitySystem.blackBoard.getEntry<Container>('sprites');
     }
 
     public initialize() {
@@ -32,17 +35,6 @@ module example.systems {
       document.addEventListener('mousemove', this.onTouchMove, true);
       document.addEventListener('mouseup', this.onTouchEnd, true);
     }
-
-    //protected fire(x:number, y:number) {
-    //  this.world.createEntity("Bullet")
-    //    .addPosition(~~x, ~~y)
-    //    .addVelocity(0, 800)
-    //    .addBounds(5)
-    //    .addExpires(5)
-    //    .addSoundEffect(EFFECT.PEW)
-    //    .addSprite(Layer.PARTICLES, bosco.prefab('bullet', this.sprites))
-    //    .start(Constants.Groups.PLAYER_BULLETS);
-    //}
 
     protected processEach(e:Entity) {
 
@@ -60,11 +52,8 @@ module example.systems {
 
       if (this.shoot) {
         if (this.timeToFire <= 0) {
-
-          //this.fire(position.x - 27, position.y + 2);
-          //this.fire(position.x + 27, position.y + 2);
-          this.world.createEntityFromTemplate('bullet', position.x - 27, position.y + 2).addToWorld();
-          this.world.createEntityFromTemplate('bullet', position.x + 27, position.y + 2).addToWorld();
+          this.world.createEntityFromTemplate('bullet', position.x - 27, position.y + 2);
+          this.world.createEntityFromTemplate('bullet', position.x + 27, position.y + 2);
           this.timeToFire = PlayerInputSystem.FireRate;
         }
       }

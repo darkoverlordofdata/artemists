@@ -14,13 +14,15 @@ module example.systems {
   import PositionComponent = artemis.components.PositionComponent;
   import HealthComponent = artemis.components.HealthComponent;
 
+  import Container = PIXI.Container;
+
 	export class CollisionSystem extends EntitySystem {
 		private collisionPairs:Bag<CollisionPair>;
-		private sprites:PIXI.Container;
+		private sprites:Container;
 	
-		constructor(sprites:PIXI.Container) {
+		constructor() {
 			super(Aspect.getAspectForAll(PositionComponent, BoundsComponent));
-			this.sprites = sprites;
+      this.sprites = EntitySystem.blackBoard.getEntry<Container>('sprites');
 		}
 	
 		
@@ -34,7 +36,7 @@ module example.systems {
 					var bp:PositionComponent = bullet.position;
           this.world.createEntityFromTemplate('small', bp.x, bp.y);
           for(var i = 0; 4 > i; i++) {
-            this.world.createEntityFromTemplate('particle', bp.x, bp.y).addToWorld();
+            this.world.createEntityFromTemplate('particle', bp.x, bp.y);
           }
 
 					bullet.deleteFromWorld();

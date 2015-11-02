@@ -6,10 +6,13 @@ module example.systems {
 	import MathUtils = artemis.utils.MathUtils;
   import Constants = example.core.Constants;
   import BitmapText = PIXI.extras.BitmapText;
+  import EntitySystem = artemis.EntitySystem;
   import HealthComponent = artemis.components.HealthComponent;
   import PositionComponent = artemis.components.PositionComponent;
   import SpriteComponent = artemis.components.SpriteComponent;
   import EntityProcessingSystem = artemis.systems.EntityProcessingSystem;
+
+  import Container = PIXI.Container;
 
   interface ILabelBMFont {
     [key: string]: BitmapText;
@@ -18,9 +21,9 @@ module example.systems {
     private texts:ILabelBMFont;
     private sprites:PIXI.Container;
 
-    constructor(sprites:PIXI.Container) {
+    constructor() {
 			super(Aspect.getAspectForAll(PositionComponent, HealthComponent));
-      this.sprites = sprites;
+      this.sprites = EntitySystem.blackBoard.getEntry<Container>('sprites');
       this.texts = {};
 		}
 		

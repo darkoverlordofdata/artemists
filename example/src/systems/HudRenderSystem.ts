@@ -1,6 +1,8 @@
 module example.systems {
 
+  import Container = PIXI.Container;
   import BitmapText = PIXI.extras.BitmapText;
+  import EntitySystem = artemis.EntitySystem;
   import VoidEntitySystem = artemis.systems.VoidEntitySystem;
   import PositionComponent = artemis.components.PositionComponent;
   import SpriteComponent = artemis.components.SpriteComponent;
@@ -13,9 +15,9 @@ module example.systems {
 
     private sprites:PIXI.Container;
 
-    constructor(sprites:PIXI.Container) {
+    constructor() {
       super();
-      this.sprites = sprites;
+      this.sprites = EntitySystem.blackBoard.getEntry<Container>('sprites');
     }
 
 

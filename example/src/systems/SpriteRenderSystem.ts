@@ -11,7 +11,7 @@ module example.systems {
 
     private sprites:PIXI.Container;
 
-    constructor(game:PIXI.Container) {
+    constructor() {
       super(Aspect.getAspectForAll(PositionComponent, SpriteComponent));
     }
 

@@ -155,13 +155,15 @@ module.exports =
     d1.push "        start(name?:string): Entity;"
 
 
-    js.push "  World.prototype.initMappers = function() {"
+    js.push "  World.prototype.loadExtensions = function() {"
     for Name, properties of config.components
       name = Name[0].toLowerCase()+Name[1...];
       js.push "    Entity._#{name}ComponentMapper = this.getMapper(#{Name}Component);"
+      js.push "    this.setManager(new GroupManager());"
+      js.push "    this.setManager(new TagManager());"
     js.push "  };"
 
-    d3.push "        initMappers(): void;"
+    d3.push "        loadExtensions(): void;"
 
     for Name, properties of config.components
       name = Name[0].toLowerCase()+Name[1...];

@@ -60,6 +60,9 @@
     "Velocity": [
       "x:number",
       "y:number"
+    ],
+    "Score": [
+      "value:number"
     ]
   },
   "systems": {
@@ -77,5 +80,6 @@
     "CreateEnemySystem": true
   },
   "entities": {
+    "Score": true
   }
 }
