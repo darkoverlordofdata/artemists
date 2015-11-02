@@ -11,16 +11,8 @@ module example.systems {
 	import ImmutableBag = artemis.utils.ImmutableBag;
 	import GroupManager = artemis.managers.GroupManager;
 	import BoundsComponent = artemis.components.BoundsComponent;
-	import ColorAnimationComponent = artemis.components.ColorAnimationComponent;
-	import ExpiresComponent = artemis.components.ExpiresComponent;
-	import HealthComponent = artemis.components.HealthComponent;
-	import ParallaxStarComponent = artemis.components.ParallaxStarComponent;
-	import PlayerComponent = artemis.components.PlayerComponent;
-	import PositionComponent = artemis.components.PositionComponent;
-	import ScaleAnimationComponent = artemis.components.ScaleAnimationComponent;
-	import SoundEffectComponent = artemis.components.SoundEffectComponent;
-	import SpriteComponent = artemis.components.SpriteComponent;
-	import VelocityComponent = artemis.components.VelocityComponent;
+  import PositionComponent = artemis.components.PositionComponent;
+  import HealthComponent = artemis.components.HealthComponent;
 
 	export class CollisionSystem extends EntitySystem {
 		private collisionPairs:Bag<CollisionPair>;
@@ -40,69 +32,25 @@ module example.systems {
 				
 				handleCollision: (bullet:Entity, ship:Entity) => {
 					var bp:PositionComponent = bullet.position;
-          this.smallExplosion(bp.x, bp.y);
-					for(var i = 0; 4 > i; i++) {
-            this.particle(bp.x, bp.y);
+          this.world.createEntityFromTemplate('small', bp.x, bp.y);
+          for(var i = 0; 4 > i; i++) {
+            this.world.createEntityFromTemplate('particle', bp.x, bp.y).addToWorld();
           }
 
 					bullet.deleteFromWorld();
 					var health:HealthComponent = ship.health;
 					var position:PositionComponent = ship.position;
 					health.health -= 1;
+
 					if(health.health < 0) {
 						health.health = 0;
 						ship.deleteFromWorld();
-            this.bigExplosion(position.x, position.y);
+            this.world.createEntityFromTemplate('big', position.x, position.y);
 					}
 				}
 			}));
 		}
 		
-		protected particle(x:number, y:number) {
-      var radians:number = MathUtils.random(2*Math.PI);
-      var magnitude:number = MathUtils.random(400);
-      var velocityX = magnitude * Math.cos(radians);
-      var velocityY = magnitude * Math.sin(radians);
-      var scale = MathUtils.random(0.5, 1);
-
-      var options = {
-        scale: {x:scale, y:scale},
-        position: {x:~~x, y:~~y}
-      };
-
-      this.world.createEntity("Particle")
-        .addPosition(~~x, ~~y)
-        .addVelocity(velocityX, velocityY)
-        .addExpires(1)
-        .addColorAnimation(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, -1, false, false, false, true, true)
-        .addSprite(Layer.PARTICLES, bosco.prefab('particle', this.sprites, options))
-        .start();
-    }
-
-    protected bigExplosion(x:number, y:number) {
-      this.explosion(x, y, 0.5)
-        .addSoundEffect(EFFECT.ASPLODE)
-        .start();
-    }
-    protected smallExplosion(x:number, y:number) {
-      this.explosion(x, y, 0.1)
-        .addSoundEffect(EFFECT.SMALLASPLODE)
-        .start();
-    }
-
-    protected explosion(x:number, y:number, scale:number):Entity {
-
-      var options = {
-        scale: {x:scale, y:scale},
-        position: {x:~~x, y:~~y}
-      };
-      return this.world.createEntity('Explosion')
-        .addPosition(~~x, ~~y)
-        .addExpires(0.5)
-        .addScaleAnimation(scale/100, scale, -3, false, true)
-        .addSprite(Layer.PARTICLES, bosco.prefab('explosion', this.sprites, options));
-    }
-
 		protected processEntities(entities:ImmutableBag<Entity>) {
 			for(var i = 0; this.collisionPairs.size() > i; i++) {
 				this.collisionPairs.get(i).checkForCollisions();

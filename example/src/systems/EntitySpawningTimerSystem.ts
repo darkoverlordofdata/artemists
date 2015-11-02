@@ -22,51 +22,23 @@ module example.systems {
       this.timer1 = new Timer(2, true);
       this.timer1.execute = () => {
 
-        var pos = {
-          x: ~~MathUtils.nextInt(Constants.FRAME_WIDTH),
-          y: ~~(Constants.FRAME_HEIGHT / 2 - 200)
-        };
-
-        this.world.createEntity("enemy")
-          .addHealth(10, 10)
-          .addPosition(pos.x, pos.y)
-          .addVelocity(0, -40)
-          .addBounds(20)
-          .addSprite(Layer.ACTORS_3, bosco.prefab('enemy1', this.sprites, pos))
-          .start(Constants.Groups.ENEMY_SHIPS);
+        this.world.createEntityFromTemplate('enemy', "enemy1", Layer.ACTORS_3, 10, MathUtils.nextInt(Constants.FRAME_WIDTH), Constants.FRAME_HEIGHT / 2 - 200, 0, -40, 20);
       };
 
       this.timer2 = new Timer(6, true);
       this.timer2.execute = () => {
-        var pos = {
-          x: ~~MathUtils.nextInt(Constants.FRAME_WIDTH),
-          y: ~~(Constants.FRAME_HEIGHT / 2 - 100)
-        };
 
-        this.world.createEntity("enemy")
-          .addHealth(20, 20)
-          .addPosition(pos.x, pos.y)
-          .addVelocity(0, -30)
-          .addBounds(40)
-          .addSprite(Layer.ACTORS_2, bosco.prefab('enemy2', this.sprites, pos))
-          .start(Constants.Groups.ENEMY_SHIPS);
+        var x = MathUtils.nextInt(Constants.FRAME_WIDTH);
+        var y = Constants.FRAME_HEIGHT / 2 - 100;
+        this.world.createEntityFromTemplate('enemy', "enemy2", Layer.ACTORS_2, 20, x, y, 0, -30, 40);
       };
 
       this.timer3 = new Timer(12, true);
       this.timer3.execute = () => {
-        var pos = {
-          x: ~~MathUtils.nextInt(Constants.FRAME_WIDTH),
-          y: ~~(Constants.FRAME_HEIGHT / 2 - 50)
-        };
 
-        this.world.createEntity("enemy")
-          .addHealth(60, 60)
-          .addPosition(pos.x,pos.y)
-          .addVelocity(0, -20)
-          .addBounds(70)
-          .addSprite(Layer.ACTORS_1, bosco.prefab('enemy3', this.sprites, pos))
-          .start(Constants.Groups.ENEMY_SHIPS);
-
+        var x = MathUtils.nextInt(Constants.FRAME_WIDTH);
+        var y = Constants.FRAME_HEIGHT / 2 - 50;
+        this.world.createEntityFromTemplate('enemy', "enemy3", Layer.ACTORS_1, 60, x, y, 0, -20, 70);
       };
     }
 

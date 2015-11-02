@@ -148,10 +148,11 @@ module.exports =
     js.push "      this.world_.getManager(GroupManager).add(this, name);"
     js.push "    }"
     js.push "    this.addToWorld();"
+    js.push "    return this;"
     js.push "  };"
     js.push ""
 
-    d1.push "        start(name?:string): void;"
+    d1.push "        start(name?:string): Entity;"
 
 
     js.push "  World.prototype.initMappers = function() {"

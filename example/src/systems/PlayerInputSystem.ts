@@ -12,7 +12,7 @@ module example.systems {
   import EntityProcessingSystem = artemis.systems.EntityProcessingSystem;
 
   export class PlayerInputSystem extends EntityProcessingSystem  {
-    private static FireRate = 0.1;
+    private static FireRate = .1;
 
     private shoot:boolean;
     private timeToFire:number=0;
@@ -33,24 +33,22 @@ module example.systems {
       document.addEventListener('mouseup', this.onTouchEnd, true);
     }
 
-    protected fire(x:number, y:number) {
-      this.world.createEntity("Bullet")
-        .addPosition(~~x, ~~y)
-        .addVelocity(0, 800)
-        .addBounds(5)
-        .addExpires(5)
-        .addSoundEffect(EFFECT.PEW)
-        .addSprite(Layer.PARTICLES, bosco.prefab('bullet', this.sprites))
-        .start(Constants.Groups.PLAYER_BULLETS);
-    }
+    //protected fire(x:number, y:number) {
+    //  this.world.createEntity("Bullet")
+    //    .addPosition(~~x, ~~y)
+    //    .addVelocity(0, 800)
+    //    .addBounds(5)
+    //    .addExpires(5)
+    //    .addSoundEffect(EFFECT.PEW)
+    //    .addSprite(Layer.PARTICLES, bosco.prefab('bullet', this.sprites))
+    //    .start(Constants.Groups.PLAYER_BULLETS);
+    //}
 
     protected processEach(e:Entity) {
 
       if (this.mouseVector === undefined) return;
 
       var position:PositionComponent = e.position;
-      var velocity:VelocityComponent = e.velocity;
-
       var destinationX = this.mouseVector.x;
       var destinationY = this.mouseVector.y;
 
@@ -63,8 +61,10 @@ module example.systems {
       if (this.shoot) {
         if (this.timeToFire <= 0) {
 
-          this.fire(position.x - 27, position.y + 2);
-          this.fire(position.x + 27, position.y + 2);
+          //this.fire(position.x - 27, position.y + 2);
+          //this.fire(position.x + 27, position.y + 2);
+          this.world.createEntityFromTemplate('bullet', position.x - 27, position.y + 2).addToWorld();
+          this.world.createEntityFromTemplate('bullet', position.x + 27, position.y + 2).addToWorld();
           this.timeToFire = PlayerInputSystem.FireRate;
         }
       }
@@ -88,7 +88,6 @@ module example.systems {
 
     protected onTouchMove = (event) => {
       event = event.changedTouches ? event.changedTouches[0] : event;
-      //this.shoot = true;
       this.mouseVector = {
         x: parseInt(event.clientX),
         y: parseInt(event.clientY)

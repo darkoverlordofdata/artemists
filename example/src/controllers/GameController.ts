@@ -71,23 +71,26 @@ module example {
         .addSprite(Layer.ACTORS_3, bosco.prefab('fighter', viewContainer))
         .start(Constants.Groups.PLAYER_SHIP);
 
-      for (var i = 0; 500 > i; i++) {
-        var x = MathUtils.nextInt(Constants.FRAME_WIDTH);
-        var y = MathUtils.nextInt(Constants.FRAME_HEIGHT);
-        var scale = MathUtils.random(0.5, 1);
-        var options = {
-          scale: {x:scale, y:scale},
-          position: {x:~~x, y:~~y}
-        };
-        world.createEntity('Star')
-          .setParallaxStar(true)
-          .addPosition(~~x, ~~y)
-          .addVelocity(0, MathUtils.random(-10, -60))
-          .addColorAnimation(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, MathUtils.random(0.2, 0.7), false, false, false, true, true)
-          .addSprite(Layer.BACKGROUND, bosco.prefab('star', viewContainer, options))
-          .start();
-
-      }
+      //for (var i = 0; 500 > i; i++) {
+      //   world.createEntityFromTemplate('star').addToWorld();
+      //}
+      //for (var i = 0; 500 > i; i++) {
+      //  var x = MathUtils.nextInt(Constants.FRAME_WIDTH);
+      //  var y = MathUtils.nextInt(Constants.FRAME_HEIGHT);
+      //  var scale = MathUtils.random(0.5, 1);
+      //  var options = {
+      //    scale: {x:scale, y:scale},
+      //    position: {x:~~x, y:~~y}
+      //  };
+      //  world.createEntity('Star')
+      //    .setParallaxStar(true)
+      //    .addPosition(~~x, ~~y)
+      //    .addVelocity(0, MathUtils.random(-10, -60))
+      //    .addColorAnimation(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, MathUtils.random(0.2, 0.7), false, false, false, true, true)
+      //    .addSprite(Layer.BACKGROUND, bosco.prefab('star', viewContainer, options))
+      //    .start();
+      //
+      //}
     }
 
     public update(delta:number) {
