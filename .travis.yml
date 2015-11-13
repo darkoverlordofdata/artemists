@@ -4,6 +4,7 @@ node_js:
 before_script:
   - npm run build
 before_install:
+  - npm install uglify-js
   - npm install typescript
   - npm install -g bower
   - npm install -g bower-installer
