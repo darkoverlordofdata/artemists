@@ -33,6 +33,7 @@ GOOG_BASE       = "../../../.."
 ANDROID_ASSETS  = "./web/frameworks/runtime-src/proj.android-studio/app/assets"
 CSCONFIG        = "./csconfig.json"
 JSCONFIG        = "./jsconfig.json"
+JSCONFIG_EXAMPLE= "./jsconfig_example.json"
 TSCONFIG        = "./tsconfig.json"
 
 ###
@@ -184,14 +185,16 @@ module.exports = (project, options = {}) ->
       ###
       # Build with tsc, then compress
       ###
+      files = require(JSCONFIG).files.join(" LF ")
       step.push """
         tsc -p . --outFile build/#{LIB_NAME}.js -d
-        cat build/#{LIB_NAME}.js | \
+        cat #{files} > build/#{LIB_NAME}.js
+        cat #{files} | \
           java -jar #{COMPILER_JAR} \
             --compilation_level #{options.compile} \
             --js_output_file build/#{LIB_NAME}.min.js
       """
-      files = require(JSCONFIG).files.join(" LF ")
+      files = require(JSCONFIG_EXAMPLE).files.join(" LF ")
       step.push """
         cat #{files} > build/web/example.js
         uglifyjs build/web/example.js --compress --mangle --output build/web/example.min.js

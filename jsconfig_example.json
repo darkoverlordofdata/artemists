@@ -1,5 +1,11 @@
 {
     "files": [
+      "web/src/stats.js/stats.min.js",
+      "web/src/pixi.js/pixi.min.js",
+      "web/src/tween.ts/tween.min.js",
+      "web/src/localstoragedb/localstoragedb.min.js",
+      "web/src/chromestoragedb/chromestoragedb.js",
+      "web/src/bosco/bosco.js",
       "web/src/artemis/prolog.js",
       "web/src/artemis/exports.js",
       "web/src/artemis/utils/Bag.js",
@@ -41,6 +47,30 @@
       "web/src/artemis/systems/EntityProcessingSystem.js",
       "web/src/artemis/systems/IntervalEntitySystem.js",
       "web/src/artemis/systems/VoidEntitySystem.js",
-      "web/src/artemis/systems/IntervalEntityProcessingSystem.js"
+      "web/src/artemis/systems/IntervalEntityProcessingSystem.js",
+      "web/src/example/prolog.js",
+      "web/src/example/generatedComponents.js",
+      "web/src/example/generatedExtensions.js",
+      "web/src/example/templates/EnemyShipTemplate.js",
+      "web/src/example/templates/ExplosionTemplate.js",
+      "web/src/example/templates/ParticleTemplate.js",
+      "web/src/example/templates/PlayerBulletTemplate.js",
+      "web/src/example/templates/PlayerTemplate.js",
+      "web/src/example/templates/StarTemplate.js",
+      "web/src/example/systems/CollisionSystem.js",
+      "web/src/example/systems/ColorAnimationSystem.js",
+      "web/src/example/systems/EntitySpawningTimerSystem.js",
+      "web/src/example/systems/ExpiringSystem.js",
+      "web/src/example/systems/HealthRenderSystem.js",
+      "web/src/example/systems/HudRenderSystem.js",
+      "web/src/example/systems/MovementSystem.js",
+      "web/src/example/systems/ParallaxStarRepeatingSystem.js",
+      "web/src/example/systems/PlayerInputSystem.js",
+      "web/src/example/systems/RemoveOffscreenShipsSystem.js",
+      "web/src/example/systems/ScaleAnimationSystem.js",
+      "web/src/example/systems/SoundEffectSystem.js",
+      "web/src/example/systems/SpriteRenderSystem.js",
+      "web/src/example/controllers/GameController.js",
+      "web/main.js"
     ]
 }
