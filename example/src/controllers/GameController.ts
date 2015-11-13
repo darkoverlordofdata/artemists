@@ -15,8 +15,6 @@ module example {
   import SoundEffectSystem = example.systems.SoundEffectSystem;
   import SpriteRenderSystem = example.systems.SpriteRenderSystem;
   import World = artemis.World;
-  //import GroupManager = artemis.managers.GroupManager;
-  //import TagManager = artemis.managers.TagManager;
   import Constants = example.core.Constants;
   import EntitySystem = artemis.EntitySystem;
   import PlayerTemplate = example.templates.PlayerTemplate;
@@ -58,7 +56,7 @@ module example {
       this.hudRenderSystem = world.setSystem(new HudRenderSystem(), true);
 
       world.initialize();
-      world.createEntityFromTemplate('player');
+      //world.createEntityFromTemplate('player');
 
       //for (var i = 0; 500 > i; i++) {
       // world.createEntityFromTemplate('star');

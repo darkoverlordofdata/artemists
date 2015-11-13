@@ -28,7 +28,7 @@ bosco.start({
         "backgroundColor": "0x3c3c3c"
     },
     "assets": {
-        "images": (window.devicePixelRatio >= 2) ? "res/images@2x.json" : "res/images.json",
+        "images": (window.devicePixelRatio >= 2) ? "res/images.json" : "res/images.json",
         "normal_fnt"        : "res/fonts/normal.fnt",
         "hud_fnt"           : "res/fonts/hud.fnt"
     },

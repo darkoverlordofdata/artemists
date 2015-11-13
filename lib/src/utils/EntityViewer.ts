@@ -1,5 +1,5 @@
 /**
- * Inspired by Unity
+ * Use dat.gui to display a live entity list
  */
 module artemis {
 

@@ -191,6 +191,11 @@ module.exports = (project, options = {}) ->
             --compilation_level #{options.compile} \
             --js_output_file build/#{LIB_NAME}.min.js
       """
+      files = require(JSCONFIG).files.join(" LF ")
+      step.push """
+        cat #{files} > build/web/example.js
+        uglifyjs build/web/example.js --compress --mangle --output build/web/example.min.js
+      """
 
     else
       ###

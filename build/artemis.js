@@ -41,447 +41,6 @@ var artemis;
         root['artemis'] = factory();
     }
 })(this, function () { return artemis; });
-/**
- * A node in the list of listeners in a signal.
-*/
-var artemis;
-(function (artemis) {
-    var signals;
-    (function (signals) {
-        /**
-         * @constructor
-        */
-        var ListenerNode = (function () {
-            function ListenerNode() {
-                /** @param {artemis.signals.ListenerNode} */
-                this.previous = null;
-                /** @param {artemis.signals.ListenerNode}*/
-                this.next = null;
-                /** @param {artemis.signals.SignalBase} */
-                this.listener = null;
-                /** @param {boolean} */
-                this.once = false;
-            }
-            return ListenerNode;
-        })();
-        signals.ListenerNode = ListenerNode;
-    })(signals = artemis.signals || (artemis.signals = {}));
-})(artemis || (artemis = {}));
-/**
- * This internal class maintains a pool of deleted listener nodes for reuse by framework. This reduces
- * the overhead from object creation and garbage collection.
-*/
-var artemis;
-(function (artemis) {
-    var signals;
-    (function (signals) {
-        var ListenerNode = artemis.signals.ListenerNode;
-        /**
-         * @constructor
-         */
-        var ListenerNodePool = (function () {
-            function ListenerNodePool() {
-                /** @type {artemis.signals.ListenerNodePool} */
-                this.tail = null;
-                /** @type {artemis.signals.ListenerNodePool} */
-                this.cacheTail = null;
-            }
-            /**
-             * Get listener node
-             * @return {artemis.signals.ListenerNode}
-             */
-            ListenerNodePool.prototype.get = function () {
-                var node;
-                if (this.tail !== null) {
-                    node = this.tail;
-                    this.tail = this.tail.previous;
-                    node.previous = null;
-                    return node;
-                }
-                else {
-                    return new ListenerNode();
-                }
-            };
-            /**
-             * Dispose of listener node
-             * @param {artemis.signals.ListenerNode} node
-             */
-            ListenerNodePool.prototype.dispose = function (node) {
-                node.listener = null;
-                node.once = false;
-                node.next = null;
-                node.previous = this.tail;
-                this.tail = node;
-            };
-            /**
-             * Cache listener node
-             * @param {artemis.signals.ListenerNode} node
-             */
-            ListenerNodePool.prototype.cache = function (node) {
-                node.listener = null;
-                node.previous = this.cacheTail;
-                this.cacheTail = node;
-            };
-            /**
-             * Release cache
-             */
-            ListenerNodePool.prototype.releaseCache = function () {
-                var node;
-                while (this.cacheTail !== null) {
-                    node = this.cacheTail;
-                    this.cacheTail = node.previous;
-                    node.next = null;
-                    node.previous = this.tail;
-                    this.tail = node;
-                }
-            };
-            return ListenerNodePool;
-        })();
-        signals.ListenerNodePool = ListenerNodePool;
-    })(signals = artemis.signals || (artemis.signals = {}));
-})(artemis || (artemis = {}));
-var artemis;
-(function (artemis) {
-    var signals;
-    (function (signals) {
-        var ListenerNodePool = artemis.signals.ListenerNodePool;
-        var SignalBase = (function () {
-            /**
-             * @constructor
-             */
-            function SignalBase() {
-                /** @type {artemis.signals.ListenerNode} */
-                this.head = null;
-                /** @type {artemis.signals.ListenerNode} */
-                this.tail = null;
-                /** @type {number} */
-                this.numListeners = 0;
-                /** @type {Array<Object>} */
-                this.keys = null;
-                /** @type {artemis.signals.ListenerNode} */
-                this.nodes = null;
-                /** @type {artemis.signals.ListenerNodePool} */
-                this.listenerNodePool = null;
-                /** @type {artemis.signals.ListenerNode} */
-                this.toAddHead = null;
-                /** @type {artemis.signals.ListenerNode} */
-                this.toAddTail = null;
-                /** @type {boolean} */
-                this.dispatching = false;
-                this.nodes = [];
-                this.keys = [];
-                this.listenerNodePool = new ListenerNodePool();
-                this.numListeners = 0;
-            }
-            /**
-             */
-            SignalBase.prototype.startDispatch = function () {
-                this.dispatching = true; // Void
-            };
-            /**
-             */
-            SignalBase.prototype.endDispatch = function () {
-                this.dispatching = false;
-                if (this.toAddHead) {
-                    if (!this.head) {
-                        this.head = this.toAddHead;
-                        this.tail = this.toAddTail;
-                    }
-                    else {
-                        this.tail.next = this.toAddHead;
-                        this.toAddHead.previous = this.tail;
-                        this.tail = this.toAddTail;
-                    }
-                    this.toAddHead = null;
-                    this.toAddTail = null;
-                }
-                this.listenerNodePool.releaseCache(); // Void
-            };
-            /**
-             * @param {Object} listener
-             */
-            SignalBase.prototype.getNode = function (listener) {
-                var node;
-                node = this.head;
-                while (node !== null) {
-                    if (node.listener === listener) {
-                        break;
-                    }
-                    node = node.next;
-                }
-                if (node === null) {
-                    node = this.toAddHead;
-                    while (node !== null) {
-                        if (node.listener === listener) {
-                            break;
-                        }
-                        node = node.next;
-                    }
-                }
-                return node;
-            };
-            /**
-             * @param {Object} listener
-             */
-            SignalBase.prototype.add = function (listener) {
-                var node;
-                if (this.keys.indexOf(listener) !== -1) {
-                    return;
-                }
-                node = this.listenerNodePool.get();
-                node.listener = listener;
-                this.nodes.push(node);
-                this.keys.push(listener);
-                this.addNode(node); // Void
-            };
-            /**
-             * @param {Object} listener
-             */
-            SignalBase.prototype.addOnce = function (listener) {
-                var node;
-                if (this.keys.indexOf(listener) !== -1) {
-                    return;
-                }
-                node = this.listenerNodePool.get();
-                node.listener = listener;
-                node.once = true;
-                this.nodes.push(node);
-                this.keys.push(listener);
-                this.addNode(node); // Void
-            };
-            /**
-             * @param {artemis.signals.ListenerNode} node
-             */
-            SignalBase.prototype.addNode = function (node) {
-                if (this.dispatching) {
-                    if (this.toAddHead === null) {
-                        this.toAddHead = this.toAddTail = node;
-                    }
-                    else {
-                        this.toAddTail.next = node;
-                        node.previous = this.toAddTail;
-                        this.toAddTail = node;
-                    }
-                }
-                else {
-                    if (this.head === null) {
-                        this.head = this.tail = node;
-                    }
-                    else {
-                        this.tail.next = node;
-                        node.previous = this.tail;
-                        this.tail = node;
-                    }
-                }
-                this.numListeners++; // Void
-            };
-            /**
-             * @param {Object} listener
-             */
-            SignalBase.prototype.remove = function (listener) {
-                var index, node;
-                index = this.keys.indexOf(listener);
-                node = this.nodes[index];
-                if (node) {
-                    if (this.head === node) {
-                        this.head = this.head.next;
-                    }
-                    if (this.tail === node) {
-                        this.tail = this.tail.previous;
-                    }
-                    if (this.toAddHead === node) {
-                        this.toAddHead = this.toAddHead.next;
-                    }
-                    if (this.toAddTail === node) {
-                        this.toAddTail = this.toAddTail.previous;
-                    }
-                    if (node.previous) {
-                        node.previous.next = node.next;
-                    }
-                    if (node.next) {
-                        node.next.previous = node.previous;
-                    }
-                    this.nodes.splice(index, 1);
-                    this.keys.splice(index, 1);
-                    if (this.dispatching) {
-                        this.listenerNodePool.cache(node);
-                    }
-                    else {
-                        this.listenerNodePool.dispose(node);
-                    }
-                    this.numListeners--; // Void
-                }
-            };
-            /**
-             */
-            SignalBase.prototype.removeAll = function () {
-                var index, node;
-                while (this.head) {
-                    node = this.head;
-                    this.head = this.head.next;
-                    index = this.keys.indexOf(node.listener);
-                    this.nodes.splice(index, 1);
-                    this.listenerNodePool.dispose(node);
-                }
-                this.nodes = [];
-                this.keys = [];
-                this.tail = null;
-                this.toAddHead = null;
-                this.toAddTail = null;
-                this.numListeners = 0; // Void
-            };
-            return SignalBase;
-        })();
-        signals.SignalBase = SignalBase;
-    })(signals = artemis.signals || (artemis.signals = {}));
-})(artemis || (artemis = {}));
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var artemis;
-(function (artemis) {
-    var signals;
-    (function (signals) {
-        /**
-         * @extends {artemis.signals.SignalBase}
-         * @constructor
-         */
-        var Signal0 = (function (_super) {
-            __extends(Signal0, _super);
-            function Signal0() {
-                _super.apply(this, arguments);
-            }
-            /**
-             * dispatch the event
-             */
-            Signal0.prototype.dispatch = function () {
-                var node;
-                this.startDispatch();
-                node = this.head;
-                while (node !== null) {
-                    node.listener();
-                    if (node.once) {
-                        this.remove(node.listener);
-                    }
-                    node = node.next;
-                }
-                return this.endDispatch();
-            };
-            return Signal0;
-        })(artemis.signals.SignalBase);
-        signals.Signal0 = Signal0;
-    })(signals = artemis.signals || (artemis.signals = {}));
-})(artemis || (artemis = {}));
-var artemis;
-(function (artemis) {
-    var signals;
-    (function (signals) {
-        /**
-         * @extends {artemis.signals.SignalBase}
-         * @constructor
-         */
-        var Signal1 = (function (_super) {
-            __extends(Signal1, _super);
-            function Signal1() {
-                _super.apply(this, arguments);
-            }
-            /**
-             * dispatch the event
-             * @param {Object} $1
-             */
-            Signal1.prototype.dispatch = function ($1) {
-                var node;
-                this.startDispatch();
-                node = this.head;
-                while (node !== null) {
-                    node.listener($1);
-                    if (node.once) {
-                        this.remove(node.listener);
-                    }
-                    node = node.next;
-                }
-                return this.endDispatch();
-            };
-            return Signal1;
-        })(artemis.signals.SignalBase);
-        signals.Signal1 = Signal1;
-    })(signals = artemis.signals || (artemis.signals = {}));
-})(artemis || (artemis = {}));
-var artemis;
-(function (artemis) {
-    var signals;
-    (function (signals) {
-        /**
-         * @extends {artemis.signals.SignalBase}
-         * @constructor
-         */
-        var Signal2 = (function (_super) {
-            __extends(Signal2, _super);
-            function Signal2() {
-                _super.apply(this, arguments);
-            }
-            /**
-             * dispatch the event
-             * @param {Object} $1
-             * @param {Object} $2
-             */
-            Signal2.prototype.dispatch = function ($1, $2) {
-                var node;
-                this.startDispatch();
-                node = this.head;
-                while (node) {
-                    node.listener($1, $2);
-                    if (node.once) {
-                        this.remove(node.listener);
-                    }
-                    node = node.next;
-                }
-                return this.endDispatch();
-            };
-            return Signal2;
-        })(artemis.signals.SignalBase);
-        signals.Signal2 = Signal2;
-    })(signals = artemis.signals || (artemis.signals = {}));
-})(artemis || (artemis = {}));
-var artemis;
-(function (artemis) {
-    var signals;
-    (function (signals) {
-        /**
-         * @extends {artemis.signals.SignalBase}
-         * @constructor
-         */
-        var Signal3 = (function (_super) {
-            __extends(Signal3, _super);
-            function Signal3() {
-                _super.apply(this, arguments);
-            }
-            /**
-             * dispatch the event
-             * @param {Object} $1
-             * @param {Object} $2
-             * @param {Object} $3
-             */
-            Signal3.prototype.dispatch = function ($1, $2, $3) {
-                var node;
-                this.startDispatch();
-                node = this.head;
-                while (node !== null) {
-                    node.listener($1, $2, $3);
-                    if (node.once) {
-                        this.remove(node.listener);
-                    }
-                    node = node.next;
-                }
-                return this.endDispatch();
-            };
-            return Signal3;
-        })(artemis.signals.SignalBase);
-        signals.Signal3 = Signal3;
-    })(signals = artemis.signals || (artemis.signals = {}));
-})(artemis || (artemis = {}));
 var artemis;
 (function (artemis) {
     var utils;
@@ -1521,6 +1080,11 @@ var artemis;
         blackboard.Trigger = Trigger;
     })(blackboard = artemis.blackboard || (artemis.blackboard = {}));
 })(artemis || (artemis = {}));
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var artemis;
 (function (artemis) {
     var blackboard;
@@ -1829,9 +1393,10 @@ var artemis;
     *
     */
     var Entity = (function () {
-        function Entity(world, id) {
+        function Entity(world, id, name) {
             this.world_ = world;
             this.id_ = id;
+            this.name = name;
             this.entityManager_ = world.getEntityManager();
             this.componentManager_ = world.getComponentManager();
             this.systemBits_ = new BitSet();
@@ -2154,6 +1719,7 @@ var artemis;
                 this.managersBag_.get(i).initialize();
             }
             for (var i = 0; i < this.systemsBag_.size(); i++) {
+                /** Inject the component mappers into each system */
                 ComponentMapperInitHelper.config(this.systemsBag_.get(i), this);
                 this.systemsBag_.get(i).initialize();
             }
@@ -2273,10 +1839,11 @@ var artemis;
         * Create and return a new or reused entity instance.
         * Will NOT add the entity to the world, use World.addEntity(Entity) for that.
         *
+        * @param name optional name for debugging
         * @return entity
         */
-        World.prototype.createEntity = function () {
-            return this.em_.createEntityInstance();
+        World.prototype.createEntity = function (name) {
+            return this.em_.createEntityInstance(name);
         };
         /**
         * Get a entity having the specified id.
@@ -2877,8 +2444,8 @@ var artemis;
         }
         EntityManager.prototype.initialize = function () {
         };
-        EntityManager.prototype.createEntityInstance = function () {
-            var e = new artemis.Entity(this.world_, this.identifierPool_.checkOut());
+        EntityManager.prototype.createEntityInstance = function (name) {
+            var e = new artemis.Entity(this.world_, this.identifierPool_.checkOut(), name);
             this.created_++;
             return e;
         };

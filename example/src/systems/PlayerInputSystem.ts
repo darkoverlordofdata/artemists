@@ -23,7 +23,8 @@ module example.systems {
     private sprites:Container;
 
     constructor() {
-      super(Aspect.getAspectForAll(PositionComponent, VelocityComponent, PlayerComponent));
+      //super(Aspect.getAspectForAll(PositionComponent, VelocityComponent, PlayerComponent));
+      super(Aspect.getAspectForAll(PlayerComponent));
       this.sprites = EntitySystem.blackBoard.getEntry<Container>('sprites');
     }
 
@@ -34,6 +35,7 @@ module example.systems {
       document.addEventListener('mousedown', this.onTouchStart, true);
       document.addEventListener('mousemove', this.onTouchMove, true);
       document.addEventListener('mouseup', this.onTouchEnd, true);
+      this.world.createEntityFromTemplate('player');
     }
 
     protected processEach(e:Entity) {

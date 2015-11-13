@@ -1,0 +1,45 @@
+#!/usr/bin/env coffee
+###
+ * Artemis code generation
+ *
+ * emulate the partial class strategy for extensions
+ * used by artemis_CSharp
+ *
+###
+artemis = require("../lib/cli")
+
+$usage = """
+Usage:
+  artemis init namespace [-t name]
+  artemis create -c name field:type... 
+  artemis create -s name interface...
+  artemis create -e name 
+  artemis create -x class name field:type...
+  artemis generate
+
+Options:
+  -t  [--template]  # template name
+  -c  [--component] # create a component
+  -s  [--system]    # create a system
+  -e  [--entity]    # create an entity
+  -x  [--extension] # extend a class
+
+"""
+switch process.argv[2]
+
+  when 'init' then artemis.init process.argv.slice(3)...
+
+  when 'create' then artemis.create process.argv.slice(3)...
+
+  when 'generate' then artemis.generate process.argv.slice(3)...
+
+  when '--version' then console.log "artemis v"+require('../package.json').version
+
+  when '-v' then console.log "artemis v"+require('../package.json').version
+
+  when '--help' then console.log $usage
+
+  when '-h' then console.log $usage
+
+  else console.log $usage
+

@@ -16,6 +16,7 @@
 		path = path + "/index_" + process.argv[3] + ".html"
 	}
 	
+	//path = "build/web/index.html";
 	gulp.src('./')
 	.pipe(server({
 		host: 'localhost',
