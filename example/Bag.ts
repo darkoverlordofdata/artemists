@@ -1,24 +1,23 @@
 module artemis.utils {
-  "use strict";
 
   /**
    * Collection type a bit like ArrayList but does not preserve the order of its
    * entities, speedwise it is very good, especially suited for games.
    */
 
-  export class Bag<E> extends Array implements ImmutableBag<E> {
-    public size_:number = 0;
+  export class Bag<E> implements ImmutableBag<E> {
+    private data_:E[];
+    private size_:number = 0;
 
     /**
      * Constructs an empty Bag with the specified initial capacity.
      * Constructs an empty Bag with an initial capacity of 64.
      *
-     * @constructor
-     * @param capacity the initial capacity of Bag
+     * @param capacity
+     *            the initial capacity of Bag
      */
     constructor(capacity:number = 64) {
-      super();
-      this.length = capacity;
+      this.data_ = new Array(capacity);
     }
 
     /**
@@ -27,13 +26,14 @@ module artemis.utils {
      *
      * @param index
      *            the index of element to be removed
-     * @return {Object} element that was removed from the Bag
+     * @return element that was removed from the Bag
      */
     removeAt(index:number):E {
 
-      var e:E = this[index]; // make copy of element to remove so it can be returned
-      this[index] = this[--this.size_]; // overwrite item to remove with last element
-      this[this.size_] = null; // null last element, so gc can do its work
+      var data = this.data_;
+      var e:E = data[index]; // make copy of element to remove so it can be returned
+      data[index] = data[--this.size_]; // overwrite item to remove with last element
+      data[this.size_] = null; // null last element, so gc can do its work
       return e;
     }
 
@@ -45,19 +45,20 @@ module artemis.utils {
      *
      * @param e
      *            element to be removed from this list, if present
-     * @return {boolean} true if this list contained the specified element
+     * @return <tt>true</tt> if this list contained the specified element
      */
     remove(e:E):boolean {
       var i:number;
       var e2:E;
+      var data = this.data_;
       var size = this.size_;
 
       for (i = 0; i < size; i++) {
-        e2 = this[i];
+        e2 = data[i];
 
         if (e == e2) {
-          this[i] = this[--this.size_]; // overwrite item to remove with last element
-          this[this.size_] = null; // null last element, so gc can do its work
+          data[i] = data[--this.size_]; // overwrite item to remove with last element
+          data[this.size_] = null; // null last element, so gc can do its work
           return true;
         }
       }
@@ -68,12 +69,13 @@ module artemis.utils {
     /**
      * Remove and return the last object in the bag.
      *
-     * @return {Object} the last object in the bag, null if empty.
+     * @return the last object in the bag, null if empty.
      */
     removeLast():E {
       if (this.size_ > 0) {
-        var e:E = this[--this.size_];
-        this[this.size_] = null;
+        var data = this.data_;
+        var e:E = data[--this.size_];
+        data[this.size_] = null;
         return e;
       }
 
@@ -84,14 +86,15 @@ module artemis.utils {
      * Check if bag contains this element.
      *
      * @param e
-     * @return {boolean}
+     * @return
      */
     contains(e:E):boolean {
       var i:number;
       var size:number;
+      var data = this.data_;
 
       for (i=0, size=this.size_; size > i; i++) {
-        if (e === this[i]) {
+        if (e === data[i]) {
           return true;
         }
       }
@@ -104,7 +107,7 @@ module artemis.utils {
      *
      * @param bag
      *            Bag containing elements to be removed from this Bag
-     * @return {boolean} true if this Bag changed as a result of the call
+     * @return {@code true} if this Bag changed as a result of the call
      */
     removeAll(bag:ImmutableBag<E>):boolean {
       var modified:boolean = false;
@@ -113,12 +116,13 @@ module artemis.utils {
       var l:number;
       var e1:E;
       var e2:E;
+      var data = this.data_;
 
       for (i = 0, l=bag.size(); i < l; i++) {
         e1 = bag.get(i);
 
         for (j = 0; j < this.size_; j++) {
-          e2 = this[j];
+          e2 = data[j];
 
           if (e1 === e2) {
             this.removeAt(j);
@@ -137,13 +141,16 @@ module artemis.utils {
      *
      * @param index
      *            index of the element to return
-     * @return {Object} the element at the specified position in bag
+     * @return the element at the specified position in bag
+     *
+     * @throws ArrayIndexOutOfBoundsException
      */
     get(index:number):E {
-      if (index >= this.length) {
+      var data = this.data_;
+      if (index >= data.length) {
         throw new Error('ArrayIndexOutOfBoundsException')
       }
-      return this[index];
+      return data[index];
     }
 
     /**
@@ -154,20 +161,21 @@ module artemis.utils {
      * @param index
      *      index of the element to return
      *
-     * @return {Object} the element at the specified position in bag
+     * @return the element at the specified position in bag
      *
      */
     safeGet(index:number):E {
-      if (index >= this.length) {
+      var data = this.data_;
+      if (index >= data.length) {
         this.grow((index * 7) / 4 + 1)
       }
-      return this[index];
+      return data[index];
     }
 
     /**
      * Returns the number of elements in this bag.
      *
-     * @return {number} the number of elements in this bag
+     * @return the number of elements in this bag
      */
     size():number {
       return this.size_;
@@ -176,17 +184,17 @@ module artemis.utils {
     /**
      * Returns the number of elements the bag can hold without growing.
      *
-     * @return {number} the number of elements the bag can hold without growing.
+     * @return the number of elements the bag can hold without growing.
      */
     getCapacity():number {
-      return this.length;
+      return this.data_.length;
     }
 
     /**
      * Checks if the internal storage supports this index.
      *
      * @param index
-     * @return {boolean}
+     * @return
      */
     isIndexWithinBounds(index:number):boolean {
       return index < this.getCapacity();
@@ -195,7 +203,7 @@ module artemis.utils {
     /**
      * Returns true if this list contains no elements.
      *
-     * @return {boolean} true if this list contains no elements
+     * @return true if this list contains no elements
      */
     isEmpty():boolean {
       return this.size_ == 0;
@@ -210,11 +218,12 @@ module artemis.utils {
      */
     add(e:E) {
       // is size greater than capacity increase capacity
-      if (this.size_ === this.length) {
+      var data = this.data_;
+      if (this.size_ === data.length) {
         this.grow();
       }
 
-      this[this.size_++] = e;
+      data[this.size_++] = e;
     }
 
     /**
@@ -224,19 +233,20 @@ module artemis.utils {
      * @param e the element
      */
     set(index:number, e:E) {
-      if (index >= this.length) {
+      var data = this.data_;
+      if (index >= data.length) {
         this.grow(index * 2);
       }
       this.size_ = index + 1;
-      this[index] = e;
+      data[index] = e;
     }
 
-    grow(newCapacity:number = ~~((this.length * 3) / 2) + 1) {
-      this.length = ~~newCapacity;
+    grow(newCapacity:number = ~~((this.data_.length * 3) / 2) + 1) {
+      this.data_.length = ~~newCapacity;
     }
 
     ensureCapacity(index:number) {
-      if (index >= this.length) {
+      if (index >= this.data_.length) {
         this.grow(index * 2);
       }
     }
@@ -248,9 +258,10 @@ module artemis.utils {
     clear() {
       var i:number;
       var size:number;
+      var data = this.data_;
       // null all elements so gc can clean up
       for (i=0, size=this.size_; i < size; i++) {
-        this[i] = null;
+        data[i] = null;
       }
 
       this.size_ = 0;

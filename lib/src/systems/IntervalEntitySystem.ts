@@ -1,4 +1,5 @@
 module artemis.systems {
+  "use strict";
 
 	import EntitySystem = artemis.EntitySystem;
 	import Aspect = artemis.Aspect;

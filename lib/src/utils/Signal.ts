@@ -1,4 +1,5 @@
 module artemis.utils {
+  "use strict";
 
   import Bag = artemis.utils.Bag;
 

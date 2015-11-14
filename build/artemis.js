@@ -43,26 +43,34 @@ var artemis;
     }
 })(this, function () { return artemis; });
 //# sourceMappingURL=exports.js.map
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var artemis;
 (function (artemis) {
     var utils;
     (function (utils) {
+        "use strict";
         /**
          * Collection type a bit like ArrayList but does not preserve the order of its
          * entities, speedwise it is very good, especially suited for games.
          */
-        var Bag = (function () {
+        var Bag = (function (_super) {
+            __extends(Bag, _super);
             /**
              * Constructs an empty Bag with the specified initial capacity.
              * Constructs an empty Bag with an initial capacity of 64.
              *
-             * @param capacity
-             *            the initial capacity of Bag
+             * @constructor
+             * @param capacity the initial capacity of Bag
              */
             function Bag(capacity) {
                 if (capacity === void 0) { capacity = 64; }
+                _super.call(this);
                 this.size_ = 0;
-                this.data_ = new Array(capacity);
+                this.length = capacity;
             }
             /**
              * Removes the element at the specified position in this Bag. does this by
@@ -70,13 +78,12 @@ var artemis;
              *
              * @param index
              *            the index of element to be removed
-             * @return element that was removed from the Bag
+             * @return {Object} element that was removed from the Bag
              */
             Bag.prototype.removeAt = function (index) {
-                var data = this.data_;
-                var e = data[index]; // make copy of element to remove so it can be returned
-                data[index] = data[--this.size_]; // overwrite item to remove with last element
-                data[this.size_] = null; // null last element, so gc can do its work
+                var e = this[index]; // make copy of element to remove so it can be returned
+                this[index] = this[--this.size_]; // overwrite item to remove with last element
+                this[this.size_] = null; // null last element, so gc can do its work
                 return e;
             };
             /**
@@ -86,18 +93,17 @@ var artemis;
              *
              * @param e
              *            element to be removed from this list, if present
-             * @return <tt>true</tt> if this list contained the specified element
+             * @return {boolean} true if this list contained the specified element
              */
             Bag.prototype.remove = function (e) {
                 var i;
                 var e2;
-                var data = this.data_;
                 var size = this.size_;
                 for (i = 0; i < size; i++) {
-                    e2 = data[i];
+                    e2 = this[i];
                     if (e == e2) {
-                        data[i] = data[--this.size_]; // overwrite item to remove with last element
-                        data[this.size_] = null; // null last element, so gc can do its work
+                        this[i] = this[--this.size_]; // overwrite item to remove with last element
+                        this[this.size_] = null; // null last element, so gc can do its work
                         return true;
                     }
                 }
@@ -106,13 +112,12 @@ var artemis;
             /**
              * Remove and return the last object in the bag.
              *
-             * @return the last object in the bag, null if empty.
+             * @return {Object} the last object in the bag, null if empty.
              */
             Bag.prototype.removeLast = function () {
                 if (this.size_ > 0) {
-                    var data = this.data_;
-                    var e = data[--this.size_];
-                    data[this.size_] = null;
+                    var e = this[--this.size_];
+                    this[this.size_] = null;
                     return e;
                 }
                 return null;
@@ -121,14 +126,13 @@ var artemis;
              * Check if bag contains this element.
              *
              * @param e
-             * @return
+             * @return {boolean}
              */
             Bag.prototype.contains = function (e) {
                 var i;
                 var size;
-                var data = this.data_;
                 for (i = 0, size = this.size_; size > i; i++) {
-                    if (e === data[i]) {
+                    if (e === this[i]) {
                         return true;
                     }
                 }
@@ -140,7 +144,7 @@ var artemis;
              *
              * @param bag
              *            Bag containing elements to be removed from this Bag
-             * @return {@code true} if this Bag changed as a result of the call
+             * @return {boolean} true if this Bag changed as a result of the call
              */
             Bag.prototype.removeAll = function (bag) {
                 var modified = false;
@@ -149,11 +153,10 @@ var artemis;
                 var l;
                 var e1;
                 var e2;
-                var data = this.data_;
                 for (i = 0, l = bag.size(); i < l; i++) {
                     e1 = bag.get(i);
                     for (j = 0; j < this.size_; j++) {
-                        e2 = data[j];
+                        e2 = this[j];
                         if (e1 === e2) {
                             this.removeAt(j);
                             j--;
@@ -169,16 +172,13 @@ var artemis;
              *
              * @param index
              *            index of the element to return
-             * @return the element at the specified position in bag
-             *
-             * @throws ArrayIndexOutOfBoundsException
+             * @return {Object} the element at the specified position in bag
              */
             Bag.prototype.get = function (index) {
-                var data = this.data_;
-                if (index >= data.length) {
+                if (index >= this.length) {
                     throw new Error('ArrayIndexOutOfBoundsException');
                 }
-                return data[index];
+                return this[index];
             };
             /**
              * Returns the element at the specified position in Bag. This method
@@ -188,20 +188,19 @@ var artemis;
              * @param index
              *      index of the element to return
              *
-             * @return the element at the specified position in bag
+             * @return {Object} the element at the specified position in bag
              *
              */
             Bag.prototype.safeGet = function (index) {
-                var data = this.data_;
-                if (index >= data.length) {
+                if (index >= this.length) {
                     this.grow((index * 7) / 4 + 1);
                 }
-                return data[index];
+                return this[index];
             };
             /**
              * Returns the number of elements in this bag.
              *
-             * @return the number of elements in this bag
+             * @return {number} the number of elements in this bag
              */
             Bag.prototype.size = function () {
                 return this.size_;
@@ -209,16 +208,16 @@ var artemis;
             /**
              * Returns the number of elements the bag can hold without growing.
              *
-             * @return the number of elements the bag can hold without growing.
+             * @return {number} the number of elements the bag can hold without growing.
              */
             Bag.prototype.getCapacity = function () {
-                return this.data_.length;
+                return this.length;
             };
             /**
              * Checks if the internal storage supports this index.
              *
              * @param index
-             * @return
+             * @return {boolean}
              */
             Bag.prototype.isIndexWithinBounds = function (index) {
                 return index < this.getCapacity();
@@ -226,7 +225,7 @@ var artemis;
             /**
              * Returns true if this list contains no elements.
              *
-             * @return true if this list contains no elements
+             * @return {boolean} true if this list contains no elements
              */
             Bag.prototype.isEmpty = function () {
                 return this.size_ == 0;
@@ -240,11 +239,10 @@ var artemis;
              */
             Bag.prototype.add = function (e) {
                 // is size greater than capacity increase capacity
-                var data = this.data_;
-                if (this.size_ === data.length) {
+                if (this.size_ === this.length) {
                     this.grow();
                 }
-                data[this.size_++] = e;
+                this[this.size_++] = e;
             };
             /**
              * Set element at specified index in the bag.
@@ -253,19 +251,18 @@ var artemis;
              * @param e the element
              */
             Bag.prototype.set = function (index, e) {
-                var data = this.data_;
-                if (index >= data.length) {
+                if (index >= this.length) {
                     this.grow(index * 2);
                 }
                 this.size_ = index + 1;
-                data[index] = e;
+                this[index] = e;
             };
             Bag.prototype.grow = function (newCapacity) {
-                if (newCapacity === void 0) { newCapacity = ~~((this.data_.length * 3) / 2) + 1; }
-                this.data_.length = ~~newCapacity;
+                if (newCapacity === void 0) { newCapacity = ~~((this.length * 3) / 2) + 1; }
+                this.length = ~~newCapacity;
             };
             Bag.prototype.ensureCapacity = function (index) {
-                if (index >= this.data_.length) {
+                if (index >= this.length) {
                     this.grow(index * 2);
                 }
             };
@@ -276,10 +273,9 @@ var artemis;
             Bag.prototype.clear = function () {
                 var i;
                 var size;
-                var data = this.data_;
                 // null all elements so gc can clean up
                 for (i = 0, size = this.size_; i < size; i++) {
-                    data[i] = null;
+                    this[i] = null;
                 }
                 this.size_ = 0;
             };
@@ -294,7 +290,7 @@ var artemis;
                 }
             };
             return Bag;
-        })();
+        })(Array);
         utils.Bag = Bag;
     })(utils = artemis.utils || (artemis.utils = {}));
 })(artemis || (artemis = {}));
@@ -303,6 +299,7 @@ var artemis;
 (function (artemis) {
     var utils;
     (function (utils) {
+        "use strict";
         /*
          * BitSets are packed into arrays of "words."  Currently a word
          * consists of 32 bits, requiring 5 address bits.
@@ -462,6 +459,7 @@ var artemis;
 (function (artemis) {
     var utils;
     (function (utils) {
+        "use strict";
         var MathUtils = (function () {
             function MathUtils() {
             }
@@ -497,11 +495,19 @@ var artemis;
     })(utils = artemis.utils || (artemis.utils = {}));
 })(artemis || (artemis = {}));
 //# sourceMappingURL=MathUtils.js.map
+var artemis;
+(function (artemis) {
+    var utils;
+    (function (utils) {
+        "use strict";
+    })(utils = artemis.utils || (artemis.utils = {}));
+})(artemis || (artemis = {}));
 //# sourceMappingURL=Map.js.map
 var artemis;
 (function (artemis) {
     var utils;
     (function (utils) {
+        "use strict";
         /**
          * Decode HashMap key
          *
@@ -603,11 +609,19 @@ var artemis;
     })(utils = artemis.utils || (artemis.utils = {}));
 })(artemis || (artemis = {}));
 //# sourceMappingURL=HashMap.js.map
+var artemis;
+(function (artemis) {
+    var utils;
+    (function (utils) {
+        "use strict";
+    })(utils = artemis.utils || (artemis.utils = {}));
+})(artemis || (artemis = {}));
 //# sourceMappingURL=ImmutableBag.js.map
 var artemis;
 (function (artemis) {
     var utils;
     (function (utils) {
+        "use strict";
         var Bag = artemis.utils.Bag;
         var Signal = (function () {
             /**
@@ -698,6 +712,7 @@ var artemis;
 (function (artemis) {
     var utils;
     (function (utils) {
+        "use strict";
         var Timer = (function () {
             function Timer(delay, repeat) {
                 if (repeat === void 0) { repeat = false; }
@@ -759,6 +774,7 @@ var artemis;
 (function (artemis) {
     var utils;
     (function (utils) {
+        "use strict";
         // Thanks to Riven
         // From: http://riven8192.blogspot.com/2009/08/fastmath-sincos-lookup-tables.html
         var TrigLUT = (function () {
@@ -807,6 +823,7 @@ var artemis;
 (function (artemis) {
     var utils;
     (function (utils) {
+        "use strict";
         var hex = [
             "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "0a", "0b", "0c", "0d", "0e", "0f",
             "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "1a", "1b", "1c", "1d", "1e", "1f",
@@ -857,6 +874,7 @@ var artemis;
 (function (artemis) {
     var annotations;
     (function (annotations) {
+        "use strict";
         /**
          * EntityTemplate
          *
@@ -875,6 +893,7 @@ var artemis;
 (function (artemis) {
     var annotations;
     (function (annotations) {
+        "use strict";
         /**
         * Mapper artemis.component.Position
         * em:ComponentMapper<artemis.component.Position>;
@@ -896,6 +915,7 @@ var artemis;
 (function (artemis) {
     var annotations;
     (function (annotations) {
+        "use strict";
         /**
         * Mapper artemis.component.Position
         * em:ComponentMapper<artemis.component.Position>;
@@ -916,6 +936,7 @@ var artemis;
 (function (artemis) {
     var blackboard;
     (function (blackboard) {
+        "use strict";
         /**
          *
          */
@@ -933,6 +954,7 @@ var artemis;
 (function (artemis) {
     var blackboard;
     (function (blackboard) {
+        "use strict";
         /**
          *
          */
@@ -1050,6 +1072,7 @@ var artemis;
 (function (artemis) {
     var blackboard;
     (function (blackboard) {
+        "use strict";
         var Trigger = (function () {
             /**
              * Initializes a new instance of the Trigger class
@@ -1107,6 +1130,7 @@ var artemis;
 (function (artemis) {
     var blackboard;
     (function (blackboard) {
+        "use strict";
         var SimpleTrigger = (function (_super) {
             __extends(SimpleTrigger, _super);
             /**
@@ -1152,6 +1176,7 @@ var artemis;
 (function (artemis) {
     var blackboard;
     (function (blackboard) {
+        "use strict";
         var TriggerMultiCondition = (function (_super) {
             __extends(TriggerMultiCondition, _super);
             /**
@@ -1196,6 +1221,7 @@ var artemis;
 //# sourceMappingURL=TriggerMultiCondition.js.map
 var artemis;
 (function (artemis) {
+    "use strict";
     /**
      * A tag class. All components in the system must extend this class.
      *
@@ -1222,6 +1248,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var artemis;
 (function (artemis) {
+    "use strict";
     /**
      * Component type that recycles instances.
      * <p>
@@ -1240,6 +1267,7 @@ var artemis;
 //# sourceMappingURL=PooledComponent.js.map
 var artemis;
 (function (artemis) {
+    "use strict";
     var BitSet = artemis.utils.BitSet;
     /**
      * An Aspects is used by systems as a matcher against entities, to check if a system is
@@ -1416,6 +1444,7 @@ var artemis;
 //# sourceMappingURL=Aspect.js.map
 var artemis;
 (function (artemis) {
+    "use strict";
     var BitSet = artemis.utils.BitSet;
     var UUID = artemis.utils.UUID;
     /**
@@ -1683,6 +1712,7 @@ var artemis;
 //# sourceMappingURL=Entity.js.map
 var artemis;
 (function (artemis) {
+    "use strict";
     /**
     * Manager.
     *
@@ -1717,6 +1747,7 @@ var artemis;
 //# sourceMappingURL=Manager.js.map
 var artemis;
 (function (artemis) {
+    "use strict";
     var Bag = artemis.utils.Bag;
     var HashMap = artemis.utils.HashMap;
     var EntityTemplate = artemis.annotations.EntityTemplate;
@@ -2062,6 +2093,7 @@ var artemis;
 //# sourceMappingURL=World.js.map
 var artemis;
 (function (artemis) {
+    "use strict";
     var Bag = artemis.utils.Bag;
     var ComponentPool = (function () {
         function ComponentPool() {
@@ -2108,6 +2140,7 @@ var artemis;
 //# sourceMappingURL=ComponentPool.js.map
 var artemis;
 (function (artemis) {
+    "use strict";
     var Pooled = artemis.annotations.Pooled;
     (function (Taxonomy) {
         Taxonomy[Taxonomy["BASIC"] = 0] = "BASIC";
@@ -2151,6 +2184,7 @@ var artemis;
 //# sourceMappingURL=ComponentType.js.map
 var artemis;
 (function (artemis) {
+    "use strict";
     var Bag = artemis.utils.Bag;
     var ComponentType = artemis.ComponentType;
     var Aspect = artemis.Aspect;
@@ -2213,6 +2247,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var artemis;
 (function (artemis) {
+    "use strict";
     var Bag = artemis.utils.Bag;
     var Manager = artemis.Manager;
     var ComponentTypeFactory = artemis.ComponentTypeFactory;
@@ -2409,6 +2444,7 @@ var artemis;
 //# sourceMappingURL=ComponentManager.js.map
 var artemis;
 (function (artemis) {
+    "use strict";
     /**
     * High performance component retrieval from entities. Use this wherever you
     * need to retrieve components from entities often and fast.
@@ -2478,6 +2514,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var artemis;
 (function (artemis) {
+    "use strict";
     var Bag = artemis.utils.Bag;
     var BitSet = artemis.utils.BitSet;
     var Manager = artemis.Manager;
@@ -2602,6 +2639,7 @@ var artemis;
 //# sourceMappingURL=EntityManager.js.map
 var artemis;
 (function (artemis) {
+    "use strict";
     var Bag = artemis.utils.Bag;
     var HashMap = artemis.utils.HashMap;
     var BlackBoard = artemis.blackboard.BlackBoard;
@@ -2782,6 +2820,7 @@ var artemis;
 (function (artemis) {
     var managers;
     (function (managers) {
+        "use strict";
         var Bag = artemis.utils.Bag;
         var HashMap = artemis.utils.HashMap;
         var Manager = artemis.Manager;
@@ -2914,6 +2953,7 @@ var artemis;
 (function (artemis) {
     var managers;
     (function (managers) {
+        "use strict";
         var Bag = artemis.utils.Bag;
         var HashMap = artemis.utils.HashMap;
         var Manager = artemis.Manager;
@@ -2980,6 +3020,7 @@ var artemis;
 (function (artemis) {
     var managers;
     (function (managers) {
+        "use strict";
         var HashMap = artemis.utils.HashMap;
         var Manager = artemis.Manager;
         /**
@@ -3035,6 +3076,7 @@ var artemis;
 (function (artemis) {
     var managers;
     (function (managers) {
+        "use strict";
         var Bag = artemis.utils.Bag;
         var HashMap = artemis.utils.HashMap;
         var Manager = artemis.Manager;
@@ -3098,6 +3140,7 @@ var artemis;
 (function (artemis) {
     var systems;
     (function (systems) {
+        "use strict";
         var EntitySystem = artemis.EntitySystem;
         /**
         * The purpose of this class is to allow systems to execute at varying intervals.
@@ -3260,6 +3303,7 @@ var artemis;
 (function (artemis) {
     var systems;
     (function (systems) {
+        "use strict";
         var EntitySystem = artemis.EntitySystem;
         /**
         * A typical entity system. Use this when you need to process entities possessing the
@@ -3301,6 +3345,7 @@ var artemis;
 (function (artemis) {
     var systems;
     (function (systems) {
+        "use strict";
         var EntitySystem = artemis.EntitySystem;
         /**
         * A system that processes entities at a interval in milliseconds.
@@ -3341,6 +3386,7 @@ var artemis;
 (function (artemis) {
     var systems;
     (function (systems) {
+        "use strict";
         var EntitySystem = artemis.EntitySystem;
         var Aspect = artemis.Aspect;
         /**
@@ -3378,6 +3424,7 @@ var artemis;
 (function (artemis) {
     var systems;
     (function (systems) {
+        "use strict";
         var IntervalEntitySystem = artemis.systems.IntervalEntitySystem;
         /**
         * If you need to process entities at a certain interval then use this.

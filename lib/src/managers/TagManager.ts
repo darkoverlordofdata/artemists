@@ -1,4 +1,5 @@
 module artemis.managers {
+  "use strict";
 
 	import HashMap = artemis.utils.HashMap;
 	import Map = artemis.utils.Map;

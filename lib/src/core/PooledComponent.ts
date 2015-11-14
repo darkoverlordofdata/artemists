@@ -1,4 +1,5 @@
 module artemis {
+  "use strict";
 
   /**
    * Component type that recycles instances.

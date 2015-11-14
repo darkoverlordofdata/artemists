@@ -1,4 +1,5 @@
 module artemis.utils {
+  "use strict";
 
   // Thanks to Riven
   // From: http://riven8192.blogspot.com/2009/08/fastmath-sincos-lookup-tables.html

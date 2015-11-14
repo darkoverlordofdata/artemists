@@ -1,4 +1,5 @@
 module artemis.blackboard {
+  "use strict";
 
   interface IHashMap {
     [key: string]: any;

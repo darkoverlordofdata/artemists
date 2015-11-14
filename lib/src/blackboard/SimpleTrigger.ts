@@ -1,4 +1,5 @@
 module artemis.blackboard {
+  "use strict";
 
   export class SimpleTrigger extends Trigger {
 

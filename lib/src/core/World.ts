@@ -1,4 +1,5 @@
 module artemis {
+  "use strict";
 	
 	import Bag = artemis.utils.Bag;
 	import ImmutableBag = artemis.utils.ImmutableBag;

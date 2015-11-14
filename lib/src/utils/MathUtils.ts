@@ -1,4 +1,5 @@
 module artemis.utils {
+  "use strict";
 	export class MathUtils {
     
 		public static nextBool() {

@@ -1,4 +1,5 @@
 module artemis {
+  "use strict";
 	
 	import EntityObserver = artemis.EntityObserver;
 

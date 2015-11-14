@@ -1,5 +1,6 @@
 module artemis {
-	
+	"use strict";
+
 	import Bag = artemis.utils.Bag;
 	import BitSet = artemis.utils.BitSet;
 	import Manager = artemis.Manager;

@@ -1,4 +1,5 @@
 module artemis.utils {
+  "use strict";
   /**
    * Decode HashMap key
    *

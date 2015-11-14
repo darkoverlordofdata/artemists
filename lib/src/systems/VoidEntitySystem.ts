@@ -1,4 +1,5 @@
 module artemis.systems {
+  "use strict";
 
 	import ImmutableBag = artemis.utils.ImmutableBag;
 	import EntitySystem = artemis.EntitySystem;

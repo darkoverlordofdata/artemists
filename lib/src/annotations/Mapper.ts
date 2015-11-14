@@ -1,4 +1,5 @@
 module artemis.annotations {
+  "use strict";
 
   import Class = artemis.Class;
   /**

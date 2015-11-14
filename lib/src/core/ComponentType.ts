@@ -1,4 +1,5 @@
 module artemis {
+  "use strict";
 
   import Class = artemis.Class;
 	import HashMap = artemis.utils.HashMap;
