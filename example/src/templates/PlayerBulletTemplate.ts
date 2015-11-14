@@ -15,23 +15,12 @@ module example.templates {
 
   export class PlayerBulletTemplate implements IEntityTemplate {
 
-    protected template: Texture;
-    protected sprites: Container;
-
-    constructor() {
-      this.sprites = EntitySystem.blackBoard.getEntry<Container>('sprites');
-
-      var sprite:Sprite = new Sprite(Texture.fromFrame('bullet.png'));
-      sprite.tint = 0xffffff;
-      this.template = sprite.generateTexture(bosco['renderer']);
-    }
-
     public buildEntity(entity:artemis.Entity, world:artemis.World, x:number, y:number):artemis.Entity {
 
-      var sprite:Sprite = new Sprite(this.template);
+      var sprite:Sprite = bosco.prefab('bullet');
       sprite.anchor.set(0.5, 0.5);
       sprite.position.set(~~x, ~~y);
-      this.sprites.addChild(sprite);
+      bosco.viewContainer.addChild(sprite);
 
       return entity
         .addPosition(~~x, ~~y)

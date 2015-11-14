@@ -20,12 +20,9 @@ module example.systems {
     private shoot:boolean;
     private timeToFire:number=0;
     private mouseVector;
-    private sprites:Container;
 
     constructor() {
-      //super(Aspect.getAspectForAll(PositionComponent, VelocityComponent, PlayerComponent));
       super(Aspect.getAspectForAll(PlayerComponent));
-      this.sprites = EntitySystem.blackBoard.getEntry<Container>('sprites');
     }
 
     public initialize() {

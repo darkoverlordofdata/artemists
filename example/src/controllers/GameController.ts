@@ -20,8 +20,6 @@ module example {
   import PlayerTemplate = example.templates.PlayerTemplate;
   import Layer = example.components.Layer;
 
-  declare var viewContainer;
-
   export class GameController {
 
     private world:World;
@@ -31,7 +29,7 @@ module example {
     private hudRenderSystem:HudRenderSystem;
 
     constructor() {
-      EntitySystem.blackBoard.setEntry('sprites', viewContainer);
+      EntitySystem.blackBoard.setEntry('sprites', bosco.viewContainer);
     }
 
     start() {

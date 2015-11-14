@@ -18,11 +18,9 @@ module example.systems {
 
 	export class CollisionSystem extends EntitySystem {
 		private collisionPairs:Bag<CollisionPair>;
-		private sprites:Container;
-	
+
 		constructor() {
 			super(Aspect.getAspectForAll(PositionComponent, BoundsComponent));
-      this.sprites = EntitySystem.blackBoard.getEntry<Container>('sprites');
 		}
 	
 		

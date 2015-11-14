@@ -10,9 +10,9 @@
  */
 bosco.start({
     "namespace": "example",
-    "controllers": [
-        "GameController"
-    ],
+    "controllers": {
+        main: "GameController"
+    },
     "width": window.innerWidth,
     "height": window.innerHeight,
     "fullScreen": false,

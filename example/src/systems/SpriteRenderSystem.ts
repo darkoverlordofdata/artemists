@@ -9,15 +9,12 @@ module example.systems {
 
   export class SpriteRenderSystem extends EntitySystem {
 
-    private sprites:PIXI.Container;
-
     constructor() {
       super(Aspect.getAspectForAll(PositionComponent, SpriteComponent));
     }
 
 
     public initialize() {
-      this.sprites = EntitySystem.blackBoard.getEntry<PIXI.Container>('sprites');
     }
 
     protected checkProcessing():boolean {
@@ -42,7 +39,7 @@ module example.systems {
     }
 
     protected removed(e:Entity) {
-      this.sprites.removeChild(<PIXI.Sprite>e.sprite.object);
+      bosco.viewContainer.removeChild(<PIXI.Sprite>e.sprite.object);
     }
   }
 }

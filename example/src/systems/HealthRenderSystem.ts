@@ -19,11 +19,9 @@ module example.systems {
   }
 	export class HealthRenderSystem extends EntityProcessingSystem {
     private texts:ILabelBMFont;
-    private sprites:PIXI.Container;
 
     constructor() {
 			super(Aspect.getAspectForAll(PositionComponent, HealthComponent));
-      this.sprites = EntitySystem.blackBoard.getEntry<Container>('sprites');
       this.texts = {};
 		}
 		
@@ -32,13 +30,13 @@ module example.systems {
       var b:BitmapText = new BitmapText('100%', {font: '20px Radio Stars', align: 'left'});
       b.scale.set(1/2, 1/2);
 
-      this.sprites.addChild(b);
+      bosco.viewContainer.addChild(b);
       this.texts[e.uuid] = b;
 
     }
     protected removed(e:Entity) {
       // remove the text element from the sprite
-      this.sprites.removeChild(this.texts[e.uuid]);
+      bosco.viewContainer.removeChild(this.texts[e.uuid]);
       this.texts[e.uuid] = null;
       delete this.texts[e.uuid];
     }

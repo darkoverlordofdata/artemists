@@ -15,16 +15,6 @@ module example.templates {
 
   export class ParticleTemplate implements IEntityTemplate {
 
-    protected template: Texture;
-    protected sprites: Container;
-
-    constructor() {
-      this.sprites = EntitySystem.blackBoard.getEntry<Container>('sprites');
-      var sprite:Sprite = new Sprite(Texture.fromFrame('particle.png'));
-      sprite.tint = 0xffd800ff;
-      this.template = sprite.generateTexture(bosco['renderer']);
-    }
-
     public buildEntity(entity:artemis.Entity, world:artemis.World, x:number, y:number):artemis.Entity {
 
       var radians:number = MathUtils.random(2*Math.PI);
@@ -33,11 +23,11 @@ module example.templates {
       var velocityY = magnitude * Math.sin(radians);
       var scale = MathUtils.random(0.5, 1);
 
-      var sprite:Sprite = new Sprite(this.template);
+      var sprite:Sprite = bosco.prefab('particle');
       sprite.anchor.set(0.5, 0.5);
       sprite.scale.set(scale, scale);
       sprite.position.set(~~x, ~~y);
-      this.sprites.addChild(sprite);
+      bosco.viewContainer.addChild(sprite);
 
       return entity
         .addPosition(~~x, ~~y)

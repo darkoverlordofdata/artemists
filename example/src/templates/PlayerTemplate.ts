@@ -16,26 +16,15 @@ module example.templates {
   @EntityTemplate('player')
   export class PlayerTemplate implements IEntityTemplate {
 
-    protected template: Texture;
-
-    protected sprites: Container;
-
-    constructor() {
-      this.sprites = EntitySystem.blackBoard.getEntry<Container>('sprites');
-      var sprite:Sprite = new Sprite(Texture.fromFrame('fighter.png'));
-      sprite.tint = 0x5dff81;
-      this.template = sprite.generateTexture(bosco['renderer']);
-    }
-
     public buildEntity(entity:Entity, world:World):Entity {
 
       var x = Constants.FRAME_WIDTH/4;
       var y = Constants.FRAME_HEIGHT-80;
 
-      var sprite:Sprite = new Sprite(this.template);
+      var sprite:Sprite = bosco.prefab('fighter');
       sprite.anchor.set(0.5, 0.5);
       sprite.position.set(~~x, ~~y);
-      this.sprites.addChild(sprite);
+      bosco.viewContainer.addChild(sprite);
 
       return entity
         .setPlayer(true)

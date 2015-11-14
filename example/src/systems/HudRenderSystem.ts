@@ -13,14 +13,6 @@ module example.systems {
     private totalCreated:BitmapText;
     private totalDeleted:BitmapText;
 
-    private sprites:PIXI.Container;
-
-    constructor() {
-      super();
-      this.sprites = EntitySystem.blackBoard.getEntry<Container>('sprites');
-    }
-
-
     public initialize() {
       //BitmapText
       //
@@ -37,9 +29,9 @@ module example.systems {
       this.totalCreated.position.set(0, 40);
       this.totalDeleted.position.set(0, 60);
 
-      this.sprites.addChild(this.activeEntities);
-      this.sprites.addChild(this.totalCreated);
-      this.sprites.addChild(this.totalDeleted);
+      bosco.viewContainer.addChild(this.activeEntities);
+      bosco.viewContainer.addChild(this.totalCreated);
+      bosco.viewContainer.addChild(this.totalDeleted);
     }
 
 
