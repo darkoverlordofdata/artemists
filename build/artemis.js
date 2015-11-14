@@ -154,7 +154,7 @@ var artemis;
                 var e1;
                 var e2;
                 for (i = 0, l = bag.size(); i < l; i++) {
-                    e1 = bag.get(i);
+                    e1 = bag[i];
                     for (j = 0; j < this.size_; j++) {
                         e2 = this[j];
                         if (e1 === e2) {
@@ -1782,7 +1782,7 @@ var artemis;
         */
         World.prototype.initialize = function () {
             for (var i = 0; i < this.managersBag_.size(); i++) {
-                this.managersBag_.get(i).initialize();
+                this.managersBag_[i].initialize();
             }
             this.entityTemplates = {};
             for (var component in EntityTemplate['entityTemplates']) {
@@ -1791,8 +1791,8 @@ var artemis;
             }
             for (var i = 0; i < this.systemsBag_.size(); i++) {
                 /** Inject the component mappers into each system */
-                ComponentMapperInitHelper.config(this.systemsBag_.get(i), this);
-                this.systemsBag_.get(i).initialize();
+                ComponentMapperInitHelper.config(this.systemsBag_[i], this);
+                this.systemsBag_[i].initialize();
             }
         };
         /**
@@ -1963,12 +1963,12 @@ var artemis;
         };
         World.prototype.notifySystems = function (performer, e) {
             for (var i = 0, s = this.systemsBag_.size(); s > i; i++) {
-                performer.perform(this.systemsBag_.get(i), e);
+                performer.perform(this.systemsBag_[i], e);
             }
         };
         World.prototype.notifyManagers = function (performer, e) {
             for (var a = 0, s = this.managersBag_.size(); s > a; a++) {
-                performer.perform(this.managersBag_.get(a), e);
+                performer.perform(this.managersBag_[a], e);
             }
         };
         /**
@@ -1988,7 +1988,7 @@ var artemis;
         World.prototype.check = function (entities, performer) {
             if (!entities.isEmpty()) {
                 for (var i = 0, s = entities.size(); s > i; i++) {
-                    var e = entities.get(i);
+                    var e = entities[i];
                     this.notifyManagers(performer, e);
                     this.notifySystems(performer, e);
                 }
@@ -2026,7 +2026,7 @@ var artemis;
             });
             this.cm_.clean();
             for (var i = 0; this.systemsBag_.size() > i; i++) {
-                var system = this.systemsBag_.get(i);
+                var system = this.systemsBag_[i];
                 if (!system.isPassive()) {
                     system.process();
                 }
@@ -2210,7 +2210,7 @@ var artemis;
          */
         ComponentTypeFactory.prototype.getTypeFor = function (c) {
             if ('number' === typeof c) {
-                return this.types.get(parseInt(c));
+                return this.types[parseInt(c)];
             }
             var type = this.componentTypes_[artemis.getClassName(c)];
             if (type == null) {
@@ -2233,7 +2233,7 @@ var artemis;
             return this.getTypeFor(c).getIndex();
         };
         ComponentTypeFactory.prototype.getTaxonomy = function (index) {
-            return this.types.get(index).getTaxonomy();
+            return this.types[index].getTaxonomy();
         };
         return ComponentTypeFactory;
     })();
@@ -2316,13 +2316,13 @@ var artemis;
                 switch (this.typeFactory.getTaxonomy(i)) {
                     case Taxonomy.BASIC:
                         //console.log('remove BASIC');
-                        this.componentsByType_.get(i).set(e.getId(), null);
+                        this.componentsByType_[i].set(e.getId(), null);
                         break;
                     case Taxonomy.POOLED:
                         //console.log('remove POOLED');
-                        var pooled = this.componentsByType_.get(i).get(e.getId());
+                        var pooled = this.componentsByType_[i][e.getId()];
                         this.pooledComponents_.freeByIndex(pooled, i);
-                        this.componentsByType_.get(i).set(e.getId(), null);
+                        this.componentsByType_[i].set(e.getId(), null);
                         break;
                     default:
                         throw new Error('InvalidComponentException' + " unknown component type: " + this.typeFactory.getTaxonomy(i));
@@ -2346,7 +2346,7 @@ var artemis;
          */
         ComponentManager.prototype.addComponent = function (e, type, component) {
             this.componentsByType_.ensureCapacity(type.getIndex());
-            var components = this.componentsByType_.get(type.getIndex());
+            var components = this.componentsByType_[type.getIndex()];
             if (components == null) {
                 components = new Bag();
                 this.componentsByType_.set(type.getIndex(), components);
@@ -2366,14 +2366,14 @@ var artemis;
             var index = type.getIndex();
             switch (type.getTaxonomy()) {
                 case Taxonomy.BASIC:
-                    this.componentsByType_.get(index).set(e.getId(), null);
+                    this.componentsByType_[index].set(e.getId(), null);
                     e.getComponentBits().clear(type.getIndex());
                     break;
                 case Taxonomy.POOLED:
-                    var pooled = this.componentsByType_.get(index).get(e.getId());
+                    var pooled = this.componentsByType_[index][e.getId()];
                     e.getComponentBits().clear(type.getIndex());
                     this.pooledComponents_.free(pooled, type);
-                    this.componentsByType_.get(index).set(e.getId(), null);
+                    this.componentsByType_[index].set(e.getId(), null);
                     break;
                 default:
                     throw new Error('InvalidComponentException' + type + " unknown component type: " + type.getTaxonomy());
@@ -2387,7 +2387,7 @@ var artemis;
          * @return a bag containing all components of the given type
          */
         ComponentManager.prototype.getComponentsByType = function (type) {
-            var components = this.componentsByType_.get(type.getIndex());
+            var components = this.componentsByType_[type.getIndex()];
             if (components == null) {
                 components = new Bag();
                 this.componentsByType_.set(type.getIndex(), components);
@@ -2404,9 +2404,9 @@ var artemis;
          * @return the component of given type
          */
         ComponentManager.prototype.getComponent = function (e, type) {
-            var components = this.componentsByType_.get(type.getIndex());
+            var components = this.componentsByType_[type.getIndex()];
             if (components != null) {
-                return components.get(e.getId());
+                return components[e.getId()];
             }
             return null;
         };
@@ -2422,7 +2422,7 @@ var artemis;
         ComponentManager.prototype.getComponentsFor = function (e, fillBag) {
             var componentBits = e.getComponentBits();
             for (var i = componentBits.nextSetBit(0); i >= 0; i = componentBits.nextSetBit(i + 1)) {
-                fillBag.add(this.componentsByType_.get(i).get(e.getId()));
+                fillBag.add(this.componentsByType_[i][e.getId()]);
             }
             return fillBag;
         };
@@ -2432,7 +2432,7 @@ var artemis;
         ComponentManager.prototype.clean = function () {
             if (this.deleted_.size() > 0) {
                 for (var i = 0; this.deleted_.size() > i; i++) {
-                    this.removeComponentsOfEntity(this.deleted_.get(i));
+                    this.removeComponentsOfEntity(this.deleted_[i]);
                 }
                 this.deleted_.clear();
             }
@@ -2469,7 +2469,7 @@ var artemis;
         * @return the instance of the component
         */
         ComponentMapper.prototype.get = function (e) {
-            return this.components_.get(e.getId());
+            return this.components_[e.getId()];
         };
         /**
         * Fast and safe retrieval of a component for this entity.
@@ -2480,7 +2480,7 @@ var artemis;
         */
         ComponentMapper.prototype.getSafe = function (e) {
             if (this.components_.isIndexWithinBounds(e.getId())) {
-                return this.components_.get(e.getId());
+                return this.components_[e.getId()];
             }
             return null;
         };
@@ -2563,7 +2563,7 @@ var artemis;
         * @return true if active, false if not.
         */
         EntityManager.prototype.isActive = function (entityId) {
-            return this.entities_.get(entityId) != null;
+            return this.entities_[entityId] != null;
         };
         /**
         * Check if the specified entityId is enabled.
@@ -2581,7 +2581,7 @@ var artemis;
         * @return the entity
         */
         EntityManager.prototype.getEntity = function (entityId) {
-            return this.entities_.get(entityId);
+            return this.entities_[entityId];
         };
         /**
         * Get how many entities are active in this world.
@@ -3174,7 +3174,7 @@ var artemis;
             }
             DelayedEntityProcessingSystem.prototype.processEntities = function (entities) {
                 for (var i = 0, s = entities.size(); s > i; i++) {
-                    var entity = entities.get(i);
+                    var entity = entities[i];
                     this.processDelta(entity, this.acc_);
                     var remaining = this.getRemainingDelay(entity);
                     if (remaining <= 0) {
@@ -3324,7 +3324,7 @@ var artemis;
             EntityProcessingSystem.prototype.processEach = function (e) { };
             EntityProcessingSystem.prototype.processEntities = function (entities) {
                 for (var i = 0, s = entities.size(); s > i; i++) {
-                    this.processEach(entities.get(i));
+                    this.processEach(entities[i]);
                 }
             };
             EntityProcessingSystem.prototype.checkProcessing = function () {
@@ -3446,7 +3446,7 @@ var artemis;
             IntervalEntityProcessingSystem.prototype.processEach = function (e) { };
             IntervalEntityProcessingSystem.prototype.processEntities = function (entities) {
                 for (var i = 0, s = entities.size(); s > i; i++) {
-                    this.processEach(entities.get(i));
+                    this.processEach(entities[i]);
                 }
             };
             return IntervalEntityProcessingSystem;
