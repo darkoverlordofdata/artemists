@@ -1,7 +1,5 @@
 module example.templates {
 
-  import GroupManager = artemis.managers.GroupManager;
-  import EntitySystem = artemis.EntitySystem;
   import EntityTemplate = artemis.annotations.EntityTemplate;
   import IEntityTemplate = artemis.IEntityTemplate;
   import Entity = artemis.Entity;
@@ -10,8 +8,6 @@ module example.templates {
   import Constants = example.core.Constants;
 
   import Sprite = PIXI.Sprite;
-  import Texture = PIXI.Texture;
-  import Container = PIXI.Container;
 
   @EntityTemplate('player')
   export class PlayerTemplate implements IEntityTemplate {

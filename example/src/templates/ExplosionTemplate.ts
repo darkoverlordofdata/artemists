@@ -2,14 +2,10 @@ module example.templates {
 
   import Layer = example.components.Layer;
   import EFFECT = example.components.EFFECT;
-  import EntitySystem = artemis.EntitySystem;
-  import Constants = example.core.Constants;
   import EntityTemplate = artemis.annotations.EntityTemplate;
   import IEntityTemplate = artemis.IEntityTemplate;
 
   import Sprite = PIXI.Sprite;
-  import Texture = PIXI.Texture;
-  import Container = PIXI.Container;
 
   export class ExplosionTemplate implements IEntityTemplate {
 

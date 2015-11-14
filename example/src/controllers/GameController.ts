@@ -54,12 +54,6 @@ module example {
       this.hudRenderSystem = world.setSystem(new HudRenderSystem(), true);
 
       world.initialize();
-      //world.createEntityFromTemplate('player');
-
-      //for (var i = 0; 500 > i; i++) {
-      // world.createEntityFromTemplate('star');
-      //}
-
     }
 
     public update(delta:number) {

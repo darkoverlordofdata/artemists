@@ -2,14 +2,11 @@ module example.templates {
 
   import MathUtils = artemis.utils.MathUtils;
   import Layer = example.components.Layer;
-  import EntitySystem = artemis.EntitySystem;
   import Constants = example.core.Constants;
   import EntityTemplate = artemis.annotations.EntityTemplate;
   import IEntityTemplate = artemis.IEntityTemplate;
 
   import Sprite = PIXI.Sprite;
-  import Texture = PIXI.Texture;
-  import Container = PIXI.Container;
 
   @EntityTemplate('star')
   export class StarTemplate implements IEntityTemplate {
