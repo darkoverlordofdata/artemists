@@ -1753,15 +1753,15 @@ var artemis;
             for (var i = 0; i < this.managersBag_.size(); i++) {
                 this.managersBag_.get(i).initialize();
             }
-            for (var i = 0; i < this.systemsBag_.size(); i++) {
-                /** Inject the component mappers into each system */
-                ComponentMapperInitHelper.config(this.systemsBag_.get(i), this);
-                this.systemsBag_.get(i).initialize();
-            }
             this.entityTemplates = {};
             for (var component in EntityTemplate['entityTemplates']) {
                 var Template = EntityTemplate['entityTemplates'][component];
                 this.setEntityTemplate(component, new Template);
+            }
+            for (var i = 0; i < this.systemsBag_.size(); i++) {
+                /** Inject the component mappers into each system */
+                ComponentMapperInitHelper.config(this.systemsBag_.get(i), this);
+                this.systemsBag_.get(i).initialize();
             }
         };
         /**

@@ -14,13 +14,6 @@
   "files": [
     "lib/src/prolog.ts",
     "lib/src/exports.ts",
-    "lib/src/signals/ListenerNode.ts",
-    "lib/src/signals/ListenerNodePool.ts",
-    "lib/src/signals/SignalBase.ts",
-    "lib/src/signals/Signal0.ts",
-    "lib/src/signals/Signal1.ts",
-    "lib/src/signals/Signal2.ts",
-    "lib/src/signals/Signal3.ts",
     "lib/src/utils/Bag.ts",
     "lib/src/utils/BitSet.ts",
     "lib/src/utils/MathUtils.ts",
