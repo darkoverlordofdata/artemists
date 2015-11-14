@@ -26,7 +26,7 @@ module artemis.systems {
 
 		protected processEntities(entities:ImmutableBag<Entity>) {
 			for (var i = 0, s = entities.size(); s > i; i++) {
-				this.processEach(entities.get(i));
+				this.processEach(entities[i]);
 			}
 		}
 

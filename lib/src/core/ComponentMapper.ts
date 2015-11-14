@@ -36,7 +36,7 @@ module artemis {
 		* @return the instance of the component
 		*/
 		public get(e:Entity):A {
-			return <A>this.components_.get(e.getId());
+			return <A>this.components_[e.getId()];
 		}
 	
 		/**
@@ -48,7 +48,7 @@ module artemis {
 		*/
 		public getSafe(e:Entity):A {
 			if(this.components_.isIndexWithinBounds(e.getId())) {
-				return <A>this.components_.get(e.getId());
+				return <A>this.components_[e.getId()];
 			}
 			return null;
 		}

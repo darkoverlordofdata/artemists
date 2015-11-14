@@ -90,14 +90,14 @@ module artemis {
 
           case Taxonomy.BASIC:
             //console.log('remove BASIC');
-            this.componentsByType_.get(i).set(e.getId(), null);
+          this.componentsByType_[i].set(e.getId(), null);
             break;
 
           case Taxonomy.POOLED:
             //console.log('remove POOLED');
-            var pooled:Component = this.componentsByType_.get(i).get(e.getId());
+            var pooled:Component = this.componentsByType_[i][e.getId()];
             this.pooledComponents_.freeByIndex(<PooledComponent>pooled, i);
-            this.componentsByType_.get(i).set(e.getId(), null);
+            this.componentsByType_[i].set(e.getId(), null);
             break;
 
           default:
@@ -125,7 +125,7 @@ module artemis {
 		public addComponent(e:Entity, type:ComponentType, component:Component) {
 			this.componentsByType_.ensureCapacity(type.getIndex());
 
-			var components:Bag<Component> = this.componentsByType_.get(type.getIndex());
+			var components:Bag<Component> = this.componentsByType_[type.getIndex()];
 			if(components == null) {
 				components = new Bag<Component>();
 				this.componentsByType_.set(type.getIndex(), components);
@@ -148,14 +148,14 @@ module artemis {
       var index = type.getIndex();
       switch (type.getTaxonomy()) {
         case Taxonomy.BASIC:
-          this.componentsByType_.get(index).set(e.getId(), null);
+          this.componentsByType_[index].set(e.getId(), null);
           e.getComponentBits().clear(type.getIndex());
           break;
         case Taxonomy.POOLED:
-          var pooled:Component = this.componentsByType_.get(index).get(e.getId());
+          var pooled:Component = this.componentsByType_[index][e.getId()];
           e.getComponentBits().clear(type.getIndex());
           this.pooledComponents_.free(<PooledComponent>pooled, type);
-          this.componentsByType_.get(index).set(e.getId(), null);
+          this.componentsByType_[index].set(e.getId(), null);
           break;
         default:
           throw new Error('InvalidComponentException'+type+ " unknown component type: " + type.getTaxonomy())
@@ -170,7 +170,7 @@ module artemis {
      * @return a bag containing all components of the given type
      */
 		public getComponentsByType(type:ComponentType):Bag<Component> {
-			var components:Bag<Component> = this.componentsByType_.get(type.getIndex());
+			var components:Bag<Component> = this.componentsByType_[type.getIndex()];
 			if(components == null) {
 				components = new Bag<Component>();
 				this.componentsByType_.set(type.getIndex(), components);
@@ -188,9 +188,9 @@ module artemis {
      * @return the component of given type
      */
 		public getComponent(e:Entity, type:ComponentType):Component {
-			var components:Bag<Component> = this.componentsByType_.get(type.getIndex());
+			var components:Bag<Component> = this.componentsByType_[type.getIndex()];
 			if(components != null) {
-				return components.get(e.getId());
+				return components[e.getId()];
 			}
 			return null;
 		}
@@ -208,7 +208,7 @@ module artemis {
 			var componentBits:BitSet = e.getComponentBits();
 	
 			for (var i = componentBits.nextSetBit(0); i >= 0; i = componentBits.nextSetBit(i+1)) {
-				fillBag.add(this.componentsByType_.get(i).get(e.getId()));
+				fillBag.add(this.componentsByType_[i][e.getId()]);
 			}
 			
 			return fillBag;
@@ -223,7 +223,7 @@ module artemis {
 		public clean() {
 			if(this.deleted_.size() > 0) {
 				for(var i = 0; this.deleted_.size() > i; i++) {
-					this.removeComponentsOfEntity(this.deleted_.get(i));
+					this.removeComponentsOfEntity(this.deleted_[i]);
 				}
 				this.deleted_.clear();
 			}

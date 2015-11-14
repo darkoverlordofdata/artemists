@@ -45,7 +45,7 @@ module artemis {
      */
     public getTypeFor(c):ComponentType {
       if ('number' === typeof c) {
-        return this.types.get(parseInt(c));
+        return this.types[parseInt(c)];
       }
 
       var type:ComponentType = this.componentTypes_[artemis.getClassName(c)];
@@ -73,7 +73,7 @@ module artemis {
     }
 
     public getTaxonomy(index:number):Taxonomy {
-      return this.types.get(index).getTaxonomy();
+      return this.types[index].getTaxonomy();
     }
 
   }

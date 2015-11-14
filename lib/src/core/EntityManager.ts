@@ -75,7 +75,7 @@ module artemis {
 		* @return true if active, false if not.
 		*/
 		public isActive(entityId:number):boolean {
-			return this.entities_.get(entityId) != null;
+			return this.entities_[entityId] != null;
 		}
 		
 		/**
@@ -95,7 +95,7 @@ module artemis {
 		* @return the entity
 		*/
 		public getEntity(entityId:number):Entity {
-			return this.entities_.get(entityId);
+			return this.entities_[entityId];
 		}
 		
 		/**

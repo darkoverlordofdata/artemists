@@ -41,7 +41,7 @@ module artemis.systems {
 
 		protected processEntities(entities:ImmutableBag<Entity>) {
 			for (var i = 0, s = entities.size(); s > i; i++) {
-				var entity:Entity = entities.get(i);
+				var entity:Entity = entities[i];
 				this.processDelta(entity, this.acc_);
 				var remaining:number = this.getRemainingDelay(entity);
 				if(remaining <= 0) {

@@ -115,7 +115,7 @@ module artemis.utils {
       var e2:E;
 
       for (i = 0, l=bag.size(); i < l; i++) {
-        e1 = bag.get(i);
+        e1 = bag[i];
 
         for (j = 0; j < this.size_; j++) {
           e2 = this[j];

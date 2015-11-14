@@ -69,7 +69,7 @@ module artemis {
 		*/
 		public initialize() {
 			for (var i = 0; i < this.managersBag_.size(); i++) {
-				this.managersBag_.get(i).initialize();
+				this.managersBag_[i].initialize();
 			}
 			
       this.entityTemplates = {};
@@ -80,8 +80,8 @@ module artemis {
 			
 			for (var i = 0; i < this.systemsBag_.size(); i++) {
 				/** Inject the component mappers into each system */
-				ComponentMapperInitHelper.config(this.systemsBag_.get(i), this);
-				this.systemsBag_.get(i).initialize();
+				ComponentMapperInitHelper.config(this.systemsBag_[i], this);
+				this.systemsBag_[i].initialize();
 			}
 
 		}
@@ -287,13 +287,13 @@ module artemis {
 		
 		private notifySystems(performer:Performer, e:Entity) {
 			for(var i = 0, s=this.systemsBag_.size(); s > i; i++) {
-				performer.perform(this.systemsBag_.get(i), e);
+				performer.perform(this.systemsBag_[i], e);
 			}
 		}
 	
 		private notifyManagers(performer:Performer, e:Entity) {
 			for(var a = 0, s = this.managersBag_.size(); s > a; a++) {
-				performer.perform(this.managersBag_.get(a), e);
+				performer.perform(this.managersBag_[a], e);
 			}
 		}
 		
@@ -315,7 +315,7 @@ module artemis {
 		private check(entities:Bag<Entity>, performer:Performer) {
 			if (!entities.isEmpty()) {
 				for (var i = 0, s = entities.size(); s > i; i++) {
-					var e:Entity = entities.get(i);
+					var e:Entity = entities[i];
 					this.notifyManagers(performer, e);
 					this.notifySystems(performer, e);
 				}
@@ -367,7 +367,7 @@ module artemis {
 			this.cm_.clean();
 			
 			for(var i = 0; this.systemsBag_.size() > i; i++) {
-				var system:EntitySystem = this.systemsBag_.get(i);
+				var system:EntitySystem = this.systemsBag_[i];
 				if(!system.isPassive()) {
 					system.process();
 				}
