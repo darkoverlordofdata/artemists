@@ -52,7 +52,7 @@ create =
   system:(name, args...) ->
     config.systems[name] = true
     fs.writeFileSync("#{process.cwd()}/artemis.json", JSON.stringify(config, null, 2))
-    template = systemTemplate(name, args)
+    template = systemTemplate(name, args...)
     mkdirp.sync "#{process.cwd()}/#{config.src}/systems"
     fs.writeFileSync("#{process.cwd()}/#{config.src}/systems/#{name}.ts", template)
 
@@ -70,11 +70,11 @@ create =
 
 
 
-systemTemplate = (name, uber='EntityProcessingSystem', components=[]) ->
+systemTemplate = (name, uber='EntityProcessingSystem', components...) ->
 
   sb = [] # StringBuilder
 
-  sb.push "module #{config.namespace} {"
+  sb.push "module #{config.namespace}.systems {"
   sb.push ""
   sb.push "  import Aspect = artemis.Aspect;"
   sb.push "  import ComponentMapper = artemis.ComponentMapper;"
