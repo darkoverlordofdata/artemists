@@ -45,6 +45,7 @@ export class PlayerTemplate implements artemis.IEntityTemplate {
         entity.addComponent(Position, x, y);
         entity.addComponent(Velocity, 0, 0);
         entity.addComponent(Bounds, 43);
+        entity.addComponent(Health, 100, 100);
         entity.addComponent(Player);
         entity.addComponent(Sprite, 'fighter', 0x5dff81), (sprite) => {
             sprite.layer = Layer.ACTORS_3;
@@ -58,6 +59,47 @@ export class PlayerTemplate implements artemis.IEntityTemplate {
 
 var player = world.createEntityFromTemplate('player', x, y);
 ```
+
+#### cli bolt-on
+
+Entitas style api bolt-on generates component definitions.
+
+```typescript
+World.prototype.createPlayer = function(x:number, y:number):Entity {
+    return this.createEntity("Player")
+      .addPosition(x, y)
+      .addVelocity(0, 0)
+      .addBounds(43)
+      .addHealth(100, 100)
+      .addLayer(Layer.ACTORS_3)
+      .addResource('fighter')
+      .setPlayer(true)
+      .start(Groups.PLAYER_SHIP);
+
+};
+...
+
+var player = world.createPlayer(x, y);
+```
+
+Example at https://github.com/darkoverlordofdata/shmupwarz/tree/artemis
+
+
+    Usage:
+      arts init namespace [-t name]
+      arts create -c name field:type... 
+      arts create -s name superclass component...
+      arts create -e name 
+      arts create -x class name field:type...
+      arts generate
+    
+    Options:
+      -t  [--template]  # template name
+      -c  [--component] # create a component
+      -s  [--system]    # create a system
+      -e  [--entity]    # create an entity
+      -x  [--extension] # extend a class
+
 
 # MIT License
 
