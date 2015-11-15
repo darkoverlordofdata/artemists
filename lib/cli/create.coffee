@@ -70,77 +70,80 @@ create =
 
 
 
-systemTemplate = (name, interfaces) ->
+systemTemplate = (name, uber='EntityProcessingSystem', components=[]) ->
+
   sb = [] # StringBuilder
 
   sb.push "module #{config.namespace} {"
   sb.push ""
-  sb.push "  import Pool = artemis.Pool;"
-  sb.push "  import Group = artemis.Group;"
+  sb.push "  import Aspect = artemis.Aspect;"
+  sb.push "  import ComponentMapper = artemis.ComponentMapper;"
   sb.push "  import Entity = artemis.Entity;"
-  sb.push "  import Matcher = artemis.Matcher;"
-  sb.push "  import Exception = artemis.Exception;"
-  sb.push "  import TriggerOnEvent = artemis.TriggerOnEvent;"
-  for iface in interfaces
-    sb.push "  import #{iface} = artemis.#{iface};"
+  if uber is 'EntitySystem'
+    sb.push "  import #{uber} = artemis.EntitySystem"
+  else
+    sb.push "  import #{uber} = artemis.systems.#{uber}"
+  for component in components
+    sb.push "  import #{component} = artemis.components.#{component};"
   sb.push ""
-  sb.push "  export class #{name} implements #{interfaces.join(', ')} {"
-
-  sb.push ""
-  for iface in interfaces
-    switch iface
-      when 'ISetPool'
-        sb.push "    protected pool:Pool;"
+  
+  sb.push "  export class #{name} extends #{uber} {"
 
   sb.push ""
-  for iface in interfaces
-    switch iface
-      when 'IMultiReactiveSystem'
-        sb.push "    public get triggers():TriggerOnEvent[] {"
-        sb.push "    }"
-        sb.push "    "
-        sb.push "    public execute(entities:Array<Entity>) {"
-        sb.push "    }"
-        sb.push "    "
+  sb.push "    constructor() {"
+  sb.push "        super(Aspect.getAspectForAll(#{components.join(', ')}));"
+  sb.push "    }"
+  sb.push ""
+  sb.push "    public initialize() {"
+  sb.push "    }"
+  sb.push "    "
 
-      when 'IReactiveSystem'
-        sb.push "    public get trigger():TriggerOnEvent {"
-        sb.push "    }"
-        sb.push "    "
-        sb.push "    public execute(entities:Array<Entity>) {"
-        sb.push "    }"
-        sb.push "    "
+  switch uber
+  
+    when "EntitySystem"
+      sb.push "    protected processEntities(entities:ImmutableBag<Entity>) {"
+      sb.push "    }"
+      sb.push "    "
+      sb.push "    protected checkProcessing():boolean {"
+      sb.push "      return true;"
+      sb.push "    }"
+      sb.push "    "
+      sb.push "    "
+      sb.push "    "
+  
+    when "DelayedEntityProcessingSystem"
+      sb.push "    protected processDelta(e:Entity, accumulatedDelta:number) {"
+      sb.push "    }"
+      sb.push "    "
+      sb.push "    protected processExpired(e:Entity) {"
+      sb.push "    }"
+      sb.push "    "
+      sb.push "    protected getRemainingDelay(e:Entity):number {"
+      sb.push "      return 0;"
+      sb.push "    }"
+      sb.push "    "
+      
+    when "EntityProcessingSystem"
+      sb.push "    public processEach(e:Entity) {"
+      sb.push "    }"
+      sb.push "    "
+    
+    when "IntervalEntitySystem"
+      sb.push "    public processEach(e:Entity) {"
+      sb.push "    }"
+      sb.push "    "
+    
+    when "IntervalEntitySystem"
+      sb.push "    "
+      sb.push "    "
+      sb.push "    "
+  
+    when "VoidEntitySystem"
+      sb.push "    protected processSystem() {"
+      sb.push "    }"
+      sb.push "    "
 
-      when 'IExecuteSystem'
-        sb.push "    public execute() {"
-        sb.push "    }"
-        sb.push "    "
-
-      when 'IInitializeSystem'
-        sb.push "    public initialize() {"
-        sb.push "    }"
-        sb.push "    "
-
-      when 'IEnsureComponents'
-        sb.push "    public get ensureComponents():IMatcher {"
-        sb.push "    }"
-        sb.push "    "
-
-      when 'IExcludeComponents'
-        sb.push "    public get excludeComponents():IMatcher {"
-        sb.push "    }"
-        sb.push "    "
-
-      when 'IClearReactiveSystem'
-        sb.push "    public get clearAfterExecute():boolean {"
-        sb.push "    }"
-        sb.push "    "
-
-      when 'ISetPool'
-        sb.push "    public setPool(pool:Pool) {"
-        sb.push "      this.pool = pool;"
-        sb.push "    }"
-        sb.push "    "
+  sb.push ""
 
   sb.push ""
   sb.push ""
