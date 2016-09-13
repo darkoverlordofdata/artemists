@@ -31,181 +31,19 @@ declare module artemis {
 declare var define: any;
 declare var exports: any;
 declare var module: any;
-/**
- * A node in the list of listeners in a signal.
-*/
-declare module artemis.signals {
-    /**
-     * @constructor
-    */
-    class ListenerNode {
-        /** @param {artemis.signals.ListenerNode} */
-        previous: any;
-        /** @param {artemis.signals.ListenerNode}*/
-        next: any;
-        /** @param {artemis.signals.SignalBase} */
-        listener: any;
-        /** @param {boolean} */
-        once: boolean;
-    }
-}
-/**
- * This internal class maintains a pool of deleted listener nodes for reuse by framework. This reduces
- * the overhead from object creation and garbage collection.
-*/
-declare module artemis.signals {
-    /**
-     * @constructor
-     */
-    class ListenerNodePool {
-        /** @type {artemis.signals.ListenerNodePool} */
-        tail: any;
-        /** @type {artemis.signals.ListenerNodePool} */
-        cacheTail: any;
-        /**
-         * Get listener node
-         * @return {artemis.signals.ListenerNode}
-         */
-        get(): any;
-        /**
-         * Dispose of listener node
-         * @param {artemis.signals.ListenerNode} node
-         */
-        dispose(node: any): void;
-        /**
-         * Cache listener node
-         * @param {artemis.signals.ListenerNode} node
-         */
-        cache(node: any): void;
-        /**
-         * Release cache
-         */
-        releaseCache(): void;
-    }
-}
-declare module artemis.signals {
-    class SignalBase {
-        /** @type {artemis.signals.ListenerNode} */
-        head: any;
-        /** @type {artemis.signals.ListenerNode} */
-        tail: any;
-        /** @type {number} */
-        numListeners: number;
-        /** @type {Array<Object>} */
-        keys: any;
-        /** @type {artemis.signals.ListenerNode} */
-        nodes: any;
-        /** @type {artemis.signals.ListenerNodePool} */
-        listenerNodePool: any;
-        /** @type {artemis.signals.ListenerNode} */
-        toAddHead: any;
-        /** @type {artemis.signals.ListenerNode} */
-        toAddTail: any;
-        /** @type {boolean} */
-        dispatching: boolean;
-        /**
-         * @constructor
-         */
-        constructor();
-        /**
-         */
-        startDispatch(): void;
-        /**
-         */
-        endDispatch(): void;
-        /**
-         * @param {Object} listener
-         */
-        getNode(listener: any): any;
-        /**
-         * @param {Object} listener
-         */
-        add(listener: any): void;
-        /**
-         * @param {Object} listener
-         */
-        addOnce(listener: any): void;
-        /**
-         * @param {artemis.signals.ListenerNode} node
-         */
-        addNode(node: any): void;
-        /**
-         * @param {Object} listener
-         */
-        remove(listener: any): void;
-        /**
-         */
-        removeAll(): void;
-    }
-}
-declare module artemis.signals {
-    /**
-     * @extends {artemis.signals.SignalBase}
-     * @constructor
-     */
-    class Signal0 extends artemis.signals.SignalBase {
-        /**
-         * dispatch the event
-         */
-        dispatch(): void;
-    }
-}
-declare module artemis.signals {
-    /**
-     * @extends {artemis.signals.SignalBase}
-     * @constructor
-     */
-    class Signal1 extends artemis.signals.SignalBase {
-        /**
-         * dispatch the event
-         * @param {Object} $1
-         */
-        dispatch($1: any): void;
-    }
-}
-declare module artemis.signals {
-    /**
-     * @extends {artemis.signals.SignalBase}
-     * @constructor
-     */
-    class Signal2 extends artemis.signals.SignalBase {
-        /**
-         * dispatch the event
-         * @param {Object} $1
-         * @param {Object} $2
-         */
-        dispatch($1: any, $2: any): void;
-    }
-}
-declare module artemis.signals {
-    /**
-     * @extends {artemis.signals.SignalBase}
-     * @constructor
-     */
-    class Signal3 extends artemis.signals.SignalBase {
-        /**
-         * dispatch the event
-         * @param {Object} $1
-         * @param {Object} $2
-         * @param {Object} $3
-         */
-        dispatch($1: any, $2: any, $3: any): void;
-    }
-}
 declare module artemis.utils {
     /**
      * Collection type a bit like ArrayList but does not preserve the order of its
      * entities, speedwise it is very good, especially suited for games.
      */
-    class Bag<E> implements ImmutableBag<E> {
-        private data_;
-        private size_;
+    class Bag<E> extends Array implements ImmutableBag<E> {
+        size_: number;
         /**
          * Constructs an empty Bag with the specified initial capacity.
          * Constructs an empty Bag with an initial capacity of 64.
          *
-         * @param capacity
-         *            the initial capacity of Bag
+         * @constructor
+         * @param capacity the initial capacity of Bag
          */
         constructor(capacity?: number);
         /**
@@ -214,7 +52,7 @@ declare module artemis.utils {
          *
          * @param index
          *            the index of element to be removed
-         * @return element that was removed from the Bag
+         * @return {Object} element that was removed from the Bag
          */
         removeAt(index: number): E;
         /**
@@ -224,20 +62,20 @@ declare module artemis.utils {
          *
          * @param e
          *            element to be removed from this list, if present
-         * @return <tt>true</tt> if this list contained the specified element
+         * @return {boolean} true if this list contained the specified element
          */
         remove(e: E): boolean;
         /**
          * Remove and return the last object in the bag.
          *
-         * @return the last object in the bag, null if empty.
+         * @return {Object} the last object in the bag, null if empty.
          */
         removeLast(): E;
         /**
          * Check if bag contains this element.
          *
          * @param e
-         * @return
+         * @return {boolean}
          */
         contains(e: E): boolean;
         /**
@@ -246,7 +84,7 @@ declare module artemis.utils {
          *
          * @param bag
          *            Bag containing elements to be removed from this Bag
-         * @return {@code true} if this Bag changed as a result of the call
+         * @return {boolean} true if this Bag changed as a result of the call
          */
         removeAll(bag: ImmutableBag<E>): boolean;
         /**
@@ -254,9 +92,7 @@ declare module artemis.utils {
          *
          * @param index
          *            index of the element to return
-         * @return the element at the specified position in bag
-         *
-         * @throws ArrayIndexOutOfBoundsException
+         * @return {Object} the element at the specified position in bag
          */
         get(index: number): E;
         /**
@@ -267,33 +103,33 @@ declare module artemis.utils {
          * @param index
          *      index of the element to return
          *
-         * @return the element at the specified position in bag
+         * @return {Object} the element at the specified position in bag
          *
          */
         safeGet(index: number): E;
         /**
          * Returns the number of elements in this bag.
          *
-         * @return the number of elements in this bag
+         * @return {number} the number of elements in this bag
          */
         size(): number;
         /**
          * Returns the number of elements the bag can hold without growing.
          *
-         * @return the number of elements the bag can hold without growing.
+         * @return {number} the number of elements the bag can hold without growing.
          */
         getCapacity(): number;
         /**
          * Checks if the internal storage supports this index.
          *
          * @param index
-         * @return
+         * @return {boolean}
          */
         isIndexWithinBounds(index: number): boolean;
         /**
          * Returns true if this list contains no elements.
          *
-         * @return true if this list contains no elements
+         * @return {boolean} true if this list contains no elements
          */
         isEmpty(): boolean;
         /**
@@ -896,13 +732,14 @@ declare module artemis {
         removeScore();
         /** END: Entity Extensions for example */
         uuid: string;
+        name: string;
         private id_;
         private componentBits_;
         private systemBits_;
         private world_;
         private entityManager_;
         private componentManager_;
-        constructor(world: World, id: number);
+        constructor(world: World, id: number, name?: string);
         /**
         * The internal id for this entity within the framework. No other entity
         * will have the same ID, but ID's are however reused so another entity may
@@ -1196,9 +1033,10 @@ declare module artemis {
         * Create and return a new or reused entity instance.
         * Will NOT add the entity to the world, use World.addEntity(Entity) for that.
         *
+        * @param name optional name for debugging
         * @return entity
         */
-        createEntity(name?:string): Entity;
+        createEntity(name?: string): Entity;
         /**
         * Get a entity having the specified id.
         *
@@ -1488,7 +1326,7 @@ declare module artemis {
         private identifierPool_;
         constructor();
         initialize(): void;
-        createEntityInstance(): Entity;
+        createEntityInstance(name?: string): Entity;
         added(e: Entity): void;
         enabled(e: Entity): void;
         disabled(e: Entity): void;

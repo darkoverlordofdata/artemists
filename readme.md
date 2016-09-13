@@ -9,6 +9,9 @@ ArtemisTS requires TypeScript >= 1.5
 The demo is a port of https://github.com/Flet/spaceship-warrior-redux and requires Pixi.js 3.0.7
 
 #### Build
+
+requires bower and bower-installer
+
 ```bash
 $ git clone https://github.com/darkoverlordofdata/artemists
 $ cd artemists
@@ -103,7 +106,7 @@ Example at https://github.com/darkoverlordofdata/shmupwarz/tree/artemis
 
 # MIT License
 
-Copyright (c) 2015 Bruce Davidson &lt;darkoverlordofdata@gmail.com&gt;
+Copyright (c) 2015-2016 Bruce Davidson &lt;darkoverlordofdata@gmail.com&gt;
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
