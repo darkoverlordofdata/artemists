@@ -3,8 +3,7 @@
   "version": "0.0.5",
   "description": "Artemis TS",
   "main": "index.js",
-  "bin": {
-  },
+  "bin": {},
   "config": {
     "build": [
       "mkdir -p build/web/src",
@@ -37,7 +36,7 @@
     "resources": "",
     "start": "tools/server web",
     "serve": "tools/server build/web",
-    "test": "NODE_ENV=test mocha --compilers coffee:coffee-script --require test/test_helper.js --recursive",
+    "test": "nw ./web",
     "transpile": "tsc"
   },
   "author": "darkoverlordofdata@gmail.com",
@@ -58,6 +57,7 @@
     "liquid.coffee": "^0.1.1",
     "mocha": "~2.0.1",
     "morgan": "^1.6.1",
+    "nw": "^0.17.1",
     "walker": "^1.0.7"
   },
   "dependencies": {
