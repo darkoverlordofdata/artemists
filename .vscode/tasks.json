@@ -24,31 +24,6 @@
             "isBuildCommand": false,
             "problemMatcher": []
         },{
-            "taskName": "closurebuild",
-            "args": [],
-            "isBuildCommand": false,
-            "problemMatcher": []
-        },{
-            "taskName": "config",
-            "args": [],
-            "isBuildCommand": false,
-            "problemMatcher": []
-        },{
-            "taskName": "deploy",
-            "args": [],
-            "isBuildCommand": false,
-            "problemMatcher": []
-        },{
-            "taskName": "jsdoc",
-            "args": [],
-            "isBuildCommand": false,
-            "problemMatcher": []
-        },{
-            "taskName": "manifest",
-            "args": [],
-            "isBuildCommand": false,
-            "problemMatcher": []
-        },{
             "taskName": "serve",
             "args": [],
             "isBuildCommand": false,

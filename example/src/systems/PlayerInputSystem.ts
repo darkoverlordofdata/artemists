@@ -26,6 +26,8 @@ module example.systems {
     }
 
     public initialize() {
+      window.addEventListener('keydown', this.onKeyDown, true)
+      window.addEventListener('keyup', this.onKeyUp, true)
       document.addEventListener('touchstart', this.onTouchStart, true);
       document.addEventListener('touchmove', this.onTouchMove, true);
       document.addEventListener('touchend', this.onTouchEnd, true);
@@ -64,6 +66,14 @@ module example.systems {
       }
     }
 
+    protected onKeyDown = (event) => {
+      if (event.which === 90) this.shoot = true
+    }
+
+    protected onKeyUp = (event) => {
+      if (event.which === 90) this.shoot = false
+    }
+    
     protected onTouchStart = (event) => {
       event = event.changedTouches ? event.changedTouches[0] : event;
       this.shoot = true;

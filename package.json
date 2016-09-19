@@ -5,39 +5,22 @@
   "main": "index.js",
   "bin": {},
   "config": {
-    "build": [
+    "pre_build": [
       "mkdir -p build/web/src",
-      "cp -f web/index_build.html build/web/index.html",
-      "cp -fr web/res build/web"
-    ],
-    "build_example": [
       "cp -f web/index_build.html build/web/index.html",
       "cp -fr web/res build/web"
     ]
   },
   "scripts": {
     "_vscode_build": "bin/artemis generate && tsc -p ./tsconfig_artemis.json && tsc -p ./tsconfig_example.json",
-    "android": "",
-    "build": "mkdir -p build/web/src && cp -f web/index_build.html build/web/index.html && cp -fr web/res build/web && tsc -p . --outFile build/artemis.js -d && cat web/src/artemis/prolog.js LF web/src/artemis/exports.js LF web/src/artemis/utils/Bag.js LF web/src/artemis/utils/BitSet.js LF web/src/artemis/utils/MathUtils.js LF web/src/artemis/utils/Map.js LF web/src/artemis/utils/HashMap.js LF web/src/artemis/utils/ImmutableBag.js LF web/src/artemis/utils/Signal.js LF web/src/artemis/utils/Timer.js LF web/src/artemis/utils/TrigLUT.js LF web/src/artemis/utils/UUID.js LF web/src/artemis/annotations/EntityTemplate.js LF web/src/artemis/annotations/Mapper.js LF web/src/artemis/annotations/Pooled.js LF web/src/artemis/blackboard/TriggerStateType.js LF web/src/artemis/blackboard/BlackBoard.js LF web/src/artemis/blackboard/Trigger.js LF web/src/artemis/blackboard/SimpleTrigger.js LF web/src/artemis/blackboard/TriggerMultiCondition.js LF web/src/artemis/core/Component.js LF web/src/artemis/core/PooledComponent.js LF web/src/artemis/core/Aspect.js LF web/src/artemis/core/Entity.js LF web/src/artemis/core/Manager.js LF web/src/artemis/core/World.js LF web/src/artemis/core/ComponentPool.js LF web/src/artemis/core/ComponentType.js LF web/src/artemis/core/ComponentTypeFactory.js LF web/src/artemis/core/ComponentManager.js LF web/src/artemis/core/ComponentMapper.js LF web/src/artemis/core/EntityManager.js LF web/src/artemis/core/EntitySystem.js LF web/src/artemis/managers/GroupManager.js LF web/src/artemis/managers/PlayerManager.js LF web/src/artemis/managers/TagManager.js LF web/src/artemis/managers/TeamManager.js LF web/src/artemis/systems/DelayedEntityProcessingSystem.js LF web/src/artemis/systems/EntityProcessingSystem.js LF web/src/artemis/systems/IntervalEntitySystem.js LF web/src/artemis/systems/VoidEntitySystem.js LF web/src/artemis/systems/IntervalEntityProcessingSystem.js > build/artemis.js && cat web/src/artemis/prolog.js LF web/src/artemis/exports.js LF web/src/artemis/utils/Bag.js LF web/src/artemis/utils/BitSet.js LF web/src/artemis/utils/MathUtils.js LF web/src/artemis/utils/Map.js LF web/src/artemis/utils/HashMap.js LF web/src/artemis/utils/ImmutableBag.js LF web/src/artemis/utils/Signal.js LF web/src/artemis/utils/Timer.js LF web/src/artemis/utils/TrigLUT.js LF web/src/artemis/utils/UUID.js LF web/src/artemis/annotations/EntityTemplate.js LF web/src/artemis/annotations/Mapper.js LF web/src/artemis/annotations/Pooled.js LF web/src/artemis/blackboard/TriggerStateType.js LF web/src/artemis/blackboard/BlackBoard.js LF web/src/artemis/blackboard/Trigger.js LF web/src/artemis/blackboard/SimpleTrigger.js LF web/src/artemis/blackboard/TriggerMultiCondition.js LF web/src/artemis/core/Component.js LF web/src/artemis/core/PooledComponent.js LF web/src/artemis/core/Aspect.js LF web/src/artemis/core/Entity.js LF web/src/artemis/core/Manager.js LF web/src/artemis/core/World.js LF web/src/artemis/core/ComponentPool.js LF web/src/artemis/core/ComponentType.js LF web/src/artemis/core/ComponentTypeFactory.js LF web/src/artemis/core/ComponentManager.js LF web/src/artemis/core/ComponentMapper.js LF web/src/artemis/core/EntityManager.js LF web/src/artemis/core/EntitySystem.js LF web/src/artemis/managers/GroupManager.js LF web/src/artemis/managers/PlayerManager.js LF web/src/artemis/managers/TagManager.js LF web/src/artemis/managers/TeamManager.js LF web/src/artemis/systems/DelayedEntityProcessingSystem.js LF web/src/artemis/systems/EntityProcessingSystem.js LF web/src/artemis/systems/IntervalEntitySystem.js LF web/src/artemis/systems/VoidEntitySystem.js LF web/src/artemis/systems/IntervalEntityProcessingSystem.js | java -jar packages/closure-compiler/lib/vendor/compiler.jar --compilation_level WHITESPACE_ONLY --js_output_file build/artemis.min.js",
+    "build": "mkdir -p build/web/src && cp -f web/index_build.html build/web/index.html && cp -fr web/res build/web && tsc --outFile build/artemis.js && cat build/artemis.js | java -jar packages/closure-compiler/lib/vendor/compiler.jar --compilation_level ADVANCED_OPTIMIZATIONS --js_output_file build/artemis.min.js",
     "clean": "rm -rf build/* && mkdir -p build && mkdir -p build/web && mkdir -p build/lib",
-    "closure": "npm run transpile && tools/convert && java -jar tools/plovr.jar build config.js",
-    "deploy": "cp -rf web/res ./web/frameworks/runtime-src/proj.android-studio/app/assets && cp -rf web/src ./web/frameworks/runtime-src/proj.android-studio/app/assets && cp -f web/main.js ./web/frameworks/runtime-src/proj.android-studio/app/assets && cp -f web/project.json ./web/frameworks/runtime-src/proj.android-studio/app/assets",
-    "depswriter": "python packages/google-closure-library/closure/bin/build/depswriter.py --root_with_prefix='packages/artemis/goog/lib ../../../../packages/artemis/goog/lib' --root_with_prefix='goog/warrior ../../../../goog/warrior' --root_with_prefix='web ../../../../web' > web/artemis.dep.js",
-    "get": "bower-installer && cake get",
     "publish": "gulp publish",
-    "jsdoc": "jsdoc web/src/lib -r --template ../jaguarjs-jsdoc --configure ./conf.json --readme ./readme.md --destination ./build/web",
-    "manifest": "gulp manifest",
-    "postbuild": "",
-    "postclosure": "cp -f web/asteroids.min.js build/web",
-    "postinstall": "bower install && npm run get",
-    "preandroid": "npm run predeploy && npm run transpile && npm run resources && cp -fr web/res ./web/frameworks/runtime-src/proj.android-studio/app/assets",
-    "prebuild": "tsc --project . && npm run clean -s",
-    "predeploy": "rm -rf ./web/frameworks/runtime-src/proj.android-studio/app/assets/res && rm -rf ./web/frameworks/runtime-src/proj.android-studio/app/assets/src && rm -f ./web/frameworks/runtime-src/proj.android-studio/app/assets/main.js && rm -f ./web/frameworks/runtime-src/proj.android-studio/app/assets/project.json",
-    "resources": "",
+    "postinstall": "bower-install",
+    "prebuild": "npm run clean -s",
     "start": "tools/server web",
     "serve": "tools/server build/web",
-    "test": "nw ./web",
-    "transpile": "tsc"
+    "test": "NODE_ENV=test mocha --compilers coffee:coffee-script --require test/test_helper.js --recursive"
   },
   "author": "darkoverlordofdata@gmail.com",
   "license": "MIT",
