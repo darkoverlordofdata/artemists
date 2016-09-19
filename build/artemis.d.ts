@@ -327,6 +327,14 @@ declare module artemis {
 declare module artemis.annotations {
     import Class = artemis.Class;
     /**
+     * EntityTemplate
+     *
+     */
+    function EntityTemplate(component: string): (target: Class, propertyKey?: string, descriptor?: TypedPropertyDescriptor<any>) => void;
+}
+declare module artemis.annotations {
+    import Class = artemis.Class;
+    /**
     * Mapper artemis.component.Position
     * em:ComponentMapper<artemis.component.Position>;
     *
@@ -341,14 +349,6 @@ declare module artemis.annotations {
     *
     */
     function Pooled(): (klass: Class, propertyKey?: string, descriptor?: TypedPropertyDescriptor<any>) => void;
-}
-declare module artemis.annotations {
-    import Class = artemis.Class;
-    /**
-     * EntityTemplate
-     *
-     */
-    function EntityTemplate(component: string): (target: Class, propertyKey?: string, descriptor?: TypedPropertyDescriptor<any>) => void;
 }
 declare module artemis.blackboard {
     /**
@@ -510,20 +510,6 @@ declare module artemis.blackboard {
          * @returns {boolean} if XXXX, false otherwise
          */
         protected checkConditionToFire(): boolean;
-    }
-}
-declare module artemis {
-    interface IEntityTemplate {
-        buildEntity(entity: artemis.Entity, world: artemis.World, ...args: any[]): any;
-    }
-}
-declare module artemis {
-    interface EntityObserver {
-        added(e: Entity): any;
-        changed(e: Entity): any;
-        deleted(e: Entity): any;
-        enabled(e: Entity): any;
-        disabled(e: Entity): any;
     }
 }
 declare module artemis {
@@ -850,6 +836,11 @@ declare module artemis {
     }
 }
 declare module artemis {
+    interface IEntityTemplate {
+        buildEntity(entity: artemis.Entity, world: artemis.World, ...args: any[]): any;
+    }
+}
+declare module artemis {
     import ImmutableBag = artemis.utils.ImmutableBag;
     import IEntityTemplate = artemis.IEntityTemplate;
     import Class = artemis.Class;
@@ -1043,6 +1034,76 @@ declare module artemis {
     }
 }
 declare module artemis {
+    class ComponentPool {
+        private pools;
+        constructor();
+        obtain<T extends PooledComponent>(componentClass: any, type: ComponentType): T;
+        free(c: PooledComponent, type: ComponentType): void;
+        freeByIndex(c: PooledComponent, typeIndex: number): void;
+        private getPool<T>(typeIndex);
+    }
+}
+declare module artemis {
+    import Class = artemis.Class;
+    import ComponentManager = artemis.ComponentManager;
+    enum Taxonomy {
+        BASIC = 0,
+        POOLED = 1,
+    }
+    class ComponentType {
+        private static INDEX;
+        static componentManager: ComponentManager;
+        private index_;
+        private type_;
+        private taxonomy_;
+        constructor(type: Class, index?: number);
+        getName(): string;
+        getIndex(): number;
+        getTaxonomy(): Taxonomy;
+        toString(): string;
+    }
+}
+declare module artemis {
+    import Taxonomy = artemis.Taxonomy;
+    import Bag = artemis.utils.Bag;
+    import ComponentType = artemis.ComponentType;
+    class ComponentTypeFactory {
+        /**
+         * Contains all generated component types, newly generated component types
+         * will be stored here.
+         */
+        private componentTypes_;
+        /** Amount of generated component types. */
+        private componentTypeCount_;
+        /** Index of this component type in componentTypes. */
+        types: Bag<ComponentType>;
+        constructor();
+        /**
+         * Gets the component type for the given component class.
+         * <p>
+         * If no component type exists yet, a new one will be created and stored
+         * for later retrieval.
+         * </p>
+         *
+         * @param c
+         *			the component's class to get the type for
+         *
+         * @return the component's {@link ComponentType}
+         */
+        getTypeFor(c: any): ComponentType;
+        /**
+         * Get the index of the component type of given component class.
+         *
+         * @param c
+         *			the component class to get the type index for
+         *
+         * @return the component type's index
+         */
+        getIndexFor(c: any): number;
+        getTaxonomy(index: number): Taxonomy;
+    }
+}
+declare module artemis {
     import Class = artemis.Class;
     import Bag = artemis.utils.Bag;
     import Manager = artemis.Manager;
@@ -1125,66 +1186,6 @@ declare module artemis {
 }
 declare module artemis {
     import Class = artemis.Class;
-    import ComponentManager = artemis.ComponentManager;
-    enum Taxonomy {
-        BASIC = 0,
-        POOLED = 1,
-    }
-    class ComponentType {
-        private static INDEX;
-        static componentManager: ComponentManager;
-        private index_;
-        private type_;
-        private taxonomy_;
-        constructor(type: Class, index?: number);
-        getName(): string;
-        getIndex(): number;
-        getTaxonomy(): Taxonomy;
-        toString(): string;
-    }
-}
-declare module artemis {
-    import Taxonomy = artemis.Taxonomy;
-    import Bag = artemis.utils.Bag;
-    import ComponentType = artemis.ComponentType;
-    class ComponentTypeFactory {
-        /**
-         * Contains all generated component types, newly generated component types
-         * will be stored here.
-         */
-        private componentTypes_;
-        /** Amount of generated component types. */
-        private componentTypeCount_;
-        /** Index of this component type in componentTypes. */
-        types: Bag<ComponentType>;
-        constructor();
-        /**
-         * Gets the component type for the given component class.
-         * <p>
-         * If no component type exists yet, a new one will be created and stored
-         * for later retrieval.
-         * </p>
-         *
-         * @param c
-         *			the component's class to get the type for
-         *
-         * @return the component's {@link ComponentType}
-         */
-        getTypeFor(c: any): ComponentType;
-        /**
-         * Get the index of the component type of given component class.
-         *
-         * @param c
-         *			the component class to get the type index for
-         *
-         * @return the component type's index
-         */
-        getIndexFor(c: any): number;
-        getTaxonomy(index: number): Taxonomy;
-    }
-}
-declare module artemis {
-    import Class = artemis.Class;
     import Component = artemis.Component;
     import Entity = artemis.Entity;
     /**
@@ -1231,16 +1232,6 @@ declare module artemis {
         * @return a new mapper.
         */
         static getFor<T extends Component>(type: Function, world: World): ComponentMapper<T>;
-    }
-}
-declare module artemis {
-    class ComponentPool {
-        private pools;
-        constructor();
-        obtain<T extends PooledComponent>(componentClass: any, type: ComponentType): T;
-        free(c: PooledComponent, type: ComponentType): void;
-        freeByIndex(c: PooledComponent, typeIndex: number): void;
-        private getPool<T>(typeIndex);
     }
 }
 declare module artemis {
@@ -1304,6 +1295,15 @@ declare module artemis {
         * @return how many entities have been deleted since start.
         */
         getTotalDeleted(): number;
+    }
+}
+declare module artemis {
+    interface EntityObserver {
+        added(e: Entity): any;
+        changed(e: Entity): any;
+        deleted(e: Entity): any;
+        enabled(e: Entity): any;
+        disabled(e: Entity): any;
     }
 }
 declare module artemis {

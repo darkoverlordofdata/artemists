@@ -13,7 +13,7 @@
   },
   "scripts": {
     "_vscode_build": "bin/artemis generate && tsc -p ./tsconfig_artemis.json && tsc -p ./tsconfig_example.json",
-    "build": "mkdir -p build/web/src && cp -f web/index_build.html build/web/index.html && cp -fr web/res build/web && tsc --outFile build/artemis.js && cat build/artemis.js | java -jar packages/closure-compiler/lib/vendor/compiler.jar --compilation_level ADVANCED_OPTIMIZATIONS --js_output_file build/artemis.min.js",
+    "build": "mkdir -p build/web/src && cp -f web/index_build.html build/web/index.html && cp -fr web/res build/web && tsc --outFile build/artemis.js && cat build/artemis.js | java -jar packages/closure-compiler/lib/vendor/compiler.jar --compilation_level WHITESPACE_ONLY --js_output_file build/artemis.min.js",
     "clean": "rm -rf build/* && mkdir -p build && mkdir -p build/web && mkdir -p build/lib",
     "publish": "gulp publish",
     "postinstall": "bower-installer",
