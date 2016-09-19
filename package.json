@@ -16,7 +16,7 @@
     "build": "mkdir -p build/web/src && cp -f web/index_build.html build/web/index.html && cp -fr web/res build/web && tsc --outFile build/artemis.js && cat build/artemis.js | java -jar packages/closure-compiler/lib/vendor/compiler.jar --compilation_level ADVANCED_OPTIMIZATIONS --js_output_file build/artemis.min.js",
     "clean": "rm -rf build/* && mkdir -p build && mkdir -p build/web && mkdir -p build/lib",
     "publish": "gulp publish",
-    "postinstall": "bower-install",
+    "postinstall": "bower-installer",
     "prebuild": "npm run clean -s",
     "start": "tools/server web",
     "serve": "tools/server build/web",
@@ -38,13 +38,12 @@
     "gulp-shell": "^0.4.2",
     "gulp-webserver": "^0.9.1",
     "liquid.coffee": "^0.1.1",
+    "mkdirp": "^0.5.1",
     "mocha": "~2.0.1",
     "morgan": "^1.6.1",
     "nw": "^0.17.1",
     "walker": "^1.0.7"
   },
   "dependencies": {
-    "liquid.coffee": "^0.1.1",
-    "mkdirp": "^0.5.1"
   }
 }
